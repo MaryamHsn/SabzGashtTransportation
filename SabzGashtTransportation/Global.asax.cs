@@ -51,7 +51,7 @@ namespace SabzGashtTransportation
 
         private static void setDbInitializer()
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+            ///Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
             SmObjectFactory.Container.GetInstance<IUnitOfWork>().ForceDatabaseInitialize();
         }
     }

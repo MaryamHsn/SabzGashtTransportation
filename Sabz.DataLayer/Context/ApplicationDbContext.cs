@@ -10,6 +10,14 @@ namespace Sabz.DataLayer.Context
         IdentityDbContext<ApplicationUser, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>,
         IUnitOfWork
     {
+        /// <summary>
+        /// It looks for a connection string named connectionString1 in the web.config file.
+        /// </summary>
+        public ApplicationDbContext()
+            : base("connectionString1")
+        {
+            //this.Database.Log = data => System.Diagnostics.Debug.WriteLine(data);
+        }
         public DbSet<Category> Categories { set; get; }
         public DbSet<Product> Products { set; get; }
         public DbSet<Address> Addresses { set; get; }
@@ -22,14 +30,7 @@ namespace Sabz.DataLayer.Context
         public DbSet<RegionTbl> Regions { set; get; }
         public DbSet<RepairmentTbl> Repairments { set; get; }
         public DbSet<RoutTbl> Routs { set; get; }
-        /// <summary>
-        /// It looks for a connection string named connectionString1 in the web.config file.
-        /// </summary>
-        public ApplicationDbContext()
-            : base("connectionString1")
-        {
-            //this.Database.Log = data => System.Diagnostics.Debug.WriteLine(data);
-        }
+     
 
         /// <summary>
         /// To change the connection string at runtime. See the SmObjectFactory class for more info.
