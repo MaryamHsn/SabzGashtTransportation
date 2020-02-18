@@ -19,7 +19,7 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<DriverTbl> GetAllDrivers()
         {
-            return _drivers.ToList();
+            return _drivers.Where(x=>x.IsActive).ToList();
         }
 
         public DriverTbl GetDriver(int? id)
@@ -27,9 +27,9 @@ namespace Sabz.ServiceLayer.Service
             return _drivers.Find(id);
         }
 
-        public void AddNewDriver(DriverTbl driverRout)
+        public void AddNewDriver(DriverTbl driver)
         {
-            _drivers.Add(driverRout);
+            _drivers.Add(driver);
         }
 
         public int Delete(int id)

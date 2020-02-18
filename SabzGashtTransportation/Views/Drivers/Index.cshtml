@@ -47,7 +47,7 @@
                     <div class="panel panel-default">
 
                         <h2>لیست کارکنان</h2>
-                        <button type="button" class="btn btn-success">کارمند جدید</button>
+                        <button type="button"onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">کارمند جدید</button>
 
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -57,9 +57,7 @@
                                         <tr>
                                             <th>Rendering engine</th>
                                             <th>Browser</th>
-                                            <th>Platform(s)</th>
-                                            <th>Engine version</th>
-                                            <th>CSS grade</th>
+                                            <th>Platform(s)</th> 
                                             <th>ویرایش</th>
                                             <th>حذف</th>
 
@@ -72,13 +70,12 @@
                                             <tr class="odd gradeX">
                                                 <td>@item.DriverId</td>
                                                 <td>@item.FirstName</td>
-                                                <td>@item.Address</td>
-                                                <td class="center">4</td>
-                                                <td class="center">X</td>
-                                                <td>X</td>
+                                                <td>@item.Address</td> 
                                                 <td>
-                                                    @Html.ActionLink("بازگشت به لیست", "Delete")
-
+                                                    @Html.ActionLink("ویرایش", "Edit",new { id = item.DriverId })
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("حذف", "Delete",new { id = item.DriverId})
                                                 </td>
 
                                             </tr>
@@ -87,9 +84,7 @@
                                                 <td>Internet Explorer 5.0</td>
                                                 <td>Win 95+</td>
                                                 <td class="center">5</td>
-                                                <td class="center">C</td>
-                                                <td>X</td>
-                                                <td>X</td>
+                                                <td class="center">C</td> 
                                             </tr>
 
                                         </tbody>

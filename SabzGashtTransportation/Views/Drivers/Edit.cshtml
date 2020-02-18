@@ -1,24 +1,28 @@
 ﻿@model Sabz.DomainClasses.DTO.DriverTbl
 
 @{
+
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+
 }
 
-<h2>Edit</h2>
+<h2>ویرایش</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    @Html.HiddenFor(model => model.IsActive);
+    @Html.HiddenFor(model => model.CFDate);
+    @Html.HiddenFor(model => model.LFDate);
+
     <div class="form-horizontal">
-        <h4>DriverTbl</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.DriverId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class = "control-label">نام:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
@@ -26,7 +30,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class = "control-label">نام خانوادگی:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
@@ -34,7 +38,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FatherName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">نام پدر:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "text-danger" })
@@ -42,7 +46,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NationalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">کد ملی:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.NationalCode, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NationalCode, "", new { @class = "text-danger" })
@@ -50,7 +54,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LicenceCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">شماره گواهینامه:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LicenceCode, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.LicenceCode, "", new { @class = "text-danger" })
@@ -58,7 +62,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">تاریخ تولد:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
@@ -74,7 +78,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">آدرس:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
@@ -82,7 +86,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Phone1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">موبایل:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Phone1, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Phone1, "", new { @class = "text-danger" })
@@ -90,7 +94,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Phone2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">تلفن:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Phone2, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Phone2, "", new { @class = "text-danger" })
@@ -99,12 +103,13 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" class="btn btn-success">ثبت</button>
+
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="link-back">
+    @Html.ActionLink("بازگشت به لیست", "Index")
 </div>

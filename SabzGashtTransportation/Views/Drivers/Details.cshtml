@@ -3,97 +3,54 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
 }
 
-<h2>Details</h2>
+<h2>اطلاعات بیشتر</h2>
 
 <div>
-    <h4>DriverTbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FatherName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FatherName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NationalCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NationalCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LicenceCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LicenceCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AutomobileId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AutomobileId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone2)
-        </dd>
-
-    </dl>
+    <table class="tbl-show">
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نام:</th>
+            <th> @Html.DisplayFor(model => model.FirstName)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> نام خانوادگی:</th>
+            <th> @Html.DisplayFor(model => model.LastName)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نام پدر:</th>
+            <th> @Html.DisplayFor(model => model.FatherName)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">کد ملی:</th>
+            <th> @Html.DisplayFor(model => model.NationalCode)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">تاریخ تولد:</th>
+            <th> @Html.DisplayFor(model => model.BirthDate)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">شماره گواهینامه:</th>
+            <th> @Html.DisplayFor(model => model.LicenceCode)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">تلفن:</th>
+            <th> @Html.DisplayFor(model => model.Phone1)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">آدرس:</th>
+            <th> @Html.DisplayFor(model => model.Address)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">IsActive</th>
+            <th> @Html.DisplayFor(model => model.IsActive)</th>
+        </tr> 
+    </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.DriverId }) |
-    @Html.ActionLink("Back to List", "Index")
+    <div class="link-back">
+        @Html.ActionLink("ویرایش", "Edit", new { id = Model.DriverId }) |
+        @Html.ActionLink("بازگشت به لیست", "Index")
+    </div>
 </p>

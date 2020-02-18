@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Sabz.DomainClasses.DTO.AccidentTbl>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DriverTbl.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UseInsurence)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CFDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LFDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AutomobileId)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriverTbl.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UseInsurence)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CFDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LFDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AutomobileId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.AccidentId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.AccidentId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AccidentId })
+            </td>
+        </tr>
+    }
+
+</table>

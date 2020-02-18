@@ -200,6 +200,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccidentTblsController.cs" />
     <Compile Include="Controllers\AccountApiTestController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DriversController.cs" />
@@ -647,6 +648,11 @@
     <Content Include="Views\Drivers\Details.cshtml" />
     <Content Include="Views\Drivers\Edit.cshtml" />
     <Content Include="Views\Drivers\Index.cshtml" />
+    <Content Include="Views\AccidentTbls\Create.cshtml" />
+    <Content Include="Views\AccidentTbls\Delete.cshtml" />
+    <Content Include="Views\AccidentTbls\Details.cshtml" />
+    <Content Include="Views\AccidentTbls\Edit.cshtml" />
+    <Content Include="Views\AccidentTbls\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

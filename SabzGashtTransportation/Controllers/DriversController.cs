@@ -67,6 +67,10 @@ namespace SabzGashtTransportation.Controllers
             {
                 //db.Drivers.Add(driverTbl);
                 // db.SaveChanges();
+                driver.IsActive = true;
+                driver.CFDate=DateTime.Now;
+                driver.LFDate = DateTime.Now;
+
                 _drivers.AddNewDriver(driver);
                 _uow.SaveAllChanges();
             }
@@ -99,7 +103,8 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                int id =_drivers.Delete(driver.DriverId);
+                _drivers.Delete(driver.DriverId);
+                driver.LFDate=DateTime.Now;
                 _drivers.AddNewDriver(driver);
                 _uow.SaveAllChanges();
 

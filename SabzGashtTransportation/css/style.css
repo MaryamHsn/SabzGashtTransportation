@@ -5236,6 +5236,12 @@ a.text-danger:focus {
     border-color: #398439;
     width: 70px;
 }
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open .dropdown-toggle.btn-danger {
+    color: #ffffff;
+    background-color: red;
+    border-color: red;
+    width: 70px;
+}
 
 .btn:hover, .btn:focus {
     color: #333333;
@@ -5256,6 +5262,14 @@ a.text-danger:focus {
     color: #ffffff;
     background-color: darkseagreen;
     border-color: #4cae4c;
+    margin: 5px 50px 5px 0;
+    width: 70px;
+}
+
+.btn-danger {
+    color: #ffffff;
+    background-color: red;
+    border-color: red;
     margin: 5px 50px 5px 0;
     width: 70px;
 }
@@ -5336,4 +5350,18 @@ button {
     padding: 1px 6px;
     margin: 25px 80px 5px 0;
 
+}
+.tbl-show {
+    padding: 4px 10px 4px 10px;
+    margin: 10px 30px 10px 0;
+    font-size: 17px;
+    font-weight: normal;
+    color: #2b542c;
+}
+.tbl-tr-show {
+    font-weight: normal;
+}
+.tbl-th-show {
+    font-weight: bold;
+    font-size: 22px;
 }
