@@ -7,9 +7,11 @@ using Sabz.DomainClasses.DTO;
 
 namespace Sabz.ServiceLayer.IService
 {
-    public interface  IAutomobileService
+    public interface IAutomobileService
     {
         void AddNewAutomobile(AutomobileTbl automobile);
         IList<AutomobileTbl> GetAllAutomobiles();
+        AutomobileTbl GetAutomobile(int? id);
+        int Delete(int id);
     }
 }

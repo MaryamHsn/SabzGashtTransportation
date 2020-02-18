@@ -11,5 +11,7 @@ namespace Sabz.ServiceLayer.IService
     {
         void AddNewRepairment(RepairmentTbl repairment);
         IList<RepairmentTbl> GetAllRepairment();
+        RepairmentTbl GetRepairment(int? id);
+        int Delete(int id);
     }
 }

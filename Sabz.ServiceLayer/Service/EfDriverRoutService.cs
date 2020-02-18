@@ -29,5 +29,16 @@ namespace Sabz.ServiceLayer.Service
         {
             return _driverRouts.ToList();
         }
+        public DriverRoutTbl GetDriverRout(int? id)
+        {
+            return _driverRouts.Find(id);
+        }
+
+        public int Delete(int id)
+        {
+            DriverRoutTbl driverRout = _driverRouts.Find(id);
+            driverRout.IsActive = false;
+            return driverRout.Id;
+        }
     }
 }

@@ -29,5 +29,16 @@ namespace Sabz.ServiceLayer.Service
         {
             return _automobileTypes.ToList();
         }
+        public AutomobileTypeTbl GetAutomobileType(int? id)
+        {
+            return _automobileTypes.Find(id);
+        }
+
+        public int Delete(int id)
+        {
+            AutomobileTypeTbl automobileType = _automobileTypes.Find(id);
+            automobileType.IsActive = false;
+            return automobileType.AutoTypeId;
+        }
     }
 }

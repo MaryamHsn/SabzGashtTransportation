@@ -29,5 +29,17 @@ namespace Sabz.ServiceLayer.Service
         {
             return _routs.ToList();
         }
+
+        public RoutTbl GetRout(int? id)
+        {
+            return _routs.Find(id);
+        }
+
+        public int Delete(int id)
+        {
+            RoutTbl rout = _routs.Find(id);
+            rout.IsActive = false;
+            return rout.RoutID;
+        }
     }
 }

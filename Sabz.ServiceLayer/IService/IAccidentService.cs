@@ -11,5 +11,7 @@ namespace Sabz.ServiceLayer.IService
     {
         void AddNewAccident(AccidentTbl accident);
         IList<AccidentTbl> GetAllAccidents();
+        AccidentTbl GetAccident(int? id);
+        int Delete(int id);
     }
 }

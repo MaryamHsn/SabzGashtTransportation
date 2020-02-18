@@ -11,5 +11,7 @@ namespace Sabz.ServiceLayer.IService
     {
         void AddNewPayment(PaymentTbl payment);
         IList<PaymentTbl> GetAllPayments();
+        PaymentTbl GetPayment(int? id);
+        int Delete(int id);
     }
 }

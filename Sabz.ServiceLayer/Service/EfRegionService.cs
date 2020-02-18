@@ -28,5 +28,16 @@ namespace Sabz.ServiceLayer.Service
         {
             return _regions.ToList();
         }
+        public RegionTbl GetRegion(int? id)
+        {
+            return _regions.Find(id);
+        }
+
+        public int Delete(int id)
+        {
+            RegionTbl region = _regions.Find(id);
+            region.IsActive = false;
+            return region.RegionId;
+        }
     }
 }

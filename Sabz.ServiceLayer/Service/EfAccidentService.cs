@@ -29,5 +29,15 @@ namespace Sabz.ServiceLayer.Service
         {
             return _accidents.ToList();
         }
+        public AccidentTbl GetAccident(int? id)
+        {
+            return _accidents.Find(id);
+        }
+        public int Delete(int id)
+        {
+            AccidentTbl accident = _accidents.Find(id);
+            accident.IsActive = false;
+            return accident.AccidentId;
+        }
     }
 }

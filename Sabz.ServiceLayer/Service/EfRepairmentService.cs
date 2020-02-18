@@ -29,6 +29,18 @@ namespace Sabz.ServiceLayer.Service
         {
             return _repairments.ToList();
         }
+
+        public RepairmentTbl GetRepairment(int? id)
+        {
+            return _repairments.Find(id);
+        }
+
+        public int Delete(int id)
+        {
+            RepairmentTbl repairment = _repairments.Find(id);
+            repairment.IsActive = false;
+            return repairment.RepairmentId;
+        }
     }
 
 }

@@ -29,5 +29,16 @@ namespace Sabz.ServiceLayer.Service
         {
             return _logRoutDrivers.ToList();
         }
+        public LogRoutDriverTbl GetLogRoutDriver(int? id)
+        {
+            return _logRoutDrivers.Find(id);
+        }
+
+        public int Delete(int id)
+        {
+            LogRoutDriverTbl logRoutDriver = _logRoutDrivers.Find(id);
+            logRoutDriver.IsActive = false;
+            return logRoutDriver.Id;
+        }
     }
 }

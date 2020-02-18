@@ -29,5 +29,16 @@ namespace Sabz.ServiceLayer.Service
         {
             return _payments.ToList();
         }
+        public PaymentTbl GetPayment(int? id)
+        {
+            return _payments.Find(id);
+        }
+
+        public int Delete(int id)
+        {
+            PaymentTbl payment = _payments.Find(id);
+            payment.IsActive = false;
+            return payment.PaymentId;
+        }
     }
 }
