@@ -27,7 +27,7 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<AutomobileTypeTbl> GetAllAutomobileTypes()
         {
-            return _automobileTypes.ToList();
+            return _automobileTypes.Where(x => x.IsActive).ToList();
         }
         public AutomobileTypeTbl GetAutomobileType(int? id)
         {

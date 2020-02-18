@@ -27,7 +27,7 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<RepairmentTbl> GetAllRepairment()
         {
-            return _repairments.ToList();
+            return _repairments.Where(x => x.IsActive).ToList();
         }
 
         public RepairmentTbl GetRepairment(int? id)

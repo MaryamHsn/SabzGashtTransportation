@@ -27,7 +27,7 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<AccidentTbl> GetAllAccidents()
         {
-            return _accidents.ToList();
+            return _accidents.Where(x=>x.IsActive).ToList();
         }
         public AccidentTbl GetAccident(int? id)
         {

@@ -10,7 +10,7 @@
         @Styles.Render("~/css/plugins/dataTables/dataTables.bootstrap.css")
         @Styles.Render("~/sb-admin.css")*@
 
-
+    int i = 0;
 }
 
 
@@ -47,7 +47,7 @@
                     <div class="panel panel-default">
 
                         <h2>لیست کارکنان</h2>
-                        <button type="button"onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">کارمند جدید</button>
+                        <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">کارمند جدید</button>
 
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -55,38 +55,46 @@
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>Rendering engine</th>
-                                            <th>Browser</th>
-                                            <th>Platform(s)</th> 
+                                            <th>نام</th>
+                                            <th>نام خانوادگی</th>
+                                            <th>شماره تماس</th>
                                             <th>ویرایش</th>
                                             <th>حذف</th>
 
                                         </tr>
                                     </thead>
-
                                     @foreach (var item in Model)
                                     {
+                                        i += 1;
                                         <tbody>
-                                            <tr class="odd gradeX">
-                                                <td>@item.DriverId</td>
-                                                <td>@item.FirstName</td>
-                                                <td>@item.Address</td> 
-                                                <td>
-                                                    @Html.ActionLink("ویرایش", "Edit",new { id = item.DriverId })
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink("حذف", "Delete",new { id = item.DriverId})
-                                                </td>
-
-                                            </tr>
-                                            <tr class="even gradeC">
-                                                <td>Trident</td>
-                                                <td>Internet Explorer 5.0</td>
-                                                <td>Win 95+</td>
-                                                <td class="center">5</td>
-                                                <td class="center">C</td> 
-                                            </tr>
-
+                                            @if (i % 2 == 0)
+                                            {
+                                                <tr class="even">
+                                                    <td>@item.FirstName</td>
+                                                    <td>@item.LastName</td>
+                                                    <td>@item.Phone1</td>
+                                                    <td>
+                                                        @Html.ActionLink("ویرایش", "Edit", new { id = item.DriverId })
+                                                    </td>
+                                                    <td>
+                                                        @Html.ActionLink("حذف", "Delete", new { id = item.DriverId })
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr class="odd">
+                                                    <td>@item.FirstName</td>
+                                                    <td>@item.LastName</td>
+                                                    <td>@item.Phone1</td>
+                                                    <td>
+                                                        @Html.ActionLink("ویرایش", "Edit", new { id = item.DriverId })
+                                                    </td>
+                                                    <td>
+                                                        @Html.ActionLink("حذف", "Delete", new { id = item.DriverId })
+                                                    </td>
+                                                </tr>
+                                            }
                                         </tbody>
                                     }
                                 </table>

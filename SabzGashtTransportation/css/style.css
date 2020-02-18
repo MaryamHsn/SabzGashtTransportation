@@ -8,8 +8,8 @@
     src: url( "../fonts/W_YEKAN_0.TTF" );
     src: local( "?" ), url( "../fonts/W_YEKAN_0.TTF" )format( "truetype" );
 }
-*{
-font-family:Yekan !important;
+* {
+    font-family: "Yekan", "Trebuchet MS", "PT Sans", "Helvetica Neue", "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
 }
 @font-face {
     font-family: 'PTSansRegular';
@@ -42,6 +42,20 @@ font-family:Yekan !important;
     font-weight: normal;
     font-style: italic;
 }
+@font-face {
+    font-family: 'Nazanin';
+    src: url('~/fonts/Nazanin.eot') format('eot'),  
+         url('~/fonts/Nazanin.woff') format('woff'),
+         url('~/fonts/Nazanin.ttf') format('truetype');
+    font-style:normal;
+    font-weight:normal;
+}
+@font-face {
+    font-family: 'Iranian Sans';
+    src: url('../fonts/Iranian Sans.ttf') format('truetype');
+}
+
+
 body,form,img,h1,h2,h3,h4,h5,p,a,div,ul,li{
 	padding:0;
 	margin:0;
@@ -51,7 +65,7 @@ input,textarea,a{
 	outline:0;
 }
 body{
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	font-size:13px;
 	color:#607586;
 	background:#FFFFFF;
@@ -59,7 +73,7 @@ body{
 	direction:rtl;
 }
 a{
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	font-size:13px;
 	color:#607586;
 	text-decoration:none;
@@ -67,9 +81,9 @@ a{
 a:hover{
 	text-decoration:underline;
 }
-strong{
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
+strong {
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+    font-weight: bold;
 }
 p{
 	line-height: 20px;
@@ -87,7 +101,7 @@ h1{
 }
 h2{
 	font-weight: normal;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	font-size: 24px;
 	line-height: 30px;
 	color: green;
@@ -98,28 +112,28 @@ h2{
 }
 h3{
 	font-weight: normal;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	font-size: 21px;
 	line-height: 28px;
 	color: #293848;
 	text-shadow:0 0 0 #293848;
 }
-h4{
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 18px;
-	line-height: 24px;
-	color: #293848;
-	padding:0 0 15px 0;
+h4 {
+    font-weight: bold;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    color: #293848;
+    padding: 0 0 15px 0;
 }
-h4 a{
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 18px;
-	line-height: 24px;
-	color: #293848;
-	text-decoration: none;
-}
+    h4 a {
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-size: 18px;
+        line-height: 24px;
+        color: #293848;
+        text-decoration: none;
+    }
 h4 a:hover{
 	text-decoration: underline;
 }
@@ -183,35 +197,35 @@ cite{
 	float: right;
 	padding: 0px 0 0 1px;
 }
-#header .top_info .logo a{
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 48px;
-	color: #FFFFFF;
-	line-height: 60px;
-	font-weight: bold;
-	text-decoration: none;
-}
+    #header .top_info .logo a {
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-size: 48px;
+        color: #FFFFFF;
+        line-height: 60px;
+        font-weight: bold;
+        text-decoration: none;
+    }
 #header .top_info .logo a span{
 	color: #FFB01F;
 }
 #header .top_info .header_contacts{
 	width: 455px;
 	float: right;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	color: #B6BFC9;
 	font-size: 12px;
 	line-height: 18px;
 	padding: 8px 0 0 5px;
 }
-#header .top_info .header_contacts .phone{
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	font-size: 18px;
-	line-height: 24px;
-	color: #FFFFFF;
-	word-spacing: 1px;
-	padding: 0 0 2px 0;
-}
+    #header .top_info .header_contacts .phone {
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 24px;
+        color: #FFFFFF;
+        word-spacing: 1px;
+        padding: 0 0 2px 0;
+    }
 #header .top_info .socials{
 	float: right;
 	width: 160px;
@@ -236,34 +250,34 @@ cite{
 	vertical-align: top;
 	background: #FFFFFF;
 	border-radius: 4px;
-	width: 197px;
+	width: 160px;
 	height: 26px;
 	margin: 0;
 	padding: 0;
 	padding: 1px 10px 0 10px;
 	line-height: 26px;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	color: #798FA1;
 	box-shadow: 0 1px 0 0 #FFFFFF;
 }
-#search_form .btn_search{
-	vertical-align: top;
-	width: 71px;
-	background: url(../images/buttons/button_1.png) no-repeat 0 0;
-	text-transform: uppercase;
-	height: 34px;
-	border:0;
-	margin: 0 7px 0 0;
-	padding: 0 0 5px 0;
-	display: inline-block;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	text-align: center;
-	font-size: 11px;
-	cursor: pointer;
-	color: #3B424A;
-	text-shadow:0 0 0 #3B424A;
-}
+    #search_form .btn_search {
+        vertical-align: top;
+        width: 71px;
+        background: url(../images/buttons/button_1.png) no-repeat 0 0;
+        text-transform: uppercase;
+        height: 34px;
+        border: 0;
+        margin: 0 7px 0 0;
+        padding: 0 0 5px 0;
+        display: inline-block;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-weight: bold;
+        text-align: center;
+        font-size: 11px;
+        cursor: pointer;
+        color: #3B424A;
+        text-shadow: 0 0 0 #3B424A;
+    }
 /*
 ================================================================================
 |                                     NAVIGATION                               |
@@ -276,54 +290,54 @@ cite{
 	margin: 0 auto;
 }
 .navigation_wrapper{
-	width: 940px;
+	width: 1000px;
 	overflow: hidden;
 	padding: 0 20px;
 	margin: 0 auto;
 }
 #navigation{
-	width: 620px;
+	width: 670px;
 	float: right;
 	padding: 0 0 0 0;
 }
-#navigation span{
-	height: 29px;
-	display: none;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	color: #FFFFFF;
-	font-size: 15px;
-	line-height: 28px;
-	cursor: pointer;
-	text-decoration: none;
-	padding: 0px 23px 0 15px;
-	background: url(../images/navigation_marker.gif) no-repeat 175px 12px;
-}
+    #navigation span {
+        height: 29px;
+        display: none;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-weight: bold;
+        color: #FFFFFF;
+        font-size: 15px;
+        line-height: 28px;
+        cursor: pointer;
+        text-decoration: none;
+        padding: 0px 23px 0 15px;
+        background: url(../images/navigation_marker.gif) no-repeat 175px 12px;
+    }
 #navigation ul{
 	
 }
 #navigation ul li{
 	display: inline-block;
 	height: 49px;
-	margin: 0 7px 0 0;
+	margin: 0 1px 0 0;
 	border:0;
 	background: none;
 	padding: 0;
 	line-height: 20px;
 }
-#navigation ul li a{
-	display: inline-block;
-	height: 49px;
-	padding: 0 0 0 0;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	color: #3B424A;
-	text-shadow:0 1px 0 #FFFFFF;
-	font-size: 15px;
-	line-height: 25px;
-	text-decoration: none;
-	padding: 11px 23px 0 23px;
-}
+    #navigation ul li a {
+        display: inline-block;
+        height: 49px;
+        padding: 0 0 0 0;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-weight: bold;
+        color: #3B424A;
+        text-shadow: 0 1px 0 #FFFFFF;
+        font-size: 15px;
+        line-height: 25px;
+        text-decoration: none;
+        padding: 11px 23px 0 23px;
+    }
 #navigation ul li.current a,
 #navigation ul li:hover a{
 	/*background: url(../images/bg_menu.jpg) repeat-x 0 0;*/
@@ -486,26 +500,26 @@ img.aligncenter {
 	color: #798FA1;
 	padding-bottom: 15px;
 }
-.services .more{
-	background: url(../images/buttons/button_9.png) no-repeat 0 0;
-    border: 0;
-    border-radius: 0;
-    color: #FFFFFF;
-    text-shadow:0 -1px 0 #000000;
-    display: block;
-    font-family: 'PTSansBold',Arial,sans-serif;
-    height: 46px;
-    text-align: center;
-    font-size: 14px;
-    cursor: pointer;
-    margin: 0 0 0px;
-    float: left;
-    padding: 0px 0px 0px;
-    width: 75px;
-    line-height: 38px;
-    text-transform: uppercase;
-    text-decoration: none;
-}
+    .services .more {
+        background: url(../images/buttons/button_9.png) no-repeat 0 0;
+        border: 0;
+        border-radius: 0;
+        color: #FFFFFF;
+        text-shadow: 0 -1px 0 #000000;
+        display: block;
+        font-family: Iranian Sans,Nazanin, Arial,sans-serif;
+        height: 46px;
+        text-align: center;
+        font-size: 14px;
+        cursor: pointer;
+        margin: 0 0 0px;
+        float: left;
+        padding: 0px 0px 0px;
+        width: 75px;
+        line-height: 38px;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
 /*
 ================================================================================
 |                                     RECENT                                   |
@@ -523,25 +537,25 @@ img.aligncenter {
 	width: 100%;
 	position: relative;
 }
-.recent_cars .all{
-	background: url(../images/buttons/button_10.png) no-repeat 0 0;
-    border: 0;
-    border-radius: 0;
-    color: #FFFFFF;
-    display: block;
-    font-family: 'PTSansBold',Arial,sans-serif;
-    height: 32px;
-    font-size: 11px;
-    text-align: center;
-    cursor: pointer;
-    line-height: 28px;
-    margin: 3px 0 0px;
-    padding: 0px 0px 0;
-    width: 96px;
-    text-transform: uppercase;
-    text-shadow:0 -1px 0 #000000;
-    text-decoration: none;
-}
+    .recent_cars .all {
+        background: url(../images/buttons/button_10.png) no-repeat 0 0;
+        border: 0;
+        border-radius: 0;
+        color: #FFFFFF;
+        display: block;
+        font-family: Iranian Sans,Nazanin,Arial,sans-serif;
+        height: 32px;
+        font-size: 11px;
+        text-align: center;
+        cursor: pointer;
+        line-height: 28px;
+        margin: 3px 0 0px;
+        padding: 0px 0px 0;
+        width: 96px;
+        text-transform: uppercase;
+        text-shadow: 0 -1px 0 #000000;
+        text-decoration: none;
+    }
 .recent_cars{
 	padding-bottom: 20px;
 }
@@ -579,7 +593,7 @@ img.aligncenter {
 	width: 187px;
 	height: 145px;
 	padding: 9px 14px 10px 19px;
-	font-family: 'PTSansRegular';
+	font-family: Iranian Sans,Nazanin;
 	font-size: 13px;
 	line-height: 21px;
 	color: #FFFFFF;
@@ -602,21 +616,21 @@ img.aligncenter {
 	z-index: 1;
 	width: 220px;
 }
-.recent_carousel .slide .title,
-.recent_cars ul li .title{
-	position: absolute;
-	bottom:0;
-	right:0;
-	width: 187px;
-	padding: 7px 14px 10px 19px;
-	font-family: 'PTSansBold';
-	font-size: 13px;
-	line-height: 20px;
-	color: #FFFFFF;
-	overflow: hidden;
-	z-index: 3;
-	background: url(../images/recent_title.png) repeat 0 0;
-}
+    .recent_carousel .slide .title,
+    .recent_cars ul li .title {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 187px;
+        padding: 7px 14px 10px 19px;
+        font-family: Iranian Sans,Nazanin,'PTSansBold';
+        font-size: 13px;
+        line-height: 20px;
+        color: #FFFFFF;
+        overflow: hidden;
+        z-index: 3;
+        background: url(../images/recent_title.png) repeat 0 0;
+    }
 .recent_carousel .slide .title span.price,
 .recent_cars ul li .title .price{
 	float: left;
@@ -629,7 +643,7 @@ img.aligncenter {
 	text-shadow:0 0 0 #FFB01F;
 	color: #FFB01F;
 	font-weight: normal;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 }
 .recent .bx-controls{
 	position: absolute;
@@ -696,27 +710,27 @@ img.aligncenter {
 .recent_blog .post_block h5{
 	padding: 0 0 15px 0;
 }
-.recent_blog .post_block h5,
-.recent_blog .post_block h5 a{
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 13px;
-	line-height: 16px;
-	color: #293848;
-	text-transform: uppercase;
-	text-decoration: none;
-}
+    .recent_blog .post_block h5,
+    .recent_blog .post_block h5 a {
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-size: 13px;
+        line-height: 16px;
+        color: #293848;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
 .recent_blog .post_block h5 a:hover{
 	text-decoration: underline;
 }
-.recent_blog .post_block .date{
-	font-family: 'PTSansItalic',Arial,sans-serif;
-	font-size: 11px;
-	line-height: 16px;
-	font-style: italic;
-	color: #798FA1;
-	padding: 0 0 3px 0;
-}
+    .recent_blog .post_block .date {
+        font-family: Iranian Sans,Nazanin,'PTSansItalic',Arial,sans-serif;
+        font-size: 11px;
+        line-height: 16px;
+        font-style: italic;
+        color: #798FA1;
+        padding: 0 0 3px 0;
+    }
 .recent_blog .post_block .post p{
 	padding: 0;
 	font-size: 13px;
@@ -736,24 +750,24 @@ img.aligncenter {
 	padding-bottom: 4px;
 	background: url(../images/tab_border.jpg) repeat-x 0 bottom;
 }
-.tabs_wrapper ul.tabs li{
-	float: right;
-	margin-left: 1px;
-	cursor: pointer;
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 14px;
-	line-height: 38px;
-	padding: 1px 18px 0;
-	text-transform: uppercase;
-	color: #798FA1;
-	overflow: hidden;
-	border:1px solid #ECEEF1;
-	border-bottom: 0;
-	background: none;
-	height: 38px;
-	border-radius: 5px 5px 0 0;
-}
+    .tabs_wrapper ul.tabs li {
+        float: right;
+        margin-left: 1px;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-size: 14px;
+        line-height: 38px;
+        padding: 1px 18px 0;
+        text-transform: uppercase;
+        color: #798FA1;
+        overflow: hidden;
+        border: 1px solid #ECEEF1;
+        border-bottom: 0;
+        background: none;
+        height: 38px;
+        border-radius: 5px 5px 0 0;
+    }
 .tabs_wrapper ul.tabs li.current{
 	background: url(../images/tab_active.jpg) repeat-x 0 0;
 	height: 39px;
@@ -782,15 +796,15 @@ img.aligncenter {
 .home_tabs .box .all:hover{
 	text-decoration: underline;
 }
-.home_tabs .box .results{
-  	font-weight: bold;
-  	font-family: 'PTSansBold',Arial,sans-serif;
-  	font-size: 13px;
-  	line-height: 20px;
-  	color: #335271;
-  	text-transform: uppercase;
-  	padding: 0 0 15px 0;
-}
+    .home_tabs .box .results {
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-size: 13px;
+        line-height: 20px;
+        color: #335271;
+        text-transform: uppercase;
+        padding: 0 0 15px 0;
+    }
 .tabs_wrapper .bx-wrapper{
 	position:relative;
 }
@@ -816,13 +830,13 @@ img.aligncenter {
 	width: 110px;
 	margin: 0 0 14px;
 }
-.tabs_carousel .slide a.title{
-	color: #293848;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	font-size: 13px;
-	line-height: 20px;
-}
+    .tabs_carousel .slide a.title {
+        color: #293848;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-weight: bold;
+        font-size: 13px;
+        line-height: 20px;
+    }
 .tabs_carousel .slide a.title:hover{
 	text-decoration: underline;
 }
@@ -968,7 +982,7 @@ img.aligncenter {
 }
 .sidebar .widget .accordion .acc_box h4{
 	font-weight: normal;
-	font-family: 'PTSansRegular';
+	font-family: Iranian Sans,Nazanin;
 	font-size: 13px;
 	color: #607586;
 	padding: 0;
@@ -980,7 +994,7 @@ img.aligncenter {
 }
 .sidebar .widget .accordion .acc_box div{
 	font-weight: normal;
-	font-family: 'PTSansRegular';
+	font-family: Iranian Sans,Nazanin;
 	font-size: 13px;
 	color: #607586;
 	padding: 0;
@@ -1108,27 +1122,27 @@ img.aligncenter {
 .video_box .post_block h5{
 	padding: 0 0 6px 0;
 }
-.video_box .post_block h5,
-.video_box .post_block h5 a{
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 13px;
-	line-height: 16px;
-	color: #293848;
-	text-transform: uppercase;
-	text-decoration: none;
-}
+    .video_box .post_block h5,
+    .video_box .post_block h5 a {
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-size: 13px;
+        line-height: 16px;
+        color: #293848;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
 .video_box .post_block h5 a:hover{
 	text-decoration: underline;
 }
-.video_box .post_block .date{
-	font-family: 'PTSansItalic',Arial,sans-serif;
-	font-size: 11px;
-	line-height: 16px;
-	font-style: italic;
-	color: #798FA1;
-	padding: 0 0 3px 0;
-}
+    .video_box .post_block .date {
+        font-family: Iranian Sans,Nazanin,'PTSansItalic',Arial,sans-serif;
+        font-size: 11px;
+        line-height: 16px;
+        font-style: italic;
+        color: #798FA1;
+        padding: 0 0 3px 0;
+    }
 .video_box .post_block .post p{
 	padding: 0;
 	font-size: 13px;
@@ -1161,49 +1175,49 @@ img.aligncenter {
 .news .news_box h5{
 	padding: 0 0 13px 0;
 }
-.news .news_box h5,
-.news .news_box h5 a{
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 13px;
-	line-height: 16px;
-	color: #293848;
-	text-transform: uppercase;
-	text-decoration: none;
-}
+    .news .news_box h5,
+    .news .news_box h5 a {
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-size: 13px;
+        line-height: 16px;
+        color: #293848;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
 .news .news_box h5 a:hover{
 	text-decoration: underline;
 }
-.news .news_box .date{
-	font-family: 'PTSansItalic',Arial,sans-serif;
-	font-size: 11px;
-	line-height: 16px;
-	font-style: italic;
-	color: #798FA1;
-	padding: 0 0 3px 0;
-}
+    .news .news_box .date {
+        font-family: Iranian Sans,Nazanin,'PTSansItalic',Arial,sans-serif;
+        font-size: 11px;
+        line-height: 16px;
+        font-style: italic;
+        color: #798FA1;
+        padding: 0 0 3px 0;
+    }
 .news .news_box .post p{
 	padding: 0;
 	font-size: 13px;
 	color: #607586;
 	line-height: 16px;
 }
-.news .all_news{
-	width: 81px;
-	height: 32px;
-	background: url(../images/buttons/button_4.png) no-repeat 0 0;
-	display: block;
-	line-height: 28px;
-	color: #FFFFFF;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 11px;
-	text-transform: uppercase;
-	text-decoration: none;
-	text-align: center;
-	font-weight: bold;
-	margin: -15px 0 0 1px;
-	text-shadow:0 -1px 0 #000000;
-}
+    .news .all_news {
+        width: 81px;
+        height: 32px;
+        background: url(../images/buttons/button_4.png) no-repeat 0 0;
+        display: block;
+        line-height: 28px;
+        color: #FFFFFF;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-size: 11px;
+        text-transform: uppercase;
+        text-decoration: none;
+        text-align: center;
+        font-weight: bold;
+        margin: -15px 0 0 1px;
+        text-shadow: 0 -1px 0 #000000;
+    }
 /*
 ================================================================================
 |                               BREADCRUMBS		                              |
@@ -1244,41 +1258,41 @@ img.aligncenter {
 	padding: 0 0 9px;
 	margin: 0 0 21px;
 }
-.get_news_box .txb{
-	background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #DC9B00;
-    border-radius: 4px 4px 4px 4px;
-    box-shadow: 0 1px 0 0 #FBDE99;
-    color: #888888;
-    display: block;
-    font-family: 'PTSansRegular',Arial,sans-serif;
-    height: 28px;
-    line-height: 28px;
-    margin: 0 0 15px;
-    padding: 1px 10px 0;
-    vertical-align: top;
-    width: 158px;
-}
-.get_news_box .btn_subscribe{
-	background: url("../images/buttons/button_5.png") no-repeat scroll 0 0 transparent;
-    color: #3B424A;
-    text-shadow:0 0 0 #3B424A;
-    display: block;
-    font-family: 'PTSansBold',Arial,sans-serif;
-    font-size: 11px;
-    height: 31px;
-    line-height: 20px;
-    margin: 0px 0 0;
-    letter-spacing: 0.5px;
-    padding: 0px 0 5px;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    width: 81px;
-    border:0;
-}
+    .get_news_box .txb {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #DC9B00;
+        border-radius: 4px 4px 4px 4px;
+        box-shadow: 0 1px 0 0 #FBDE99;
+        color: #888888;
+        display: block;
+        font-family: Iranian Sans,Nazanin,Arial,sans-serif;
+        height: 28px;
+        line-height: 28px;
+        margin: 0 0 15px;
+        padding: 1px 10px 0;
+        vertical-align: top;
+        width: 158px;
+    }
+    .get_news_box .btn_subscribe {
+        background: url("../images/buttons/button_5.png") no-repeat scroll 0 0 transparent;
+        color: #3B424A;
+        text-shadow: 0 0 0 #3B424A;
+        display: block;
+        font-family: Iranian Sans,Nazanin,Arial,sans-serif;
+        font-size: 11px;
+        height: 31px;
+        line-height: 20px;
+        margin: 0px 0 0;
+        letter-spacing: 0.5px;
+        padding: 0px 0 5px;
+        font-weight: bold;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        width: 81px;
+        border: 0;
+    }
 /*
 ================================================================================
 |                             CONSTRUCTION  SUBSCRIBE                           |
@@ -1288,20 +1302,20 @@ img.aligncenter {
 	text-align: center;
 	padding: 44px 0 45px 0;
 }
-.newsletter .title{
-	color: #293848;
-	line-height: 20px;
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	padding: 0 0 25px 0;
-}
+    .newsletter .title {
+        color: #293848;
+        line-height: 20px;
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        padding: 0 0 25px 0;
+    }
 .newsletter .txb{
 	background: #FFFFFF;
     border: 1px solid #D1D5DC;
     border-radius: 4px 4px 4px 4px;
     color: #798FA1;
     display: inline-block;
-    font-family: 'PTSansRegular',Arial,sans-serif;
+    font-family: Iranian Sans,Nazanin,Arial,sans-serif;
     height: 39px;
     line-height: 38px;
     margin: 0 16px 0px 0;
@@ -1309,26 +1323,26 @@ img.aligncenter {
     vertical-align: top;
     width: 310px;
 }
-.newsletter .btn_subscribe{
-	background: url("../images/buttons/button_7.png") no-repeat scroll 0 0 transparent;
-    color: #FFFFFF;
-    text-shadow:0 -1px 0 #050A0F;
-    display: inline-block;
-    font-family: 'PTSansBold',Arial,sans-serif;
-    font-size: 14px;
-    height: 46px;
-    line-height: 20px;
-    margin: 0px 0 0;
-    letter-spacing: 0.5px;
-    padding: 0px 0 9px;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    width: 106px;
-    border:0;
-}
+    .newsletter .btn_subscribe {
+        background: url("../images/buttons/button_7.png") no-repeat scroll 0 0 transparent;
+        color: #FFFFFF;
+        text-shadow: 0 -1px 0 #050A0F;
+        display: inline-block;
+        font-family: Iranian Sans,Nazanin,Arial,sans-serif;
+        font-size: 14px;
+        height: 46px;
+        line-height: 20px;
+        margin: 0px 0 0;
+        letter-spacing: 0.5px;
+        padding: 0px 0 9px;
+        font-weight: bold;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        width: 106px;
+        border: 0;
+    }
 /*
 ================================================================================
 |                                     SLIDER                                   |
@@ -1360,19 +1374,19 @@ img.aligncenter {
 	min-height: 50px;
 	z-index: 2;
 }
-.slider .slide .description h2{
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	color: #FFFFFF;
-	font-size:21px;
-	/* max-width: 440px; */
-	line-height: 28px;
-	padding:0 20px 3px;
-	border:0;
-	margin: 0;
-	overflow: hidden;
-	white-space: nowrap;
-}
+    .slider .slide .description h2 {
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-weight: bold;
+        color: #FFFFFF;
+        font-size: 21px;
+        /* max-width: 440px; */
+        line-height: 28px;
+        padding: 0 20px 3px;
+        border: 0;
+        margin: 0;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 .slider .slide .description p{
 	font-size: 12px;
 	color: #A9B5BD;
@@ -1385,16 +1399,16 @@ img.aligncenter {
 .slider .slide .description p span{
 	padding: 0 16px 0 0
 }
-.slider .slide .description .price{
-	color: #FFB01F;
-	line-height: 28px;
-	font-size: 21px;
-	text-shadow:0 -1px 0 #000003;
-	font-family: Arial,sans-serif;
-	position:absolute;
-	top:14px;
-	font-weight: bold;
-}
+    .slider .slide .description .price {
+        color: #FFB01F;
+        line-height: 28px;
+        font-size: 21px;
+        text-shadow: 0 -1px 0 #000003;
+        font-family: Iranian Sans,Nazanin,Arial,sans-serif;
+        position: absolute;
+        top: 14px;
+        font-weight: bold;
+    }
 .home_slider .bx-controls,
 .page_slider .bx-controls{
 	position:absolute;
@@ -1524,21 +1538,21 @@ img.aligncenter {
 	line-height: 18px;
 	padding: 0;
 }
-.main_banner a{
-	display: block;
-	float: right;
-	width: 81px;
-	height: 34px;
-	background: url(../images/buttons/button_3.png) no-repeat 0 0;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 13px;
-	text-transform: uppercase;
-	text-align: center;
-	text-decoration: none;
-	color: #3B424A;
-	line-height: 20px;
-	padding: 9px 0 0;
-	margin: 12px 0 0;
+.main_banner a {
+    display: block;
+    float: right;
+    width: 81px;
+    height: 34px;
+    background: url(../images/buttons/button_3.png) no-repeat 0 0;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    color: #3B424A;
+    line-height: 20px;
+    padding: 9px 0 0;
+    margin: 12px 0 0;
 }
 /*
 ================================================================================
@@ -1672,21 +1686,21 @@ img.aligncenter {
 	margin: 4px 2px 0 0;
 	vertical-align: top;
 }
-.search_auto .btn_search{
-	width: 104px;
-	height: 46px;
-	background: url(../images/buttons/button_2.png) no-repeat 0 0;
-	border:0;
-	cursor: pointer;
-	border-radius: 4px;
-	float: left;
-	font-family: 'PTSansBold';
-	color: #FFFFFF;
-	text-shadow:0 -1px 0 #050A0F;
-	text-transform: uppercase;
-	font-size: 14px;
-	margin: 13px 0 0 0;
-	padding: 0 0 7px 0;
+.search_auto .btn_search {
+    width: 104px;
+    height: 46px;
+    background: url(../images/buttons/button_2.png) no-repeat 0 0;
+    border: 0;
+    cursor: pointer;
+    border-radius: 4px;
+    float: left;
+    font-family: Iranian Sans,Nazanin,'PTSansBold';
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 #050A0F;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin: 13px 0 0 0;
+    padding: 0 0 7px 0;
 }
 .catalog_sidebar .search_auto .btn_search{
 	float: none;
@@ -1721,21 +1735,21 @@ img.aligncenter {
 	width: 180px;
 	padding: 0 0 8px 0;
 }
-.calculator .btn_calc{
-	width: 104px;
-	height: 46px;
-	background: url(../images/buttons/button_2.png) no-repeat 0 0;
-	border:0;
-	cursor: pointer;
-	border-radius: 4px;
-	font-family: 'PTSansBold';
-	color: #FFFFFF;
-	text-shadow:0 -1px 0 #050A0F;
-	text-transform: uppercase;
-	font-size: 14px;
-	margin: 12px 0 0 0;
-	padding: 0 0 9px 0;
-}
+    .calculator .btn_calc {
+        width: 104px;
+        height: 46px;
+        background: url(../images/buttons/button_2.png) no-repeat 0 0;
+        border: 0;
+        cursor: pointer;
+        border-radius: 4px;
+        font-family: Iranian Sans,Nazanin,'PTSansBold';
+        color: #FFFFFF;
+        text-shadow: 0 -1px 0 #050A0F;
+        text-transform: uppercase;
+        font-size: 14px;
+        margin: 12px 0 0 0;
+        padding: 0 0 9px 0;
+    }
 /*
 ================================================================================
 |                                PAGINATION		                              |
@@ -1838,18 +1852,18 @@ img.aligncenter {
 	min-height: 15px;
 	margin: 0 12px 0 0;
 }
-.blog_date,
-.blog_author,
-.blog_category,
-.blog_comments,
-.blog_category a{
-	font-size: 11px;
-	font-family: 'PTSansItalic',Arial,sans-serif;
-	font-style: italic;
-	line-height: 18px;
-	color: #798FA1;
-	text-decoration: none;
-}
+    .blog_date,
+    .blog_author,
+    .blog_category,
+    .blog_comments,
+    .blog_category a {
+        font-size: 11px;
+        font-family: Iranian Sans,Nazanin,'PTSansItalic',Arial,sans-serif;
+        font-style: italic;
+        line-height: 18px;
+        color: #798FA1;
+        text-decoration: none;
+    }
 .blog_date:hover,
 .blog_author:hover,
 .blog_comments:hover,
@@ -1947,21 +1961,21 @@ img.aligncenter {
 .comment_author{
 	overflow: hidden;
 }
-.comments ul li .comment_data .author{
-	font-weight: bold;
-	color: #293848;
-	line-height: 20px;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	float: right;
-	padding: 0 10px 4px 0;
+.comments ul li .comment_data .author {
+    font-weight: bold;
+    color: #293848;
+    line-height: 20px;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+    float: right;
+    padding: 0 10px 4px 0;
 }
-.comments ul li .comment_data .date{
-	font-style: italic;
-	color: #798FA1;
-	line-height: 20px;
-	font-family: 'PTSansItalic',Arial,sans-serif;
-	font-size: 11px;
-	float: right;
+.comments ul li .comment_data .date {
+    font-style: italic;
+    color: #798FA1;
+    line-height: 20px;
+    font-family: Iranian Sans,Nazanin,'PTSansItalic',Arial,sans-serif;
+    font-size: 11px;
+    float: right;
 }
 .comments ul li .comment_data .comment{
 	line-height: 20px;
@@ -1985,15 +1999,15 @@ img.aligncenter {
 .comment_form .fld_box.center{
 	padding: 0 41px 0 40px;	
 }
-.comment_form label{
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	color: #293484;
-	display: block;
-	padding-right: 1px;
-	line-height: 18px;
-	padding-bottom: 3px;
-}
+    .comment_form label {
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        color: #293484;
+        display: block;
+        padding-right: 1px;
+        line-height: 18px;
+        padding-bottom: 3px;
+    }
 .comment_form input{
 	background: #FFFFFF;
     border: 1px solid #D1D5DC;
@@ -2001,7 +2015,7 @@ img.aligncenter {
     box-shadow:none;
     color: #888888;
     display: block;
-    font-family: 'PTSansRegular',Arial,sans-serif;
+    font-family: Iranian Sans,Nazanin,Arial,sans-serif;
     height: 28px;
     line-height: 28px;
     margin: 0 0 8px;
@@ -2017,7 +2031,7 @@ img.aligncenter {
     box-shadow:none;
     color: #888888;
     display: block;
-    font-family: 'PTSansRegular',Arial,sans-serif;
+    font-family: Iranian Sans,Nazanin,Arial,sans-serif;
     height: 100px;
     line-height: 20px;
     margin: 0 0 20px;
@@ -2027,22 +2041,22 @@ img.aligncenter {
     font-size: 13px;
     resize:none;
 }
-.comment_form input.submit{
-	background: url(../images/buttons/button_6.png) no-repeat 0 0;
-    border: 0;
-    border-radius: 0;
-    color: #FFFFFF;
-    display: block;
-    font-family: 'PTSansBold',Arial,sans-serif;
-    height: 46px;
-    font-size: 14px;
-    cursor: pointer;
-    line-height: 18px;
-    margin: 0 0 0px;
-    padding: 0px 0px 9px;
-    width: 87px;
-    text-transform: uppercase;
-}
+    .comment_form input.submit {
+        background: url(../images/buttons/button_6.png) no-repeat 0 0;
+        border: 0;
+        border-radius: 0;
+        color: #FFFFFF;
+        display: block;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        height: 46px;
+        font-size: 14px;
+        cursor: pointer;
+        line-height: 18px;
+        margin: 0 0 0px;
+        padding: 0px 0px 9px;
+        width: 87px;
+        text-transform: uppercase;
+    }
 /*
 ================================================================================
 |                              DEALER		                                   |
@@ -2083,17 +2097,17 @@ img.aligncenter {
 	z-index: 2;
 	padding: 13px 20px 20px;
 }
-.best_offer .description h2{
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	color: #FFFFFF;
-	font-size:21px;
-	max-width: 440px;
-	line-height: 28px;
-	padding-bottom:3px;
-	border:0;
-	margin: 0;
-}
+    .best_offer .description h2 {
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-weight: bold;
+        color: #FFFFFF;
+        font-size: 21px;
+        max-width: 440px;
+        line-height: 28px;
+        padding-bottom: 3px;
+        border: 0;
+        margin: 0;
+    }
 .best_offer .description p{
 	font-size: 12px;
 	color: #A9B5BD;
@@ -2102,17 +2116,17 @@ img.aligncenter {
 .best_offer .description p span{
 	padding: 0 16px 0 0
 }
-.best_offer .description .price{
-	color: #FFB01F;
-	line-height: 28px;
-	font-size: 21px;
-	text-shadow:0 -1px 0 #000003;
-	font-family: Arial,sans-serif;
-	position:absolute;
-	top:14px;
-	font-weight: bold;
-	left:20px;
-}
+    .best_offer .description .price {
+        color: #FFB01F;
+        line-height: 28px;
+        font-size: 21px;
+        text-shadow: 0 -1px 0 #000003;
+        font-family: Iranian Sans,Nazanin,Arial,sans-serif;
+        position: absolute;
+        top: 14px;
+        font-weight: bold;
+        left: 20px;
+    }
 .offers{
 	padding: 20px 0 17px 0;
 	overflow: hidden;
@@ -2126,26 +2140,26 @@ img.aligncenter {
 .offers .count strong{
 	color: #293848;
 }
-.offers .all{
-	background: url(../images/buttons/button_8.png) no-repeat 0 0;
-    border: 0;
-    border-radius: 0;
-    color: #FFFFFF;
-    display: block;
-    font-family: 'PTSansBold',Arial,sans-serif;
-    height: 33px;
-    font-size: 11px;
-    text-align: center;
-    cursor: pointer;
-    line-height: 28px;
-    margin: 0 0 0px;
-    padding: 0px 0px 0;
-    width: 120px;
-    float: left;
-    text-transform: uppercase;
-    text-shadow:0 -1px 0 #000000;
-    text-decoration: none;
-}
+    .offers .all {
+        background: url(../images/buttons/button_8.png) no-repeat 0 0;
+        border: 0;
+        border-radius: 0;
+        color: #FFFFFF;
+        display: block;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        height: 33px;
+        font-size: 11px;
+        text-align: center;
+        cursor: pointer;
+        line-height: 28px;
+        margin: 0 0 0px;
+        padding: 0px 0px 0;
+        width: 120px;
+        float: left;
+        text-transform: uppercase;
+        text-shadow: 0 -1px 0 #000000;
+        text-decoration: none;
+    }
 .dealer_catalog li .catalog_desc{
 	padding: 0 0 0 0px;
 	width: 471px;
@@ -2175,7 +2189,7 @@ img.aligncenter {
 	font-size: 13px;
 	height: 28px;
 	line-height: 28px;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	padding:1px 11px 0 0;
 	box-shadow: 0 1px 0 0 #FFFFFF;
 	width: auto;
@@ -2191,7 +2205,7 @@ img.aligncenter {
 	font-size: 13px;
 	top: 31px;
 	line-height: 28px;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	padding:0px 0 0 0px;
 	width: 100%;
 	position: absolute;
@@ -2352,15 +2366,15 @@ img.aligncenter {
 .contact_form .fld_box.center{
 	padding: 0 39px 0 40px;	
 }
-.contact_form label{
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	color: #293484;
-	display: block;
-	padding-right: 1px;
-	line-height: 18px;
-	padding-bottom: 3px;
-}
+    .contact_form label {
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        color: #293484;
+        display: block;
+        padding-right: 1px;
+        line-height: 18px;
+        padding-bottom: 3px;
+    }
 .contact_form input{
 	background: #FFFFFF;
     border: 1px solid #D1D5DC;
@@ -2368,7 +2382,7 @@ img.aligncenter {
     box-shadow:none;
     color: #888888;
     display: block;
-    font-family: 'PTSansRegular',Arial,sans-serif;
+    font-family: Iranian Sans,Nazanin,Arial,sans-serif;
     height: 28px;
     line-height: 28px;
     margin: 0 0 8px;
@@ -2384,7 +2398,7 @@ img.aligncenter {
     box-shadow:none;
     color: #888888;
     display: block;
-    font-family: 'PTSansRegular',Arial,sans-serif;
+    font-family: Iranian Sans,Nazanin,Arial,sans-serif;
     height: 100px;
     line-height: 20px;
     margin: 0 0 20px;
@@ -2394,22 +2408,22 @@ img.aligncenter {
     font-size: 13px;
     resize:none;
 }
-.contact_form input.submit{
-    background: url(../images/buttons/button_6.png) no-repeat 0 0;
-    border: 0;
-    border-radius: 0;
-    color: #FFFFFF;
-    display: block;
-    font-family: 'PTSansBold',Arial,sans-serif;
-    height: 46px;
-    font-size: 14px;
-    cursor: pointer;
-    line-height: 18px;
-    margin: 0 0 0px;
-    padding: 6px 0px 9px;
-    width: 87px;
-    text-transform: uppercase;
-}
+    .contact_form input.submit {
+        background: url(../images/buttons/button_6.png) no-repeat 0 0;
+        border: 0;
+        border-radius: 0;
+        color: #FFFFFF;
+        display: block;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        height: 46px;
+        font-size: 14px;
+        cursor: pointer;
+        line-height: 18px;
+        margin: 0 0 0px;
+        padding: 6px 0px 9px;
+        width: 87px;
+        text-transform: uppercase;
+    }
 ul.personal_list{
 
 }
@@ -2488,20 +2502,20 @@ ul.personal_list li .grey_area span{
 	margin: 0 10px;
 	line-height: 20px;
 }
-#counter .countdown_amount{
-	width: 85px;
-	height: 87px;
-	background: url(../images/digit.png) no-repeat 0 0;
-	display: block;
-	font-family: Arial,sans-serif;
-	font-size: 60px;
-	text-align: center;
-	font-weight: bold;
-	color: #293848;
-	line-height: 87px;
-	padding: 0 0 0 2px;
-	margin: 0 0 9px 0;
-}
+    #counter .countdown_amount {
+        width: 85px;
+        height: 87px;
+        background: url(../images/digit.png) no-repeat 0 0;
+        display: block;
+        font-family: Iranian Sans,Nazanin,Arial,sans-serif;
+        font-size: 60px;
+        text-align: center;
+        font-weight: bold;
+        color: #293848;
+        line-height: 87px;
+        padding: 0 0 0 2px;
+        margin: 0 0 9px 0;
+    }
 .needs_wrapper{
 	padding: 21px 29px 18px 29px;
 	background: #F8F8F8;
@@ -2621,7 +2635,7 @@ ul.personal_list li .grey_area span{
 	margin: 0;
 	padding: 1px 10px 0 10px;
 	line-height: 28px;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	color: #798FA1;
 }
 .sell_box .txb.large{
@@ -2656,23 +2670,23 @@ ul.personal_list li .grey_area span{
 	border-top:1px solid #D1D5DC;
 	padding: 18px 0 35px 0;
 }
-.sell_submit_wrapper input.sell_submit{
-	background: url(../images/buttons/button_6.png) no-repeat 0 0;
-    border: 0;
-    border-radius: 0;
-    color: #FFFFFF;
-    display: block;
-    font-family: 'PTSansBold',Arial,sans-serif;
-    height: 46px;
-    float: left;
-    font-size: 14px;
-    cursor: pointer;
-    line-height: 18px;
-    margin: 2px 0 0px;
-    padding: 0px 0px 9px;
-    width: 87px;
-    text-transform: uppercase;
-}
+    .sell_submit_wrapper input.sell_submit {
+        background: url(../images/buttons/button_6.png) no-repeat 0 0;
+        border: 0;
+        border-radius: 0;
+        color: #FFFFFF;
+        display: block;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        height: 46px;
+        float: left;
+        font-size: 14px;
+        cursor: pointer;
+        line-height: 18px;
+        margin: 2px 0 0px;
+        padding: 0px 0px 9px;
+        width: 87px;
+        text-transform: uppercase;
+    }
 /*
 ================================================================================
 |                                     CHECKBOXES                               |
@@ -2919,14 +2933,14 @@ ul.personal_list li .grey_area span{
 .dealer_catalog li .title_box h4 a{
 	line-height: 20px;
 }
-.catalog_table li .title_box .price,
-.dealer_catalog li .title_box .price{
-	font-size: 16px;
-	line-height: 20px;
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	color: #F89D13;
-}
+    .catalog_table li .title_box .price,
+    .dealer_catalog li .title_box .price {
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        color: #F89D13;
+    }
 .catalog_table li .grey_area,
 .dealer_catalog li .grey_area{
 	color: #798FA1;
@@ -2983,7 +2997,7 @@ ul.personal_list li .grey_area span{
 	width: 184px;
 	height: 144px;
 	padding: 10px 14px 10px 15px;
-	font-family: 'PTSansRegular';
+	font-family: Iranian Sans,Nazanin;
 	font-size: 13px;
 	line-height: 21px;
 	color: #FFFFFF;
@@ -3005,25 +3019,25 @@ ul.personal_list li .grey_area span{
 	width: 213px;
 	height: 164px;
 }
-.catalog_list li .title{
-	position: absolute;
-	bottom:0;
-	right:0;
-	width: 184px;
-	padding: 7px 14px 10px 15px;
-	font-family: 'PTSansBold';
-	font-size: 13px;
-	line-height: 20px;
-	color: #FFFFFF;
-	overflow: hidden;
-	z-index: 3;
-	background: url(../images/recent_title.png) repeat 0 0;
-}
+    .catalog_list li .title {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 184px;
+        padding: 7px 14px 10px 15px;
+        font-family: Iranian Sans,Nazanin,'PTSansBold';
+        font-size: 13px;
+        line-height: 20px;
+        color: #FFFFFF;
+        overflow: hidden;
+        z-index: 3;
+        background: url(../images/recent_title.png) repeat 0 0;
+    }
 .catalog_list li .title span.price{
 	float: left;
 	letter-spacing: 0.5px;
 	color: #FFB01F;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 	font-weight:normal;
 	text-shadow:0 0 0 #FFB01F;
 }
@@ -3038,13 +3052,13 @@ ul.personal_list li .grey_area span{
 	left: 0;
 	text-align: left;
 }
-.cars_id .id{
-	font-weight: bold;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	color: #293848;
-	line-height: 16px;
-	padding: 0 0 3px;
-}
+    .cars_id .id {
+        font-weight: bold;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        color: #293848;
+        line-height: 16px;
+        padding: 0 0 3px;
+    }
 .cars_id .id span{
 	letter-spacing: 1px;
 }
@@ -3107,19 +3121,19 @@ ul.personal_list li .grey_area span{
 	background: url(../images/print_icon.png) no-repeat 0 0;
 	margin: 3px 0 0 0;
 }
-.car_characteristics .price{
-	font-size: 28px;
-	color: #FFB01F;
-	line-height: 32px;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	padding-bottom: 19px;
+.car_characteristics .price {
+    font-size: 28px;
+    color: #FFB01F;
+    line-height: 32px;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+    font-weight: bold;
+    padding-bottom: 19px;
 }
 .car_characteristics .price span{
 	font-size: 13px;
 	color: #607586;
 	font-weight: normal;
-	font-family: 'PTSansRegular',Arial,sans-serif;
+	font-family: Iranian Sans,Nazanin,Arial,sans-serif;
 }
 .features_table {
 	padding: 0 0 19px;
@@ -3129,13 +3143,13 @@ ul.personal_list li .grey_area span{
 	color: #798FA1;
 	padding: 7px 15px 8px;
 }
-.features_table .line .right{
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	color: #293848;
-	float: right;
-	width: 185px;
-}
+    .features_table .line .right {
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-weight: bold;
+        color: #293848;
+        float: right;
+        width: 185px;
+    }
 .features_table .line .left{
 	float: right;
 	width: 205px;	
@@ -3154,17 +3168,17 @@ ul.personal_list li .grey_area span{
 	width: 220px;
 	float: right;
 }
-.wanted_line .left a{
-	background: url(../images/plus.gif) no-repeat right 8px;
-	font-size: 20px;
-	line-height: 26px;
-	color: #FFB01F;
-	text-decoration: none;
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-weight: bold;
-	text-transform: uppercase;
-	padding: 0 20px 0 0;
-}
+    .wanted_line .left a {
+        background: url(../images/plus.gif) no-repeat right 8px;
+        font-size: 20px;
+        line-height: 26px;
+        color: #FFB01F;
+        text-decoration: none;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 0 20px 0 0;
+    }
 .wanted_line .left a:hover{
 	text-decoration: underline;
 }
@@ -3284,15 +3298,15 @@ ul.personal_list li .grey_area span{
 .schedule li span{
 	float: left;
 }
-#footer a.footer_logo{
-	font-family: 'PTSansBold',Arial,sans-serif;
-	font-size: 38px;
-	color: #8F98A2;
-	line-height: 50px;
-	font-weight: bold;
-	text-decoration: none;
-	margin: 0 0 13px;
-	display: block;
+#footer a.footer_logo {
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+    font-size: 38px;
+    color: #8F98A2;
+    line-height: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0 0 13px;
+    display: block;
 }
 .f_contact{
 	color: #607586;
@@ -5364,4 +5378,11 @@ button {
 .tbl-th-show {
     font-weight: bold;
     font-size: 22px;
+}
+.odd {
+    background-color: lightgrey;
+}
+
+.even {
+    background-color: white;
 }

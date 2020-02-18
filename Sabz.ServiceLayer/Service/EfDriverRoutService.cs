@@ -27,7 +27,7 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<DriverRoutTbl> GetAllDriverRouts()
         {
-            return _driverRouts.ToList();
+            return _driverRouts.Where(x => x.IsActive).ToList();
         }
         public DriverRoutTbl GetDriverRout(int? id)
         {

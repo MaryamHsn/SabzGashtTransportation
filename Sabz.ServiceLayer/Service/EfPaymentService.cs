@@ -27,7 +27,7 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<PaymentTbl> GetAllPayments()
         {
-            return _payments.ToList();
+            return _payments.Where(x => x.IsActive).ToList();
         }
         public PaymentTbl GetPayment(int? id)
         {

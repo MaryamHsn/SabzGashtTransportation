@@ -26,7 +26,7 @@ namespace Sabz.ServiceLayer.Service
         }
         public IList<RegionTbl> GetAllRegions()
         {
-            return _regions.ToList();
+            return _regions.Where(x => x.IsActive).ToList();
         }
         public RegionTbl GetRegion(int? id)
         {

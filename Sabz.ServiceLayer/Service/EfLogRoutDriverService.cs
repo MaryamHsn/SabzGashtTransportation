@@ -27,7 +27,7 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<LogRoutDriverTbl> GetAllLogRoutDrivers()
         {
-            return _logRoutDrivers.ToList();
+            return _logRoutDrivers.Where(x => x.IsActive).ToList();
         }
         public LogRoutDriverTbl GetLogRoutDriver(int? id)
         {

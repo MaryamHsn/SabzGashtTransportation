@@ -27,7 +27,7 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<RoutTbl> GetAllRouts()
         {
-            return _routs.ToList();
+            return _routs.Where(x => x.IsActive).ToList();
         }
 
         public RoutTbl GetRout(int? id)
