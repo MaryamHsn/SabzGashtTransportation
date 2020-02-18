@@ -89,6 +89,7 @@
     <Compile Include="EfCategoryService.cs" />
     <Compile Include="EfProductService.cs" />
     <Compile Include="EmailService.cs" />
+    <Compile Include="Exception\DateTimeFormatException.cs" />
     <Compile Include="IService\IAccidentService.cs" />
     <Compile Include="IService\IApplicationRoleManager.cs" />
     <Compile Include="IService\IApplicationSignInManager.cs" />
@@ -118,6 +119,8 @@
     <Compile Include="Service\EfRepairmentService.cs" />
     <Compile Include="Service\EfRoutService.cs" />
     <Compile Include="SmsService.cs" />
+    <Compile Include="Utils\ConvertDate.cs" />
+    <Compile Include="Utils\JalaliCalendar.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sabz.DataLayer\Sabz.DataLayer.csproj">
