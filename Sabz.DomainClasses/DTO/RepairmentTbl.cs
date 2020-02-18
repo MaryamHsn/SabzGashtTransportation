@@ -17,7 +17,9 @@ namespace Sabz.DomainClasses.DTO
         public string Descrition { get; set; }
 
         public decimal? Cost { get; set; }
-
+        public bool IsActive { get; set; }
+        public DateTime CFDate { get; set; }
+        public DateTime LFDate { get; set; }
         public virtual DriverTbl DriverTbl { get; set; }
     }
 }

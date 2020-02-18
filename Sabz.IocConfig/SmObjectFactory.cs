@@ -141,6 +141,10 @@ namespace Sabz.IocConfig
                 ioc.For<IRoutService>()
                     .HybridHttpOrThreadLocalScoped()
                     .Use<EfRoutService>();
+
+                ioc.For<IPaymentService>()
+                    .HybridHttpOrThreadLocalScoped()
+                    .Use<EfPaymentService>();
             });
         }
 

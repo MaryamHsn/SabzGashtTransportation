@@ -59,6 +59,18 @@
     <Compile Include="Context\ApplicationDbContext.cs" />
     <Compile Include="Context\Configuration.cs" />
     <Compile Include="Context\IUnitOfWork.cs" />
+    <Compile Include="Migrations\202002110937073_init.cs" />
+    <Compile Include="Migrations\202002110937073_init.Designer.cs">
+      <DependentUpon>202002110937073_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002151147365_addPayment.cs" />
+    <Compile Include="Migrations\202002151147365_addPayment.Designer.cs">
+      <DependentUpon>202002151147365_addPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002161105364_miss.cs" />
+    <Compile Include="Migrations\202002161105364_miss.Designer.cs">
+      <DependentUpon>202002161105364_miss.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -71,6 +83,17 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202002110937073_init.resx">
+      <DependentUpon>202002110937073_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002151147365_addPayment.resx">
+      <DependentUpon>202002151147365_addPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002161105364_miss.resx">
+      <DependentUpon>202002161105364_miss.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

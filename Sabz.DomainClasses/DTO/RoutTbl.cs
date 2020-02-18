@@ -44,7 +44,9 @@ namespace Sabz.DomainClasses.DTO
         public decimal DriverPrice { get; set; }
 
         public int Count { get; set; }
-
+        public bool IsActive { get; set; }
+        public DateTime CFDate { get; set; }
+        public DateTime LFDate { get; set; }
         public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq; 
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.IService;
@@ -20,14 +17,26 @@ namespace Sabz.ServiceLayer.Service
             _drivers = _uow.Set<DriverTbl>();
         }
 
+        public IList<DriverTbl> GetAllDrivers()
+        {
+            return _drivers.ToList();
+        }
+
+        public DriverTbl GetDriver(int? id)
+        {
+            return _drivers.Find(id);
+        }
+
         public void AddNewDriver(DriverTbl driverRout)
         {
             _drivers.Add(driverRout);
         }
 
-        public IList<DriverTbl> GetAllDrivers()
+        public int Delete(int id)
         {
-            return _drivers.ToList();
+            DriverTbl driver = _drivers.Find(id);
+            driver.IsActive = false;
+            return driver.DriverId;
         }
     }
 }

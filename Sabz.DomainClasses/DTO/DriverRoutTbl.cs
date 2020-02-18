@@ -22,7 +22,9 @@ namespace Sabz.DomainClasses.DTO
         public int RoutId { get; set; }
 
         public int IsTemporary { get; set; }
-
+        public bool IsActive { get; set; }
+        public DateTime CFDate { get; set; }
+        public DateTime LFDate { get; set; }
         public virtual DriverTbl DriverTbl { get; set; }
 
         public virtual RoutTbl RoutTbl { get; set; }

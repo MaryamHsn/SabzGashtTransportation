@@ -26,12 +26,16 @@ namespace Sabz.DomainClasses.DTO
 
         [StringLength(10)]
         public string CreateYear { get; set; }
-
+        public bool IsActive { get; set; }
+        public DateTime CFDate { get; set; }
+        public DateTime LFDate { get; set; }
         public int? AutomobileTypeId { get; set; }
 
         public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DriverTbl> DriverTbls { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AccidentTbl> AccidentTbls { get; set; }
     }
 }

@@ -101,6 +101,7 @@
     <Compile Include="IService\IDriverRoutService.cs" />
     <Compile Include="IService\IDriverService.cs" />
     <Compile Include="IService\ILogRoutDriverService.cs" />
+    <Compile Include="IService\IPaymentService.cs" />
     <Compile Include="IService\IProductService.cs" />
     <Compile Include="IService\IRegionService.cs" />
     <Compile Include="IService\IRepairmentService.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Service\EfDriverRoutService.cs" />
     <Compile Include="Service\EfDriverService.cs" />
     <Compile Include="Service\EfLogRoutDriverService.cs" />
+    <Compile Include="Service\EfPaymentService.cs" />
     <Compile Include="Service\EfRegionService.cs" />
     <Compile Include="Service\EfRepairmentService.cs" />
     <Compile Include="Service\EfRoutService.cs" />
