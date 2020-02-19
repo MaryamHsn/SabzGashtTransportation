@@ -1,42 +1,39 @@
-﻿@model IEnumerable<Sabz.DomainClasses.DTO.AccidentTbl>
+﻿
+@model PagedList.IPagedList<Sabz.DomainClasses.DTO.AccidentTbl>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
-
 }
 
-<h2>Index</h2>
+<h2>Students</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("ثبت تصادف", "Create")
 </p>
+@using (Html.BeginForm("Index", "AccidentTbls", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DriverTbl.FirstName)
+            @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UseInsurence)
+            @Html.ActionLink("اتومبیل", "Index", new { sortOrder = ViewBag.Automobile, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cost)
-        </th>
+            @Html.ActionLink(" هزینه ", "Index", new {sortOrder = ViewBag.Cost, currentFilter = ViewBag.CurrentFilter})
+        </th> 
         <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AutomobileId)
+            @Html.ActionLink(" استفاده از بیمه", "Index", new {sortOrder = ViewBag.Insurance, currentFilter = ViewBag.CurrentFilter})
         </th>
         <th></th>
     </tr>
@@ -45,35 +42,28 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DriverTbl.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UseInsurence)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CFDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LFDate)
+                @Html.DisplayFor(modelItem => item.DriverId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AutomobileId)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.AccidentId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.AccidentId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.AccidentId })
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UseInsurence)
+            </td>
+            <td>
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.AccidentId }) |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.AccidentId}) |
+                @Html.ActionLink("حذف", "Delete", new { id = item.AccidentId })
             </td>
         </tr>
     }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

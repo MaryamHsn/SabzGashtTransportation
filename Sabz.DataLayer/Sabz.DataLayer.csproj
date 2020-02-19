@@ -57,7 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\ApplicationDbContext.cs" />
-    <Compile Include="Context\Configuration.cs" />
     <Compile Include="Context\IUnitOfWork.cs" />
     <Compile Include="Migrations\202002110937073_init.cs" />
     <Compile Include="Migrations\202002110937073_init.Designer.cs">
