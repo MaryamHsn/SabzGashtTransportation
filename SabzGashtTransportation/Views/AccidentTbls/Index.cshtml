@@ -21,41 +21,41 @@
         <input type="submit" value="Search" />
     </p>
 }
-<table class="table">
-    <tr>
-        <th>
+<table class="table-sort">
+    <tr class="table-sort-tr">
+        <th class="table-sort-th">
             @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
         </th>
-        <th>
+        <th class="table-sort-th">
             @Html.ActionLink("اتومبیل", "Index", new { sortOrder = ViewBag.Automobile, currentFilter = ViewBag.CurrentFilter })
         </th>
-        <th>
-            @Html.ActionLink(" هزینه ", "Index", new {sortOrder = ViewBag.Cost, currentFilter = ViewBag.CurrentFilter})
-        </th> 
-        <th>
-            @Html.ActionLink(" استفاده از بیمه", "Index", new {sortOrder = ViewBag.Insurance, currentFilter = ViewBag.CurrentFilter})
+        <th class="table-sort-th">
+            @Html.ActionLink(" هزینه ", "Index", new { sortOrder = ViewBag.Cost, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th class="table-sort-th">
+            @Html.ActionLink(" استفاده از بیمه", "Index", new { sortOrder = ViewBag.Insurance, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
+        <tr class="table-sort-tr">
+            <td class="table-sort-td">
                 @Html.DisplayFor(modelItem => item.DriverId)
             </td>
-            <td>
+            <td  class="table-sort-td">
                 @Html.DisplayFor(modelItem => item.AutomobileId)
             </td>
-            <td>
+            <td class="table-sort-td">
                 @Html.DisplayFor(modelItem => item.Cost)
             </td>
-            <td>
+            <td class="table-sort-td">
                 @Html.DisplayFor(modelItem => item.UseInsurence)
             </td>
             <td>
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.AccidentId }) |
-                @Html.ActionLink("جزئیات", "Details", new { id = item.AccidentId}) |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.AccidentId }) |
                 @Html.ActionLink("حذف", "Delete", new { id = item.AccidentId })
             </td>
         </tr>

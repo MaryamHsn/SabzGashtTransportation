@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Sabz.DomainClasses.DTO.AutomobileTypeTbl>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HasCooler)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsBus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CFDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LFDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HasCooler)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsBus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CFDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LFDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AutoTypeId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AutoTypeId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AutoTypeId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,75 @@
+﻿@model Sabz.DomainClasses.DTO.AutomobileTbl
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AutomobileTbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Shasi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Shasi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CFDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CFDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LFDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LFDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AutomobileTypeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AutomobileTypeId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AutoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

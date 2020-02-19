@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Sabz.DomainClasses.DTO.LogRoutDriverTbl>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinePrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DoDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CFDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LFDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DriverRoutId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsTemporary)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinePrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DoDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CFDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LFDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DriverRoutId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsTemporary)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

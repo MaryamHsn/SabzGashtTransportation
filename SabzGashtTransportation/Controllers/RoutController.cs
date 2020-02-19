@@ -13,24 +13,27 @@ using Sabz.ServiceLayer.IService;
 
 namespace SabzGashtTransportation.Controllers
 {
-    public class DriversController : Controller
+    public class RoutController : Controller
     {
-        readonly IDriverService _drivers;
+        readonly IRoutService _rout;
         readonly IUnitOfWork _uow;
-        public DriversController(IUnitOfWork uow, IDriverService drivers)
+        public RoutController(IUnitOfWork uow, IRoutService rout)
         {
-            _drivers = drivers;
+            _rout = rout;
             _uow = uow;
         }
 
-        // GET: Drivers
+        // GET: Automobile
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
-            ViewBag.LastName = sortOrder == "LastName" ? "lastName_desc" : "lastName";
-            ViewBag.Phone = sortOrder == "Phone" ? "phone_desc" : "phone";
+            ViewBag.ShiftType = String.IsNullOrEmpty(sortOrder) ? "shiftType_desc" : "";
+            ViewBag.EnterTime = sortOrder == "EnterTime" ? "enterTime_desc" : "enterTime";
+            ViewBag.ExitTime = sortOrder == "ExitTime" ? "exitTime_desc" : "exitTime";
+            ViewBag.RegionId = sortOrder == "Region" ? "region_desc" : "region";
+            ViewBag.AutomobileType = sortOrder == "AutomobileType" ? "automobileType_desc" : "AutomobileType";
+            ViewBag.Count = sortOrder == "Count" ? "count_desc" : "count";
 
             if (searchString != null)
             {
@@ -42,40 +45,61 @@ namespace SabzGashtTransportation.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            var list = _drivers.GetAllDrivers();
+            var list = _rout.GetAllRouts();
             if (!String.IsNullOrEmpty(searchString))
             {
-                list = list.Where(s => s.FirstName.Contains(searchString)
-                                       || s.LastName.Contains(searchString)
-                                       || s.Phone1.Contains(searchString)).ToList();
+                list = list.Where(s => s.ShiftType.ToString().Contains(searchString)
+                                       || s.EnterTime.ToString().Contains(searchString)
+                                       || s.ExitTime.ToString().Contains(searchString)
+                                       || s.RegionId.ToString().Contains(searchString)
+                                       || s.AutomobileTypeId.ToString().Contains(searchString)
+                                       || s.Count.ToString().Contains(searchString)).ToList();
             }
             switch (sortOrder)
             {
-                case "firstName_desc":
-                    list = list.OrderByDescending(s => s.FirstName).ToList();
+                case "shiftType_desc":
+                    list = list.OrderByDescending(s => s.ShiftType).ToList();
                     break;
-                case "lastName":
-                    list = list.OrderBy(s => s.LastName).ToList();
+                case "enterTime":
+                    list = list.OrderBy(s => s.EnterTime).ToList();
                     break;
-                case "lastName_desc":
-                    list = list.OrderByDescending(s => s.LastName).ToList();
+                case "enterTime_desc":
+                    list = list.OrderByDescending(s => s.EnterTime).ToList();
                     break;
-                case "phone":
-                    list = list.OrderBy(s => s.Phone1).ToList();
+                case "exitTime":
+                    list = list.OrderBy(s => s.AutomobileTypeId).ToList();
                     break;
-                case "phone_desc":
-                    list = list.OrderByDescending(s => s.Phone1).ToList();
+                case "exitTime_desc":
+                    list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
+                    break;
+                case "region":
+                    list = list.OrderBy(s => s.RegionId).ToList();
+                    break;
+                case "region_desc":
+                    list = list.OrderByDescending(s => s.RegionId).ToList();
+                    break;
+                case "automobileType":
+                    list = list.OrderBy(s => s.AutomobileTypeId).ToList();
+                    break;
+                case "automobileType_desc":
+                    list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
+                    break;
+                case "count":
+                    list = list.OrderBy(s => s.Count).ToList();
+                    break;
+                case "count_desc":
+                    list = list.OrderByDescending(s => s.Count).ToList();
                     break;
                 default:
-                    list = list.OrderBy(s => s.DriverId).ToList();
+                    list = list.OrderBy(s => s.ShiftType).ToList();
                     break;
             }
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(list.ToPagedList(pageNumber, pageSize));
-        
-        } 
+
+        }
 
         // GET: Drivers/Details/5
         public ActionResult Details(int? id)
@@ -84,14 +108,13 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // DriverTbl driverTbl = db.Drivers.Find(id); 
-            DriverTbl driverTbl = _drivers.GetDriver(id);
+            RoutTbl rout= _rout.GetRout(id);
 
-            if (driverTbl == null)
+            if (rout == null)
             {
                 return HttpNotFound();
             }
-            return View(driverTbl);
+            return View(rout);
         }
 
         // GET: Drivers/Create
@@ -105,17 +128,15 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( DriverTbl driver)
+        public ActionResult Create(RoutTbl rout)
         {
             if (ModelState.IsValid)
             {
-                //db.Drivers.Add(driverTbl);
-                // db.SaveChanges();
-                driver.IsActive = true;
-                driver.CFDate=DateTime.Now;
-                driver.LFDate = DateTime.Now;
+                rout.IsActive = true;
+                rout.CFDate = DateTime.Now;
+                rout.LFDate = DateTime.Now;
 
-                _drivers.AddNewDriver(driver);
+                _rout.AddNewRout(rout);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -128,14 +149,13 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //DriverTbl driverTbl = db.Drivers.Find(id);
-            DriverTbl driverTbl =_drivers.GetDriver(id);
+            RoutTbl rout= _rout.GetRout(id);
 
-            if (driverTbl == null)
+            if (rout == null)
             {
                 return HttpNotFound();
             }
-            return View(driverTbl);
+            return View(rout);
         }
 
         // POST: Drivers/Edit/5
@@ -143,13 +163,13 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( DriverTbl driver)
+        public ActionResult Edit(RoutTbl rout)
         {
             if (ModelState.IsValid)
             {
-                _drivers.Delete(driver.DriverId);
-                driver.LFDate=DateTime.Now;
-                _drivers.AddNewDriver(driver);
+                _rout.Delete(rout.RoutID);
+                rout.LFDate = DateTime.Now;
+                _rout.AddNewRout(rout);
                 _uow.SaveAllChanges();
 
                 // db.Entry(driverTbl).State = EntityState.Modified;
@@ -166,14 +186,12 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DriverTbl driverTbl = _drivers.GetDriver(id);
-
-            // DriverTbl driverTbl = db.Drivers.Find(id);
-            if (driverTbl == null)
+            RoutTbl rout = _rout.GetRout(id);
+            if (rout == null)
             {
                 return HttpNotFound();
             }
-            return View(driverTbl);
+            return View(rout);
         }
 
         // POST: Drivers/Delete/5
@@ -181,12 +199,8 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _drivers.Delete(id);
+            _rout.Delete(id);
             _uow.SaveAllChanges();
-
-            //DriverTbl driverTbl = db.Drivers.Find(id);
-            //db.Drivers.Remove(driverTbl);
-            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 

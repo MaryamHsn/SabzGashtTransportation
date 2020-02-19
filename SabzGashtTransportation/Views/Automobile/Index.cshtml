@@ -1,0 +1,65 @@
+﻿
+@model PagedList.IPagedList<Sabz.DomainClasses.DTO.AutomobileTbl>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+                @Styles.Render("~/css/style.css");
+}
+
+<h2>Students</h2>
+
+<p>
+    @Html.ActionLink("ثبت اتومبیل جدید", "Create")
+</p>
+@using (Html.BeginForm("Index", "AccidentTbls", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table-sort">
+    <tr class="table-sort-tr">
+        <th class="table-sort-th">
+            @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Numbet, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("اتومبیل", "Index", new { sortOrder = ViewBag.Shasi, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink(" هزینه ", "Index", new { sortOrder = ViewBag.AutomobileType, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="table-sort-tr">
+            <td class="table-sort-td">
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td class="table-sort-td">
+                @Html.DisplayFor(modelItem => item.Shasi)
+            </td>
+            <td class="table-sort-td">
+                @Html.DisplayFor(modelItem => item.AutomobileTypeId)
+            </td>
+            <td class="table-sort-td">
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.AutoId }) |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.AutoId }) |
+                @Html.ActionLink("حذف", "Delete", new { id = item.AutoId })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Sabz.DomainClasses.DTO.RoutTbl>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RegionTbl.RegionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShiftType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnterTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExitTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AutomobileTypeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AgreementPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DriverPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Count)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CFDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LFDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegionTbl.RegionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShiftType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnterTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExitTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AutomobileTypeId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgreementPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DriverPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CFDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LFDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RoutID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RoutID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RoutID })
+        </td>
+    </tr>
+}
+
+</table>

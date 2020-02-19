@@ -1,0 +1,73 @@
+﻿@model Sabz.DomainClasses.DTO.DriverRoutTbl
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DriverRoutTbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DriverTbl.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DriverTbl.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoutTbl.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoutTbl.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsTemporary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsTemporary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CFDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CFDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LFDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LFDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

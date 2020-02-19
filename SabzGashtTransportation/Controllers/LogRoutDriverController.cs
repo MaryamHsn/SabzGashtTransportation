@@ -13,24 +13,25 @@ using Sabz.ServiceLayer.IService;
 
 namespace SabzGashtTransportation.Controllers
 {
-    public class DriversController : Controller
+    public class LogRoutDriverController : Controller
     {
-        readonly IDriverService _drivers;
+        readonly ILogRoutDriverService _logRoutDriver;
         readonly IUnitOfWork _uow;
-        public DriversController(IUnitOfWork uow, IDriverService drivers)
+        public LogRoutDriverController(IUnitOfWork uow, ILogRoutDriverService logRoutDriver)
         {
-            _drivers = drivers;
+            _logRoutDriver = logRoutDriver;
             _uow = uow;
         }
 
-        // GET: Drivers
+        // GET: Automobile
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
-            ViewBag.LastName = sortOrder == "LastName" ? "lastName_desc" : "lastName";
-            ViewBag.Phone = sortOrder == "Phone" ? "phone_desc" : "phone";
+            ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
+            ViewBag.Rout = sortOrder == "Rout" ? "rout_desc" : "rout";
+            ViewBag.IsTemporary = sortOrder == "IsTemporary" ? "isTemporary_desc" : "isTemporary";
+            ViewBag.IsDone = sortOrder == "IsDone" ? "isDone_desc" : "isDone";
 
             if (searchString != null)
             {
@@ -42,29 +43,35 @@ namespace SabzGashtTransportation.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            var list = _drivers.GetAllDrivers();
+            var list = _logRoutDriver.GetAllLogRoutDrivers();
             if (!String.IsNullOrEmpty(searchString))
             {
-                list = list.Where(s => s.FirstName.Contains(searchString)
-                                       || s.LastName.Contains(searchString)
-                                       || s.Phone1.Contains(searchString)).ToList();
+                list = list.Where(s => s.DriverRoutId.ToString().Contains(searchString)
+                                       || s.IsTemporary.ToString().Contains(searchString)
+                                       || s.IsDone.ToString().Contains(searchString)).ToList();
             }
             switch (sortOrder)
             {
-                case "firstName_desc":
-                    list = list.OrderByDescending(s => s.FirstName).ToList();
+                case "driver_desc":
+                    list = list.OrderByDescending(s => s.DriverId).ToList();
                     break;
-                case "lastName":
-                    list = list.OrderBy(s => s.LastName).ToList();
+                case "rout":
+                    list = list.OrderBy(s => s.RoutId).ToList();
                     break;
-                case "lastName_desc":
-                    list = list.OrderByDescending(s => s.LastName).ToList();
+                case "rout_desc":
+                    list = list.OrderByDescending(s => s.RoutId).ToList();
                     break;
-                case "phone":
-                    list = list.OrderBy(s => s.Phone1).ToList();
+                case "isTemporary":
+                    list = list.OrderBy(s => s.IsTemporary).ToList();
                     break;
-                case "phone_desc":
-                    list = list.OrderByDescending(s => s.Phone1).ToList();
+                case "isTemporary_desc":
+                    list = list.OrderByDescending(s => s.IsTemporary).ToList();
+                    break;
+                case "isDone":
+                    list = list.OrderBy(s => s.IsDone).ToList();
+                    break;
+                case "isDone_desc":
+                    list = list.OrderByDescending(s => s.IsDone).ToList();
                     break;
                 default:
                     list = list.OrderBy(s => s.DriverId).ToList();
@@ -74,8 +81,8 @@ namespace SabzGashtTransportation.Controllers
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(list.ToPagedList(pageNumber, pageSize));
-        
-        } 
+
+        }
 
         // GET: Drivers/Details/5
         public ActionResult Details(int? id)
@@ -84,14 +91,13 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // DriverTbl driverTbl = db.Drivers.Find(id); 
-            DriverTbl driverTbl = _drivers.GetDriver(id);
+            LogRoutDriverTbl routDriver= _logRoutDriver.GetLogRoutDriver(id);
 
-            if (driverTbl == null)
+            if (routDriver == null)
             {
                 return HttpNotFound();
             }
-            return View(driverTbl);
+            return View(routDriver);
         }
 
         // GET: Drivers/Create
@@ -105,17 +111,15 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( DriverTbl driver)
+        public ActionResult Create(LogRoutDriverTbl rout)
         {
             if (ModelState.IsValid)
             {
-                //db.Drivers.Add(driverTbl);
-                // db.SaveChanges();
-                driver.IsActive = true;
-                driver.CFDate=DateTime.Now;
-                driver.LFDate = DateTime.Now;
+                rout.IsActive = true;
+                rout.CFDate = DateTime.Now;
+                rout.LFDate = DateTime.Now;
 
-                _drivers.AddNewDriver(driver);
+                _logRoutDriver.AddNewLogRoutDriver(rout);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -128,14 +132,13 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //DriverTbl driverTbl = db.Drivers.Find(id);
-            DriverTbl driverTbl =_drivers.GetDriver(id);
+            LogRoutDriverTbl logRoutDriver= _logRoutDriver.GetLogRoutDriver(id);
 
-            if (driverTbl == null)
+            if (logRoutDriver == null)
             {
                 return HttpNotFound();
             }
-            return View(driverTbl);
+            return View(logRoutDriver);
         }
 
         // POST: Drivers/Edit/5
@@ -143,13 +146,13 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( DriverTbl driver)
+        public ActionResult Edit(LogRoutDriverTbl logRoutDriver)
         {
             if (ModelState.IsValid)
             {
-                _drivers.Delete(driver.DriverId);
-                driver.LFDate=DateTime.Now;
-                _drivers.AddNewDriver(driver);
+                _logRoutDriver.Delete(logRoutDriver.Id);
+                logRoutDriver.LFDate = DateTime.Now;
+                _logRoutDriver.AddNewLogRoutDriver(logRoutDriver);
                 _uow.SaveAllChanges();
 
                 // db.Entry(driverTbl).State = EntityState.Modified;
@@ -166,14 +169,12 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DriverTbl driverTbl = _drivers.GetDriver(id);
-
-            // DriverTbl driverTbl = db.Drivers.Find(id);
-            if (driverTbl == null)
+            LogRoutDriverTbl logRoutDriver= _logRoutDriver.GetLogRoutDriver(id);
+            if (logRoutDriver == null)
             {
                 return HttpNotFound();
             }
-            return View(driverTbl);
+            return View(logRoutDriver);
         }
 
         // POST: Drivers/Delete/5
@@ -181,12 +182,8 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _drivers.Delete(id);
+            _logRoutDriver.Delete(id);
             _uow.SaveAllChanges();
-
-            //DriverTbl driverTbl = db.Drivers.Find(id);
-            //db.Drivers.Remove(driverTbl);
-            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 
