@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.IService;
@@ -26,11 +27,56 @@ namespace SabzGashtTransportation.Controllers
 
         // GET: Drivers
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            //return View(db.Drivers.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
+            ViewBag.LastName = sortOrder == "LastName" ? "lastName_desc" : "lastName";
+            ViewBag.Phone = sortOrder == "Phone" ? "phone_desc" : "phone";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
             var list = _drivers.GetAllDrivers();
-            return View(list);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                list = list.Where(s => s.FirstName.Contains(searchString)
+                                       || s.LastName.Contains(searchString)
+                                       || s.Phone1.Contains(searchString)).ToList();
+            }
+            switch (sortOrder)
+            {
+                case "firstName_desc":
+                    list = list.OrderByDescending(s => s.FirstName).ToList();
+                    break;
+                case "LastName_desc":
+                    list = list.OrderBy(s => s.LastName).ToList();
+                    break;
+                case "lastName_desc":
+                    list = list.OrderByDescending(s => s.LastName).ToList();
+                    break;
+                case "Phone":
+                    list = list.OrderBy(s => s.Phone1).ToList();
+                    break;
+                case "phone_desc":
+                    list = list.OrderByDescending(s => s.Phone1).ToList();
+                    break;
+                default:
+                    list = list.OrderBy(s => s.DriverId).ToList();
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(list.ToPagedList(pageNumber, pageSize));
+        
         } 
 
         // GET: Drivers/Details/5
