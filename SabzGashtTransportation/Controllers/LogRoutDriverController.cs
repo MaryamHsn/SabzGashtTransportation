@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System; 
 using System.Linq;
-using System.Net;
-using System.Web;
+using System.Net; 
 using System.Web.Mvc;
 using PagedList;
 using Sabz.DataLayer.Context;
-using Sabz.DomainClasses.DTO;
+using Sabz.DomainClasses.DTO; 
 using Sabz.ServiceLayer.IService;
 
 namespace SabzGashtTransportation.Controllers
@@ -52,15 +48,15 @@ namespace SabzGashtTransportation.Controllers
             }
             switch (sortOrder)
             {
-                case "driver_desc":
-                    list = list.OrderByDescending(s => s.DriverId).ToList();
-                    break;
-                case "rout":
-                    list = list.OrderBy(s => s.RoutId).ToList();
-                    break;
-                case "rout_desc":
-                    list = list.OrderByDescending(s => s.RoutId).ToList();
-                    break;
+                //case "driver_desc":
+                //    list = list.OrderByDescending(s => s.DriverId).ToList();
+                //    break;
+                //case "rout":
+                //    list = list.OrderBy(s => s.RoutId).ToList();
+                //    break;
+                //case "rout_desc":
+                //    list = list.OrderByDescending(s => s.RoutId).ToList();
+                //    break;
                 case "isTemporary":
                     list = list.OrderBy(s => s.IsTemporary).ToList();
                     break;
@@ -74,7 +70,7 @@ namespace SabzGashtTransportation.Controllers
                     list = list.OrderByDescending(s => s.IsDone).ToList();
                     break;
                 default:
-                    list = list.OrderBy(s => s.DriverId).ToList();
+                   // list = list.OrderBy(s => s.DriverId).ToList();
                     break;
             }
 

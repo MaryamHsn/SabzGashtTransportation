@@ -12,9 +12,11 @@ namespace SabzGashtTransportation.Controllers
     public class AccidentTblsController : Controller
     {
         readonly IAccidentService _accident;
+        private readonly IDriverService _driver;
         readonly IUnitOfWork _uow;
-        public AccidentTblsController(IUnitOfWork uow, IAccidentService accident)
+        public AccidentTblsController(IUnitOfWork uow, IAccidentService accident, IDriverService driver)
         {
+            _driver = driver;
             _accident = accident;
             _uow = uow;
         }
@@ -49,7 +51,8 @@ namespace SabzGashtTransportation.Controllers
             switch (sortOrder)
             {
                 case "driver_desc":
-                    list = list.OrderByDescending(s => s.DriverId).ToList();
+                    //var driver = _driver.GetAllDrivers().OrderByDescending(s => s.DriverId).ToList();
+                    list = list.OrderByDescending(s => s.DriverTbl.FatherName).ToList();
                     break;
                 case "Auto":
                     list = list.OrderBy(s => s.AutomobileId).ToList();

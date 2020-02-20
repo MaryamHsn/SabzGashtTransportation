@@ -1,6 +1,7 @@
 ﻿
-@model PagedList.IPagedList<Sabz.DomainClasses.DTO.AccidentTbl>
+@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.AccidentTbl>
 @using PagedList.Mvc;
+@using Sabz.ServiceLayer.Utils
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -47,8 +48,8 @@
             <td  class="table-sort-td">
                 @Html.DisplayFor(modelItem => item.AutomobileId)
             </td>
-            <td class="table-sort-td">
-                @Html.DisplayFor(modelItem => item.Cost)
+            <td class="table-sort-td"> 
+                @Html.DisplayFor(modelItem => item.LFDate.ToPersianDateString())
             </td>
             <td class="table-sort-td">
                 @Html.DisplayFor(modelItem => item.UseInsurence)

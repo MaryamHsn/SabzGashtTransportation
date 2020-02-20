@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Sabz.DomainClasses.DTO;
 using SabzGashtTransportation.Helpers;
 using SabzGashtTransportation.Models;
 using Sabz.ServiceLayer.IService;

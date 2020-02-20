@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System; 
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Sabz.DataLayer.Context;
-using Sabz.DomainClasses.DTO;
+using Sabz.DomainClasses.DTO; 
 using Sabz.ServiceLayer.IService;
 
 namespace SabzGashtTransportation.Controllers
