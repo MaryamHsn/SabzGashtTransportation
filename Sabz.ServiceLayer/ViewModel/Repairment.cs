@@ -1,4 +1,4 @@
-namespace SabzGashtTransportation.ViewModel
+namespace Sabz.ServiceLayer.ViewModel
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@ namespace SabzGashtTransportation.ViewModel
     using System.Data.Entity.Spatial;
 
     [Table("RepairmentTbl")]
-    public partial class RepairmentTbl
+    public partial class Repairment
     {
         [Key]
         public int RepairmentId { get; set; }
@@ -20,6 +20,6 @@ namespace SabzGashtTransportation.ViewModel
         public bool IsActive { get; set; }
         public DateTime CFDate { get; set; }
         public DateTime LFDate { get; set; }
-        public virtual DriverTbl DriverTbl { get; set; }
+        public virtual Driver DriverTbl { get; set; }
     }
 }

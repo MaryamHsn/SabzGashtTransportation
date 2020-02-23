@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace  SabzGashtTransportation.ViewModel
+namespace  Sabz.ServiceLayer.ViewModel
 {
     public class Product
     {

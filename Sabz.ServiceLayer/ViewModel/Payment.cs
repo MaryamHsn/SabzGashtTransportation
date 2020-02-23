@@ -1,8 +1,8 @@
 ﻿using System; 
 
-namespace SabzGashtTransportation.ViewModel
+namespace Sabz.ServiceLayer.ViewModel
 { 
-    public class PaymentTbl
+    public class Payment
     { 
         public int PaymentId { get; set; }
         public decimal? Insurance { get; set; }

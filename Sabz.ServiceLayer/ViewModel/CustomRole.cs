@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace  SabzGashtTransportation.ViewModel
+namespace  Sabz.ServiceLayer.ViewModel
 {
     public class CustomRole : IdentityRole<int, CustomUserRole>
     {

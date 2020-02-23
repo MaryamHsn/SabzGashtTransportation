@@ -1,7 +1,7 @@
-namespace SabzGashtTransportation.ViewModel
+namespace Sabz.ServiceLayer.ViewModel
 {
     using System;  
-    public class RoutTbl
+    public class Rout
     {
         public int RoutID { get; set; }
         public string Name { get; set; }

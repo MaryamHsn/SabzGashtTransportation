@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using PagedList;
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO;
-using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.IService; 
 
 namespace SabzGashtTransportation.Controllers
 {
@@ -13,7 +14,7 @@ namespace SabzGashtTransportation.Controllers
     {
         readonly IAccidentService _accident;
         private readonly IDriverService _driver;
-        readonly IUnitOfWork _uow;
+        readonly IUnitOfWork _uow; 
         public AccidentTblsController(IUnitOfWork uow, IAccidentService accident, IDriverService driver)
         {
             _driver = driver;
@@ -101,6 +102,17 @@ namespace SabzGashtTransportation.Controllers
         // GET: Drivers/Create
         public ActionResult Create()
         {
+            var t=_driver.GetAllDrivers();
+            var myskill = new List<ConvertEnum>();
+            foreach (var lang in t)
+                myskill.Add(new DriverTbl
+                {
+                    FirstName = t.,
+                    LastName = lang.ToString()
+                });
+            ViewBag.MySkillEnum = myskill;
+
+            ViewBag.Drivers =t.
             return View();
         }
 

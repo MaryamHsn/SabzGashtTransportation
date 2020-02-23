@@ -1,15 +1,14 @@
-namespace SabzGashtTransportation.ViewModel
+namespace Sabz.ServiceLayer.ViewModel
 {
     using System;
     using System.Collections.Generic; 
-    public class DriverRoutTbl
+    public class DriverRout
     { 
         public int Id { get; set; }
 
         public int DriverId { get; set; }
         public string DriverFirstName { get; set; }
         public string DriverLastName { get; set; }
-
         public int RoutId { get; set; }
         public string RoutName { get; set; }
         public string RoutShiftType { get; set; }
@@ -23,7 +22,10 @@ namespace SabzGashtTransportation.ViewModel
         public string LFDateString { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Phone1 { get; set; } 
+        public string Phone1 { get; set; }
+        public virtual List<Driver> DriverList{ get; set; }
+        public virtual List<Rout> RoutList { get; set; }
+
         //public virtual ICollection<LogRoutDriverTbl> LogRoutDriverTbls { get; set; }
     }
 }

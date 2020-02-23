@@ -1,89 +1,74 @@
-﻿@model Sabz.DomainClasses.DTO.AccidentTbl
+﻿@*@model SabzGashtTransportation.ViewModel.DriverTbl*@
+@model Sabz.DomainClasses.DTO.AccidentTbl
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+
 }
 
-<h2>Create</h2>
+<h2>ثبت کارمند جدید</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>AccidentTbl</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        <p class="control-label">استفاده از بیمه:</p>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UseInsurence, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UseInsurence, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <p class="control-label">نام:</p>
+            <div class="col-md-10">
+                @Html.DropDownList("MySkills", new SelectList(ViewBag.MySkillEnum, "Value", "Text"))
+                @*@Html.EditorFor(model => model.DriverId, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.DriverId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label">نام خانوادگی:</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AutomobileId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AutomobileId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label">نام پدر:</p>
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.Cost , new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label">کد ملی:</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UseInsurence, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UseInsurence, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label">شماره گواهینامه:</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-success">ثبت</button>
+
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        <p class="control-label">هزینه:</p>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <p class="control-label">توضیحات:</p>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <p class = "control-label">تاریخ ایجاد:</p>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.CFDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CFDate, "", new { @class = "text-danger" })
-        </div>
-    </div>            
-
-    <div class="form-group">
-        <p class = "control-label">تاریخ آخرین تغییر:</p>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.LFDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.LFDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <p class = "control-label">راننده:</p>
-        <div class="col-md-10">
-            @Html.DropDownList("DriverId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DriverTbl.LastName, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <p class = "control-label">اتومبیل:</p>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.AutomobileId, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.AutomobileTbl.Number, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="link-back">
+    @Html.ActionLink("بازگشت به لیست", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

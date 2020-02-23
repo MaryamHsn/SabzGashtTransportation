@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq; 
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.Mapper; 
 
 namespace Sabz.ServiceLayer.Service
 {
@@ -19,7 +21,7 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<DriverTbl> GetAllDrivers()
         {
-            return _drivers.Where(x=>x.IsActive).ToList();
+            return _drivers.Where(x => x.IsActive).ToList();
         }
 
         public DriverTbl GetDriver(int? id)
@@ -29,7 +31,7 @@ namespace Sabz.ServiceLayer.Service
 
         public void AddNewDriver(DriverTbl driver)
         {
-            _drivers.Add(driver);
+             _drivers.Add(driver); 
         }
 
         public int Delete(int id)
@@ -38,5 +40,32 @@ namespace Sabz.ServiceLayer.Service
             driver.IsActive = false;
             return driver.DriverId;
         }
+        //public List<Driver> GetAllDrivers()
+        //{
+        //    var entities = _drivers.Where(x => x.IsActive).ToList(); 
+        //    var t=entities.Select(BaseMapper<DriverTbl, Driver>.Map).ToList();
+        //    return t;
+        //}
+
+        //public Driver GetDriver(int? id)
+        //{
+        //    var entity = _drivers.Find(id);
+        //    var t= BaseMapper<DriverTbl, Driver>.Map(entity);
+        //    return t;
+        //}
+
+        //public void AddNewDriver(Driver driver)
+        //{
+        //    // _drivers.Add(driver); 
+        //    var entity = BaseMapper<Sabz.ServiceLayer.ViewModel.Driver, DriverTbl>.Map(driver);
+        //    _drivers.Add(entity);
+        //}
+
+        //public int Delete(int id)
+        //{
+        //    DriverTbl driver = _drivers.Find(id);
+        //    driver.IsActive = false;
+        //    return driver.DriverId;
+        //}
     }
 }

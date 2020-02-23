@@ -1,10 +1,7 @@
-namespace SabzGashtTransportation.ViewModel
+namespace Sabz.ServiceLayer.ViewModel
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public class Accident
     {
@@ -24,6 +21,10 @@ namespace SabzGashtTransportation.ViewModel
         public string AutomobileNumber { get; set; }
         public string AutomobileShasi{ get; set; }
         public string HasCooler { get; set; }
+        public List<Driver> DriverTblList { get; set; }
+        public virtual Driver DriverTbl { get; set; }
+        public List<Automobile> AutomobileTblList { get; set; }
+        public virtual Automobile AutomobileTbl { get; set; }
 
     }
 }

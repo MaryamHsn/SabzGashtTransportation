@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SabzGashtTransportation.ViewModel
+namespace Sabz.ServiceLayer.ViewModel
 {
     public class Address
     {

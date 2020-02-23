@@ -21,5 +21,6 @@ namespace Sabz.DomainClasses.DTO
         public virtual DriverTbl DriverTbl { get; set; }
         public int? AutomobileId { get; set; }
         public virtual AutomobileTbl AutomobileTbl { get; set; }
+
     }
 }

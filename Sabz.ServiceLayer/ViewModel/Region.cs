@@ -1,10 +1,10 @@
-namespace SabzGashtTransportation.ViewModel
+namespace Sabz.ServiceLayer.ViewModel
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema; 
-    public   class RegionTbl
+    public   class Region
     { 
         public int RegionId { get; set; } 
         public string RegionName { get; set; }
@@ -14,6 +14,6 @@ namespace SabzGashtTransportation.ViewModel
         public DateTime LFDate { get; set; }
         public string LFDateString { get; set; }
 
-        public virtual ICollection<RoutTbl> RoutTbls { get; set; }
+        public virtual ICollection<Rout> RoutTbls { get; set; }
     }
 }
