@@ -1,3 +1,5 @@
+using Sabz.DomainClasses.DTO;
+
 namespace Sabz.ServiceLayer.ViewModel
 {
     using System;
@@ -6,7 +8,7 @@ namespace Sabz.ServiceLayer.ViewModel
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public   class LogRoutDriver
+    public   class LogRoutDriverViewModel
     {
         public int Id { get; set; }
         public bool IsDone { get; set; }
@@ -33,6 +35,6 @@ namespace Sabz.ServiceLayer.ViewModel
         public string RoutShiftType { get; set; }
         public string RoutEnterTimeString { get; set; }
         public string RoutExitTimeString { get; set; }
-        public virtual DriverRout DriverRoutTbl { get; set; }
+        public virtual DriverRoutTbl DriverRoutTbl { get; set; }
     }
 }

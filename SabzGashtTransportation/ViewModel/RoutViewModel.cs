@@ -1,7 +1,7 @@
 namespace Sabz.ServiceLayer.ViewModel
 {
     using System;  
-    public class Rout
+    public class RoutViewModel
     {
         public int RoutID { get; set; }
         public string Name { get; set; }

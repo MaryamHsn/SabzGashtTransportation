@@ -16,10 +16,13 @@ namespace SabzGashtTransportation.Controllers
     public class AutomobileController : Controller
     {
         readonly IAutomobileService _automobile;
+        readonly IDriverService _driver;
+
         readonly IUnitOfWork _uow;
-        public AutomobileController(IUnitOfWork uow, IAutomobileService automobile)
+        public AutomobileController(IUnitOfWork uow, IAutomobileService automobile, IDriverService driver)
         {
-            _automobile= automobile;
+            _driver = driver;
+            _automobile = automobile;
             _uow = uow;
         }
 
@@ -180,6 +183,11 @@ namespace SabzGashtTransportation.Controllers
             return RedirectToAction("Index");
         }
 
+        public JsonResult FetchAutomobileList(int id)
+        { 
+            var AutomobileList = _driver.GetAllDrivers().Where(x=>x.DriverId==id);
+            return Json(AutomobileList, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

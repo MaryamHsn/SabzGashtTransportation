@@ -27,7 +27,14 @@ namespace Sabz.DomainClasses.DTO
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
-
+        [NotMapped]
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
         [StringLength(50)]
         public string FatherName { get; set; }
 

@@ -1,3 +1,5 @@
+using Sabz.DomainClasses.DTO;
+
 namespace Sabz.ServiceLayer.ViewModel
 {
     using System;
@@ -5,11 +7,9 @@ namespace Sabz.ServiceLayer.ViewModel
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-
-    [Table("RepairmentTbl")]
-    public partial class Repairment
-    {
-        [Key]
+     
+    public partial class RepairmentViewModel
+    { 
         public int RepairmentId { get; set; }
 
         public int? DriverId { get; set; }
@@ -20,6 +20,6 @@ namespace Sabz.ServiceLayer.ViewModel
         public bool IsActive { get; set; }
         public DateTime CFDate { get; set; }
         public DateTime LFDate { get; set; }
-        public virtual Driver DriverTbl { get; set; }
+        public virtual DriverTbl DriverTbl { get; set; }
     }
 }

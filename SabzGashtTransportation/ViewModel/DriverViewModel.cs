@@ -1,6 +1,6 @@
 using Sabz.DomainClasses.DTO;
 
-namespace Sabz.ServiceLayer.ViewModel
+namespace SabzGashtTransportation.ViewModel
 {
     using System;
     using System.Collections.Generic;
@@ -39,7 +39,7 @@ namespace Sabz.ServiceLayer.ViewModel
     //    //  public virtual ICollection<RepairmentTbl> RepairmentTbls { get; set; }
     //    //  public virtual ICollection<PaymentTbl> PaymentTbls { get; set; }
     //}
-    public   class Driver
+    public   class DriverViewModel
     {
         public int DriverId { get; set; }
         public string FirstName { get; set; }

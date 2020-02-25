@@ -1755,9 +1755,9 @@ img.aligncenter {
 |                                PAGINATION		                              |
 ================================================================================
 */
-.pagination{
+/*.pagination{
 	float: left;
-}
+}*/
 .pagination ul{
 	overflow: hidden;
 }
@@ -5248,7 +5248,7 @@ a.text-danger:focus {
     color: #ffffff;
     background-color: green;
     border-color: #398439;
-    width: 70px;
+    width: 100px;
 }
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open .dropdown-toggle.btn-danger {
     color: #ffffff;
@@ -5277,7 +5277,8 @@ a.text-danger:focus {
     background-color: darkseagreen;
     border-color: #4cae4c;
     margin: 5px 50px 5px 0;
-    width: 70px;
+    width: 100px;
+
 }
 
 .btn-danger {
@@ -5289,9 +5290,9 @@ a.text-danger:focus {
 }
 
 .btn {
-    /* display: inline-block; */
-    padding: 6px 12px;
-    margin-bottom: 0;
+    /*display: inline-block;*/ 
+    padding: 5px 8px;
+    margin-bottom: 10px;
     font-size: 14px;
     font-weight: normal;
     line-height: 1.428571429;
@@ -5305,6 +5306,7 @@ a.text-danger:focus {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-family: Iranian Sans, Nazanin;
 }
 
 button, input, select[multiple], textarea {
@@ -5368,16 +5370,24 @@ button {
 .tbl-show {
     padding: 4px 10px 4px 10px;
     margin: 10px 30px 10px 0;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: normal;
     color: #2b542c;
+    font-family: Iranian Sans, Nazanin;
 }
 .tbl-tr-show {
-    font-weight: normal;
+    font-weight: normal; 
+
 }
+    .tbl-tr-show th {
+        font-weight: normal;
+        border-bottom: darkgreen solid 1px;
+        padding: 5px 10px 5px 10px;
+    }
 .tbl-th-show {
     font-weight: bold;
-    font-size: 22px;
+    font-size: 18px;
+    padding: 5px;
 }
 .odd {
     background-color: lightgrey;
@@ -5385,4 +5395,49 @@ button {
 
 .even {
     background-color: white;
+}
+.search_table {
+    margin: 10px 37px 20px 0;
+    font-family: Iranian Sans, Nazanin;
+}
+
+#showList {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    margin: 10px 30px 10px 0;
+}
+
+    #showList td, #showList th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #showList tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #showList tr:hover {
+        background-color: #ddd;
+    }
+
+    #showList th {
+        font-family: Iranian Sans,Nazanin,Arial,sans-serif;
+        font-size: 13px; 
+        padding-bottom: 12px;
+        /*text-align: left;*/
+        background-color: darkgreen;
+        color: white;
+    }
+#showList th a {
+    font-family: Iranian Sans,Nazanin,Arial,sans-serif;
+    font-size: 13px; 
+    padding-bottom: 12px;
+    /*text-align: left;*/
+    background-color: darkgreen;
+    color: white;
+}
+.showPage {
+    margin: 10px 37px 20px 0;
+    font-family: Iranian Sans, Nazanin;
 }

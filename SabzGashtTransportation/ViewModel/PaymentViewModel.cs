@@ -2,7 +2,7 @@
 
 namespace Sabz.ServiceLayer.ViewModel
 { 
-    public class Payment
+    public class PaymentViewModel
     { 
         public int PaymentId { get; set; }
         public decimal? Insurance { get; set; }

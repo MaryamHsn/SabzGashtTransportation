@@ -1,30 +1,58 @@
 ﻿@using Sabz.ServiceLayer.Utils
-@model Sabz.DomainClasses.DTO.AccidentTbl
+@model SabzGashtTransportation.ViewModel.AccidentViewModel
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+    var insurancTextShowDefault = "";
+
 }
 
-<h2>Edit</h2>
 
+<h2>ویرایش</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>AccidentTbl</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.AccidentId)
 
+
+        <div class="form-group">
+            <p class="control-label">راننده:</p>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.Drivers, "DriverId", "FullName"), htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
+                @Html.ValidationMessageFor(x => x.DriverId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                <p class="control-label">اتومبیل:</p>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AutomobileId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AutomobileId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
         <div class="form-group">
             <p class="control-label">استفاده از بیمه:</p>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UseInsurence, new { htmlAttributes = new { @class = "form-control" } })
+                 @{
+                    if (Model.UseInsurence == 1)
+                    {
+                        insurancTextShowDefault = "استفاده شده";
+                    }
+                    else
+                    {
+                        insurancTextShowDefault = "استفاده نشده";
+                    }
+                }
+                @Html.DropDownList("استفاده از بیمه", (IEnumerable<SelectListItem>)ViewBag.insurance, insurancTextShowDefault, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.UseInsurence, "", new { @class = "text-danger" })
-            </div>
+                 @Html.HiddenFor(m=>m.UseInsurence)
+                 </div>
         </div>
 
         <div class="form-group">
@@ -41,53 +69,16 @@
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
-        </div> 
-
-        <div class="form-group">
-            <p class = "control-label">تاریخ ایجاد:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CFDate.ToPersianDateString(), new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.CFDate, "", new {@class = "text-danger"})
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class = "control-label">تاریخ آخرین تغییر:</p>
-            <div class="col-md-10">
-                <p class = "control-label">تاریخ آخرین تغییر:</p>
-                @Html.EditorFor(model => model.LFDate.ToPersianDateString(), new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LFDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class = "control-label">راننده:</p>
-            <div class="col-md-10">
-                @Html.DropDownList("DriverId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DriverId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class = "control-label">اتومبیل:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AutomobileId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AutomobileId, "", new { @class = "text-danger" })
-            </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" class="btn btn-success">ثبت</button>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="link-back">
+    @Html.ActionLink("بازگشت به لیست", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

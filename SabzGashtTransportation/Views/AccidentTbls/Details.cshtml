@@ -1,83 +1,46 @@
-﻿@model SabzGashtTransportation.ViewModel.AccidentTbl
+﻿@using Sabz.ServiceLayer.Utils
+@model SabzGashtTransportation.ViewModel.AccidentViewModel 
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
 }
 
-<h2>Details</h2>
+<h2>اطلاعات بیشتر</h2>
 
 <div>
-    <h4>AccidentTbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DriverTbl.FirstName)
-        </dt>
+    <table class="tbl-show">
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">راننده:</th>
+            <th> @Html.DisplayFor(model => model.DriverFullName)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> اتومبیل:</th>
+            <th> @Html.DisplayFor(model => model.AutomobileNumber)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">هزینه:</th>
+            <th> @Html.DisplayFor(model => model.Cost)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">استفاده از بیمه:</th>
+            <th> @Html.DisplayFor(model => model.UseInsurence)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">تاریخ ایجاد:</th>
+            <th> @Html.DisplayFor(model => model.CFDateString)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">تاریخ آخرین تغییر:</th>
+            <th> @Html.DisplayFor(model => model.LFDateString)</th>
+        </tr>  
 
-        <dd>
-            @Html.DisplayFor(model => model.DriverTbl.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UseInsurence)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UseInsurence)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cost)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cost)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AutomobileId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AutomobileId)
-        </dd>
-
-    </dl>
+    </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AccidentId }) |
-    @Html.ActionLink("Back to List", "Index")
+    <div class="link-back">
+        @Html.ActionLink("ویرایش", "Edit", new { id = Model.AccidentId }) |
+        @Html.ActionLink("بازگشت به لیست", "Index")
+    </div>
 </p>

@@ -1,14 +1,13 @@
 ﻿
-@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.AutomobileTbl>
+@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.AutomobileViewModel>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-                /**/
 
-                ViewBag.Title = "Index";
-                Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-                @Styles.Render("~/css/style.css");
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
 }
 
 <h2>Students</h2>

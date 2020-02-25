@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net;
+using System.Security.AccessControl;
 using System.Web.Mvc;
 using PagedList;
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO;
-using Sabz.ServiceLayer.IService; 
+using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.Mapper;
+using Sabz.ServiceLayer.Utils;
+using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
@@ -14,9 +19,15 @@ namespace SabzGashtTransportation.Controllers
     {
         readonly IAccidentService _accident;
         private readonly IDriverService _driver;
-        readonly IUnitOfWork _uow; 
-        public AccidentTblsController(IUnitOfWork uow, IAccidentService accident, IDriverService driver)
+        private readonly IAutomobileService _automobile;
+
+        private AccidentViewModel common { get; set; }
+        private List<AccidentViewModel> commonList { get; set; }
+
+        readonly IUnitOfWork _uow;
+        public AccidentTblsController(IUnitOfWork uow, IAccidentService accident, IDriverService driver, IAutomobileService automobile)
         {
+            _automobile = automobile;
             _driver = driver;
             _accident = accident;
             _uow = uow;
@@ -25,10 +36,11 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            commonList = new List<AccidentViewModel>();
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
             ViewBag.Automobile = sortOrder == "Auto" ? "auto_desc" : "auto";
-            ViewBag.Cost= sortOrder == "Cost" ? "cost_desc" : "cost";
+            ViewBag.Cost = sortOrder == "cost" ? "cost_desc" : "cost";
             ViewBag.Insurance = sortOrder == "Insurance" ? "insurance_desc" : "insurance";
 
             if (searchString != null)
@@ -41,46 +53,60 @@ namespace SabzGashtTransportation.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            var list = _accident.GetAllAccidents();
+            var accident = _accident.GetAllAccidents().ToList();
+            var driver = _driver.GetAllDrivers().ToList();
+            var autombile = _automobile.GetAllAutomobiles().ToList();
             if (!String.IsNullOrEmpty(searchString))
             {
-                list = list.Where(s => s.DriverId.ToString().Contains(searchString)
-                                       || s.AutomobileId.ToString().Contains(searchString)
-                                       || s.Cost.ToString().Contains(searchString)
-                                       || s.UseInsurence.ToString().Contains(searchString)).ToList();
+                accident = accident.Where(s => s.DriverTbl.FirstName.Contains(searchString)
+                                               || s.DriverTbl.LastName.Contains(searchString)
+                                               || s.AutomobileTbl.Number.ToString().Contains(searchString)
+                                               || s.Cost.ToString().Contains(searchString)
+                                               || s.UseInsurence.ToString().Contains(searchString)).ToList();
             }
             switch (sortOrder)
             {
                 case "driver_desc":
                     //var driver = _driver.GetAllDrivers().OrderByDescending(s => s.DriverId).ToList();
-                    list = list.OrderByDescending(s => s.DriverTbl.FatherName).ToList();
+                    accident = accident.OrderByDescending(s => s.DriverTbl.FatherName).ToList();
                     break;
                 case "Auto":
-                    list = list.OrderBy(s => s.AutomobileId).ToList();
+                    accident = accident.OrderBy(s => s.AutomobileId).ToList();
                     break;
                 case "auto_desc":
-                    list = list.OrderByDescending(s => s.AutomobileId).ToList();
+                    accident = accident.OrderByDescending(s => s.AutomobileId).ToList();
                     break;
-                case "Cost":
-                    list = list.OrderBy(s => s.Cost).ToList();
+                case "cost":
+                    accident = accident.OrderBy(s => s.Cost).ToList();
                     break;
                 case "cost_desc":
-                    list = list.OrderByDescending(s => s.Cost).ToList();
+                    accident = accident.OrderByDescending(s => s.Cost).ToList();
                     break;
                 case "insurance":
-                    list = list.OrderBy(s => s.UseInsurence).ToList();
+                    accident = accident.OrderBy(s => s.UseInsurence).ToList();
                     break;
                 case "insurance_desc":
-                    list = list.OrderByDescending(s => s.UseInsurence).ToList();
+                    accident = accident.OrderByDescending(s => s.UseInsurence).ToList();
                     break;
                 default:
-                    list = list.OrderBy(s => s.DriverId).ToList();
+                    accident = accident.OrderBy(s => s.DriverId).ToList();
                     break;
             }
-
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(list.ToPagedList(pageNumber, pageSize));
+            foreach (var item in accident)
+            {
+                //var element = new AccidentViewModel();
+                var element = BaseMapper<AccidentViewModel, AccidentTbl>.Map(item);
+                element.DriverFirstName = driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault().FirstName : "--";
+                element.DriverLastName = driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault().LastName : "--";
+                element.DriverFullName = element.DriverFirstName + " " + element.DriverLastName;
+                element.AutomobileNumber = autombile.Where(x => x.AutoId == item.AutomobileId).SingleOrDefault() != null ? autombile.Where(x => x.AutoId == item.AutomobileId).SingleOrDefault().Number : "--";
+                element.Cost = accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault() != null ? accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault().Cost : 0;
+                element.Description = accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault() != null ? accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault().Description : "";
+                commonList.Add(element);
+            }
+            return View(commonList.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Drivers/Details/5
@@ -90,30 +116,34 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AccidentTbl accident= _accident.GetAccident(id);
+            common = new AccidentViewModel();
+            AccidentTbl accident = _accident.GetAccident(id);
+            common = BaseMapper<AccidentViewModel, AccidentTbl>.Map(accident);
+            common.DriverFullName = accident.DriverTbl != null ? accident.DriverTbl.FirstName + " " + accident.DriverTbl.LastName : _driver.GetDriver(accident.DriverId).FirstName + " " + _driver.GetDriver(accident.DriverId).LastName;
+            common.AutomobileNumber = accident.AutomobileTbl != null ? accident.AutomobileTbl.Number : _automobile.GetAutomobile(accident.AutomobileId).Number;
+            common.CFDateString = accident.CFDate.ToPersianDateString();
+            common.LFDateString = accident.LFDate.ToPersianDateString();
 
-            if (accident == null)
+            if (common == null)
             {
                 return HttpNotFound();
             }
-            return View(accident);
+            return View(common);
         }
 
         // GET: Drivers/Create
         public ActionResult Create()
         {
-            var t=_driver.GetAllDrivers();
-            var myskill = new List<ConvertEnum>();
-            foreach (var lang in t)
-                myskill.Add(new DriverTbl
-                {
-                    FirstName = t.,
-                    LastName = lang.ToString()
-                });
-            ViewBag.MySkillEnum = myskill;
-
-            ViewBag.Drivers =t.
-            return View();
+            common = new AccidentViewModel()
+            {
+                Drivers = _driver.GetAllDrivers(),
+                Automobiles = _automobile.GetAllAutomobiles()
+            };
+            List<SelectListItem> insuranceListItems = new List<SelectListItem>();
+            insuranceListItems.Add(new SelectListItem() { Text = "استفاده شده", Value = "1" });
+            insuranceListItems.Add(new SelectListItem() { Text = "استفاده نشده", Value = "0" });
+            ViewBag.insurance = insuranceListItems;
+            return View(common);
         }
 
         // POST: Drivers/Create
@@ -121,17 +151,16 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AccidentTbl accident)
+        public ActionResult Create(AccidentViewModel accident)
         {
             if (ModelState.IsValid)
             {
-                //db.Drivers.Add(driverTbl);
-                // db.SaveChanges();
-                accident.IsActive = true;
-                accident.CFDate = DateTime.Now;
-                accident.LFDate = DateTime.Now;
-
-                _accident.AddNewAccident(accident);
+                var obj = BaseMapper<AccidentTbl, AccidentViewModel>.Map(accident);
+                obj.IsActive = true;
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                obj.AutomobileId = _driver.GetDriver(obj.DriverId).AutomobileId;
+                _accident.AddNewAccident(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -150,7 +179,19 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(accident);
+            var element = BaseMapper<AccidentViewModel, AccidentTbl>.Map(accident);
+            element.DriverFirstName = accident.DriverTbl != null ? accident.DriverTbl.FirstName : "--";//driver.Where(x => x.DriverId == accident.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == accident.DriverId).SingleOrDefault().FirstName : "--";
+            element.DriverLastName = accident.DriverTbl != null ? accident.DriverTbl.LastName : "--";//driver.Where(x => x.DriverId == accident.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == accident.DriverId).SingleOrDefault().LastName : "--";
+            element.DriverFullName = element.DriverFirstName + " " + element.DriverLastName;
+            element.AutomobileNumber = accident.AutomobileTbl != null ? accident.AutomobileTbl.Number : "--";// autombile.Where(x => x.AutoId == accident.AutomobileId).SingleOrDefault() != null ? autombile.Where(x => x.AutoId == accident.AutomobileId).SingleOrDefault().Number : "--";
+            element.Cost = accident.Cost;
+            element.Description = accident.Description;
+            element.Drivers = _driver.GetAllDrivers().ToList();
+            List<SelectListItem> insuranceListItems = new List<SelectListItem>();
+            insuranceListItems.Add(new SelectListItem() { Text = "استفاده شده", Value = "1" });
+            insuranceListItems.Add(new SelectListItem() { Text = "استفاده نشده", Value = "0" });
+            ViewBag.insurance = insuranceListItems;
+            return View(element);
         }
 
         // POST: Drivers/Edit/5
@@ -158,17 +199,19 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AccidentTbl accident)
+        public ActionResult Edit(AccidentViewModel accident)
         {
             if (ModelState.IsValid)
             {
-                _accident.Delete(accident.AccidentId);
                 accident.LFDate = DateTime.Now;
-                _accident.AddNewAccident(accident);
+                _accident.Delete(accident.AccidentId);
+                var obj = BaseMapper<AccidentTbl, AccidentViewModel>.Map(accident);
+                obj.AutomobileId = _driver.GetDriver(accident.DriverId).AutomobileId;
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                obj.IsActive = true;
+                _accident.AddNewAccident(obj);
                 _uow.SaveAllChanges();
-
-                // db.Entry(driverTbl).State = EntityState.Modified;
-                //   db.SaveChanges();
             }
             return RedirectToAction("Index");
 
@@ -187,7 +230,23 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(accident);
+            var obj = BaseMapper<AccidentTbl, AccidentViewModel>.Map(accident);
+            obj.DriverFullName = accident.DriverTbl != null
+                ? accident.DriverTbl.FirstName + " " + accident.DriverTbl.LastName
+                : _driver.GetDriver(accident.DriverId).FullName;
+            obj.AutomobileNumber = accident.AutomobileTbl != null
+                ? accident.AutomobileTbl.Number : _automobile.GetAutomobile(accident.AutomobileId).Number;
+            if (obj.UseInsurence == 1)
+            {
+                ViewBag.insurance ="استفاده شده";
+            }
+            else
+            {
+                ViewBag.insurance = "استفاده نشده";
+            }
+
+            return View(obj);
+
         }
 
         // POST: Drivers/Delete/5
@@ -196,7 +255,7 @@ namespace SabzGashtTransportation.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _accident.Delete(id);
-            _uow.SaveAllChanges(); 
+            _uow.SaveAllChanges();
             return RedirectToAction("Index");
         }
 

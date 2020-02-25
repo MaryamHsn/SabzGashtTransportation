@@ -1,7 +1,6 @@
 ﻿
-@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.AccidentTbl>
-@using PagedList.Mvc;
-@using Sabz.ServiceLayer.Utils
+@using PagedList.Mvc
+@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.AccidentViewModel> 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -10,19 +9,18 @@
     @Styles.Render("~/css/style.css");
 }
 
-<h2>Students</h2>
+<h2>تصادفات</h2>
 
-<p>
-    @Html.ActionLink("ثبت تصادف", "Create")
-</p>
+<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">تصادف جدید</button>
+
 @using (Html.BeginForm("Index", "AccidentTbls", FormMethod.Get))
 {
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
+    <p class="search_table">
+        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="جستجو" />
     </p>
 }
-<table class="table-sort">
+@*<table class="table-sort">
     <tr class="table-sort-tr">
         <th class="table-sort-th">
             @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
@@ -43,16 +41,59 @@
     {
         <tr class="table-sort-tr">
             <td class="table-sort-td">
-                @Html.DisplayFor(modelItem => item.DriverId)
-            </td>
-            <td  class="table-sort-td">
-                @Html.DisplayFor(modelItem => item.AutomobileId)
-            </td>
-            <td class="table-sort-td"> 
-                @Html.DisplayFor(modelItem => item.LFDate.ToPersianDateString())
+                @Html.DisplayFor(modelItem => item.DriverFullName)
             </td>
             <td class="table-sort-td">
-                @Html.DisplayFor(modelItem => item.UseInsurence)
+                @Html.DisplayFor(modelItem => item.AutomobileNumber)
+            </td>
+            <td class="table-sort-td">
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td class="table-sort-td">
+                @(item.UseInsurence ==1  ? "استفاده شده" : "استفاده نشده")
+            </td>
+            <td>
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.AccidentId }) |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.AccidentId }) |
+                @Html.ActionLink("حذف", "Delete", new { id = item.AccidentId })
+            </td>
+        </tr>
+    }
+
+</table>*@
+<table id="showList" >
+    <tr >
+        <th >
+            @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th class="table-sort-th">
+            @Html.ActionLink("اتومبیل", "Index", new { sortOrder = ViewBag.Automobile, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink(" هزینه ", "Index", new { sortOrder = ViewBag.Cost, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th >
+            @Html.ActionLink(" استفاده از بیمه", "Index", new { sortOrder = ViewBag.Insurance, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            عملیات
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr >
+            <td  >
+                @Html.DisplayFor(modelItem => item.DriverFullName)
+            </td>
+            <td  >
+                @Html.DisplayFor(modelItem => item.AutomobileNumber)
+            </td>
+            <td  >
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td  >
+                @(item.UseInsurence == 1 ? "استفاده شده" : "استفاده نشده")
             </td>
             <td>
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.AccidentId }) |
@@ -64,7 +105,9 @@
 
 </table>
 <br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+<p class="showPage">
+    صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+</p>
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

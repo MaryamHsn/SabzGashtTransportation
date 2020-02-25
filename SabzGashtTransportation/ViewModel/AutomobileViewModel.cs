@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using Sabz.DomainClasses.DTO;
 
-namespace Sabz.ServiceLayer.ViewModel
+namespace SabzGashtTransportation.ViewModel
 {
     using System;
     using System.Collections.Generic;
-    public class Automobile
+    public class AutomobileViewModel
     {
         public int AutoId { get; set; }
         public string Number { get; set; }
@@ -19,7 +19,7 @@ namespace Sabz.ServiceLayer.ViewModel
         public int? AutomobileTypeId { get; set; }
         public string HasCooler { get; set; }
         public string IsBus { get; set; }
-        public virtual List<AutomobileType> AutomobileTypeList { get; set; }
+        public virtual List<AutomobileTypeTbl> AutomobileTypeList { get; set; }
 
         // public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; } 
         //public virtual ICollection<DriverTbl> DriverTbls { get; set; }

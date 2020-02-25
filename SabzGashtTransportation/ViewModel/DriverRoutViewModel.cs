@@ -1,8 +1,10 @@
+using Sabz.DomainClasses.DTO;
+
 namespace Sabz.ServiceLayer.ViewModel
 {
     using System;
     using System.Collections.Generic; 
-    public class DriverRout
+    public class DriverRoutViewModel
     { 
         public int Id { get; set; }
 
@@ -23,8 +25,8 @@ namespace Sabz.ServiceLayer.ViewModel
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone1 { get; set; }
-        public virtual List<Driver> DriverList{ get; set; }
-        public virtual List<Rout> RoutList { get; set; }
+        public virtual List<DriverTbl> DriverList{ get; set; }
+        public virtual List<RoutTbl> RoutList { get; set; }
 
         //public virtual ICollection<LogRoutDriverTbl> LogRoutDriverTbls { get; set; }
     }

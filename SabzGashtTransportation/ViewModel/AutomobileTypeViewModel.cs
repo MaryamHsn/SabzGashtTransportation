@@ -1,9 +1,9 @@
-namespace Sabz.ServiceLayer.ViewModel
+namespace SabzGashtTransportation.ViewModel
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations; 
-    public class AutomobileType
+    public class AutomobileTypeViewModel
     {  
         public int AutoTypeId { get; set; }
         public bool HasCooler { get; set; }

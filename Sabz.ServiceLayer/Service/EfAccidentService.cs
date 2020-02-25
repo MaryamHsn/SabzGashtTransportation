@@ -31,7 +31,7 @@ namespace Sabz.ServiceLayer.Service
         }
         public AccidentTbl GetAccident(int? id)
         {
-            return _accidents.Find(id);
+            return _accidents.Where(x=>x.IsActive&&x.AccidentId==id).SingleOrDefault();
         }
         public int Delete(int id)
         {
