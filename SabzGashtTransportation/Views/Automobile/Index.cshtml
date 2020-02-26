@@ -1,6 +1,8 @@
 ﻿
 @model PagedList.IPagedList<SabzGashtTransportation.ViewModel.AutomobileViewModel>
 @using PagedList.Mvc;
+@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -26,16 +28,19 @@
 <table class="table-sort">
     <tr class="table-sort-tr">
         <th class="table-sort-th">
-            @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Numbet, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("شماره پلاک", "Index", new { sortOrder = ViewBag.Number, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("اتومبیل", "Index", new { sortOrder = ViewBag.Shasi, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("شماره شاسی", "Index", new { sortOrder = ViewBag.Shasi, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink(" هزینه ", "Index", new { sortOrder = ViewBag.AutomobileType, currentFilter = ViewBag.CurrentFilter })
-        </th>
+            @Html.ActionLink("مدل اتومبیل", "Index", new { sortOrder = ViewBag.AutomobileType, currentFilter = ViewBag.CurrentFilter })
+        </th> 
+        <th>
+            @Html.ActionLink("کولر اتومبیل", "Index", new { sortOrder = ViewBag.AutomobileTypeCooler, currentFilter = ViewBag.CurrentFilter })
+        </th> 
         <th></th>
-    </tr>
+    </tr>   
 
     @foreach (var item in Model)
     {
@@ -47,7 +52,10 @@
                 @Html.DisplayFor(modelItem => item.Shasi)
             </td>
             <td class="table-sort-td">
-                @Html.DisplayFor(modelItem => item.AutomobileTypeId)
+                @(item.AutomobileType.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())
+            </td>
+            <td class="table-sort-td">
+                @(item.AutomobileType.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())
             </td>
             <td class="table-sort-td">
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.AutoId }) |

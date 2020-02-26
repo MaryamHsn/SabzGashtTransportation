@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Sabz.DomainClasses.DTO;
+using Sabz.ServiceLayer.Enumration;
 
 namespace SabzGashtTransportation.ViewModel
 {
@@ -19,7 +20,10 @@ namespace SabzGashtTransportation.ViewModel
         public int? AutomobileTypeId { get; set; }
         public string HasCooler { get; set; }
         public string IsBus { get; set; }
-        public virtual List<AutomobileTypeTbl> AutomobileTypeList { get; set; }
+        public  List<AutomobileTypeTbl> AutomobileTypeList { get; set; }
+        public  AutomobileTypeTbl AutomobileType { get; set; }
+        public AutomobileTypeEnum IsBusEnum { get; set; }
+        public HasCoolerEnum HasCoolerEnum { get; set; }
 
         // public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; } 
         //public virtual ICollection<DriverTbl> DriverTbls { get; set; }

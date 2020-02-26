@@ -8,8 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Sabz.DataLayer.Context;
-using Sabz.DomainClasses.DTO; 
+using Sabz.DomainClasses.DTO;
+using Sabz.ServiceLayer.Enumration;
 using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.Mapper;
+using Sabz.ServiceLayer.Utils;
 using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
@@ -17,13 +20,15 @@ namespace SabzGashtTransportation.Controllers
     public class AutomobileController : Controller
     {
         readonly IAutomobileService _automobile;
+        readonly IAutomobileTypeService _automobileType;
         readonly IDriverService _driver;
         private AutomobileViewModel common { get; set; }
         private List<AutomobileViewModel> commonList { get; set; }
 
         readonly IUnitOfWork _uow;
-        public AutomobileController(IUnitOfWork uow, IAutomobileService automobile, IDriverService driver)
+        public AutomobileController(IUnitOfWork uow, IAutomobileService automobile, IDriverService driver, IAutomobileTypeService automobileType)
         {
+            _automobileType = automobileType;
             _driver = driver;
             _automobile = automobile;
             _uow = uow;
@@ -33,11 +38,12 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            commonList = new List<AutomobileViewModel>();
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Number = String.IsNullOrEmpty(sortOrder) ? "number_desc" : "";
-            ViewBag.Shasi= sortOrder == "Shasi" ? "shasi_desc" : "shasi";
-            ViewBag.AutomobileType = sortOrder == "AutomobileType" ? "automobileType_desc" : "automobileType";
-
+            ViewBag.Shasi= sortOrder == "shasi" ? "shasi_desc" : "shasi";
+            ViewBag.AutomobileType = sortOrder == "automobileType" ? "automobileType_desc" : "automobileType";
+            ViewBag.AutomobileTypeCooler = sortOrder == "automobileTypeCooler" ? "automobileTypeCooler_desc" : "automobileTypeCooler";
             if (searchString != null)
             {
                 page = 1;
@@ -72,14 +78,25 @@ namespace SabzGashtTransportation.Controllers
                 case "automobileType_desc":
                     list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
                     break;
+                case "automobileTypeCooler":
+                    list = list.OrderBy(s => s.AutomobileTypeId).ToList();
+                    break;
+                case "automobileTypeCooler_desc":
+                    list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
+                    break;
                 default:
                     list = list.OrderBy(s => s.Number).ToList();
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(list.ToPagedList(pageNumber, pageSize));
+            foreach (var item in list)
+            {
+                var element = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(item);
+                commonList.Add(element);
+            }
+            return View(commonList.ToPagedList(pageNumber, pageSize));
 
         }
 
@@ -91,18 +108,24 @@ namespace SabzGashtTransportation.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             AutomobileTbl automobile= _automobile.GetAutomobile(id);
-
-            if (automobile== null)
+            if (automobile.AutomobileTypeTbl != null)
+            {
+                automobile.AutomobileTypeTbl = _automobileType.GetAutomobileType(automobile.AutomobileTypeId);
+            }
+            common = new AutomobileViewModel();
+            common = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
+            common.CFDateString = automobile.CFDate.ToPersianDateString();
+            common.LFDateString = automobile.LFDate.ToPersianDateString();
+            if (common== null)
             {
                 return HttpNotFound();
             }
-            return View(automobile);
+            return View(common);
         }
 
         // GET: Drivers/Create
         public ActionResult Create()
-        { 
-          
+        {
             return View();
         }
 
@@ -111,15 +134,15 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AutomobileTbl automobile)
+        public ActionResult Create(AutomobileViewModel automobile)
         {
             if (ModelState.IsValid)
             {
-                automobile.IsActive = true;
-                automobile.CFDate = DateTime.Now;
-                automobile.LFDate = DateTime.Now;
-
-                _automobile.AddNewAutomobile(automobile);
+                var obj = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
+                obj.IsActive = true;
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                _automobile.AddNewAutomobile(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -133,12 +156,12 @@ namespace SabzGashtTransportation.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             AutomobileTbl automobile = _automobile.GetAutomobile(id);
-
             if (automobile == null)
             {
                 return HttpNotFound();
             }
-            return View(automobile);
+            var obj = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
+            return View(obj);
         }
 
         // POST: Drivers/Edit/5
@@ -146,20 +169,21 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AutomobileTbl automobile)
+        public ActionResult Edit(AutomobileViewModel automobile)
         {
             if (ModelState.IsValid)
             {
-                _automobile.Delete(automobile.AutomobileId);
                 automobile.LFDate = DateTime.Now;
-                _automobile.AddNewAutomobile(automobile);
+                automobile.IsActive = false;
+                _automobile.Delete(automobile.AutoId);
+                var obj = BaseMapper<AutomobileTbl, AutomobileViewModel>.Map(automobile);
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                obj.IsActive = true;
+                _automobile.AddNewAutomobile(obj);
                 _uow.SaveAllChanges();
-
-                // db.Entry(driverTbl).State = EntityState.Modified;
-                //   db.SaveChanges();
             }
             return RedirectToAction("Index");
-
         }
 
         // GET: Drivers/Delete/5
@@ -174,7 +198,17 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(automobile);
+            var obj = BaseMapper<AutomobileTbl, AutomobileViewModel>.Map(automobile);
+            if (obj.AutomobileType.IsBus == (int)AutomobileTypeEnum.Bus)
+            {
+                ViewBag.AutomobileType = AutomobileTypeEnum.Bus;
+            }
+            else
+            {
+                ViewBag.AutomobileType = AutomobileTypeEnum.MiniBus;
+            }
+
+            return View(obj);
         }
 
         // POST: Drivers/Delete/5

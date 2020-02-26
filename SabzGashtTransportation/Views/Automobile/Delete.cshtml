@@ -1,81 +1,52 @@
-﻿@model SabzGashtTransportation.ViewModel.AutomobileTbl
+﻿@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
+@model SabzGashtTransportation.ViewModel.AutomobileViewModel
+
 
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h2>آیا مطمئن از حذف هستید؟ </h2>
 <div>
-    <h4>AutomobileTbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Number)
-        </dt>
+    <table class="tbl-show">
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">شماره پلاک:</th>
+            <th> @Html.DisplayFor(model => model.Number)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">شماره شاسی:</th>
+            <th> @Html.DisplayFor(model => model.Shasi)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">سال ساخت:</th>
+            <th> @Html.DisplayFor(model => model.CreateYear)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">کولر دار:</th>
+            <th> @(Model.AutomobileType.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نوع ماشین:</th>
+            <th> @(Model.AutomobileType.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())</th>
+        </tr>
+    </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.Number)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Shasi)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Shasi)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateYear)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreateYear)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AutomobileTypeId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AutomobileTypeId)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-danger">حذف</button>
+            </div>
+        </div>
+
+        <div class="link-back">
+            @Html.ActionLink("بازگشت به لیست", "Index")
         </div>
     }
 </div>

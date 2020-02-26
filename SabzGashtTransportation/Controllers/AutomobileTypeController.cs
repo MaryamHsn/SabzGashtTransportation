@@ -105,10 +105,10 @@ namespace SabzGashtTransportation.Controllers
         // GET: Drivers/Create
         public ActionResult Create()
         {
-            List<SelectListItem> automobileTypeItems = new List<SelectListItem>();
-            automobileTypeItems.Add(new SelectListItem() { Text = "اتوبوس", Value = "0" });
-            automobileTypeItems.Add(new SelectListItem() { Text = "مینی بوس", Value = "1" });
-            ViewBag.AutomobileType = automobileTypeItems;
+            //List<SelectListItem> automobileTypeItems = new List<SelectListItem>();
+            //automobileTypeItems.Add(new SelectListItem() { Text = "اتوبوس", Value = "0" });
+            //automobileTypeItems.Add(new SelectListItem() { Text = "مینی بوس", Value = "1" });
+            //ViewBag.AutomobileType = automobileTypeItems;
             return View();
         }
 
@@ -169,10 +169,7 @@ namespace SabzGashtTransportation.Controllers
                 obj.LFDate = DateTime.Now;
                 obj.IsActive = true;
                 _automobile.AddNewAutomobileType(obj);
-                _uow.SaveAllChanges(); 
-
-                // db.Entry(driverTbl).State = EntityState.Modified;
-                //   db.SaveChanges();
+                _uow.SaveAllChanges();  
             }
             return RedirectToAction("Index");
 

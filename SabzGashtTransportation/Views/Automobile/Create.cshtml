@@ -1,91 +1,74 @@
-﻿@model SabzGashtTransportation.ViewModel.AutomobileTbl
+﻿@model SabzGashtTransportation.ViewModel.AutomobileViewModel
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+
 }
 
-<h2>Create</h2>
+<h2>ثبت اتومبیل</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>AutomobileTbl</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Shasi, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Shasi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Shasi, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreateYear, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreateYear, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreateYear, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        <p class="control-label">شماره پلاک:</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsActive)
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                </div>
-            </div>
+    <div class="form-group">
+        <p class="control-label">شماره شاسی:</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Shasi, new { htmlAttributes = new { @class = "form-control" } })
+
+            @Html.ValidationMessageFor(model => model.Shasi, "", new { @class = "text-danger" })
         </div>
+    </div>
+    <div class="form-group">
+        <p class="control-label">سال ساخت:</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CreateYear, new { htmlAttributes = new { @class = "form-control" } })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CFDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CFDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CFDate, "", new { @class = "text-danger" })
-            </div>
+            @Html.ValidationMessageFor(model => model.CreateYear, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LFDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LFDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LFDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AutomobileTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AutomobileTypeId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AutomobileTypeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+    </div>
+    <div class="form-group">
+        <p class="control-label">کولر دار:</p>
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EnumDropDownListFor(x => x.HasCoolerEnum, "انتخاب کنید", new { @class = "form-control" })
+                @*  @Html.DropDownList("کولر", (IEnumerable<SelectListItem>)ViewBag.AutomobileType, "--", htmlAttributes: new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.HasCooler, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div class="form-group">
+        <p class="control-label">نوع اتومبیل:</p>
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(x => x.IsBusEnum, "انتخاب کنید", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsBus, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-success">ثبت</button>
+        </div>
+    </div>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+<div class="link-back">
+    @Html.ActionLink("بازگشت به لیست", "Index")
+</div>

@@ -1242,9 +1242,6 @@
     <Content Include="Views\SignalRTest\Index.cshtml" />
     <Content Include="Views\WebApiTest\Index.cshtml" />
     <Content Include="Views\Manage\RemoveLogin.cshtml" />
-    <Content Include="Views\Products\Create.cshtml" />
-    <Content Include="Views\Products\CreateCategory.cshtml" />
-    <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\TeHome\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPageDealer.cshtml" />
     <Content Include="Views\Drivers\Create.cshtml" />
