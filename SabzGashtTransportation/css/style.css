@@ -5248,7 +5248,7 @@ a.text-danger:focus {
     color: #ffffff;
     background-color: green;
     border-color: #398439;
-    width: 100px;
+    /*width: 100px;*/
 }
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open .dropdown-toggle.btn-danger {
     color: #ffffff;
@@ -5277,7 +5277,7 @@ a.text-danger:focus {
     background-color: darkseagreen;
     border-color: #4cae4c;
     margin: 5px 50px 5px 0;
-    width: 100px;
+    /*width: 100px;*/
 
 }
 

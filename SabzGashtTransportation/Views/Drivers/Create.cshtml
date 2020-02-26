@@ -1,4 +1,4 @@
-﻿@model SabzGashtTransportation.ViewModel.driv
+﻿@model SabzGashtTransportation.ViewModel.DriverViewModel
 
 
 @{
@@ -60,8 +60,8 @@
         <div class="form-group">
             <p class="control-label">تاریخ تولد:</p>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.BirthDateString, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BirthDateString, "", new { @class = "text-danger" })
             </div>
         </div>
 

@@ -1,3 +1,5 @@
+using Sabz.ServiceLayer.Enumration;
+
 namespace SabzGashtTransportation.ViewModel
 {
     using System;
@@ -14,6 +16,10 @@ namespace SabzGashtTransportation.ViewModel
         public string CFDateString { get; set; }
         public DateTime LFDate { get; set; }
         public string LFDateString { get; set; }
+
+        public HasCoolerEnum HasCoolerEnum { get; set; }
+
+        public AutomobileTypeEnum IsBusEnum { get; set; }
         //public virtual ICollection<AutomobileTbl> AutomobileTbls { get; set; }
         //public virtual ICollection<RoutTbl> RoutTbls { get; set; }
     }

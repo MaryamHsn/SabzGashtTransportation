@@ -10,12 +10,13 @@
     @Styles.Render("~/css/style.css");
 }
 
-<h2>Students</h2>
+<h2>اتومبیل ها</h2>
 
 <p>
-    @Html.ActionLink("ثبت اتومبیل جدید", "Create")
+    <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">اتومبیل جدید</button>
+
 </p>
-@using (Html.BeginForm("Index", "AccidentTbls", FormMethod.Get))
+@using (Html.BeginForm("Index", "Automobile", FormMethod.Get))
 {
     <p>
         Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)

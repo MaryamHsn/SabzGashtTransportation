@@ -16,7 +16,7 @@ namespace Sabz.DomainClasses.DTO
         }
 
         [Key]
-        public int AutoId { get; set; }
+        public int AutomobileId { get; set; }
 
         [StringLength(13)]
         public string Number { get; set; }
@@ -29,7 +29,7 @@ namespace Sabz.DomainClasses.DTO
         public bool IsActive { get; set; }
         public DateTime CFDate { get; set; }
         public DateTime LFDate { get; set; }
-        public int? AutomobileTypeId { get; set; }
+        public int AutomobileTypeId { get; set; }
 
         public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; }
 

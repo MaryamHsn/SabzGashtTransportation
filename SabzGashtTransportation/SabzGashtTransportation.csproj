@@ -216,7 +216,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogRoutDriverController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\RoutController.cs" />
@@ -1288,6 +1287,7 @@
     <Content Include="Views\LogRoutDriver\Details.cshtml" />
     <Content Include="Views\LogRoutDriver\Edit.cshtml" />
     <Content Include="Views\LogRoutDriver\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

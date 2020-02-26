@@ -98,14 +98,6 @@ namespace Sabz.IocConfig
 
                 //config.For<IDataProtectionProvider>().Use(()=> app.GetDataProtectionProvider()); // In Startup class
 
-                ioc.For<ICategoryService>()
-                   .HybridHttpOrThreadLocalScoped()
-                   .Use<EfCategoryService>();
-
-                ioc.For<IProductService>()
-                   .HybridHttpOrThreadLocalScoped()
-                   .Use<EfProductService>();
-
                 ioc.For<IAccidentService>()
                     .HybridHttpOrThreadLocalScoped()
                     .Use<EfAccidentService>();

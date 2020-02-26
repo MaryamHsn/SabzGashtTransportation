@@ -57,11 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\AccidentTbl.cs" />
-    <Compile Include="DTO\Address.cs" />
     <Compile Include="DTO\ApplicationUser.cs" />
     <Compile Include="DTO\AutomobileTbl.cs" />
     <Compile Include="DTO\AutomobileTypeTbl.cs" />
-    <Compile Include="DTO\Category.cs" />
     <Compile Include="DTO\CustomRole.cs" />
     <Compile Include="DTO\CustomUserClaim.cs" />
     <Compile Include="DTO\CustomUserLogin.cs" />
@@ -70,7 +68,6 @@
     <Compile Include="DTO\DriverTbl.cs" />
     <Compile Include="DTO\LogRoutDriverTbl.cs" />
     <Compile Include="DTO\PaymentTbl.cs" />
-    <Compile Include="DTO\Product.cs" />
     <Compile Include="DTO\RegionTbl.cs" />
     <Compile Include="DTO\RepairmentTbl.cs" />
     <Compile Include="DTO\RoutTbl.cs" />

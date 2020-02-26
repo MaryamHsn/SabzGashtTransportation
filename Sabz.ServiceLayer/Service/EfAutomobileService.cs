@@ -38,7 +38,7 @@ namespace Sabz.ServiceLayer.Service
         {
             AutomobileTbl auto = _automobiles.Find(id);
             auto.IsActive = false;
-            return auto.AutoId;
+            return auto.AutomobileId;
         }
     }
 }

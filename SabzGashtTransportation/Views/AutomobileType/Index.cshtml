@@ -1,64 +1,70 @@
-﻿@model IEnumerable<SabzGashtTransportation.ViewModel.AutomobileTypeTbl>
+﻿
+@using PagedList.Mvc
+@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
+@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.AutomobileTypeViewModel>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
 }
 
-<h2>Index</h2>
+<h2>تصادفات</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.HasCooler)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsBus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </th>
-        <th></th>
-    </tr>
+<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">مدل ماشین جدید</button>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.HasCooler)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsBus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CFDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LFDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AutoTypeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AutoTypeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AutoTypeId })
-        </td>
-    </tr>
+@using (Html.BeginForm("Index", "AutomobileType", FormMethod.Get))
+{
+    <p class="search_table">
+        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="جستجو" />
+    </p>
 }
+<table id="showList">
+    <tr>
+        <th>
+            @Html.ActionLink("کولر دار", "Index", new { sortOrder = ViewBag.HasCooler, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("مدل ماشین", "Index", new { sortOrder = ViewBag.IsBus, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            توضیحات
+        </th>
+        <th>
+            عملیات
+        </th>
+    </tr>
+ 
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @(item.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())
+            
+            </td>
+            <td>
+                @(item.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.AutoTypeId }) |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.AutoTypeId }) |
+                @Html.ActionLink("حذف", "Delete", new { id = item.AutoTypeId })
+            </td>
+        </tr>
+    }
 
 </table>
+<br />
+<p class="showPage">
+    صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+</p>
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

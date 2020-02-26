@@ -15,45 +15,33 @@ namespace Sabz.DataLayer.Migrations
                         UseInsurence = c.Int(),
                         Cost = c.Decimal(precision: 18, scale: 2),
                         Description = c.String(),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
                         DriverId = c.Int(),
+                        AutomobileId = c.Int(),
                     })
                 .PrimaryKey(t => t.AccidentId)
+                .ForeignKey("dbo.AutomobileTbl", t => t.AutomobileId)
                 .ForeignKey("dbo.DriverTbl", t => t.DriverId)
-                .Index(t => t.DriverId);
-            
-            CreateTable(
-                "dbo.DriverTbl",
-                c => new
-                    {
-                        DriverId = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(nullable: false, maxLength: 50),
-                        LastName = c.String(nullable: false, maxLength: 50),
-                        FatherName = c.String(maxLength: 50),
-                        NationalCode = c.String(maxLength: 10),
-                        LicenceCode = c.String(maxLength: 10),
-                        BirthDate = c.DateTime(),
-                        AutomobileId = c.Int(nullable: false),
-                        Address = c.String(),
-                        Phone1 = c.String(maxLength: 15),
-                        Phone2 = c.String(maxLength: 15),
-                        AutomobileTbl_AutoId = c.Int(),
-                    })
-                .PrimaryKey(t => t.DriverId)
-                .ForeignKey("dbo.AutomobileTbl", t => t.AutomobileTbl_AutoId)
-                .Index(t => t.AutomobileTbl_AutoId);
+                .Index(t => t.DriverId)
+                .Index(t => t.AutomobileId);
             
             CreateTable(
                 "dbo.AutomobileTbl",
                 c => new
                     {
-                        AutoId = c.Int(nullable: false, identity: true),
+                        AutomobileId = c.Int(nullable: false, identity: true),
                         Number = c.String(maxLength: 13),
                         Shasi = c.String(maxLength: 10),
                         CreateYear = c.String(maxLength: 10),
-                        AutomobileTypeId = c.Int(),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
+                        AutomobileTypeId = c.Int(nullable: false),
                         AutomobileTypeTbl_AutoTypeId = c.Int(),
                     })
-                .PrimaryKey(t => t.AutoId)
+                .PrimaryKey(t => t.AutomobileId)
                 .ForeignKey("dbo.AutomobileTypeTbl", t => t.AutomobileTypeTbl_AutoTypeId)
                 .Index(t => t.AutomobileTypeTbl_AutoTypeId);
             
@@ -65,6 +53,9 @@ namespace Sabz.DataLayer.Migrations
                         HasCooler = c.Boolean(nullable: false),
                         Description = c.String(),
                         IsBus = c.Int(),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.AutoTypeId);
             
@@ -84,6 +75,9 @@ namespace Sabz.DataLayer.Migrations
                         AgreementPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
                         DriverPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Count = c.Int(nullable: false),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
                         AutomobileTypeTbl_AutoTypeId = c.Int(),
                     })
                 .PrimaryKey(t => t.RoutID)
@@ -100,12 +94,74 @@ namespace Sabz.DataLayer.Migrations
                         DriverId = c.Int(nullable: false),
                         RoutId = c.Int(nullable: false),
                         IsTemporary = c.Int(nullable: false),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.DriverTbl", t => t.DriverId, cascadeDelete: true)
                 .ForeignKey("dbo.RoutTbl", t => t.RoutId, cascadeDelete: true)
                 .Index(t => t.DriverId)
                 .Index(t => t.RoutId);
+            
+            CreateTable(
+                "dbo.DriverTbl",
+                c => new
+                    {
+                        DriverId = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(nullable: false, maxLength: 50),
+                        LastName = c.String(nullable: false, maxLength: 50),
+                        FatherName = c.String(maxLength: 50),
+                        NationalCode = c.String(maxLength: 10),
+                        LicenceCode = c.String(maxLength: 10),
+                        BirthDate = c.DateTime(nullable: false),
+                        AutomobileId = c.Int(nullable: false),
+                        Address = c.String(),
+                        Phone1 = c.String(maxLength: 15),
+                        Phone2 = c.String(maxLength: 15),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.DriverId)
+                .ForeignKey("dbo.AutomobileTbl", t => t.AutomobileId, cascadeDelete: true)
+                .Index(t => t.AutomobileId);
+            
+            CreateTable(
+                "dbo.PaymentTbl",
+                c => new
+                    {
+                        PaymentId = c.Int(nullable: false, identity: true),
+                        Insurance = c.Decimal(precision: 18, scale: 2),
+                        PreHelpCost = c.Decimal(precision: 18, scale: 2),
+                        Fine = c.Decimal(precision: 18, scale: 2),
+                        Tax = c.Decimal(precision: 18, scale: 2),
+                        AccidentCost = c.Decimal(precision: 18, scale: 2),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
+                        CreateDate = c.DateTime(nullable: false),
+                        DriverId = c.Int(),
+                    })
+                .PrimaryKey(t => t.PaymentId)
+                .ForeignKey("dbo.DriverTbl", t => t.DriverId)
+                .Index(t => t.DriverId);
+            
+            CreateTable(
+                "dbo.RepairmentTbl",
+                c => new
+                    {
+                        RepairmentId = c.Int(nullable: false, identity: true),
+                        DriverId = c.Int(),
+                        Descrition = c.String(),
+                        Cost = c.Decimal(precision: 18, scale: 2),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.RepairmentId)
+                .ForeignKey("dbo.DriverTbl", t => t.DriverId)
+                .Index(t => t.DriverId);
             
             CreateTable(
                 "dbo.LogRoutDriverTbl",
@@ -117,6 +173,9 @@ namespace Sabz.DataLayer.Migrations
                         DoDate = c.DateTime(nullable: false, storeType: "date"),
                         CDate = c.DateTime(),
                         LDate = c.DateTime(),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
                         DriverRoutId = c.Int(nullable: false),
                         IsTemporary = c.Int(),
                         DriverRoutTbl_Id = c.Int(),
@@ -131,38 +190,40 @@ namespace Sabz.DataLayer.Migrations
                     {
                         RegionId = c.Int(nullable: false, identity: true),
                         RegionName = c.String(nullable: false, maxLength: 50),
+                        IsActive = c.Boolean(nullable: false),
+                        CFDate = c.DateTime(nullable: false),
+                        LFDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.RegionId);
             
             CreateTable(
-                "dbo.RepairmentTbl",
-                c => new
-                    {
-                        RepairmentId = c.Int(nullable: false, identity: true),
-                        DriverId = c.Int(),
-                        Descrition = c.String(),
-                        Cost = c.Decimal(precision: 18, scale: 2),
-                    })
-                .PrimaryKey(t => t.RepairmentId)
-                .ForeignKey("dbo.DriverTbl", t => t.DriverId)
-                .Index(t => t.DriverId);
-            
-            CreateTable(
-                "dbo.Addresses",
+                "dbo.AspNetRoles",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        City = c.String(),
-                        State = c.String(),
+                        Name = c.String(nullable: false, maxLength: 256),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.Int(nullable: false),
+                        RoleId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.AspNetUsers",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        AddressId = c.Int(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -176,8 +237,6 @@ namespace Sabz.DataLayer.Migrations
                         UserName = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Addresses", t => t.AddressId)
-                .Index(t => t.AddressId)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex");
             
             CreateTable(
@@ -205,104 +264,56 @@ namespace Sabz.DataLayer.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.Int(nullable: false),
-                        RoleId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.Categories",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        Title = c.String(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Products",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        CategoryId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
-                .Index(t => t.CategoryId);
-            
-            CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Products", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUsers", "AddressId", "dbo.Addresses");
-            DropForeignKey("dbo.RepairmentTbl", "DriverId", "dbo.DriverTbl");
-            DropForeignKey("dbo.DriverTbl", "AutomobileTbl_AutoId", "dbo.AutomobileTbl");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.RoutTbl", "RegionId", "dbo.RegionTbl");
             DropForeignKey("dbo.DriverRoutTbl", "RoutId", "dbo.RoutTbl");
             DropForeignKey("dbo.LogRoutDriverTbl", "DriverRoutTbl_Id", "dbo.DriverRoutTbl");
+            DropForeignKey("dbo.RepairmentTbl", "DriverId", "dbo.DriverTbl");
+            DropForeignKey("dbo.PaymentTbl", "DriverId", "dbo.DriverTbl");
             DropForeignKey("dbo.DriverRoutTbl", "DriverId", "dbo.DriverTbl");
+            DropForeignKey("dbo.DriverTbl", "AutomobileId", "dbo.AutomobileTbl");
+            DropForeignKey("dbo.AccidentTbl", "DriverId", "dbo.DriverTbl");
             DropForeignKey("dbo.RoutTbl", "AutomobileTypeTbl_AutoTypeId", "dbo.AutomobileTypeTbl");
             DropForeignKey("dbo.AutomobileTbl", "AutomobileTypeTbl_AutoTypeId", "dbo.AutomobileTypeTbl");
-            DropForeignKey("dbo.AccidentTbl", "DriverId", "dbo.DriverTbl");
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.Products", new[] { "CategoryId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropForeignKey("dbo.AccidentTbl", "AutomobileId", "dbo.AutomobileTbl");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.AspNetUsers", new[] { "AddressId" });
-            DropIndex("dbo.RepairmentTbl", new[] { "DriverId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.LogRoutDriverTbl", new[] { "DriverRoutTbl_Id" });
+            DropIndex("dbo.RepairmentTbl", new[] { "DriverId" });
+            DropIndex("dbo.PaymentTbl", new[] { "DriverId" });
+            DropIndex("dbo.DriverTbl", new[] { "AutomobileId" });
             DropIndex("dbo.DriverRoutTbl", new[] { "RoutId" });
             DropIndex("dbo.DriverRoutTbl", new[] { "DriverId" });
             DropIndex("dbo.RoutTbl", new[] { "AutomobileTypeTbl_AutoTypeId" });
             DropIndex("dbo.RoutTbl", new[] { "RegionId" });
             DropIndex("dbo.AutomobileTbl", new[] { "AutomobileTypeTbl_AutoTypeId" });
-            DropIndex("dbo.DriverTbl", new[] { "AutomobileTbl_AutoId" });
+            DropIndex("dbo.AccidentTbl", new[] { "AutomobileId" });
             DropIndex("dbo.AccidentTbl", new[] { "DriverId" });
-            DropTable("dbo.AspNetRoles");
-            DropTable("dbo.Products");
-            DropTable("dbo.Categories");
-            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.Addresses");
-            DropTable("dbo.RepairmentTbl");
+            DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.AspNetRoles");
             DropTable("dbo.RegionTbl");
             DropTable("dbo.LogRoutDriverTbl");
+            DropTable("dbo.RepairmentTbl");
+            DropTable("dbo.PaymentTbl");
+            DropTable("dbo.DriverTbl");
             DropTable("dbo.DriverRoutTbl");
             DropTable("dbo.RoutTbl");
             DropTable("dbo.AutomobileTypeTbl");
             DropTable("dbo.AutomobileTbl");
-            DropTable("dbo.DriverTbl");
             DropTable("dbo.AccidentTbl");
         }
     }

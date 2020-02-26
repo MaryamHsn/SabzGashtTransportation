@@ -7,8 +7,8 @@ namespace  Sabz.DomainClasses.DTO
     {
         // Add other properties here
 
-        [ForeignKey("AddressId")]
-        public virtual Address Address { get; set; }
-        public int? AddressId { get; set; }
+        //[ForeignKey("AddressId")]
+        //public virtual Address Address { get; set; }
+        //public int? AddressId { get; set; }
     }
 }

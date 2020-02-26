@@ -10,15 +10,24 @@ using PagedList;
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.Mapper;
+using Sabz.ServiceLayer.Utils;
+using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
     public class DriversController : Controller
     {
         readonly IDriverService _drivers;
+        readonly IAutomobileService _automobile;
+
         readonly IUnitOfWork _uow;
-        public DriversController(IUnitOfWork uow, IDriverService drivers)
+        private DriverViewModel common { get; set; }
+        private List<DriverViewModel> commonList { get; set; }
+
+        public DriversController(IUnitOfWork uow, IDriverService drivers, IAutomobileService automobile)
         {
+            _automobile = automobile;
             _drivers = drivers;
             _uow = uow;
         }
@@ -27,10 +36,12 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            commonList = new List<DriverViewModel>();
+
             ViewBag.CurrentSort = sortOrder;
             ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
-            ViewBag.LastName = sortOrder == "LastName" ? "lastName_desc" : "lastName";
-            ViewBag.Phone = sortOrder == "Phone" ? "phone_desc" : "phone";
+            ViewBag.LastName = sortOrder == "lastName" ? "lastName_desc" : "lastName";
+            ViewBag.Phone = sortOrder == "phone" ? "phone_desc" : "phone";
 
             if (searchString != null)
             {
@@ -71,9 +82,14 @@ namespace SabzGashtTransportation.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(list.ToPagedList(pageNumber, pageSize));
+            foreach (var item in list)
+            { 
+                var element = BaseMapper<DriverViewModel, DriverTbl>.Map(item);
+                commonList.Add(element);
+            }
+            return View(commonList.ToPagedList(pageNumber, pageSize));
         
         } 
 
@@ -84,20 +100,24 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // DriverTbl driverTbl = db.Drivers.Find(id); 
-            DriverTbl driverTbl = _drivers.GetDriver(id);
-
-            if (driverTbl == null)
+            DriverTbl driver = _drivers.GetDriver(id);
+            if (driver == null)
             {
                 return HttpNotFound();
             }
-            return View(driverTbl);
+            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+            obj.BirthDateString = driver.BirthDate != null ? driver.BirthDate.ToPersianDateString() : "";
+            return View(obj);
         }
 
         // GET: Drivers/Create
         public ActionResult Create()
         {
-            return View();
+            common = new DriverViewModel()
+            {
+                Automobiles = _automobile.GetAllAutomobiles()
+            };
+            return View(common);
         }
 
         // POST: Drivers/Create
@@ -105,17 +125,16 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( DriverTbl driver)
+        public ActionResult Create( DriverViewModel driver)
         {
             if (ModelState.IsValid)
             {
-                //db.Drivers.Add(driverTbl);
-                // db.SaveChanges();
-                driver.IsActive = true;
-                driver.CFDate=DateTime.Now;
-                driver.LFDate = DateTime.Now;
-
-                _drivers.AddNewDriver(driver);
+                var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
+                obj.IsActive = true;
+                obj.CFDate=DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                _drivers.AddNewDriver(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -127,15 +146,18 @@ namespace SabzGashtTransportation.Controllers
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            //DriverTbl driverTbl = db.Drivers.Find(id);
-            DriverTbl driverTbl =_drivers.GetDriver(id);
-
-            if (driverTbl == null)
+            } 
+            DriverTbl driver =_drivers.GetDriver(id);
+            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+            obj.Automobiles = _automobile.GetAllAutomobiles();
+            obj.BirthDateString = obj.BirthDate != null
+                ? obj.BirthDate.ToPersianDateString()
+                : driver.BirthDate.ToPersianDateString();
+            if (driver  == null)
             {
                 return HttpNotFound();
             }
-            return View(driverTbl);
+            return View(obj);
         }
 
         // POST: Drivers/Edit/5
@@ -143,17 +165,19 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( DriverTbl driver)
+        public ActionResult Edit( DriverViewModel driver)
         {
             if (ModelState.IsValid)
             {
-                _drivers.Delete(driver.DriverId);
                 driver.LFDate=DateTime.Now;
-                _drivers.AddNewDriver(driver);
-                _uow.SaveAllChanges();
-
-                // db.Entry(driverTbl).State = EntityState.Modified;
-                //   db.SaveChanges();
+                _drivers.Delete(driver.DriverId);
+                var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                obj.IsActive = true;
+                _drivers.AddNewDriver(obj);
+                _uow.SaveAllChanges(); 
             }
             return RedirectToAction("Index");
 
@@ -166,14 +190,14 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DriverTbl driverTbl = _drivers.GetDriver(id);
-
-            // DriverTbl driverTbl = db.Drivers.Find(id);
-            if (driverTbl == null)
+            DriverTbl driver= _drivers.GetDriver(id);
+            if (driver == null)
             {
                 return HttpNotFound();
             }
-            return View(driverTbl);
+            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+            obj.BirthDateString = driver.BirthDate.ToPersianDateString();
+            return View(obj);
         }
 
         // POST: Drivers/Delete/5
@@ -182,11 +206,7 @@ namespace SabzGashtTransportation.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _drivers.Delete(id);
-            _uow.SaveAllChanges();
-
-            //DriverTbl driverTbl = db.Drivers.Find(id);
-            //db.Drivers.Remove(driverTbl);
-            //db.SaveChanges();
+            _uow.SaveAllChanges(); 
             return RedirectToAction("Index");
         }
 

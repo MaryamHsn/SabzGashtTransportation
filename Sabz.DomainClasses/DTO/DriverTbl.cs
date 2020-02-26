@@ -44,7 +44,7 @@ namespace Sabz.DomainClasses.DTO
         [StringLength(10)]
         public string LicenceCode { get; set; }
 
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public int AutomobileId { get; set; }
 

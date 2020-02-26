@@ -10,6 +10,7 @@ using PagedList;
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO; 
 using Sabz.ServiceLayer.IService;
+using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
@@ -17,6 +18,8 @@ namespace SabzGashtTransportation.Controllers
     {
         readonly IAutomobileService _automobile;
         readonly IDriverService _driver;
+        private AutomobileViewModel common { get; set; }
+        private List<AutomobileViewModel> commonList { get; set; }
 
         readonly IUnitOfWork _uow;
         public AutomobileController(IUnitOfWork uow, IAutomobileService automobile, IDriverService driver)
@@ -98,7 +101,8 @@ namespace SabzGashtTransportation.Controllers
 
         // GET: Drivers/Create
         public ActionResult Create()
-        {
+        { 
+          
             return View();
         }
 
@@ -146,7 +150,7 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                _automobile.Delete(automobile.AutoId);
+                _automobile.Delete(automobile.AutomobileId);
                 automobile.LFDate = DateTime.Now;
                 _automobile.AddNewAutomobile(automobile);
                 _uow.SaveAllChanges();

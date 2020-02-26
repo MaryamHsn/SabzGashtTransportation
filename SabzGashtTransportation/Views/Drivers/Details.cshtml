@@ -1,6 +1,4 @@
-﻿@*@model SabzGashtTransportation.ViewModel.DriverTbl*@
-@model Sabz.DomainClasses.DTO.DriverTbl
-
+﻿@model SabzGashtTransportation.ViewModel.DriverViewModel
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
@@ -29,7 +27,7 @@
         </tr>
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">تاریخ تولد:</th>
-            <th> @Html.DisplayFor(model => model.BirthDate)</th>
+            <th> @Html.DisplayFor(model => model.BirthDateString)</th>
         </tr>
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">شماره گواهینامه:</th>
@@ -42,10 +40,6 @@
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">آدرس:</th>
             <th> @Html.DisplayFor(model => model.Address)</th>
-        </tr>
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show">IsActive</th>
-            <th> @Html.DisplayFor(model => model.IsActive)</th>
         </tr>
     </table>
 </div>

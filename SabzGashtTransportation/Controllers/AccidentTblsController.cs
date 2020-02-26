@@ -101,7 +101,7 @@ namespace SabzGashtTransportation.Controllers
                 element.DriverFirstName = driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault().FirstName : "--";
                 element.DriverLastName = driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault().LastName : "--";
                 element.DriverFullName = element.DriverFirstName + " " + element.DriverLastName;
-                element.AutomobileNumber = autombile.Where(x => x.AutoId == item.AutomobileId).SingleOrDefault() != null ? autombile.Where(x => x.AutoId == item.AutomobileId).SingleOrDefault().Number : "--";
+                element.AutomobileNumber = autombile.Where(x => x.AutomobileId == item.AutomobileId).SingleOrDefault() != null ? autombile.Where(x => x.AutomobileId == item.AutomobileId).SingleOrDefault().Number : "--";
                 element.Cost = accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault() != null ? accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault().Cost : 0;
                 element.Description = accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault() != null ? accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault().Description : "";
                 commonList.Add(element);
@@ -204,6 +204,7 @@ namespace SabzGashtTransportation.Controllers
             if (ModelState.IsValid)
             {
                 accident.LFDate = DateTime.Now;
+                accident.IsActive = false;
                 _accident.Delete(accident.AccidentId);
                 var obj = BaseMapper<AccidentTbl, AccidentViewModel>.Map(accident);
                 obj.AutomobileId = _driver.GetDriver(accident.DriverId).AutomobileId;

@@ -8,8 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Sabz.DataLayer.Context;
-using Sabz.DomainClasses.DTO; 
+using Sabz.DomainClasses.DTO;
+using Sabz.ServiceLayer.Enumration;
 using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.Mapper;
+using Sabz.ServiceLayer.Utils;
+using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
@@ -17,6 +21,9 @@ namespace SabzGashtTransportation.Controllers
     {
         readonly IAutomobileTypeService _automobile;
         readonly IUnitOfWork _uow;
+        private AutomobileTypeViewModel common { get; set; }
+        private List<AutomobileTypeViewModel> commonList { get; set; }
+
         public AutomobileTypeController(IUnitOfWork uow, IAutomobileTypeService automobile)
         {
             _automobile = automobile;
@@ -27,9 +34,10 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            commonList = new List<AutomobileTypeViewModel>();
             ViewBag.CurrentSort = sortOrder;
             ViewBag.HasCooler = String.IsNullOrEmpty(sortOrder) ? "hasCooler_desc" : "";
-            ViewBag.IsBus = sortOrder == "IsBus" ? "isBus_desc" : "isBus";
+            ViewBag.IsBus = sortOrder == "isBus" ? "isBus_desc" : "isBus";
            
             if (searchString != null)
             {
@@ -63,9 +71,14 @@ namespace SabzGashtTransportation.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize =10;
             int pageNumber = (page ?? 1);
-            return View(list.ToPagedList(pageNumber, pageSize));
+            foreach(var item in list)
+            {
+                var element = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(item);
+                commonList.Add(element);
+            }
+            return View(commonList.ToPagedList(pageNumber, pageSize));
 
         }
 
@@ -77,17 +90,25 @@ namespace SabzGashtTransportation.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             AutomobileTypeTbl automobile = _automobile.GetAutomobileType(id);
+            common = new AutomobileTypeViewModel();
+            common = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
+            common.CFDateString = automobile.CFDate.ToPersianDateString();
+            common.LFDateString = automobile.LFDate.ToPersianDateString();
 
-            if (automobile == null)
+            if (common == null)
             {
                 return HttpNotFound();
             }
-            return View(automobile);
+            return View(common);
         }
 
         // GET: Drivers/Create
         public ActionResult Create()
         {
+            List<SelectListItem> automobileTypeItems = new List<SelectListItem>();
+            automobileTypeItems.Add(new SelectListItem() { Text = "اتوبوس", Value = "0" });
+            automobileTypeItems.Add(new SelectListItem() { Text = "مینی بوس", Value = "1" });
+            ViewBag.AutomobileType = automobileTypeItems;
             return View();
         }
 
@@ -96,15 +117,15 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AutomobileTypeTbl automobile)
+        public ActionResult Create(AutomobileTypeViewModel automobile)
         {
             if (ModelState.IsValid)
             {
-                automobile.IsActive = true;
-                automobile.CFDate = DateTime.Now;
-                automobile.LFDate = DateTime.Now;
-
-                _automobile.AddNewAutomobileType(automobile);
+                var obj = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
+                obj.IsActive = true;
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                _automobile.AddNewAutomobileType(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -123,7 +144,12 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(automobile);
+            var obj= BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
+            //List<SelectListItem> insuranceListItems = new List<SelectListItem>();
+            //insuranceListItems.Add(new SelectListItem() { Text = "استفاده شده", Value = "1" });
+            //insuranceListItems.Add(new SelectListItem() { Text = "استفاده نشده", Value = "0" });
+            //ViewBag.insurance = insuranceListItems;
+            return View(obj);
         }
 
         // POST: Drivers/Edit/5
@@ -131,14 +157,19 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AutomobileTypeTbl automobile)
+        public ActionResult Edit(AutomobileTypeViewModel automobile)
         {
             if (ModelState.IsValid)
             {
-                _automobile.Delete(automobile.AutoTypeId);
                 automobile.LFDate = DateTime.Now;
-                _automobile.AddNewAutomobileType(automobile);
-                _uow.SaveAllChanges();
+                automobile.IsActive = false;
+                _automobile.Delete(automobile.AutoTypeId);
+                var obj = BaseMapper<AutomobileTypeTbl, AutomobileTypeViewModel>.Map(automobile);
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                obj.IsActive = true;
+                _automobile.AddNewAutomobileType(obj);
+                _uow.SaveAllChanges(); 
 
                 // db.Entry(driverTbl).State = EntityState.Modified;
                 //   db.SaveChanges();
@@ -159,7 +190,17 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(automobile);
+            var obj = BaseMapper<AutomobileTypeTbl, AutomobileTypeViewModel>.Map(automobile);
+            if (obj.IsBus == (int)AutomobileTypeEnum.Bus)
+            {
+                ViewBag.AutomobileType = AutomobileTypeEnum.Bus;
+            }
+            else
+            {
+                ViewBag.AutomobileType = AutomobileTypeEnum.MiniBus;
+            }
+
+            return View(obj);
         }
 
         // POST: Drivers/Delete/5

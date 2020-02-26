@@ -18,9 +18,6 @@ namespace Sabz.DataLayer.Context
         {
             //this.Database.Log = data => System.Diagnostics.Debug.WriteLine(data);
         }
-        public DbSet<Category> Categories { set; get; }
-        public DbSet<Product> Products { set; get; }
-        public DbSet<Address> Addresses { set; get; }
         public DbSet<AccidentTbl> Accidents { set; get; }
         public DbSet<AutomobileTbl> Automobiles { set; get; }
         public DbSet<AutomobileTypeTbl> AutomobileTypes { set; get; }
