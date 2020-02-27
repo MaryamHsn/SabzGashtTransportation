@@ -79,7 +79,6 @@ namespace SabzGashtTransportation.Controllers
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));
-
         }
 
         // GET: Drivers/Details/5

@@ -1,4 +1,5 @@
-﻿using System; 
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net; 
 using System.Web.Mvc;
@@ -6,6 +7,8 @@ using PagedList;
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO; 
 using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.ViewModel;
+using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
@@ -13,6 +16,9 @@ namespace SabzGashtTransportation.Controllers
     {
         readonly ILogRoutDriverService _logRoutDriver;
         readonly IUnitOfWork _uow;
+        private LogRoutDriverViewModel common { get; set; }
+        private List<LogRoutDriverViewModel> commonList { get; set; }
+
         public LogRoutDriverController(IUnitOfWork uow, ILogRoutDriverService logRoutDriver)
         {
             _logRoutDriver = logRoutDriver;
@@ -23,11 +29,12 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            commonList=new List<LogRoutDriverViewModel>();
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
-            ViewBag.Rout = sortOrder == "Rout" ? "rout_desc" : "rout";
-            ViewBag.IsTemporary = sortOrder == "IsTemporary" ? "isTemporary_desc" : "isTemporary";
-            ViewBag.IsDone = sortOrder == "IsDone" ? "isDone_desc" : "isDone";
+            ViewBag.Rout = sortOrder == "rout" ? "rout_desc" : "rout";
+            ViewBag.IsTemporary = sortOrder == "isTemporary" ? "isTemporary_desc" : "isTemporary";
+            ViewBag.IsDone = sortOrder == "isDone" ? "isDone_desc" : "isDone";
 
             if (searchString != null)
             {

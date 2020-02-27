@@ -92,6 +92,7 @@
     <Compile Include="EmailService.cs" />
     <Compile Include="Enumration\AutomobileTypeEnum.cs" />
     <Compile Include="Enumration\HasCoolerEnum.cs" />
+    <Compile Include="Enumration\RoutTypeEnum.cs" />
     <Compile Include="Exception\DateTimeFormatException.cs" />
     <Compile Include="Extension\EnumExtension.cs" />
     <Compile Include="IService\IAccidentService.cs" />

@@ -1,85 +1,72 @@
-﻿@model SabzGashtTransportation.ViewModel.DriverRoutTbl
+﻿@using Sabz.DomainClasses.DTO
+@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Utils
+@model SabzGashtTransportation.ViewModel.DriverRoutViewModel
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+    var RoutTextShowDefault  = "";
+
 }
 
-<h2>Edit</h2>
 
+<h2>ویرایش</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>DriverRoutTbl</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
+
         <div class="form-group">
-            @Html.LabelFor(model => model.DriverId, "DriverId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">راننده:</p>
             <div class="col-md-10">
-                @Html.DropDownList("DriverId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DriverId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverList, "DriverId", "FullName"),Model.Driver.FullName, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Driver.FullName, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoutId, "RoutId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">مسیر:</p>
             <div class="col-md-10">
-                @Html.DropDownList("RoutId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RoutId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "RoutId", "Name"), Model.Rout.Name,htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.IsTemporary, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IsTemporary, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IsTemporary, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p class="control-label">نوع مسیر:</p>
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.IsActive)
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                    @{
+                        if (Model.IsTemporary== (int)RoutTypeEnum.Always)
+                        {
+                            RoutTextShowDefault  = RoutTypeEnum.Always.ToString();
+                        }
+                        else
+                        {
+                            RoutTextShowDefault = RoutTypeEnum.Temporary.ToString();
+                        }
+                    }
+                    @Html.EnumDropDownListFor(x => x.RoutTypeEnum, RoutTextShowDefault , new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoutTypeEnum, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
+        </div> 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CFDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CFDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CFDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LFDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LFDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LFDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" class="btn btn-success">ثبت</button>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="link-back">
+    @Html.ActionLink("بازگشت به لیست", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

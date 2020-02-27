@@ -8,17 +8,29 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Sabz.DataLayer.Context;
-using Sabz.DomainClasses.DTO; 
+using Sabz.DomainClasses.DTO;
+using Sabz.ServiceLayer.Enumration;
 using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.Mapper;
+using Sabz.ServiceLayer.ViewModel;
+using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
     public class DriverRoutController : Controller
     {
         readonly IDriverRoutService _driverRout;
+        readonly IDriverService _driver;
+        readonly IRoutService _rout;
+
+        private DriverRoutViewModel common;
+        private List<DriverRoutViewModel> commonList;
+
         readonly IUnitOfWork _uow;
-        public DriverRoutController(IUnitOfWork uow, IDriverRoutService driverRout)
+        public DriverRoutController(IUnitOfWork uow, IDriverRoutService driverRout, IDriverService driver, IRoutService rout)
         {
+            _driver = driver;
+            _rout = rout;
             _driverRout = driverRout;
             _uow = uow;
         }
@@ -29,8 +41,8 @@ namespace SabzGashtTransportation.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
-            ViewBag.Rout = sortOrder == "Rout" ? "rout_desc" : "rout";
-            ViewBag.IsTemporary = sortOrder == "IsTemporary" ? "isTemporary_desc" : "isTemporary";
+            ViewBag.Rout = sortOrder == "rout" ? "rout_desc" : "rout";
+            ViewBag.IsTemporary = sortOrder == "isTemporary" ? "isTemporary_desc" : "isTemporary";
 
             if (searchString != null)
             {
@@ -45,20 +57,20 @@ namespace SabzGashtTransportation.Controllers
             var list = _driverRout.GetAllDriverRouts();
             if (!String.IsNullOrEmpty(searchString))
             {
-                list = list.Where(s => s.DriverId.ToString().Contains(searchString)
-                                       || s.RoutId.ToString().Contains(searchString)
+                list = list.Where(s => s.DriverTbl.FullName.ToString().Contains(searchString)
+                                       || s.RoutTbl.Name.ToString().Contains(searchString)
                                        || s.IsTemporary.ToString().Contains(searchString)).ToList();
             }
             switch (sortOrder)
             {
                 case "driver_desc":
-                    list = list.OrderByDescending(s => s.DriverId).ToList();
+                    list = list.OrderByDescending(s => s.DriverTbl.FullName).ToList();
                     break;
                 case "rout":
-                    list = list.OrderBy(s => s.RoutId).ToList();
+                    list = list.OrderBy(s => s.RoutTbl.Name).ToList();
                     break;
                 case "rout_desc":
-                    list = list.OrderByDescending(s => s.RoutId).ToList();
+                    list = list.OrderByDescending(s => s.RoutTbl.Name).ToList();
                     break;
                 case "isTemporary":
                     list = list.OrderBy(s => s.IsTemporary).ToList();
@@ -71,10 +83,18 @@ namespace SabzGashtTransportation.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(list.ToPagedList(pageNumber, pageSize));
-
+            var allDrivers = _driver.GetAllDrivers();
+            var allRouts = _rout.GetAllRouts();
+            foreach (var item in list)
+            {
+                var element = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(item);
+                element.Driver = allDrivers.Where(x => x.DriverId == item.DriverId).FirstOrDefault();
+                element.Rout = allRouts.Where(x => x.RoutID == item.RoutId).FirstOrDefault();
+                commonList.Add(element);
+            }
+            return View(commonList.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Drivers/Details/5
@@ -84,19 +104,23 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DriverRoutTbl driverRout= _driverRout.GetDriverRout(id);
+            DriverRoutTbl driverRout = _driverRout.GetDriverRout(id);
 
             if (driverRout == null)
             {
                 return HttpNotFound();
             }
-            return View(driverRout);
+            var obj = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(driverRout);
+            return View(obj);
         }
 
         // GET: Drivers/Create
         public ActionResult Create()
         {
-            return View();
+            common = new DriverRoutViewModel();
+            common.RoutList = _rout.GetAllRouts();
+            common.DriverList = _driver.GetAllDrivers();
+            return View(common);
         }
 
         // POST: Drivers/Create
@@ -131,7 +155,8 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(driverRout);
+            var obj = BaseMapper<DriverRoutViewModel,DriverRoutTbl>.Map(driverRout);
+            return View(obj);
         }
 
         // POST: Drivers/Edit/5
@@ -139,17 +164,19 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(DriverRoutTbl driverRout)
+        public ActionResult Edit(DriverRoutViewModel driverRout)
         {
             if (ModelState.IsValid)
             {
-                _driverRout.Delete(driverRout.Id);
                 driverRout.LFDate = DateTime.Now;
-                _driverRout.AddNewDriverRout(driverRout);
+                driverRout.IsActive = false;
+                _driverRout.Delete(driverRout.Id);
+                var obj = BaseMapper< DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                obj.IsActive = true;
+                _driverRout.AddNewDriverRout(obj);
                 _uow.SaveAllChanges();
-
-                // db.Entry(driverTbl).State = EntityState.Modified;
-                //   db.SaveChanges();
             }
             return RedirectToAction("Index");
 
@@ -167,7 +194,17 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(rout);
+            var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(rout);
+            if (obj.IsTemporary == (int)RoutTypeEnum.Always)
+            {
+                ViewBag.IsTemporary = RoutTypeEnum.Always;
+            }
+            else
+            {
+                ViewBag.IsTemporary = RoutTypeEnum.Temporary;
+            }
+
+            return View(obj);
         }
 
         // POST: Drivers/Delete/5

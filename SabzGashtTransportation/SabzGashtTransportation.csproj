@@ -251,7 +251,7 @@
     <Compile Include="Models\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModel\AccidentAccidentViewModel.cs" />
+    <Compile Include="ViewModel\AccidentViewModel.cs" />
     <Compile Include="ViewModel\AutomobileViewModel.cs" />
     <Compile Include="ViewModel\AutomobileTypeViewModel.cs" />
     <Compile Include="ViewModel\DriverViewModel.cs" />
