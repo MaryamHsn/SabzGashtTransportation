@@ -19,7 +19,7 @@ namespace SabzGashtTransportation.ViewModel
         public string LFDateString { get; set; }
         public int? AutomobileTypeId { get; set; }
         public string HasCooler { get; set; }
-        public string IsBus { get; set; }
+        public int IsBus { get; set; }
         public  List<AutomobileTypeTbl> AutomobileTypeList { get; set; }
         public  AutomobileTypeTbl AutomobileType { get; set; }
         public AutomobileTypeEnum IsBusEnum { get; set; }

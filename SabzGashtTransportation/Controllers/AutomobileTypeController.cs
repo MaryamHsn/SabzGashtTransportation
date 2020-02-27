@@ -90,15 +90,14 @@ namespace SabzGashtTransportation.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             AutomobileTypeTbl automobile = _automobile.GetAutomobileType(id);
+            if (automobile == null)
+            {
+                return HttpNotFound();
+            }
             common = new AutomobileTypeViewModel();
             common = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
             common.CFDateString = automobile.CFDate.ToPersianDateString();
             common.LFDateString = automobile.LFDate.ToPersianDateString();
-
-            if (common == null)
-            {
-                return HttpNotFound();
-            }
             return View(common);
         }
 

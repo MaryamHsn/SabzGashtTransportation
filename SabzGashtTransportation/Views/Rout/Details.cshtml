@@ -1,131 +1,72 @@
-﻿@model SabzGashtTransportation.ViewModel.RoutTbl
+﻿@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
+@using Sabz.ServiceLayer.Utils
+@model SabzGashtTransportation.ViewModel.RoutViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
 }
 
-<h2>Details</h2>
+<h2>اطلاعات بیشتر</h2>
 
 <div>
-    <h4>RoutTbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RegionTbl.RegionName)
-        </dt>
+    <table class="tbl-show">
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نام مسیر:</th>
+            <th> @Html.DisplayFor(model => model.Name)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> نوع مسیر:</th>
+            <th> @Html.DisplayFor(model => model.ShiftType)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">ساعت ورود:</th>
+            <th> @Html.DisplayFor(model => model.EnterTime)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">ساعت خروج:</th>
+            <th> @Html.DisplayFor(model => model.ExitTime)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> تاریخ شروع:</th>
+            <th> @Html.DisplayFor(model => model.StartDateString)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">تاریخ پایان:</th>
+            <th> @Html.DisplayFor(model => model.EndTimeString)</th>
+        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.RegionTbl.RegionName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShiftType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ShiftType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EnterTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EnterTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ExitTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExitTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AutomobileTypeId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AutomobileTypeId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AgreementPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AgreementPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DriverPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DriverPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Count)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Count)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LFDate)
-        </dd>
-
-    </dl>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">منطقه:</th>
+            <th> @Html.DisplayFor(model => model.RegionName)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">وضعیت کولر:</th>
+            <th> @(Model.AutomobileTypeTbl.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نوع ماشین:</th>
+            <th> @(Model.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> بهای دریافتی مسیر:</th>
+            <th> @Html.DisplayFor(model => model.AgreementPrice)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> بهای پرداخت به راننده:</th>
+            <th> @Html.DisplayFor(model => model.DriverPrice)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> تعداد:</th>
+            <th> @Html.DisplayFor(model => model.Count)</th>
+        </tr>
+    </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.RoutID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <div class="link-back">
+        @Html.ActionLink("ویرایش", "Edit", new { id = Model.RoutID }) |
+        @Html.ActionLink("بازگشت به لیست", "Index")
+    </div>
 </p>

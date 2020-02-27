@@ -33,7 +33,7 @@ namespace Sabz.DomainClasses.DTO
         public DateTime? StartDate { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? EndTime { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public int RegionId { get; set; }
 

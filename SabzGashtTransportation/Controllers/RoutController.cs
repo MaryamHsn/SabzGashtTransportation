@@ -8,17 +8,28 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Sabz.DataLayer.Context;
-using Sabz.DomainClasses.DTO; 
+using Sabz.DomainClasses.DTO;
+using Sabz.ServiceLayer.Enumration;
 using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.Mapper;
+using Sabz.ServiceLayer.Utils;
+using Sabz.ServiceLayer.ViewModel;
+using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
     public class RoutController : Controller
     {
         readonly IRoutService _rout;
+        readonly IRegionService _region;
+
         readonly IUnitOfWork _uow;
-        public RoutController(IUnitOfWork uow, IRoutService rout)
+        private RoutViewModel common { get; set; }
+        private List<RoutViewModel> commonList { get; set; }
+
+        public RoutController(IUnitOfWork uow, IRoutService rout, IRegionService region)
         {
+            _region = region;
             _rout = rout;
             _uow = uow;
         }
@@ -29,11 +40,13 @@ namespace SabzGashtTransportation.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.ShiftType = String.IsNullOrEmpty(sortOrder) ? "shiftType_desc" : "";
-            ViewBag.EnterTime = sortOrder == "EnterTime" ? "enterTime_desc" : "enterTime";
-            ViewBag.ExitTime = sortOrder == "ExitTime" ? "exitTime_desc" : "exitTime";
-            ViewBag.RegionId = sortOrder == "Region" ? "region_desc" : "region";
-            ViewBag.AutomobileType = sortOrder == "AutomobileType" ? "automobileType_desc" : "AutomobileType";
-            ViewBag.Count = sortOrder == "Count" ? "count_desc" : "count";
+            ViewBag.Name = sortOrder == "name" ? "name_desc" : "name";
+            ViewBag.EnterTime = sortOrder == "enterTime" ? "enterTime_desc" : "enterTime";
+            ViewBag.ExitTime = sortOrder == "exitTime" ? "exitTime_desc" : "exitTime";
+            ViewBag.RegionId = sortOrder == "region" ? "region_desc" : "region";
+            ViewBag.AutomobileTypeBus = sortOrder == "automobileTypeBus" ? "automobileTypeBus_desc" : "automobileTypeBus";
+            ViewBag.AutomobileTypeCooler = sortOrder == "automobileTypeCooler" ? "automobileTypeCooler_desc" : "automobileTypeCooler";
+            ViewBag.Count = sortOrder == "count" ? "count_desc" : "count";
 
             if (searchString != null)
             {
@@ -50,9 +63,11 @@ namespace SabzGashtTransportation.Controllers
             {
                 list = list.Where(s => s.ShiftType.ToString().Contains(searchString)
                                        || s.EnterTime.ToString().Contains(searchString)
+                                       || s.Name.ToString().Contains(searchString)
                                        || s.ExitTime.ToString().Contains(searchString)
-                                       || s.RegionId.ToString().Contains(searchString)
-                                       || s.AutomobileTypeId.ToString().Contains(searchString)
+                                       || s.RegionTbl.RegionName.Contains(searchString)
+                                       || s.AutomobileTypeTbl.HasCooler.ToString().Contains(searchString)
+                                       || s.AutomobileTypeTbl.IsBus.ToString().Contains(searchString)
                                        || s.Count.ToString().Contains(searchString)).ToList();
             }
             switch (sortOrder)
@@ -67,22 +82,28 @@ namespace SabzGashtTransportation.Controllers
                     list = list.OrderByDescending(s => s.EnterTime).ToList();
                     break;
                 case "exitTime":
-                    list = list.OrderBy(s => s.AutomobileTypeId).ToList();
+                    list = list.OrderBy(s => s.ExitTime).ToList();
                     break;
                 case "exitTime_desc":
-                    list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
+                    list = list.OrderByDescending(s => s.ExitTime).ToList();
                     break;
                 case "region":
-                    list = list.OrderBy(s => s.RegionId).ToList();
+                    list = list.OrderBy(s => s.RegionTbl.RegionName).ToList();
                     break;
                 case "region_desc":
-                    list = list.OrderByDescending(s => s.RegionId).ToList();
+                    list = list.OrderByDescending(s => s.RegionTbl.RegionName).ToList();
                     break;
-                case "automobileType":
-                    list = list.OrderBy(s => s.AutomobileTypeId).ToList();
+                case "automobileTypeBus":
+                    list = list.OrderBy(s => s.AutomobileTypeTbl.IsBus).ToList();
                     break;
-                case "automobileType_desc":
-                    list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
+                case "automobileTypeBus_desc":
+                    list = list.OrderByDescending(s => s.AutomobileTypeTbl.IsBus).ToList();
+                    break;
+                case "automobileTypeCooler":
+                    list = list.OrderBy(s => s.AutomobileTypeTbl.HasCooler).ToList();
+                    break;
+                case "automobileTypeCooler_desc":
+                    list = list.OrderByDescending(s => s.AutomobileTypeTbl.HasCooler).ToList();
                     break;
                 case "count":
                     list = list.OrderBy(s => s.Count).ToList();
@@ -90,15 +111,25 @@ namespace SabzGashtTransportation.Controllers
                 case "count_desc":
                     list = list.OrderByDescending(s => s.Count).ToList();
                     break;
+                case "name":
+                    list = list.OrderBy(s => s.Name).ToList();
+                    break;
+                case "name_desc":
+                    list = list.OrderByDescending(s => s.Name).ToList();
+                    break;
                 default:
                     list = list.OrderBy(s => s.ShiftType).ToList();
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(list.ToPagedList(pageNumber, pageSize));
-
+            foreach (var item in list)
+            {
+                var element = BaseMapper<RoutViewModel, RoutTbl>.Map(item);
+                commonList.Add(element);
+            }
+            return View(commonList.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Drivers/Details/5
@@ -109,17 +140,26 @@ namespace SabzGashtTransportation.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             RoutTbl rout= _rout.GetRout(id);
-
             if (rout == null)
             {
                 return HttpNotFound();
             }
-            return View(rout);
+            common = new RoutViewModel();
+            common = BaseMapper<RoutViewModel, RoutTbl>.Map(rout);
+            common.CFDateString = rout.CFDate.ToPersianDateString();
+            common.LFDateString = rout.LFDate.ToPersianDateString();
+            common.StartDateString = rout.EndDate != null ? ConvertDate.ToPersianDateString((DateTime)rout.StartDate) : "";
+            common.EndDateString = rout.EndDate!= null?ConvertDate.ToPersianDateString((DateTime)rout.EndDate) :"";
+            return View(common);
         }
 
         // GET: Drivers/Create
         public ActionResult Create()
         {
+            common = new RoutViewModel()
+            {
+                RegionTblList = _region.GetAllRegions() 
+            };
             return View();
         }
 
@@ -128,15 +168,17 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RoutTbl rout)
+        public ActionResult Create(RoutViewModel rout)
         {
             if (ModelState.IsValid)
             {
+                rout.StartDate = rout.StartDateString.ToGeorgianDate();
+                rout.EndDate = rout.EndDateString.ToGeorgianDate();
                 rout.IsActive = true;
                 rout.CFDate = DateTime.Now;
                 rout.LFDate = DateTime.Now;
-
-                _rout.AddNewRout(rout);
+                var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
+                _rout.AddNewRout(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -155,7 +197,9 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(rout);
+            var obj = BaseMapper<RoutViewModel, RoutTbl>.Map(rout);
+            obj.RegionTblList = _region.GetAllRegions();
+            return View(obj);
         }
 
         // POST: Drivers/Edit/5
@@ -163,17 +207,20 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RoutTbl rout)
+        public ActionResult Edit(RoutViewModel rout)
         {
             if (ModelState.IsValid)
             {
-                _rout.Delete(rout.RoutID);
                 rout.LFDate = DateTime.Now;
-                _rout.AddNewRout(rout);
-                _uow.SaveAllChanges();
-
-                // db.Entry(driverTbl).State = EntityState.Modified;
-                //   db.SaveChanges();
+                _rout.Delete(rout.RoutID);
+                var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                obj.StartDate = rout.StartDateString.ToGeorgianDate();
+                obj.EndDate= rout.EndDateString.ToGeorgianDate();
+                obj.IsActive = true;
+                _rout.AddNewRout(obj);
+                _uow.SaveAllChanges(); 
             }
             return RedirectToAction("Index");
 
@@ -191,7 +238,12 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(rout);
+            var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
+            obj.StartDateString = obj.StartDate != null ? ConvertDate.ToPersianDateString((DateTime) obj.StartDate) : "";
+            obj.EndDateString = obj.EndDate != null ? ConvertDate.ToPersianDateString((DateTime)obj.EndDate) : "";
+            obj.RegionName = rout.RegionTbl != null
+                ? rout.RegionTbl.RegionName : _region.GetRegion(rout.RegionId).RegionName;
+            return View(obj);
         }
 
         // POST: Drivers/Delete/5

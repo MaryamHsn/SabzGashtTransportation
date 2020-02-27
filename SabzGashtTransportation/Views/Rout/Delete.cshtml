@@ -1,137 +1,61 @@
-﻿@model SabzGashtTransportation.ViewModel.RoutTbl
+﻿@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
+@model SabzGashtTransportation.ViewModel.RoutViewModel
+
 
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h2>آیا مطمئن از حذف هستید؟ </h2>
 <div>
-    <h4>RoutTbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RegionTbl.RegionName)
-        </dt>
+    <table class="tbl-show">
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نام مسیر:</th>
+            <th> @Html.DisplayFor(model => model.Name)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نوع مسیر:</th>
+            <th> @Html.DisplayFor(model => model.ShiftType)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">ساعت ورورد:</th>
+            <th> @Html.DisplayFor(model => model.EnterTime)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">ساعت خروج:</th>
+            <th> @Html.DisplayFor(model => model.ExitTime)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">تاریخ شروع:</th>
+            <th> @Html.DisplayFor(model => model.StartDateString)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">تاریخ پایان:</th>
+            <th> @Html.DisplayFor(model => model.EndDateString)</th>
+        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.RegionTbl.RegionName)
-        </dd>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">منطقه:</th>
+            <th> @Html.DisplayFor(model => model.RegionName)</th>
+        </tr>
+    </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShiftType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ShiftType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EnterTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EnterTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ExitTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExitTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AutomobileTypeId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AutomobileTypeId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AgreementPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AgreementPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DriverPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DriverPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Count)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Count)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LFDate)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-danger">حذف</button>
+            </div>
+        </div>
+
+        <div class="link-back">
+            @Html.ActionLink("بازگشت به لیست", "Index")
         </div>
     }
 </div>
