@@ -103,10 +103,6 @@ namespace SabzGashtTransportation.Controllers
         // GET: Drivers/Create
         public ActionResult Create()
         {
-            //List<SelectListItem> automobileTypeItems = new List<SelectListItem>();
-            //automobileTypeItems.Add(new SelectListItem() { Text = "اتوبوس", Value = "0" });
-            //automobileTypeItems.Add(new SelectListItem() { Text = "مینی بوس", Value = "1" });
-            //ViewBag.AutomobileType = automobileTypeItems;
             return View();
         }
 

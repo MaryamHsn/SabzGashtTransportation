@@ -1,24 +1,29 @@
-﻿using System; 
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Sabz.DataLayer.Context;
-using Sabz.DomainClasses.DTO; 
+using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.IService;
+using Sabz.ServiceLayer.Mapper;
+using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
     public class RegionController : Controller
     {
         private readonly IRegionService _region;
+        private readonly IRoutService _rout;
         readonly IUnitOfWork _uow;
-        private Re common { get; set; }
-        private List<AutomobileTypeViewModel> commonList { get; set; }
+        private RegionViewModel common { get; set; }
+        private List<RegionViewModel> commonList { get; set; }
 
-        public RegionController(IUnitOfWork uow, IRegionService region)
+        public RegionController(IUnitOfWork uow, IRegionService region, IRoutService rout)
         {
+            _rout = rout;
             _region = region;
             _uow = uow;
         }
@@ -27,6 +32,7 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            commonList = new List<RegionViewModel>();
             ViewBag.CurrentSort = sortOrder;
             ViewBag.RegionName = String.IsNullOrEmpty(sortOrder) ? "regionName_desc" : "";
             if (searchString != null)
@@ -54,9 +60,14 @@ namespace SabzGashtTransportation.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(list.ToPagedList(pageNumber, pageSize));
+            foreach (var item in list)
+            {
+                var element = BaseMapper<RegionViewModel, RegionTbl>.Map(item);
+                commonList.Add(element);
+            }
+            return View(commonList.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Drivers/Details/5
@@ -72,7 +83,9 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            return View(region);
+            common = new RegionViewModel();
+            common = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
+            return View(common);
         }
 
         // GET: Drivers/Create
@@ -86,15 +99,15 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RegionTbl region)
+        public ActionResult Create(RegionViewModel region)
         {
             if (ModelState.IsValid)
             {
-                region.IsActive = true;
-                region.CFDate = DateTime.Now;
-                region.LFDate = DateTime.Now;
-
-                _region.AddNewRegion(region);
+                var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
+                obj.IsActive = true;
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                _region.AddNewRegion(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -107,13 +120,14 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RegionTbl region= _region.GetRegion(id);
+            RegionTbl region = _region.GetRegion(id);
+            var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
 
             if (region == null)
             {
                 return HttpNotFound();
             }
-            return View(region);
+            return View(obj);
         }
 
         // POST: Drivers/Edit/5
@@ -121,13 +135,18 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RegionTbl region)
+        public ActionResult Edit(RegionViewModel region)
         {
             if (ModelState.IsValid)
             {
-                _region.Delete(region.RegionId);
+                region.IsActive = false;
                 region.LFDate = DateTime.Now;
-                _region.AddNewRegion(region);
+                _region.Delete(region.RegionId);
+                var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                obj.IsActive = true;
+                _region.AddNewRegion(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -141,12 +160,13 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RegionTbl region= _region.GetRegion(id);
+            RegionTbl region = _region.GetRegion(id);
             if (region == null)
             {
                 return HttpNotFound();
             }
-            return View(region);
+            var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
+            return View(obj);
         }
 
         // POST: Drivers/Delete/5

@@ -1,57 +1,36 @@
-﻿@model SabzGashtTransportation.ViewModel.RegionTbl
+﻿@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
+@model SabzGashtTransportation.ViewModel.RegionViewModel
+
 
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h2>آیا مطمئن از حذف هستید؟ </h2>
 <div>
-    <h4>RegionTbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RegionName)
-        </dt>
+    <table class="tbl-show">
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نام منطقه:</th>
+            <th> @Html.DisplayFor(model => model.RegionName)</th>
+        </tr>
+    </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.RegionName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LFDate)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-danger">حذف</button>
+            </div>
+        </div>
+
+        <div class="link-back">
+            @Html.ActionLink("بازگشت به لیست", "Index")
         </div>
     }
 </div>

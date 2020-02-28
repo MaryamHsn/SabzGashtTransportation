@@ -1,51 +1,28 @@
-﻿@model SabzGashtTransportation.ViewModel.RegionTbl
+﻿@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
+@using Sabz.ServiceLayer.Utils
+@model SabzGashtTransportation.ViewModel.RegionViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
 }
 
-<h2>Details</h2>
+<h2>اطلاعات بیشتر</h2>
 
 <div>
-    <h4>RegionTbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RegionName)
-        </dt>
+    <table class="tbl-show">
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نام منطقه:</th>
+            <th> @Html.DisplayFor(model => model.RegionName)</th>
+        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.RegionName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LFDate)
-        </dd>
-
-    </dl>
+    </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.RegionId }) |
-    @Html.ActionLink("Back to List", "Index")
+    <div class="link-back">
+        @Html.ActionLink("ویرایش", "Edit", new { id = Model.RegionId }) |
+        @Html.ActionLink("بازگشت به لیست", "Index")
+    </div>
 </p>

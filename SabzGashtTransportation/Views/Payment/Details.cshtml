@@ -1,0 +1,99 @@
+﻿@model Sabz.DomainClasses.DTO.PaymentTbl
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PaymentTbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DriverTbl.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DriverTbl.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Insurance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Insurance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreHelpCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreHelpCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fine)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fine)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccidentCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccidentCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CFDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CFDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LFDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LFDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PaymentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

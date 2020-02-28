@@ -1,6 +1,6 @@
 ﻿using System; 
 
-namespace Sabz.ServiceLayer.ViewModel
+namespace SabzGashtTransportation.ViewModel
 { 
     public class PaymentViewModel
     { 

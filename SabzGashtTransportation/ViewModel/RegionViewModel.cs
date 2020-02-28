@@ -15,7 +15,8 @@ namespace SabzGashtTransportation.ViewModel
         public string CFDateString { get; set; }
         public DateTime LFDate { get; set; }
         public string LFDateString { get; set; }
+        public string RoutName { get; set; }
 
-        public virtual ICollection<RoutTbl> RoutTbls { get; set; }
+        public  RoutTbl RoutTbl { get; set; }
     }
 }
