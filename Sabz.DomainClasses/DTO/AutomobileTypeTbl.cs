@@ -23,7 +23,7 @@ namespace Sabz.DomainClasses.DTO
 
         public string Description { get; set; }
 
-        public int IsBus { get; set; }
+        public int? IsBus { get; set; }
         public bool IsActive { get; set; }
         public DateTime CFDate { get; set; }
         public DateTime LFDate { get; set; }

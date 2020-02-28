@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Sabz.ServiceLayer.Enumration
 {
-    public enum HasCoolerEnum
+    public enum WorkDoneEnum
     {
-        [Display(Name = "کولر ندارد")]
-        HasNotCooler = 0,
-        [Display(Name = "کولر دارد")]
-        HasCooler = 1
+        [Display(Name = "انجام شده")]
+        NotDone = 0,
+        [Display(Name = "انجام نشده")]
+        Done = 1
     }
 }

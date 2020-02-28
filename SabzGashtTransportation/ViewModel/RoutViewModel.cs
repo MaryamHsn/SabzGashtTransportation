@@ -14,14 +14,14 @@ namespace SabzGashtTransportation.ViewModel
         public string EnterTimeString { get; set; }
         public TimeSpan ExitTime { get; set; }
         public string ExitTimeString { get; set; }
-        public DateTime? StartDate { get; set; }
+        public DateTime StartDate { get; set; }
         public string StartDateString { get; set; }
-        public DateTime? EndDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string EndDateString { get; set; }
         public int RegionId { get; set; }
         public string RegionName { get; set; }
         public int AutomobileTypeId { get; set; }
-        public bool HasCooler { get; set; }
+        public int HasCooler { get; set; }
         public int IsBus { get; set; }
         public decimal AgreementPrice { get; set; }
         public decimal DriverPrice { get; set; }

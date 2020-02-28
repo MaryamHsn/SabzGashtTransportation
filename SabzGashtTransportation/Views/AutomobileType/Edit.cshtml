@@ -35,7 +35,7 @@
         <div class="form-group">
             <p class="control-label">نوع ماشین:</p>
             <div class="col-md-10">
-                @{
+                @*@{
                     if (Model.IsBus == (int)AutomobileTypeEnum.Bus)
                     {
                         insurancTextShowDefault = AutomobileTypeEnum.Bus.ToString();
@@ -44,7 +44,7 @@
                     {
                         insurancTextShowDefault = AutomobileTypeEnum.Bus.ToString();
                     }
-                }
+                }*@
                 @Html.EnumDropDownListFor(x => x.IsBusEnum, "انتخاب کنید", new { @class = "form-control" })
 
                 @* @Html.DropDownList("استفاده از بیمه", (IEnumerable<SelectListItem>)ViewBag.insurance, insurancTextShowDefault, htmlAttributes: new { @class = "form-control" })*@

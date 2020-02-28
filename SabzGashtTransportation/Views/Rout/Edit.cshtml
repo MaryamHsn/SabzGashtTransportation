@@ -1,5 +1,6 @@
 ﻿@using Sabz.DomainClasses.DTO
 @using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
 @using Sabz.ServiceLayer.Utils
 @model SabzGashtTransportation.ViewModel.RoutViewModel
 
@@ -7,7 +8,8 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
-    var insurancTextShowDefault = "";
+    var coolerTextShowDefault = "";
+    var autoTypeTextShowDefault = "";
 
 }
 
@@ -76,6 +78,67 @@
         <div class="col-md-10">
             @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.RegionTblList, "RegionId", "RegionName"), htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.RegionId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="control-label">کولر دار:</p>
+        <div class="col-md-10">
+            <div class="checkbox">
+                @*@{
+                    if (Model.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler))
+                    {
+                        coolerTextShowDefault = HasCoolerEnum.HasCooler.GetDisplayName();
+                    }
+                    else
+                    {
+                        coolerTextShowDefault = HasCoolerEnum.HasNotCooler.GetDisplayName();
+                    }
+                }*@
+                @Html.EnumDropDownListFor(x => x.HasCoolerEnum, "انتخاب کنید", new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.HasCooler, "", new {@class = "text-danger"})
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label">نوع اتومبیل:</p>
+        <div class="col-md-10">
+            @*@{
+               
+                if (Model.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus)
+                {
+                    autoTypeTextShowDefault = AutomobileTypeEnum.Bus.GetDisplayName();
+                }
+                else
+                {
+                    autoTypeTextShowDefault = AutomobileTypeEnum.MiniBus.GetDisplayName();
+                }
+            }*@
+            @Html.EnumDropDownListFor(x => x.IsBusEnum, "انتخاب کنید", new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.IsBusEnum, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="control-label">بهای دریافتی مسیر :</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AgreementPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AgreementPrice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label">بهای پرداخت به راننده :</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DriverPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DriverPrice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label">تعداد :</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
         </div>
     </div>
 

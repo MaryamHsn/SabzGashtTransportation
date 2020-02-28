@@ -59,7 +59,7 @@ namespace Sabz.ServiceLayer.Utils
 
         public static DateTime ToGeorgianDate(this string persianDateStringParam)
         {
-            var dateParts = persianDateStringParam.Split(new[] { '/' });
+            var dateParts = persianDateStringParam.Split(new[] { '/' , '-' });
             JalaliCalendar persianCalendar = new JalaliCalendar();
             DateTime resultDateTime = new DateTime();
             if (dateParts[0].Length == 4)

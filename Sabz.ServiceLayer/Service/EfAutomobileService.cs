@@ -31,12 +31,12 @@ namespace Sabz.ServiceLayer.Service
         }
         public AutomobileTbl GetAutomobile(int? id)
         {
-            return _automobiles.Find(id);
+            return _automobiles.Where(x => x.IsActive&&x.AutomobileId==id).FirstOrDefault(); 
         }
 
         public int Delete(int id)
         {
-            AutomobileTbl auto = _automobiles.Find(id);
+            AutomobileTbl auto = _automobiles.Where(x => x.IsActive && x.AutomobileId == id).FirstOrDefault();
             auto.IsActive = false;
             return auto.AutomobileId;
         }

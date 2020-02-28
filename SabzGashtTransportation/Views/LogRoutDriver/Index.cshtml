@@ -1,88 +1,80 @@
-﻿@model IEnumerable<SabzGashtTransportation.ViewModel.LogRoutDriverTbl>
+﻿
+@using PagedList.Mvc
+@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
+@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.LogRoutDriverViewModel>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
 }
 
-<h2>Index</h2>
+<h2>تصادفات</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FinePrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DoDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DriverRoutId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsTemporary)
-        </th>
-        <th></th>
-    </tr>
+<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">ثبت جدید</button>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FinePrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DoDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CFDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LFDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DriverRoutId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsTemporary)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@using (Html.BeginForm("Index", "LogRoutDriver", FormMethod.Get))
+{
+    <p class="search_table">
+        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="جستجو" />
+    </p>
 }
+<table id="showList">
+    <tr>
+        <th>
+            @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("اتومبیل", "Index", new { sortOrder = ViewBag.Automobile, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("انجام کار", "Index", new { sortOrder = ViewBag.Cost, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("تاریخ انجام", "Index", new { sortOrder = ViewBag.Insurance, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("جریمه", "Index", new { sortOrder = ViewBag.Insurance, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            عملیات
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.DriverRoutTbl.DriverTbl.FullName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DriverRoutTbl.RoutTbl.Name)
+    </td>
+    <td>
+        @(item.IsDone == Convert.ToBoolean(WorkDoneEnum.Done)? WorkDoneEnum.Done.GetDisplayName() : WorkDoneEnum.NotDone.GetDisplayName())
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DoDateString)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FinePrice)
+    </td>
+    <td>
+        @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("جزئیات", "Details", new { id = item.Id}) |
+        @Html.ActionLink("حذف", "Delete", new { id = item.Id})
+    </td>
+</tr>
+    }
 
 </table>
+<br />
+<p class="showPage">
+    صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+</p>
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

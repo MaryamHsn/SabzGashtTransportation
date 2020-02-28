@@ -14,6 +14,9 @@ namespace SabzGashtTransportation.Controllers
     {
         private readonly IRegionService _region;
         readonly IUnitOfWork _uow;
+        private Re common { get; set; }
+        private List<AutomobileTypeViewModel> commonList { get; set; }
+
         public RegionController(IUnitOfWork uow, IRegionService region)
         {
             _region = region;

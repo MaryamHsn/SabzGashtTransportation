@@ -5409,6 +5409,7 @@ button {
 }
 
     #showList td, #showList th {
+        font-family: Iranian Sans,Nazanin,Arial,sans-serif;
         border: 1px solid #ddd;
         padding: 8px;
     }

@@ -12,6 +12,7 @@ namespace Sabz.ServiceLayer.IService
         void AddNewAutomobileType(AutomobileTypeTbl automobileType);
         IList<AutomobileTypeTbl> GetAllAutomobileTypes();
         AutomobileTypeTbl GetAutomobileType(int? id);
+        AutomobileTypeTbl GetAutomobileTypeByCoolerBus(int cooler, int bus);
         int Delete(int id);
     }
 }

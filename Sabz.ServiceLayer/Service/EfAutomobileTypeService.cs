@@ -31,7 +31,13 @@ namespace Sabz.ServiceLayer.Service
         }
         public AutomobileTypeTbl GetAutomobileType(int? id)
         {
-            return _automobileTypes.Find(id);
+            return _automobileTypes.Where(x=>x.IsActive&& x.AutoTypeId==id).FirstOrDefault();
+        }
+        public AutomobileTypeTbl GetAutomobileTypeByCoolerBus(int cooler,int bus)
+        {
+            var t = Convert.ToBoolean(cooler);
+            var autoType= _automobileTypes.Where(x => x.IsActive && x.HasCooler == t &&x.IsBus==bus).FirstOrDefault();
+            return autoType;
         }
 
         public int Delete(int id)

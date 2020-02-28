@@ -55,34 +55,37 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShiftType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnterTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExitTime)
-            </td>
-            <td>
-                @(item.AutomobileTypeTbl.IsBus == (int) AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())
-            </td>
-            <td>
-                @(item.AutomobileTypeTbl.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.ActionLink("ویرایش", "Edit", new {id = item.RoutID}) |
-                @Html.ActionLink("جزئیات", "Details", new {id = item.RoutID}) |
-                @Html.ActionLink("حذف", "Delete", new {id = item.RoutID})
-            </td>
-        </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ShiftType)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EnterTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ExitTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RegionName)
+    </td>
+    <td>
+        @(item.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())
+    </td>
+    <td>
+        @(item.AutomobileTypeTbl.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Count)
+    </td>
+    <td>
+        @Html.ActionLink("ویرایش", "Edit", new { id = item.RoutID }) |
+        @Html.ActionLink("جزئیات", "Details", new { id = item.RoutID }) |
+        @Html.ActionLink("حذف", "Delete", new { id = item.RoutID })
+    </td>
+</tr>
     }
 
 </table>

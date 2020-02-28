@@ -12,6 +12,7 @@ namespace Sabz.ServiceLayer.IService
         void AddNewRout(RoutTbl rout);
         IList<RoutTbl> GetAllRouts();
         RoutTbl GetRout(int? id);
+        RoutTbl GetRoutByName(string name);
         int Delete(int id);
     }
 }

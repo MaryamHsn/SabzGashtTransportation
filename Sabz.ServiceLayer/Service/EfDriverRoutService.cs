@@ -31,7 +31,12 @@ namespace Sabz.ServiceLayer.Service
         }
         public DriverRoutTbl GetDriverRout(int? id)
         {
-            return _driverRouts.Find(id);
+            return _driverRouts.Where(x => x.IsActive && x.Id==id).FirstOrDefault();
+        }
+
+        public DriverRoutTbl GetDriverRoutByDriverIdRoutId(int driverId,int routId)
+        {
+            return _driverRouts.Where(x => x.IsActive && x.DriverId == driverId && x.RoutId==routId).FirstOrDefault();
         }
 
         public int Delete(int id)

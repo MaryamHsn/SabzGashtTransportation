@@ -22,13 +22,14 @@ namespace SabzGashtTransportation.Controllers
     {
         readonly IRoutService _rout;
         readonly IRegionService _region;
-
+        readonly IAutomobileTypeService _automobileType;
         readonly IUnitOfWork _uow;
         private RoutViewModel common { get; set; }
         private List<RoutViewModel> commonList { get; set; }
 
-        public RoutController(IUnitOfWork uow, IRoutService rout, IRegionService region)
+        public RoutController(IUnitOfWork uow, IRoutService rout, IRegionService region, IAutomobileTypeService automobileType)
         {
+            _automobileType = automobileType;
             _region = region;
             _rout = rout;
             _uow = uow;
@@ -38,6 +39,7 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            commonList= new List<RoutViewModel>();
             ViewBag.CurrentSort = sortOrder;
             ViewBag.ShiftType = String.IsNullOrEmpty(sortOrder) ? "shiftType_desc" : "";
             ViewBag.Name = sortOrder == "name" ? "name_desc" : "name";
@@ -124,9 +126,14 @@ namespace SabzGashtTransportation.Controllers
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
+            var allRegion= _region.GetAllRegions();
+            var allAutomobileType = _automobileType.GetAllAutomobileTypes();
             foreach (var item in list)
             {
                 var element = BaseMapper<RoutViewModel, RoutTbl>.Map(item);
+                element.RegionName = allRegion.Where(x => x.RegionId== element.RegionId).FirstOrDefault().RegionName;
+                element.AutomobileTypeTbl = allAutomobileType.Where(x => x.AutoTypeId == item.AutomobileTypeId).FirstOrDefault();
+                    //element.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus(item.AutomobileTypeTbl.HasCooler, (int)item.AutomobileTypeTbl.IsBus);
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));
@@ -150,6 +157,8 @@ namespace SabzGashtTransportation.Controllers
             common.LFDateString = rout.LFDate.ToPersianDateString();
             common.StartDateString = rout.EndDate != null ? ConvertDate.ToPersianDateString((DateTime)rout.StartDate) : "";
             common.EndDateString = rout.EndDate!= null?ConvertDate.ToPersianDateString((DateTime)rout.EndDate) :"";
+            common.AutomobileTypeTbl = _automobileType.GetAutomobileType(common.AutomobileTypeId);
+            common.RegionName = _region.GetRegion(common.RegionId).RegionName;
             return View(common);
         }
 
@@ -160,7 +169,7 @@ namespace SabzGashtTransportation.Controllers
             {
                 RegionTblList = _region.GetAllRegions() 
             };
-            return View();
+            return View(common);
         }
 
         // POST: Drivers/Create
@@ -172,6 +181,7 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
+                rout.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus(rout.HasCooler, rout.IsBus).AutoTypeId;
                 rout.StartDate = rout.StartDateString.ToGeorgianDate();
                 rout.EndDate = rout.EndDateString.ToGeorgianDate();
                 rout.IsActive = true;
@@ -199,6 +209,27 @@ namespace SabzGashtTransportation.Controllers
             }
             var obj = BaseMapper<RoutViewModel, RoutTbl>.Map(rout);
             obj.RegionTblList = _region.GetAllRegions();
+            obj.StartDateString = obj.StartDate.ToPersianDateString();
+            obj.EndDateString= obj.EndDate.ToPersianDateString();
+            obj.AutomobileTypeTbl = _automobileType.GetAutomobileType(obj.AutomobileTypeId);
+            if (obj.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler))
+            {
+                obj.HasCoolerEnum = HasCoolerEnum.HasCooler;
+            }
+            else
+            {
+                obj.HasCoolerEnum = HasCoolerEnum.HasNotCooler;
+            }
+            if (obj.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus)
+            {
+                obj.IsBusEnum = AutomobileTypeEnum.Bus;
+            }
+            else
+            {
+                obj.IsBusEnum = AutomobileTypeEnum.MiniBus;
+            }
+
+
             return View(obj);
         }
 
@@ -212,6 +243,7 @@ namespace SabzGashtTransportation.Controllers
             if (ModelState.IsValid)
             {
                 rout.LFDate = DateTime.Now;
+                rout.IsActive = false;
                 _rout.Delete(rout.RoutID);
                 var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
                 obj.CFDate = DateTime.Now;
@@ -219,6 +251,8 @@ namespace SabzGashtTransportation.Controllers
                 obj.StartDate = rout.StartDateString.ToGeorgianDate();
                 obj.EndDate= rout.EndDateString.ToGeorgianDate();
                 obj.IsActive = true;
+                obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus((int)rout.HasCoolerEnum,(int) rout.IsBusEnum).AutoTypeId;
+
                 _rout.AddNewRout(obj);
                 _uow.SaveAllChanges(); 
             }

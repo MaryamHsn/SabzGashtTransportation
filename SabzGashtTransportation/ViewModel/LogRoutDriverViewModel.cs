@@ -1,6 +1,7 @@
 using Sabz.DomainClasses.DTO;
+using Sabz.ServiceLayer.Enumration;
 
-namespace Sabz.ServiceLayer.ViewModel
+namespace SabzGashtTransportation.ViewModel
 {
     using System;
     using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace Sabz.ServiceLayer.ViewModel
         public int DriverId { get; set; }
         public string DriverFirstName { get; set; }
         public string DriverLastName { get; set; }
+        public string DriverFullName { get; set; }
         public string DriverPhone { get; set; }
         public int  RoutId { get; set; }
         public string RoutName { get; set; }
@@ -35,6 +37,14 @@ namespace Sabz.ServiceLayer.ViewModel
         public string RoutShiftType { get; set; }
         public string RoutEnterTimeString { get; set; }
         public string RoutExitTimeString { get; set; }
-        public virtual DriverRoutTbl DriverRoutTbl { get; set; }
+        public  DriverRoutTbl DriverRoutTbl { get; set; }
+        public  DriverTbl DriverTbl { get; set; }
+        public  RoutTbl RoutTbl { get; set; }
+        public IEnumerable<DriverTbl> DriverTblList { get; set; }
+        public IEnumerable<RoutTbl> RoutTblList { get; set; }
+        public LogRoutDriverTbl LogRoutDriverTbl { get; set; }
+        public IEnumerable<LogRoutDriverTbl> LogRoutDriverTblList { get; set; }
+        public WorkDoneEnum WorkDoneEnum { get; set; }
+
     }
 }

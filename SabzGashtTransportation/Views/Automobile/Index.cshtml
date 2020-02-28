@@ -20,14 +20,15 @@
 </p>
 @using (Html.BeginForm("Index", "Automobile", FormMethod.Get))
 {
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
+    <p class="search_table">
+
+        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="جستجو" />
     </p>
 }
-<table class="table-sort">
-    <tr class="table-sort-tr">
-        <th class="table-sort-th">
+<table id="showList">
+    <tr>
+        <th>
             @Html.ActionLink("شماره پلاک", "Index", new { sortOrder = ViewBag.Number, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
@@ -35,29 +36,29 @@
         </th>
         <th>
             @Html.ActionLink("مدل اتومبیل", "Index", new { sortOrder = ViewBag.AutomobileType, currentFilter = ViewBag.CurrentFilter })
-        </th> 
+        </th>
         <th>
             @Html.ActionLink("کولر اتومبیل", "Index", new { sortOrder = ViewBag.AutomobileTypeCooler, currentFilter = ViewBag.CurrentFilter })
-        </th> 
+        </th>
         <th></th>
-    </tr>   
+    </tr>
 
     @foreach (var item in Model)
     {
-        <tr class="table-sort-tr">
-            <td class="table-sort-td">
+        <tr>
+            <td>
                 @Html.DisplayFor(modelItem => item.Number)
             </td>
-            <td class="table-sort-td">
+            <td>
                 @Html.DisplayFor(modelItem => item.Shasi)
             </td>
-            <td class="table-sort-td">
+            <td>
                 @(item.AutomobileType.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())
             </td>
-            <td class="table-sort-td">
+            <td>
                 @(item.AutomobileType.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())
             </td>
-            <td class="table-sort-td">
+            <td>
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.AutoId }) |
                 @Html.ActionLink("جزئیات", "Details", new { id = item.AutoId }) |
                 @Html.ActionLink("حذف", "Delete", new { id = item.AutoId })
@@ -67,7 +68,9 @@
 
 </table>
 <br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+<p class="showPage">
+    صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+</p>
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

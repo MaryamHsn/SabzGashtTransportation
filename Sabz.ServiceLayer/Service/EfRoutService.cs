@@ -32,7 +32,12 @@ namespace Sabz.ServiceLayer.Service
 
         public RoutTbl GetRout(int? id)
         {
-            return _routs.Find(id);
+            return _routs.Where(x => x.IsActive&& x.RoutID==id).FirstOrDefault();
+        }
+
+        public RoutTbl GetRoutByName(string name)
+        {
+            return _routs.Where(x => x.IsActive && x.Name == name).FirstOrDefault();
         }
 
         public int Delete(int id)

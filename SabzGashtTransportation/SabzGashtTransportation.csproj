@@ -1275,7 +1275,6 @@
     <Content Include="Views\Rout\Edit.cshtml" />
     <Content Include="Views\Rout\Index.cshtml" />
     <Content Include="Views\DriverRout\Create.cshtml" />
-    <Content Include="Views\DriverRout\Delete.cshtml" />
     <Content Include="Views\DriverRout\Details.cshtml" />
     <Content Include="Views\DriverRout\Edit.cshtml" />
     <Content Include="Views\DriverRout\Index.cshtml" />
@@ -1285,6 +1284,7 @@
     <Content Include="Views\LogRoutDriver\Edit.cshtml" />
     <Content Include="Views\LogRoutDriver\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
+    <Content Include="Views\DriverRout\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

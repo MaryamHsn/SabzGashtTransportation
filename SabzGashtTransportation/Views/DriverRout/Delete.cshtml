@@ -23,7 +23,7 @@
         </tr>
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">مسیر همیشگی؟</th>
-            <th> @(Model.IsTemporary == (int)RoutTypeEnum.Temporary? RoutTypeEnum.Temporary.GetDisplayName() : RoutTypeEnum.Always.GetDisplayName())</th>
+            <th> @(Model.IsTemporary == (int)RoutTypeEnum.Temporary ? RoutTypeEnum.Temporary.GetDisplayName() : RoutTypeEnum.Always.GetDisplayName())</th>
         </tr>
 
     </table>

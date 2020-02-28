@@ -143,10 +143,25 @@ namespace SabzGashtTransportation.Controllers
                 return HttpNotFound();
             }
             var obj= BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
-            //List<SelectListItem> insuranceListItems = new List<SelectListItem>();
-            //insuranceListItems.Add(new SelectListItem() { Text = "استفاده شده", Value = "1" });
-            //insuranceListItems.Add(new SelectListItem() { Text = "استفاده نشده", Value = "0" });
-            //ViewBag.insurance = insuranceListItems;
+          //  obj.HasCoolerEnum = (HasCoolerEnum) Enum.Parse(typeof(HasCoolerEnum), obj.HasCooler.ToString(), true);
+            if (obj.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler))
+            {
+                obj.HasCoolerEnum = HasCoolerEnum.HasCooler;
+            }
+            else
+            {
+                obj.HasCoolerEnum = HasCoolerEnum.HasNotCooler;
+            }
+            if (obj.IsBus == (int)AutomobileTypeEnum.Bus)
+            {
+                obj.IsBusEnum = AutomobileTypeEnum.Bus;
+            }
+            else
+            {
+                obj.IsBusEnum = AutomobileTypeEnum.MiniBus;
+            }
+
+  
             return View(obj);
         }
 

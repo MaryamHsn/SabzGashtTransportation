@@ -91,9 +91,15 @@ namespace SabzGashtTransportation.Controllers
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
+            var AutomobileTypes = _automobileType.GetAllAutomobileTypes();
+
             foreach (var item in list)
             {
                 var element = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(item);
+                element.AutomobileType =
+                    AutomobileTypes.Where(x => x.AutoTypeId == item.AutomobileTypeId).FirstOrDefault();
+                element.AutoId = item.AutomobileId;
+                element.AutomobileTypeId = item.AutomobileTypeId;
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));
@@ -114,6 +120,7 @@ namespace SabzGashtTransportation.Controllers
             }
             common = new AutomobileViewModel();
             common = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
+            common.AutomobileType = _automobileType.GetAutomobileType(automobile.AutomobileTypeId);
             common.CFDateString = automobile.CFDate.ToPersianDateString();
             common.LFDateString = automobile.LFDate.ToPersianDateString();
             if (common== null)
@@ -142,6 +149,8 @@ namespace SabzGashtTransportation.Controllers
                 obj.IsActive = true;
                 obj.CFDate = DateTime.Now;
                 obj.LFDate = DateTime.Now;
+                obj.AutomobileTypeTbl= _automobileType.GetAutomobileTypeByCoolerBus((int)automobile.HasCoolerEnum, (int)automobile.IsBusEnum);
+                obj.AutomobileTypeId = obj.AutomobileTypeTbl.AutoTypeId;
                 _automobile.AddNewAutomobile(obj);
                 _uow.SaveAllChanges();
             }
@@ -161,6 +170,8 @@ namespace SabzGashtTransportation.Controllers
                 return HttpNotFound();
             }
             var obj = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
+            obj.AutoId = automobile.AutomobileId;
+            obj.AutomobileType = _automobileType.GetAutomobileType(obj.AutomobileTypeId);
             return View(obj);
         }
 
@@ -179,7 +190,8 @@ namespace SabzGashtTransportation.Controllers
                 var obj = BaseMapper<AutomobileTbl, AutomobileViewModel>.Map(automobile);
                 obj.CFDate = DateTime.Now;
                 obj.LFDate = DateTime.Now;
-                obj.IsActive = true;
+                obj.IsActive = true; 
+                obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus(automobile.HasCooler,automobile.IsBus).AutoTypeId;
                 _automobile.AddNewAutomobile(obj);
                 _uow.SaveAllChanges();
             }
@@ -199,6 +211,7 @@ namespace SabzGashtTransportation.Controllers
                 return HttpNotFound();
             }
             var obj = BaseMapper<AutomobileTbl, AutomobileViewModel>.Map(automobile);
+            obj.AutomobileType = _automobileType.GetAutomobileType(automobile.AutomobileTypeId);
             if (obj.AutomobileType.IsBus == (int)AutomobileTypeEnum.Bus)
             {
                 ViewBag.AutomobileType = AutomobileTypeEnum.Bus;

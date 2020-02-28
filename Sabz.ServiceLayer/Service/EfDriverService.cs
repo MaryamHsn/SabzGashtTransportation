@@ -26,7 +26,12 @@ namespace Sabz.ServiceLayer.Service
 
         public DriverTbl GetDriver(int? id)
         {
-            return _drivers.Find(id);
+            return _drivers.Where(x => x.IsActive && x.DriverId==id).FirstOrDefault();
+        }
+
+        public DriverTbl GetDriverByName(string fullName)
+        {
+            return _drivers.Where(x => x.IsActive && x.FullName==fullName).FirstOrDefault();
         }
 
         public void AddNewDriver(DriverTbl driver)

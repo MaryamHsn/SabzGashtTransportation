@@ -36,6 +36,9 @@
         <th>
             عملیات
         </th>
+        <th>
+            شناسه
+        </th>
     </tr>
  
     @foreach (var item in Model)
@@ -56,6 +59,9 @@
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.AutoTypeId }) |
                 @Html.ActionLink("جزئیات", "Details", new { id = item.AutoTypeId }) |
                 @Html.ActionLink("حذف", "Delete", new { id = item.AutoTypeId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AutoTypeId)
             </td>
         </tr>
     }

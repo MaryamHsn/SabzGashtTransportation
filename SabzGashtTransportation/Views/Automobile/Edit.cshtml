@@ -1,5 +1,6 @@
 ﻿@using Sabz.DomainClasses.DTO
 @using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
 @using Sabz.ServiceLayer.Utils
 @model SabzGashtTransportation.ViewModel.AutomobileViewModel
 
@@ -7,8 +8,8 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
-    var insurancTextShowDefault = "";
-
+    var coolerTextShowDefault = "";
+    var autoTypeTextShowDefault = "";
 }
 
 
@@ -18,69 +19,79 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.AutoId)
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.AutoId)
+   
 
-        <div class="form-group">
-            <p class="control-label">شماره پلاک:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <p class="control-label">شماره شاسی:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Shasi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Shasi, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <p class="control-label">سال ساخت:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreateYear, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreateYear, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class="control-label">کولر دار:</p>
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(x => x.HasCoolerEnum, "انتخاب کنید", new { @class = "form-control" })
-                @*  @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.Drivers, "DriverId", "FullName"), htmlAttributes: new {@class = "form-control", id = "DriverSelect"})*@
-                @Html.ValidationMessageFor(x => x.HasCooler, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class="control-label">نوع ماشین:</p>
-            <div class="col-md-10">
-                @{
-                    if (Model.AutomobileType.IsBus == (int)AutomobileTypeEnum.Bus)
-                    {
-                        insurancTextShowDefault = AutomobileTypeEnum.Bus.ToString();
-                    }
-                    else
-                    {
-                        insurancTextShowDefault = AutomobileTypeEnum.Bus.ToString();
-                    }
-                }
-                @Html.EnumDropDownListFor(x => x.IsBusEnum, "انتخاب کنید", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IsBus, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-success">ثبت</button>
-            </div>
+    <div class="form-group">
+        <p class="control-label">شماره پلاک:</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <p class="control-label">شماره شاسی:</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Shasi, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Shasi, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label">سال ساخت:</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CreateYear, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CreateYear, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label">کولر دار:</p>
+       <div class="col-md-10">
+           @*     @{
+                if (Model.AutomobileType.HasCooler == (int)HasCoolerEnum.HasCooler)
+                {
+                    coolerTextShowDefault = AutomobileTypeEnum.Bus.GetDisplayName();
+                }
+                else
+                {
+                    coolerTextShowDefault = AutomobileTypeEnum.MiniBus.GetDisplayName();
+                }
+            }*@
+            @Html.EnumDropDownListFor(x => x.HasCoolerEnum, "انتخاب کنید", new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.HasCooler, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label">نوع ماشین:</p>
+        <div class="col-md-10">
+            @*@{
+                if (Model.AutomobileType.IsBus == (int)AutomobileTypeEnum.Bus)
+                {
+                    autoTypeTextShowDefault = AutomobileTypeEnum.Bus.GetDisplayName();
+                }
+                else
+                {
+                    autoTypeTextShowDefault = AutomobileTypeEnum.Bus.GetDisplayName();
+                }
+            }*@
+            @Html.EnumDropDownListFor(x => x.IsBusEnum, autoTypeTextShowDefault, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsBus, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-success">ثبت</button>
+        </div>
+    </div>
+</div>
 }
 <div class="link-back">
     @Html.ActionLink("بازگشت به لیست", "Index")

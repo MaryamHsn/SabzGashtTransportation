@@ -1,6 +1,6 @@
 using Sabz.DomainClasses.DTO;
 
-namespace Sabz.ServiceLayer.ViewModel
+namespace SabzGashtTransportation.ViewModel
 {
     using System;
     using System.Collections.Generic;

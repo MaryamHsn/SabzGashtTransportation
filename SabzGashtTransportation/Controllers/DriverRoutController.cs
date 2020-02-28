@@ -39,6 +39,7 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            commonList = new List<DriverRoutViewModel>();
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
             ViewBag.Rout = sortOrder == "rout" ? "rout_desc" : "rout";
