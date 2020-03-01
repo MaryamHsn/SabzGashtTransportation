@@ -4,13 +4,71 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@font-face {
+    font-family: "Yekan";
+    src: url( "../fonts/W_YEKAN_0.TTF" );
+    src: local( "?" ), url( "../fonts/W_YEKAN_0.TTF" )format( "truetype" );
+}
+* {
+    font-family: "Yekan", "Trebuchet MS", "PT Sans", "Helvetica Neue", "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
+}
+@font-face {
+    font-family: 'PTSansRegular';
+    src: url('../fonts/PTS55F-webfont.eot');
+    src: url('../fonts/PTS55F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTS55F-webfont.woff') format('woff'),
+         url('../fonts/PTS55F-webfont.ttf') format('truetype'),
+         url('../fonts/PTS55F-webfont.svg#PTSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'PTSansBold';
+    src: url('../fonts/PTS75F-webfont.eot');
+    src: url('../fonts/PTS75F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTS75F-webfont.woff') format('woff'),
+         url('../fonts/PTS75F-webfont.ttf') format('truetype'),
+         url('../fonts/PTS75F-webfont.svg#PTSansBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'PTSansItalic';
+    src: url('../fonts/PTS56F-webfont.eot');
+    src: url('../fonts/PTS56F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTS56F-webfont.woff') format('woff'),
+         url('../fonts/PTS56F-webfont.ttf') format('truetype'),
+         url('../fonts/PTS56F-webfont.svg#PTSansItalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Nazanin';
+    src: url('~/fonts/Nazanin.eot') format('eot'),  
+         url('~/fonts/Nazanin.woff') format('woff'),
+         url('~/fonts/Nazanin.ttf') format('truetype');
+    font-style:normal;
+    font-weight:normal;
+}
+@font-face {
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+
+    src: url('../fonts/Iranian Sans.ttf') format('truetype');
+}
+
+
 html {
-  font-family: sans-serif;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
 body {
   margin: 0;
+    float: right;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+
 }
 article,
 aside,
@@ -41,6 +99,8 @@ audio:not([controls]) {
 [hidden],
 template {
   display: none;
+    float: right;
+
 }
 a {
   background-color: transparent;
@@ -66,6 +126,8 @@ dfn {
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
+    direction: rtl;
+
 }
 mark {
   background: #ff0;
@@ -109,8 +171,8 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
-  font-size: 1em;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+    font-size: 1em;
 }
 button,
 input,
@@ -236,6 +298,7 @@ th {
   h3 {
     orphans: 3;
     widows: 3;
+      direction: rtl;
   }
   h2,
   h3 {
@@ -272,8 +335,8 @@ th {
   position: relative;
   top: 1px;
   display: inline-block;
-  font-family: "Glyphicons Halflings";
-  font-style: normal;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+    font-style: normal;
   font-weight: 400;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
@@ -1082,7 +1145,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
@@ -1269,25 +1332,37 @@ h1,
 h2,
 .h2 {
   font-size: 30px;
+        direction: rtl;
+
 }
 h3,
 .h3 {
   font-size: 24px;
+        direction: rtl;
+
 }
 h4,
 .h4 {
   font-size: 18px;
+        direction: rtl;
+
 }
 h5,
 .h5 {
   font-size: 14px;
+        direction: rtl;
+
 }
 h6,
 .h6 {
   font-size: 12px;
+        direction: rtl;
+
 }
 p {
   margin: 0 0 10px;
+        direction: rtl;
+    float: right;
 }
 .lead {
   margin-bottom: 20px;
@@ -1530,7 +1605,8 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+
 }
 code {
   padding: 2px 4px;
@@ -1610,6 +1686,7 @@ pre code {
 .row {
   margin-right: -15px;
   margin-left: -15px;
+    direction: rtl;
 }
 .row-no-gutters {
   margin-right: 0;
@@ -2676,12 +2753,15 @@ output {
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
 }
-.form-control:focus {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
+    .form-control:focus {
+        /*border-color: #66afe9;*/
+        border-color: green;
+        outline: 0;
+        /*-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);*/
+        -webkit-box-shadow: inset 0 1px 1px green, 0 0 8px lightgrey;
+        box-shadow: inset 0 1px 1px green, 0 0 8px lightgrey;
+    }
 .form-control::-moz-placeholder {
   color: #999;
   opacity: 1;
@@ -2746,6 +2826,9 @@ textarea.form-control {
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
+    direction: :rtl;
+    float: right;
+               
 }
 .radio.disabled label,
 .checkbox.disabled label,
@@ -2765,7 +2848,7 @@ fieldset[disabled] .checkbox label {
 .radio-inline input[type="radio"],
 .checkbox input[type="checkbox"],
 .checkbox-inline input[type="checkbox"] {
-  position: absolute;
+  /*position: absolute;*/
   margin-top: 4px \9;
   margin-left: -20px;
 }
@@ -2922,6 +3005,8 @@ select[multiple].input-lg {
 .has-success.radio-inline label,
 .has-success.checkbox-inline label {
   color: #3c763d;
+    float: right;
+
 }
 .has-success .form-control {
   border-color: #3c763d;
@@ -2952,6 +3037,8 @@ select[multiple].input-lg {
 .has-warning.radio-inline label,
 .has-warning.checkbox-inline label {
   color: #8a6d3b;
+    float: right;
+
 }
 .has-warning .form-control {
   border-color: #8a6d3b;
@@ -2982,6 +3069,8 @@ select[multiple].input-lg {
 .has-error.radio-inline label,
 .has-error.checkbox-inline label {
   color: #a94442;
+    float: right;
+
 }
 .has-error .form-control {
   border-color: #a94442;
@@ -3039,10 +3128,11 @@ select[multiple].input-lg {
   .form-inline .input-group > .form-control {
     width: 100%;
   }
-  .form-inline .control-label {
-    margin-bottom: 0;
-    vertical-align: middle;
-  }
+    .form-inline .control-label {
+        margin-bottom: 0;
+        vertical-align: middle;
+        float: right;
+    }
   .form-inline .radio,
   .form-inline .checkbox {
     display: inline-block;
@@ -3078,28 +3168,32 @@ select[multiple].input-lg {
 .form-horizontal .form-group {
   margin-right: -15px;
   margin-left: -15px;
+    direction: rtl;
 }
 @media (min-width: 768px) {
-  .form-horizontal .control-label {
-    padding-top: 7px;
-    margin-bottom: 0;
-    text-align: right;
-  }
+    .form-horizontal .control-label {
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: right;
+        float: right;
+    }
 }
 .form-horizontal .has-feedback .form-control-feedback {
   right: 15px;
 }
 @media (min-width: 768px) {
-  .form-horizontal .form-group-lg .control-label {
-    padding-top: 11px;
-    font-size: 18px;
-  }
+    .form-horizontal .form-group-lg .control-label {
+        padding-top: 11px;
+        font-size: 18px;
+        float: right;
+    }
 }
 @media (min-width: 768px) {
-  .form-horizontal .form-group-sm .control-label {
-    padding-top: 6px;
-    font-size: 12px;
-  }
+    .form-horizontal .form-group-sm .control-label {
+        padding-top: 6px;
+        font-size: 12px;
+        float: right;
+    }
 }
 .btn {
   display: inline-block;
@@ -4477,10 +4571,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-form .input-group > .form-control {
     width: 100%;
   }
-  .navbar-form .control-label {
-    margin-bottom: 0;
-    vertical-align: middle;
-  }
+    .navbar-form .control-label {
+        margin-bottom: 0;
+        vertical-align: middle;
+        float: right;
+    }
   .navbar-form .radio,
   .navbar-form .checkbox {
     display: inline-block;
@@ -4665,8 +4760,8 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
 .navbar-inverse {
-  background-color: #222;
-  border-color: #080808;
+    background-color: darkgreen;
+    border-color: darkgreen;
 }
 .navbar-inverse .navbar-brand {
   color: #9d9d9d;
@@ -6069,7 +6164,8 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+
   font-style: normal;
   font-weight: 400;
   line-height: 1.42857143;
@@ -6187,7 +6283,8 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+
   font-style: normal;
   font-weight: 400;
   line-height: 1.42857143;
@@ -6451,13 +6548,13 @@ button.close {
   right: 50%;
   margin-right: -10px;
 }
-.carousel-control .icon-prev,
-.carousel-control .icon-next {
-  width: 20px;
-  height: 20px;
-  font-family: serif;
-  line-height: 1;
-}
+    .carousel-control .icon-prev,
+    .carousel-control .icon-next {
+        width: 20px;
+        height: 20px;
+        font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
+        line-height: 1;
+    }
 .carousel-control .icon-prev:before {
   content: "\2039";
 }

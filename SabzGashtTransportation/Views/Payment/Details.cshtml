@@ -1,99 +1,48 @@
-﻿@model Sabz.DomainClasses.DTO.PaymentTbl
+﻿@using Sabz.ServiceLayer.Utils
+@model SabzGashtTransportation.ViewModel.PaymentViewModel 
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
 }
 
-<h2>Details</h2>
+<h2>اطلاعات بیشتر</h2>
 
 <div>
-    <h4>PaymentTbl</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DriverTbl.FirstName)
-        </dt>
+    <table class="tbl-show">
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> نام راننده:</th>
+            <th> @Html.DisplayFor(model => model.DriverFullName)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">مساعده:</th>
+            <th> @Html.DisplayFor(model => model.PreHelpCost)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> بیمه:</th>
+            <th> @Html.DisplayFor(model => model.Insurance)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">جریمه:</th>
+            <th> @Html.DisplayFor(model => model.Fine)</th>
+        </tr>   <tr class="tbl-tr-show">
+            <th class="tbl-th-show">مالیات:</th>
+            <th> @Html.DisplayFor(model => model.Tax)</th>
+        </tr>   <tr class="tbl-tr-show">
+            <th class="tbl-th-show">هزینه تصادف:</th>
+            <th> @Html.DisplayFor(model => model.AccidentCost)</th>
+        </tr>   <tr class="tbl-tr-show">
+            <th class="tbl-th-show">تاریخ:</th>
+            <th> @Html.DisplayFor(model => model.CreateDateString)</th>
+        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.DriverTbl.FirstName)
-        </dd>
+    </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Insurance)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Insurance)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PreHelpCost)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PreHelpCost)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Fine)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fine)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tax)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tax)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AccidentCost)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AccidentCost)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LFDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreateDate)
-        </dd>
-
-    </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PaymentId }) |
-    @Html.ActionLink("Back to List", "Index")
+    <div class="link-back">
+        @Html.ActionLink("ویرایش", "Edit", new { id = Model.PaymentId }) |
+        @Html.ActionLink("بازگشت به لیست", "Index")
+    </div>
 </p>

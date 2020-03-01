@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Sabz.ServiceLayer.Enumration
-{
-    public enum WorkDoneEnum
+{ 
+    public enum WorkTemporaryEnum
     {
-        [Display(Name = "انجام نشده")]
-        NotDone = 0,
-        [Display(Name = "انجام شده")]
-        Done = 1
+        [Display(Name = "دائمی")]
+        IsNotTemporary = 0,
+        [Display(Name = "موقتی")]
+        IsTemporary = 1
     }
 }

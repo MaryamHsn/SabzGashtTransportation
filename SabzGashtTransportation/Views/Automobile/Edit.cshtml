@@ -51,16 +51,6 @@
     <div class="form-group">
         <p class="control-label">کولر دار:</p>
        <div class="col-md-10">
-           @*     @{
-                if (Model.AutomobileType.HasCooler == (int)HasCoolerEnum.HasCooler)
-                {
-                    coolerTextShowDefault = AutomobileTypeEnum.Bus.GetDisplayName();
-                }
-                else
-                {
-                    coolerTextShowDefault = AutomobileTypeEnum.MiniBus.GetDisplayName();
-                }
-            }*@
             @Html.EnumDropDownListFor(x => x.HasCoolerEnum, "انتخاب کنید", new {@class = "form-control"})
             @Html.ValidationMessageFor(x => x.HasCooler, "", new {@class = "text-danger"})
         </div>
@@ -69,16 +59,6 @@
     <div class="form-group">
         <p class="control-label">نوع ماشین:</p>
         <div class="col-md-10">
-            @*@{
-                if (Model.AutomobileType.IsBus == (int)AutomobileTypeEnum.Bus)
-                {
-                    autoTypeTextShowDefault = AutomobileTypeEnum.Bus.GetDisplayName();
-                }
-                else
-                {
-                    autoTypeTextShowDefault = AutomobileTypeEnum.Bus.GetDisplayName();
-                }
-            }*@
             @Html.EnumDropDownListFor(x => x.IsBusEnum, autoTypeTextShowDefault, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.IsBus, "", new { @class = "text-danger" })
         </div>

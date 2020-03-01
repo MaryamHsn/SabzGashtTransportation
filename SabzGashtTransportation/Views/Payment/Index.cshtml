@@ -1,88 +1,83 @@
-﻿@model IEnumerable<Sabz.DomainClasses.DTO.PaymentTbl>
+﻿
+@using PagedList.Mvc
+@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.PaymentViewModel>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
 }
 
-<h2>Index</h2>
+<h2>پرداخت ها</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.DriverTbl.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Insurance)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PreHelpCost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Fine)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tax)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AccidentCost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CFDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LFDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </th>
-        <th></th>
-    </tr>
+<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">پرداخت جدید</button>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DriverTbl.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Insurance)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PreHelpCost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fine)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tax)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccidentCost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CFDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LFDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PaymentId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PaymentId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PaymentId })
-        </td>
-    </tr>
+@using (Html.BeginForm("Index", "Payment", FormMethod.Get))
+{
+    <p class="search_table">
+        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="جستجو" />
+    </p>
 }
+<table id="showList">
+    <tr>
+        <th>
+            @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("بیمه", "Index", new { sortOrder = ViewBag.Insurance, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink(" مساعده ", "Index", new { sortOrder = ViewBag.PreHelpCost, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink(" جریمه", "Index", new { sortOrder = ViewBag.Fine, currentFilter = ViewBag.CurrentFilter })
+        </th>  <th>
+            @Html.ActionLink(" مالیات", "Index", new { sortOrder = ViewBag.Tax, currentFilter = ViewBag.CurrentFilter })
+        </th>  <th>
+            @Html.ActionLink(" هزینه تصادفات", "Index", new { sortOrder = ViewBag.AccidentCost, currentFilter = ViewBag.CurrentFilter })
+        </th>  <th>
+            @Html.ActionLink(" تاریخ", "Index", new { sortOrder = ViewBag.CreateDate, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            عملیات
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriverFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Insurance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreHelpCost)
+            </td>    <td>
+                @Html.DisplayFor(modelItem => item.Fine)
+            </td>    <td>
+                @Html.DisplayFor(modelItem => item.Tax)
+            </td>    <td>
+                @Html.DisplayFor(modelItem => item.AccidentCost)
+            </td>    <td>
+                @Html.DisplayFor(modelItem => item.CreateDateString)
+            </td> 
+            <td>
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.PaymentId }) |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.PaymentId}) |
+                @Html.ActionLink("حذف", "Delete", new { id = item.PaymentId })
+            </td>
+        </tr>
+    }
 
 </table>
+<br />
+<p class="showPage">
+    صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+</p>
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

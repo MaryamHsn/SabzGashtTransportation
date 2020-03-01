@@ -31,7 +31,7 @@ namespace Sabz.ServiceLayer.Service
 
         public DriverTbl GetDriverByName(string fullName)
         {
-            return _drivers.Where(x => x.IsActive && x.FullName==fullName).FirstOrDefault();
+            return _drivers.Where(x => x.IsActive && x.FullName.Contains(fullName)).FirstOrDefault();
         }
 
         public void AddNewDriver(DriverTbl driver)

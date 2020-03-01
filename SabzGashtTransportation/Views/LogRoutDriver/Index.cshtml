@@ -11,7 +11,7 @@
     @Styles.Render("~/css/style.css");
 }
 
-<h2>تصادفات</h2>
+<h2>ثبت مسیرهای روزانه</h2>
 
 <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">ثبت جدید</button>
 
@@ -28,16 +28,19 @@
             @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("اتومبیل", "Index", new { sortOrder = ViewBag.Automobile, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("مسیر", "Index", new { sortOrder = ViewBag.Rout, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("انجام کار", "Index", new { sortOrder = ViewBag.Cost, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink(" انجام", "Index", new { sortOrder = ViewBag.IsDone, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("تاریخ انجام", "Index", new { sortOrder = ViewBag.Insurance, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("نوع فعالیت", "Index", new { sortOrder = ViewBag.IsTemporary, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("جریمه", "Index", new { sortOrder = ViewBag.Insurance, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("تاریخ انجام", "Index", new { sortOrder = ViewBag.DoDate, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("جریمه", "Index", new { sortOrder = ViewBag.Fine, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             عملیات
@@ -54,7 +57,10 @@
         @Html.DisplayFor(modelItem => item.DriverRoutTbl.RoutTbl.Name)
     </td>
     <td>
-        @(item.IsDone == Convert.ToBoolean(WorkDoneEnum.Done)? WorkDoneEnum.Done.GetDisplayName() : WorkDoneEnum.NotDone.GetDisplayName())
+        @(item.IsDone == Convert.ToBoolean(WorkDoneEnum.Done) ? WorkDoneEnum.Done.GetDisplayName() : WorkDoneEnum.NotDone.GetDisplayName())
+    </td>
+    <td>
+        @(item.RoutIsTemporary ==  (int)WorkTemporaryEnum.IsTemporary ? WorkTemporaryEnum.IsTemporary.GetDisplayName() : WorkTemporaryEnum.IsNotTemporary.GetDisplayName())
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.DoDateString)
@@ -64,8 +70,8 @@
     </td>
     <td>
         @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("جزئیات", "Details", new { id = item.Id}) |
-        @Html.ActionLink("حذف", "Delete", new { id = item.Id})
+        @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+        @Html.ActionLink("حذف", "Delete", new { id = item.Id })
     </td>
 </tr>
     }

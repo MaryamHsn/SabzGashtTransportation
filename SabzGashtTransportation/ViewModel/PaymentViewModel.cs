@@ -1,4 +1,6 @@
-﻿using System; 
+﻿using System;
+using System.Collections.Generic;
+using Sabz.DomainClasses.DTO;
 
 namespace SabzGashtTransportation.ViewModel
 { 
@@ -20,7 +22,8 @@ namespace SabzGashtTransportation.ViewModel
         public int? DriverId { get; set; }
         public string DriverFirstName { get; set; }
         public string DriverLastName { get; set; }
+        public string DriverFullName { get; set; }
         public string DriverPhone { get; set; }
-
+        public IEnumerable<DriverTbl> Drivers{ get; set; }
     }
 }

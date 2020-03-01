@@ -45,6 +45,6 @@ namespace SabzGashtTransportation.ViewModel
         public LogRoutDriverTbl LogRoutDriverTbl { get; set; }
         public IEnumerable<LogRoutDriverTbl> LogRoutDriverTblList { get; set; }
         public WorkDoneEnum WorkDoneEnum { get; set; }
-
+        public WorkTemporaryEnum WorkTemporaryEnum { get; set; }
     }
 }

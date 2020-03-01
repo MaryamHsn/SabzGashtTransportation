@@ -7,7 +7,7 @@
 
 }
 
-<h2>ثبت اتومبیل</h2>
+<h2>ثبت مسیرهای جاری</h2>
 
 
 @using (Html.BeginForm())
@@ -19,17 +19,19 @@
         <div class="form-group">
             <p class="control-label"> راننده:</p>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DriverTbl.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverTblList, "DriverId", "FullName"), htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
+                @Html.ValidationMessageFor(x => x.DriverId, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.DriverId)
 
-                @Html.ValidationMessageFor(model => model.DriverTbl.FullName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             <p class="control-label"> مسیر:</p>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RoutTbl.Name, new { htmlAttributes = new { @class = "form-control" } })
-
+                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutTblList, "RoutId", "Name"), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RoutTbl.Name, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.RoutId)
+
             </div>
         </div>
         <div class="form-group">
