@@ -13,6 +13,7 @@ namespace Sabz.ServiceLayer.IService
         IList<DriverRoutTbl> GetAllDriverRouts();
         DriverRoutTbl GetDriverRout(int? id);
         DriverRoutTbl GetDriverRoutByDriverIdRoutId(int driverId, int routId);
+        List<DriverRoutTbl> GetDriverRoutByRoutId(int routId);
         int Delete(int id);
     }
 }

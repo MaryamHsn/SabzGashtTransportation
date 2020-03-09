@@ -1,0 +1,106 @@
+﻿@*@using Sabz.DomainClasses.DTO
+    @using Sabz.ServiceLayer.Enumration
+    @using Sabz.ServiceLayer.Utils
+    @model IEnumerable<SabzGashtTransportation.ViewModel.DriverRoutViewModel>
+
+    @{
+        ViewBag.Title = "Allocate";
+        Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+        @Styles.Render("~/css/style.css");
+        var RoutTextShowDefault = "";
+
+    }
+
+
+    <h2>تخصیص مسیر</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @{
+                foreach (var item in Model)
+                {
+                    <div class="form-group">
+                        <p class="control-label">راننده:</p>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(x => item.DriverId, new SelectList(item.DriverList, "DriverId", "FullName"), item.Driver.FullName, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => item.Driver.FullName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+            }
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-success">ثبت</button>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="link-back">
+        @Html.ActionLink("بازگشت به لیست", "Index")
+    </div>*@
+
+
+
+@model SabzGashtTransportation.ViewModel.DriverRoutViewModel
+
+@{
+    ViewBag.Title = "Allocate";
+    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    @Styles.Render("~/css/style.css");
+
+}
+
+<h2>اختصاص راننده به مسیر</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.RoutId)
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <p class="control-label">مسیر:</p>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.RoutName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label">راننده:</p>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverList, "DriverId", "FullName"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Driver.FullName, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.DriverId)
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <p class="control-label">نوع مسیر:</p>
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EnumDropDownListFor(x => x.RoutTypeEnum, "انتخاب کنید", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoutTypeEnum, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-success">ثبت</button>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="link-back">
+    @Html.ActionLink("بازگشت به لیست", "Index")
+</div>

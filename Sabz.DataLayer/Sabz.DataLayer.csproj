@@ -66,6 +66,10 @@
     <Compile Include="Migrations\202002271236402_changType.Designer.cs">
       <DependentUpon>202002271236402_changType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003071222517_addColoumninRoutTbl.cs" />
+    <Compile Include="Migrations\202003071222517_addColoumninRoutTbl.Designer.cs">
+      <DependentUpon>202003071222517_addColoumninRoutTbl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -85,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002271236402_changType.resx">
       <DependentUpon>202002271236402_changType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003071222517_addColoumninRoutTbl.resx">
+      <DependentUpon>202003071222517_addColoumninRoutTbl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

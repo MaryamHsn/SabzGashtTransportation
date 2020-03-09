@@ -1292,6 +1292,7 @@
     <Content Include="Views\Payment\Edit.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Home\home.cshtml" />
+    <Content Include="Views\DriverRout\Allocate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

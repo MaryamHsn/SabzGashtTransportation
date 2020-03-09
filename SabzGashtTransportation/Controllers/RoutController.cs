@@ -23,12 +23,15 @@ namespace SabzGashtTransportation.Controllers
         readonly IRoutService _rout;
         readonly IRegionService _region;
         readonly IAutomobileTypeService _automobileType;
+        readonly IDriverRoutService _driverRout;
+
         readonly IUnitOfWork _uow;
         private RoutViewModel common { get; set; }
         private List<RoutViewModel> commonList { get; set; }
 
-        public RoutController(IUnitOfWork uow, IRoutService rout, IRegionService region, IAutomobileTypeService automobileType)
+        public RoutController(IUnitOfWork uow, IRoutService rout, IRegionService region, IAutomobileTypeService automobileType, IDriverRoutService driverRout)
         {
+            _driverRout = driverRout;
             _automobileType = automobileType;
             _region = region;
             _rout = rout;
@@ -133,7 +136,8 @@ namespace SabzGashtTransportation.Controllers
                 var element = BaseMapper<RoutViewModel, RoutTbl>.Map(item);
                 element.RegionName = allRegion.Where(x => x.RegionId== element.RegionId).FirstOrDefault().RegionName;
                 element.AutomobileTypeTbl = allAutomobileType.Where(x => x.AutoTypeId == item.AutomobileTypeId).FirstOrDefault();
-                    //element.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus(item.AutomobileTypeTbl.HasCooler, (int)item.AutomobileTypeTbl.IsBus);
+                //element.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus(item.AutomobileTypeTbl.HasCooler, (int)item.AutomobileTypeTbl.IsBus);
+                element.Allocate = _driverRout.GetDriverRoutByRoutId(item.RoutID).Count;
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));

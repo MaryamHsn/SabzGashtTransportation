@@ -23,7 +23,14 @@ namespace Sabz.ServiceLayer.Service
         {
             return _drivers.Where(x => x.IsActive).ToList();
         }
-
+        public IList<DriverTbl> GetAllDriversByIds(List<int> ids)
+        {
+            return _drivers.Where(x =>ids.Contains(x.DriverId) && x.IsActive).ToList();
+        }
+        public IList<DriverTbl> GetOtherDriversByIds(List<int> ids)
+        {
+            return _drivers.Where(x => !ids.Contains(x.DriverId) && x.IsActive).ToList();
+        }
         public DriverTbl GetDriver(int? id)
         {
             return _drivers.Where(x => x.IsActive && x.DriverId==id).FirstOrDefault();

@@ -10,6 +10,8 @@ namespace Sabz.ServiceLayer.IService
     public interface IDriverService
     {
         IList<DriverTbl> GetAllDrivers();
+        IList<DriverTbl> GetAllDriversByIds(List<int> ids);
+        IList<DriverTbl> GetOtherDriversByIds(List<int> ids);
         DriverTbl GetDriver(int? id);
         DriverTbl GetDriverByName(string fullName);
         void AddNewDriver(DriverTbl driverRout);

@@ -25,6 +25,7 @@ namespace Sabz.DomainClasses.DTO
         [StringLength(50)]
         public string ShiftType { get; set; }
 
+        public int RoutTransactionType { get; set; }
         public TimeSpan EnterTime { get; set; }
 
         public TimeSpan ExitTime { get; set; }

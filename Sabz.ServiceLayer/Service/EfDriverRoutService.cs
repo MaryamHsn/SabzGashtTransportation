@@ -38,6 +38,10 @@ namespace Sabz.ServiceLayer.Service
         {
             return _driverRouts.Where(x => x.IsActive && x.DriverId == driverId && x.RoutId==routId).FirstOrDefault();
         }
+        public List<DriverRoutTbl> GetDriverRoutByRoutId(int routId)
+        {
+            return _driverRouts.Where(x => x.IsActive && x.RoutId == routId).ToList();
+        }
 
         public int Delete(int id)
         {

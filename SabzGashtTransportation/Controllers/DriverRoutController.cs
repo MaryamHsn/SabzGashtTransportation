@@ -156,7 +156,7 @@ namespace SabzGashtTransportation.Controllers
             {
                 return HttpNotFound();
             }
-            var obj = BaseMapper<DriverRoutViewModel,DriverRoutTbl>.Map(driverRout);
+            var obj = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(driverRout);
             return View(obj);
         }
 
@@ -172,7 +172,7 @@ namespace SabzGashtTransportation.Controllers
                 driverRout.LFDate = DateTime.Now;
                 driverRout.IsActive = false;
                 _driverRout.Delete(driverRout.Id);
-                var obj = BaseMapper< DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
+                var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
                 obj.CFDate = DateTime.Now;
                 obj.LFDate = DateTime.Now;
                 obj.IsActive = true;
@@ -216,6 +216,62 @@ namespace SabzGashtTransportation.Controllers
             _driverRout.Delete(id);
             _uow.SaveAllChanges();
             return RedirectToAction("Index");
+        }
+
+        // GET: Drivers/Allocate/5
+        public ActionResult Allocate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            common=new DriverRoutViewModel();
+           var driverRouts = _driverRout.GetDriverRoutByRoutId((int)id);
+           // ViewBag.Total = _rout.GetRout(routId).Count;
+            if (driverRouts == null)
+            {
+                return HttpNotFound();
+            }
+
+            var rout = _rout.GetRout(id);
+            var allDrivers = _driver.GetAllDrivers();
+            var allocateDriversKId = _driverRout.GetDriverRoutByRoutId((int)id).Select(x => x.DriverId).ToList();
+            var remainDrivers = _driver.GetOtherDriversByIds(allocateDriversKId);
+            common.DriverList = remainDrivers;
+            common.RoutId =(int) id;
+            common.RoutName = rout.Name;
+                //var element = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(common);
+                //element.DriverTbl = remainDrivers;
+                //element.RoutId = (int)id;
+                //element.CFDate=DateTime.Now;
+                //element.LFDate= DateTime.Now;
+                //element.IsTemporary = 0;
+                //commonList.Add(element);
+            
+            return View(common);
+        }
+
+        // POST: Drivers/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Allocate(DriverRoutViewModel driverRout)
+        {
+            if (ModelState.IsValid)
+            {
+                driverRout.LFDate = DateTime.Now;
+                driverRout.IsActive = false;
+                _driverRout.Delete(driverRout.Id);
+                var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
+                obj.CFDate = DateTime.Now;
+                obj.LFDate = DateTime.Now;
+                obj.IsActive = true;
+                _driverRout.AddNewDriverRout(obj);
+                _uow.SaveAllChanges();
+            }
+            return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)
