@@ -7,7 +7,7 @@ namespace Sabz.DomainClasses.DTO
     using System.Data.Entity.Spatial;
 
     [Table("RepairmentTbl")]
-    public partial class RepairmentTbl
+    public partial class RepairmentTbl : BaseEntity<int>
     {
         [Key]
         public int RepairmentId { get; set; }
@@ -17,9 +17,6 @@ namespace Sabz.DomainClasses.DTO
         public string Descrition { get; set; }
 
         public decimal? Cost { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime CFDate { get; set; }
-        public DateTime LFDate { get; set; }
         public virtual DriverTbl DriverTbl { get; set; }
     }
 }

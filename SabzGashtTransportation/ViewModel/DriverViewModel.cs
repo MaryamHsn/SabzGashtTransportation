@@ -23,10 +23,10 @@ namespace SabzGashtTransportation.ViewModel
     //    public string Phone1 { get; set; }
     //    public string Phone2 { get; set; }
     //    public bool IsActive { get; set; }
-    //    public DateTime CFDate { get; set; }
-    //    public string CFDateString { get; set; }
-    //    public DateTime LFDate { get; set; }
-    //    public string lFDateString { get; set; }
+    //    public DateTime CreatedDate { get; set; }
+    //    public string CreatedDateString { get; set; }
+    //    public DateTime .ModifiedDate { get; set; }
+    //    public string .ModifiedDateString { get; set; }
     //    public virtual Automobile AutomobileTbl { get; set; }
     //    public string Number { get; set; }
     //    public string Shasi { get; set; }
@@ -54,10 +54,10 @@ namespace SabzGashtTransportation.ViewModel
         public string Phone1 { get; set; }
         public string Phone2 { get; set; }
         public bool IsActive { get; set; }
-        public DateTime CFDate { get; set; }
-        public string CFDateString { get; set; }
-        public DateTime LFDate { get; set; }
-        public string LFDateString { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string CreatedDateString { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public string ModifiedDateString { get; set; }
 
         public virtual ICollection<AccidentTbl> Accidents { get; set; }
 

@@ -21,10 +21,10 @@ namespace SabzGashtTransportation.ViewModel
         public DateTime? LDate { get; set; }
         public string LDateString { get; set; }
         public bool IsActive { get; set; }
-        public DateTime CFDate { get; set; }
-        public string CFDateString { get; set; }
-        public DateTime LFDate { get; set; }
-        public string LFDateString { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string CreatedDateString { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public string ModifiedDateString { get; set; }
         public int DriverRoutId { get; set; }
         public int DriverId { get; set; }
         public string DriverFirstName { get; set; }

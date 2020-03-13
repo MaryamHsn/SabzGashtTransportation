@@ -13,10 +13,10 @@ namespace SabzGashtTransportation.ViewModel
         public string Shasi { get; set; }
         public string CreateYear { get; set; }
         public bool IsActive { get; set; }
-        public DateTime CFDate { get; set; }
-        public string CFDateString { get; set; }
-        public DateTime LFDate { get; set; }
-        public string LFDateString { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string CreatedDateString { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public string ModifiedDateString { get; set; }
         public int? AutomobileTypeId { get; set; }
         public int HasCooler { get; set; }
         public int IsBus { get; set; }

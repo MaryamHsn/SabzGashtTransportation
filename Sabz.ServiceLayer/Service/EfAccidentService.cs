@@ -5,21 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sabz.DataLayer.Context;
+using Sabz.DataLayer.IRepository;
+using Sabz.DataLayer.Repository;
 using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.IService;
 
 namespace Sabz.ServiceLayer.Service
 { 
-    public class EfAccidentService : IAccidentService
+    public class EfAccidentService :  IAccidentService
     {
-        IUnitOfWork _uow;
-        readonly IDbSet<AccidentTbl> _accidents;
-        public EfAccidentService(IUnitOfWork uow)
+        //IUnitOfWork _uow;
+        //readonly IDbSet<AccidentTbl> _accidents;
+        readonly IAccidentRepository _accidents;
+        public EfAccidentService(IAccidentRepository accidents)
         {
-            _uow = uow;
-            _accidents = _uow.Set<AccidentTbl>();
+            _accidents = accidents;
         }
-
+        //public EfAccidentService(IUnitOfWork uow)
+        //{
+        //    _uow = uow;
+        //    _accidents = _uow.Set<AccidentTbl>();
+        //}
+        
         public void AddNewAccident(AccidentTbl accident)
         {
             _accidents.Add(accident);
@@ -27,17 +34,19 @@ namespace Sabz.ServiceLayer.Service
 
         public IList<AccidentTbl> GetAllAccidents()
         {
-            return _accidents.Where(x=>x.IsActive).ToList();
+            return _accidents.Get(x=>x.IsActive).ToList();
         }
         public AccidentTbl GetAccident(int? id)
         {
-            return _accidents.Where(x=>x.IsActive&&x.AccidentId==id).SingleOrDefault();
+            return _accidents.Get(x=>x.IsActive&&x.AccidentId==id).SingleOrDefault();
         }
-        public int Delete(int id)
+        public bool Delete(int id)
         {
-            AccidentTbl accident = _accidents.Find(id);
-            accident.IsActive = false;
-            return accident.AccidentId;
+            var entity = _accidents.Get(id);
+            entity.IsActive = false;
+
+            var accident = _accidents.Delete(entity);
+            return accident;
         }
     }
 }

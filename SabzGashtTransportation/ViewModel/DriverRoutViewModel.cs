@@ -19,10 +19,10 @@ namespace SabzGashtTransportation.ViewModel
         public string RoutExitTimeString { get; set; }
         public int IsTemporary { get; set; }
         public bool IsActive { get; set; }
-        public DateTime CFDate { get; set; }
-        public string CFDateString { get; set; }
-        public DateTime LFDate { get; set; }
-        public string LFDateString { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string CreatedDateString { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public string ModifiedDateString { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone1 { get; set; }

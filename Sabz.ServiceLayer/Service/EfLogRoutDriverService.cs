@@ -14,14 +14,21 @@ namespace Sabz.ServiceLayer.Service
     {
         IUnitOfWork _uow;
         readonly IDbSet<LogRoutDriverTbl> _logRoutDrivers;
+        protected readonly DateTime _now;
+
         public EfLogRoutDriverService(IUnitOfWork uow)
         {
             _uow = uow;
             _logRoutDrivers = _uow.Set<LogRoutDriverTbl>();
+            _now = DateTime.Now;
+
         }
 
         public void AddNewLogRoutDriver(LogRoutDriverTbl driverRout)
         {
+            driverRout.CreatedDate = _now;
+            driverRout.ModifiedDate = _now;
+            driverRout.IsActive = true;
             _logRoutDrivers.Add(driverRout);
         }
 
@@ -40,5 +47,7 @@ namespace Sabz.ServiceLayer.Service
             logRoutDriver.IsActive = false;
             return logRoutDriver.Id;
         }
+        
+
     }
 }

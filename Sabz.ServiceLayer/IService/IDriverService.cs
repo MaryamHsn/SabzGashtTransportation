@@ -16,5 +16,6 @@ namespace Sabz.ServiceLayer.IService
         DriverTbl GetDriverByName(string fullName);
         void AddNewDriver(DriverTbl driverRout);
         int Delete(int id);
+        DriverTbl UpdateDriver(DriverTbl entity);
     }
 }

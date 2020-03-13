@@ -121,8 +121,8 @@ namespace SabzGashtTransportation.Controllers
             common = BaseMapper<AccidentViewModel, AccidentTbl>.Map(accident);
             common.DriverFullName = accident.DriverTbl != null ? accident.DriverTbl.FirstName + " " + accident.DriverTbl.LastName : _driver.GetDriver(accident.DriverId).FirstName + " " + _driver.GetDriver(accident.DriverId).LastName;
             common.AutomobileNumber = accident.AutomobileTbl != null ? accident.AutomobileTbl.Number : _automobile.GetAutomobile(accident.AutomobileId).Number;
-            common.CFDateString = accident.CFDate.ToPersianDateString();
-            common.LFDateString = accident.LFDate.ToPersianDateString();
+            common.CreateDateString = accident.CreatedDate.ToPersianDateString();
+            common.ModifiedDateString = ((DateTime)accident.ModifiedDate).ToPersianDateString();
 
             if (common == null)
             {
@@ -157,8 +157,8 @@ namespace SabzGashtTransportation.Controllers
             {
                 var obj = BaseMapper<AccidentTbl, AccidentViewModel>.Map(accident);
                 obj.IsActive = true;
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.AutomobileId = _driver.GetDriver(obj.DriverId).AutomobileId;
                 _accident.AddNewAccident(obj);
                 _uow.SaveAllChanges();
@@ -203,13 +203,13 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                accident.LFDate = DateTime.Now;
+                accident.ModifiedDate = DateTime.Now;
                 accident.IsActive = false;
                 _accident.Delete(accident.AccidentId);
                 var obj = BaseMapper<AccidentTbl, AccidentViewModel>.Map(accident);
                 obj.AutomobileId = _driver.GetDriver(accident.DriverId).AutomobileId;
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true;
                 _accident.AddNewAccident(obj);
                 _uow.SaveAllChanges();

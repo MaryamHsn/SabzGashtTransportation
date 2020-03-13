@@ -7,7 +7,7 @@ namespace Sabz.DomainClasses.DTO
     using System.Data.Entity.Spatial;
 
     [Table("DriverTbl")]
-    public partial class DriverTbl
+    public partial class DriverTbl : BaseEntity<int>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DriverTbl()
@@ -54,9 +54,6 @@ namespace Sabz.DomainClasses.DTO
         public string Phone1 { get; set; }
         [StringLength(15)]
         public string Phone2 { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime CFDate { get; set; }
-        public DateTime LFDate { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccidentTbl> AccidentTbls { get; set; }
 

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Sabz.DataLayer.Context;
+using Sabz.DataLayer.Repository;
 using Sabz.IocConfig;
 using SabzGashtTransportation.App_Start;
 using StructureMap.Web.Pipeline;
@@ -54,6 +55,8 @@ namespace SabzGashtTransportation
         {
            // Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Sabz.DataLayer.Migrations.Configuration>());
+            //SmObjectFactory.Container.GetInstance<UnitOfWork>().ForceDatabaseInitialize();
+
             SmObjectFactory.Container.GetInstance<IUnitOfWork>().ForceDatabaseInitialize();
         }
     }

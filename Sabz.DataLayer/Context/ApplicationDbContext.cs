@@ -1,14 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Sabz.DataLayer.IRepository;
+using Sabz.DataLayer.Repository;
+using Sabz.DomainClasses;
 using Sabz.DomainClasses.DTO;
 
 namespace Sabz.DataLayer.Context
 {
     public class ApplicationDbContext :
-        IdentityDbContext<ApplicationUser, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>,
-        IUnitOfWork
+        IdentityDbContext<ApplicationUser, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>
+        , IUnitOfWork
     {
         /// <summary>
         /// It looks for a connection string named connectionString1 in the web.config file.
@@ -18,6 +23,7 @@ namespace Sabz.DataLayer.Context
         {
             //this.Database.Log = data => System.Diagnostics.Debug.WriteLine(data);
         }
+        #region Dbset
         public DbSet<AccidentTbl> Accidents { set; get; }
         public DbSet<AutomobileTbl> Automobiles { set; get; }
         public DbSet<AutomobileTypeTbl> AutomobileTypes { set; get; }
@@ -28,8 +34,9 @@ namespace Sabz.DataLayer.Context
         public DbSet<RepairmentTbl> Repairments { set; get; }
         public DbSet<RoutTbl> Routs { set; get; }
         public DbSet<PaymentTbl> Payments { set; get; }
+        #endregion
 
-
+        #region OnModelCreating
         /// <summary>
         /// To change the connection string at runtime. See the SmObjectFactory class for more info.
         /// </summary>
@@ -129,7 +136,28 @@ namespace Sabz.DataLayer.Context
         //        .WithRequired(e => e.RoutTbl)
         //        .WillCascadeOnDelete(false);
         //}
-
+        #endregion
+        private BaseRepository<RoutTbl, int> _routs;
+        public IRepository<RoutTbl, int> Rout
+        {
+            get
+            {
+                return _routs ??
+                    (_routs = new BaseRepository<RoutTbl, int>(this));
+            }
+        }
+        #region defineRepository
+        private BaseRepository<DriverTbl, int> _drivers;
+        public IRepository<DriverTbl, int> Driver
+        {
+            get
+            {
+                return _drivers ??
+                    (_drivers = new BaseRepository<DriverTbl, int>(this));
+            }
+        }
+        //public IDriverRepository driverRepository { get; set; }
+        #endregion
         public new IDbSet<TEntity> Set<TEntity>() where TEntity : class
         {
             return base.Set<TEntity>();
@@ -147,17 +175,19 @@ namespace Sabz.DataLayer.Context
 
         public void MarkAsChanged<TEntity>(TEntity entity) where TEntity : class
         {
-            Entry(entity).State = EntityState.Modified;
+            base.Entry(entity).State = EntityState.Modified;
         }
 
         public IList<T> GetRows<T>(string sql, params object[] parameters) where T : class
         {
-            return Database.SqlQuery<T>(sql, parameters).ToList();
+            return base.Database.SqlQuery<T>(sql, parameters).ToList();
         }
 
         public void ForceDatabaseInitialize()
         {
-            this.Database.Initialize(force: true);
+            base.Database.Initialize(force: true);
         }
+
     }
+
 }

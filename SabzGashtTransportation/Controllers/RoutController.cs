@@ -157,8 +157,8 @@ namespace SabzGashtTransportation.Controllers
             }
             common = new RoutViewModel();
             common = BaseMapper<RoutViewModel, RoutTbl>.Map(rout);
-            common.CFDateString = rout.CFDate.ToPersianDateString();
-            common.LFDateString = rout.LFDate.ToPersianDateString();
+            common.CreatedDateString = rout.CreatedDate.ToPersianDateString();
+            common.ModifiedDateString = ((DateTime)rout.ModifiedDate).ToPersianDateString();
             common.StartDateString = rout.EndDate != null ? ConvertDate.ToPersianDateString((DateTime)rout.StartDate) : "";
             common.EndDateString = rout.EndDate!= null?ConvertDate.ToPersianDateString((DateTime)rout.EndDate) :"";
             common.AutomobileTypeTbl = _automobileType.GetAutomobileType(common.AutomobileTypeId);
@@ -189,10 +189,11 @@ namespace SabzGashtTransportation.Controllers
                 rout.StartDate = rout.StartDateString.ToGeorgianDate();
                 rout.EndDate = rout.EndDateString.ToGeorgianDate();
                 rout.IsActive = true;
-                rout.CFDate = DateTime.Now;
-                rout.LFDate = DateTime.Now;
+                rout.CreatedDate = DateTime.Now;
+                rout.ModifiedDate = DateTime.Now;
                 var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
                 _rout.AddNewRout(obj);
+                
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -246,12 +247,12 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                rout.LFDate = DateTime.Now;
+                rout.ModifiedDate = DateTime.Now;
                 rout.IsActive = false;
                 _rout.Delete(rout.RoutID);
                 var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.StartDate = rout.StartDateString.ToGeorgianDate();
                 obj.EndDate= rout.EndDateString.ToGeorgianDate();
                 obj.IsActive = true;

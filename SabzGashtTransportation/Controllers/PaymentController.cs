@@ -138,8 +138,8 @@ namespace SabzGashtTransportation.Controllers
             common = BaseMapper<PaymentViewModel, PaymentTbl>.Map(payment);
             common.DriverFullName = payment.DriverTbl != null
                 ? payment.DriverTbl.FullName : _driver.GetDriver(payment.DriverId).FullName;
-            common.CFDateString = payment.CFDate.ToPersianDateString();
-            common.LFDateString = payment.LFDate.ToPersianDateString();
+            common.CreatedDateString = payment.CreatedDate.ToPersianDateString();
+            common.ModifiedDateString = ((DateTime)payment.ModifiedDate).ToPersianDateString();
             common.CreateDateString = payment.CreateDate.ToPersianDateString();
 
             if (common == null)
@@ -170,8 +170,8 @@ namespace SabzGashtTransportation.Controllers
             {
                 var obj = BaseMapper<PaymentTbl, PaymentViewModel>.Map(payment);
                 obj.IsActive = true;
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.CreateDate = payment.CreateDateString.ToGeorgianDate();
                 _payment.AddNewPayment(obj);
                 _uow.SaveAllChanges();
@@ -209,14 +209,14 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                payment.LFDate = DateTime.Now;
+                payment.ModifiedDate = DateTime.Now;
                 payment.IsActive = false;
                 _payment.Delete(payment.PaymentId);
                 var obj = BaseMapper<PaymentTbl, PaymentViewModel>.Map(payment);
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true;
-                obj.CreateDate = payment.CreateDateString.ToGeorgianDate();
+                obj.CreateDate = payment.CreatedDateString.ToGeorgianDate();
                 _payment.AddNewPayment(obj);
                 _uow.SaveAllChanges();
             }

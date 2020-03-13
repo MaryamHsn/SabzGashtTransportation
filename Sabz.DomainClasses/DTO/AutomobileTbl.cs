@@ -7,7 +7,7 @@ namespace Sabz.DomainClasses.DTO
     using System.Data.Entity.Spatial;
 
     [Table("AutomobileTbl")]
-    public partial class AutomobileTbl
+    public partial class AutomobileTbl : BaseEntity<int>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AutomobileTbl()
@@ -26,9 +26,6 @@ namespace Sabz.DomainClasses.DTO
 
         [StringLength(10)]
         public string CreateYear { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime CFDate { get; set; }
-        public DateTime LFDate { get; set; }
         public int AutomobileTypeId { get; set; }
 
         public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; }

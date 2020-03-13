@@ -7,7 +7,7 @@ namespace Sabz.DomainClasses.DTO
     using System.Data.Entity.Spatial;
 
     [Table("LogRoutDriverTbl")]
-    public partial class LogRoutDriverTbl
+    public partial class LogRoutDriverTbl : BaseEntity<int>
     {
         public int Id { get; set; }
 
@@ -21,9 +21,6 @@ namespace Sabz.DomainClasses.DTO
         public DateTime? CDate { get; set; }
 
         public DateTime? LDate { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime CFDate { get; set; }
-        public DateTime LFDate { get; set; }
         public int DriverRoutId { get; set; }
 
         public int? IsTemporary { get; set; }

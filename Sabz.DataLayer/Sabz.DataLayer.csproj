@@ -58,6 +58,17 @@
   <ItemGroup>
     <Compile Include="Context\ApplicationDbContext.cs" />
     <Compile Include="Context\IUnitOfWork.cs" />
+    <Compile Include="Context\UnitOfWork.cs" />
+    <Compile Include="IRepository\IAccidentRepository.cs" />
+    <Compile Include="IRepository\IAutomobileRepository.cs" />
+    <Compile Include="IRepository\IAutomobileTypeRepository.cs" />
+    <Compile Include="IRepository\IDriverRepository.cs" />
+    <Compile Include="IRepository\IDriverRoutRepository.cs" />
+    <Compile Include="IRepository\ILogRoutDriverRepository.cs" />
+    <Compile Include="IRepository\IPaymentRepository.cs" />
+    <Compile Include="IRepository\IRegionRepository.cs" />
+    <Compile Include="IRepository\IRepairmentRepository.cs" />
+    <Compile Include="IRepository\IRoutRepository.cs" />
     <Compile Include="Migrations\202002260850346_init.cs" />
     <Compile Include="Migrations\202002260850346_init.Designer.cs">
       <DependentUpon>202002260850346_init.cs</DependentUpon>
@@ -70,8 +81,24 @@
     <Compile Include="Migrations\202003071222517_addColoumninRoutTbl.Designer.cs">
       <DependentUpon>202003071222517_addColoumninRoutTbl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003111546268_baseEntity.cs" />
+    <Compile Include="Migrations\202003111546268_baseEntity.Designer.cs">
+      <DependentUpon>202003111546268_baseEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repository\PaymentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AccidentRepository.cs" />
+    <Compile Include="Repository\AutomobileRepository.cs" />
+    <Compile Include="Repository\AutomobileTypeRepository.cs" />
+    <Compile Include="Repository\BaseRepository.cs" />
+    <Compile Include="Repository\DriverRepository.cs" />
+    <Compile Include="Repository\DriverRoutRepository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\LogRoutDriverRepository.cs" />
+    <Compile Include="Repository\RegionRepository.cs" />
+    <Compile Include="Repository\RepairmentRepository.cs" />
+    <Compile Include="Repository\RoutRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sabz.DomainClasses\Sabz.DomainClasses.csproj">
@@ -93,6 +120,10 @@
     <EmbeddedResource Include="Migrations\202003071222517_addColoumninRoutTbl.resx">
       <DependentUpon>202003071222517_addColoumninRoutTbl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003111546268_baseEntity.resx">
+      <DependentUpon>202003111546268_baseEntity.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

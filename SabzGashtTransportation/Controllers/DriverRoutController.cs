@@ -134,8 +134,8 @@ namespace SabzGashtTransportation.Controllers
             if (ModelState.IsValid)
             {
                 rout.IsActive = true;
-                rout.CFDate = DateTime.Now;
-                rout.LFDate = DateTime.Now;
+                rout.CreatedDate = DateTime.Now;
+                rout.ModifiedDate = DateTime.Now;
 
                 _driverRout.AddNewDriverRout(rout);
                 _uow.SaveAllChanges();
@@ -169,12 +169,12 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                driverRout.LFDate = DateTime.Now;
+                driverRout.ModifiedDate = DateTime.Now;
                 driverRout.IsActive = false;
                 _driverRout.Delete(driverRout.Id);
                 var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true;
                 _driverRout.AddNewDriverRout(obj);
                 _uow.SaveAllChanges();
@@ -243,8 +243,8 @@ namespace SabzGashtTransportation.Controllers
                 //var element = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(common);
                 //element.DriverTbl = remainDrivers;
                 //element.RoutId = (int)id;
-                //element.CFDate=DateTime.Now;
-                //element.LFDate= DateTime.Now;
+                //element.CreatedDate=DateTime.Now;
+                //element..ModifiedDate= DateTime.Now;
                 //element.IsTemporary = 0;
                 //commonList.Add(element);
             
@@ -260,12 +260,12 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                driverRout.LFDate = DateTime.Now;
+                driverRout.ModifiedDate = DateTime.Now;
                 driverRout.IsActive = false;
                 _driverRout.Delete(driverRout.Id);
                 var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true;
                 _driverRout.AddNewDriverRout(obj);
                 _uow.SaveAllChanges();

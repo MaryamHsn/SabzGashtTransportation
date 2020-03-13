@@ -121,8 +121,8 @@ namespace SabzGashtTransportation.Controllers
             common = new AutomobileViewModel();
             common = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
             common.AutomobileType = _automobileType.GetAutomobileType(automobile.AutomobileTypeId);
-            common.CFDateString = automobile.CFDate.ToPersianDateString();
-            common.LFDateString = automobile.LFDate.ToPersianDateString();
+            common.CreatedDateString = automobile.CreatedDate.ToPersianDateString();
+            common.ModifiedDateString = ((DateTime)automobile.ModifiedDate).ToPersianDateString();
             if (common== null)
             {
                 return HttpNotFound();
@@ -147,8 +147,8 @@ namespace SabzGashtTransportation.Controllers
             {
                 var obj = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
                 obj.IsActive = true;
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.AutomobileTypeTbl= _automobileType.GetAutomobileTypeByCoolerBus((int)automobile.HasCoolerEnum, (int)automobile.IsBusEnum);
                 obj.AutomobileTypeId = obj.AutomobileTypeTbl.AutoTypeId;
                 _automobile.AddNewAutomobile(obj);
@@ -184,12 +184,12 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                automobile.LFDate = DateTime.Now;
+                automobile.ModifiedDate = DateTime.Now;
                 automobile.IsActive = false;
                 _automobile.Delete(automobile.AutoId);
                 var obj = BaseMapper<AutomobileTbl, AutomobileViewModel>.Map(automobile);
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true; 
                 obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus(automobile.HasCooler,automobile.IsBus).AutoTypeId;
                 _automobile.AddNewAutomobile(obj);

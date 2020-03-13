@@ -105,8 +105,8 @@ namespace SabzGashtTransportation.Controllers
             {
                 var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
                 obj.IsActive = true;
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 _region.AddNewRegion(obj);
                 _uow.SaveAllChanges();
             }
@@ -140,11 +140,11 @@ namespace SabzGashtTransportation.Controllers
             if (ModelState.IsValid)
             {
                 region.IsActive = false;
-                region.LFDate = DateTime.Now;
+                region.ModifiedDate = DateTime.Now;
                 _region.Delete(region.RegionId);
                 var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true;
                 _region.AddNewRegion(obj);
                 _uow.SaveAllChanges();

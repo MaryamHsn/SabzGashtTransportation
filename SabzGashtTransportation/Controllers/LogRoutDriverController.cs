@@ -174,8 +174,8 @@ namespace SabzGashtTransportation.Controllers
                 // common = new LogRoutDriverViewModel();
                 var obj = BaseMapper<LogRoutDriverViewModel, LogRoutDriverTbl>.Map(routDriver);
                 obj.IsActive = true;
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.DoDate = routDriver.DoDateString.ToGeorgianDate();
                    var findDriverRoutTbl = _driverRout.GetDriverRoutByDriverIdRoutId(routDriver.DriverId, routDriver.RoutId);
                 obj.DriverRoutId = findDriverRoutTbl.Id;
@@ -227,12 +227,12 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                logRoutDriver.LFDate = DateTime.Now;
+                logRoutDriver.ModifiedDate = DateTime.Now;
                 logRoutDriver.IsActive = false;
                 _logRoutDriver.Delete(logRoutDriver.Id);
                 var obj = BaseMapper<LogRoutDriverViewModel, LogRoutDriverTbl>.Map(logRoutDriver);
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.CDate = DateTime.Now;
                 obj.LDate = DateTime.Now;
                 obj.DoDate = logRoutDriver.DoDateString.ToGeorgianDate();

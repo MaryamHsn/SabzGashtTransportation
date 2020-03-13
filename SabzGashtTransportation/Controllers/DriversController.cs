@@ -132,10 +132,10 @@ namespace SabzGashtTransportation.Controllers
                 var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
                 obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
                 obj.IsActive = true;
-                obj.CFDate=DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate=DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 _drivers.AddNewDriver(obj);
-                _uow.SaveAllChanges();
+                //_uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
         }
@@ -169,15 +169,18 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                driver.LFDate=DateTime.Now;
-                _drivers.Delete(driver.DriverId);
+                //driver.ModifiedDate=DateTime.Now;
+                //_drivers.Delete(driver.DriverId);
                 var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
                 obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true;
-                _drivers.AddNewDriver(obj);
-                _uow.SaveAllChanges(); 
+                //_drivers.AddNewDriver(obj);
+                //_uow.SaveAllChanges(); 
+                obj.Id = driver.DriverId;
+                _drivers.UpdateDriver(obj);
+                //_uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
 
@@ -206,7 +209,7 @@ namespace SabzGashtTransportation.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _drivers.Delete(id);
-            _uow.SaveAllChanges(); 
+          //  _uow.SaveAllChanges(); 
             return RedirectToAction("Index");
         }
 

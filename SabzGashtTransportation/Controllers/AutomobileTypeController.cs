@@ -95,8 +95,8 @@ namespace SabzGashtTransportation.Controllers
             }
             common = new AutomobileTypeViewModel();
             common = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
-            common.CFDateString = automobile.CFDate.ToPersianDateString();
-            common.LFDateString = automobile.LFDate.ToPersianDateString();
+            common.CreatedDateString = automobile.CreatedDate.ToPersianDateString();
+            common.ModifiedDateString = ((DateTime)automobile.ModifiedDate).ToPersianDateString();
             return View(common);
         }
 
@@ -117,8 +117,8 @@ namespace SabzGashtTransportation.Controllers
             {
                 var obj = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
                 obj.IsActive = true;
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 _automobile.AddNewAutomobileType(obj);
                 _uow.SaveAllChanges();
             }
@@ -170,12 +170,12 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                automobile.LFDate = DateTime.Now;
+                automobile.ModifiedDate = DateTime.Now;
                 automobile.IsActive = false;
                 _automobile.Delete(automobile.AutoTypeId);
                 var obj = BaseMapper<AutomobileTypeTbl, AutomobileTypeViewModel>.Map(automobile);
-                obj.CFDate = DateTime.Now;
-                obj.LFDate = DateTime.Now;
+                obj.CreatedDate = DateTime.Now;
+                obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true;
                 _automobile.AddNewAutomobileType(obj);
                 _uow.SaveAllChanges();  
