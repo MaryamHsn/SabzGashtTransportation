@@ -11,14 +11,13 @@ namespace Sabz.DomainClasses.DTO
     [Table("PaymentTbl")]
     public class PaymentTbl : BaseEntity<int>
     {
-        [Key]
-        public int PaymentId { get; set; }
         public decimal? Insurance { get; set; }
         public decimal? PreHelpCost { get; set; }
         public decimal? Fine { get; set; }
         public decimal? Tax { get; set; }
         public decimal? AccidentCost { get; set; }
         public DateTime CreateDate { get; set; }
+        [ForeignKey("DriverTbl")]
         public int? DriverId { get; set; }
         public virtual DriverTbl DriverTbl{ get; set; }
     }

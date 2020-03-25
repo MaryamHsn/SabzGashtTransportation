@@ -12,6 +12,10 @@ namespace Sabz.ServiceLayer.IService
         void AddNewRegion(RegionTbl Region);
         IList<RegionTbl> GetAllRegions();
         RegionTbl GetRegion(int? id);
-        int Delete(int id);
+        bool Delete(int id);
+        Task AddNewRegionAsync(RegionTbl region);
+        Task<IList<RegionTbl>> GetAllRegionsAsync();
+        Task<RegionTbl> GetRegionAsync(int? id);
+        Task<bool> DeleteAsync(int id);
     }
 }

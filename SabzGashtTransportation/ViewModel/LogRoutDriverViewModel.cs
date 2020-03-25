@@ -9,7 +9,7 @@ namespace SabzGashtTransportation.ViewModel
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public   class LogRoutDriverViewModel
+    public   class LogDriverRoutViewModel
     {
         public int Id { get; set; }
         public bool IsDone { get; set; }
@@ -42,8 +42,8 @@ namespace SabzGashtTransportation.ViewModel
         public  RoutTbl RoutTbl { get; set; }
         public IEnumerable<DriverTbl> DriverTblList { get; set; }
         public IEnumerable<RoutTbl> RoutTblList { get; set; }
-        public LogRoutDriverTbl LogRoutDriverTbl { get; set; }
-        public IEnumerable<LogRoutDriverTbl> LogRoutDriverTblList { get; set; }
+        public LogDriverRoutTbl LogDriverRoutTbl { get; set; }
+        public IEnumerable<LogDriverRoutTbl> LogDriverRoutTblList { get; set; }
         public WorkDoneEnum WorkDoneEnum { get; set; }
         public WorkTemporaryEnum WorkTemporaryEnum { get; set; }
     }

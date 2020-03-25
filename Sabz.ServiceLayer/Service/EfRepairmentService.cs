@@ -13,33 +13,33 @@ namespace Sabz.ServiceLayer.Service
     public class EfRepairmentService : IRepairmentService
     {
         IUnitOfWork _uow;
-        readonly IDbSet<RepairmentTbl> _repairments;
         public EfRepairmentService(IUnitOfWork uow)
         {
             _uow = uow;
-            _repairments = _uow.Set<RepairmentTbl>();
         }
 
         public void AddNewRepairment(RepairmentTbl repairment)
         {
-            _repairments.Add(repairment);
+            _uow.RepairmentRepository.Add(repairment);
+            _uow.SaveAllChanges();
         }
 
         public IList<RepairmentTbl> GetAllRepairment()
         {
-            return _repairments.Where(x => x.IsActive).ToList();
+            return _uow.RepairmentRepository.GetAll().ToList();
         }
 
         public RepairmentTbl GetRepairment(int? id)
         {
-            return _repairments.Find(id);
+            return _uow.RepairmentRepository.Get((int)id);
         }
 
-        public int Delete(int id)
+        public bool Delete(int id)
         {
-            RepairmentTbl repairment = _repairments.Find(id);
-            repairment.IsActive = false;
-            return repairment.RepairmentId;
+            RepairmentTbl repairment = _uow.RepairmentRepository.Get(id); 
+            var t = _uow.RepairmentRepository.SoftDelete(repairment);
+            _uow.SaveAllChanges();
+            return t;
         }
     }
 

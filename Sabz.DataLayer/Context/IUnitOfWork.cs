@@ -10,7 +10,16 @@ namespace Sabz.DataLayer.Context
 {
     public interface IUnitOfWork : IDisposable
     {
-       IRepository<DriverTbl,int> Driver { get; }
+       IRepository<AccidentTbl,int> AccidentRepository { get; }
+       IRepository<AutomobileTbl,int> AutomobileRepository { get; }
+       IRepository<AutomobileTypeTbl,int> AutomobileTypeRepository { get; }
+       IRepository<DriverRoutTbl,int> DriverRoutRepository { get; }
+       IRepository<DriverTbl,int> DriverRepository { get; }
+       IRepository<LogDriverRoutTbl,int> LogDriverRoutRepository { get; }
+       IRepository<PaymentTbl,int> PaymentRepository { get; }
+       IRepository<RegionTbl,int> RegionRepository { get; }
+       IRepository<RepairmentTbl,int> RepairmentRepository { get; }
+       IRepository<RoutTbl,int> RoutRepository { get; }
         IDbSet<TEntity> Set<TEntity>() where TEntity : class;
         int SaveAllChanges();
         void MarkAsChanged<TEntity>(TEntity entity) where TEntity : class;

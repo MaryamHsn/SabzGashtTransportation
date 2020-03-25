@@ -69,21 +69,9 @@
     <Compile Include="IRepository\IRegionRepository.cs" />
     <Compile Include="IRepository\IRepairmentRepository.cs" />
     <Compile Include="IRepository\IRoutRepository.cs" />
-    <Compile Include="Migrations\202002260850346_init.cs" />
-    <Compile Include="Migrations\202002260850346_init.Designer.cs">
-      <DependentUpon>202002260850346_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002271236402_changType.cs" />
-    <Compile Include="Migrations\202002271236402_changType.Designer.cs">
-      <DependentUpon>202002271236402_changType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003071222517_addColoumninRoutTbl.cs" />
-    <Compile Include="Migrations\202003071222517_addColoumninRoutTbl.Designer.cs">
-      <DependentUpon>202003071222517_addColoumninRoutTbl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003111546268_baseEntity.cs" />
-    <Compile Include="Migrations\202003111546268_baseEntity.Designer.cs">
-      <DependentUpon>202003111546268_baseEntity.cs</DependentUpon>
+    <Compile Include="Migrations\202003132106162_init.cs" />
+    <Compile Include="Migrations\202003132106162_init.Designer.cs">
+      <DependentUpon>202003132106162_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\PaymentRepository.cs" />
@@ -111,19 +99,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002260850346_init.resx">
-      <DependentUpon>202002260850346_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002271236402_changType.resx">
-      <DependentUpon>202002271236402_changType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003071222517_addColoumninRoutTbl.resx">
-      <DependentUpon>202003071222517_addColoumninRoutTbl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003111546268_baseEntity.resx">
-      <DependentUpon>202003111546268_baseEntity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003132106162_init.resx">
+      <DependentUpon>202003132106162_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

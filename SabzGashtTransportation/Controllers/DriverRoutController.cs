@@ -91,8 +91,8 @@ namespace SabzGashtTransportation.Controllers
             foreach (var item in list)
             {
                 var element = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(item);
-                element.Driver = allDrivers.Where(x => x.DriverId == item.DriverId).FirstOrDefault();
-                element.Rout = allRouts.Where(x => x.RoutID == item.RoutId).FirstOrDefault();
+                element.Driver = allDrivers.Where(x => x.Id == item.DriverId).FirstOrDefault();
+                element.Rout = allRouts.Where(x => x.Id == item.RoutId).FirstOrDefault();
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));

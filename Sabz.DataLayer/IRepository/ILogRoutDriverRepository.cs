@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sabz.DataLayer.IRepository
 {
-    public interface ILogRoutDriverRepository : IRepository<LogRoutDriverTbl, int>
+    public interface ILogDriverRoutRepository : IRepository<LogDriverRoutTbl, int>
     {
     }
 }

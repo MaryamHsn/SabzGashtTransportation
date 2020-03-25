@@ -97,8 +97,8 @@ namespace SabzGashtTransportation.Controllers
             {
                 var element = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(item);
                 element.AutomobileType =
-                    AutomobileTypes.Where(x => x.AutoTypeId == item.AutomobileTypeId).FirstOrDefault();
-                element.AutoId = item.AutomobileId;
+                    AutomobileTypes.Where(x => x.Id == item.AutomobileTypeId).FirstOrDefault();
+                element.AutoId = item.Id;
                 element.AutomobileTypeId = item.AutomobileTypeId;
                 commonList.Add(element);
             }
@@ -150,7 +150,7 @@ namespace SabzGashtTransportation.Controllers
                 obj.CreatedDate = DateTime.Now;
                 obj.ModifiedDate = DateTime.Now;
                 obj.AutomobileTypeTbl= _automobileType.GetAutomobileTypeByCoolerBus((int)automobile.HasCoolerEnum, (int)automobile.IsBusEnum);
-                obj.AutomobileTypeId = obj.AutomobileTypeTbl.AutoTypeId;
+                obj.AutomobileTypeId = obj.AutomobileTypeTbl.Id;
                 _automobile.AddNewAutomobile(obj);
                 _uow.SaveAllChanges();
             }
@@ -170,7 +170,7 @@ namespace SabzGashtTransportation.Controllers
                 return HttpNotFound();
             }
             var obj = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
-            obj.AutoId = automobile.AutomobileId;
+            obj.AutoId = automobile.Id;
             obj.AutomobileType = _automobileType.GetAutomobileType(obj.AutomobileTypeId);
             return View(obj);
         }
@@ -191,7 +191,7 @@ namespace SabzGashtTransportation.Controllers
                 obj.CreatedDate = DateTime.Now;
                 obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true; 
-                obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus(automobile.HasCooler,automobile.IsBus).AutoTypeId;
+                obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus(automobile.HasCooler,automobile.IsBus).Id;
                 _automobile.AddNewAutomobile(obj);
                 _uow.SaveAllChanges();
             }
@@ -236,7 +236,7 @@ namespace SabzGashtTransportation.Controllers
 
         public JsonResult FetchAutomobileList(int id)
         { 
-            var AutomobileList = _driver.GetAllDrivers().Where(x=>x.DriverId==id);
+            var AutomobileList = _driver.GetAllDrivers().Where(x=>x.Id==id);
             return Json(AutomobileList, JsonRequestBehavior.AllowGet);
         }
         protected override void Dispose(bool disposing)

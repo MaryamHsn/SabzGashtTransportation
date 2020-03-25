@@ -134,10 +134,10 @@ namespace SabzGashtTransportation.Controllers
             foreach (var item in list)
             {
                 var element = BaseMapper<RoutViewModel, RoutTbl>.Map(item);
-                element.RegionName = allRegion.Where(x => x.RegionId== element.RegionId).FirstOrDefault().RegionName;
-                element.AutomobileTypeTbl = allAutomobileType.Where(x => x.AutoTypeId == item.AutomobileTypeId).FirstOrDefault();
+                element.RegionName = allRegion.Where(x => x.Id== element.RegionId).FirstOrDefault().RegionName;
+                element.AutomobileTypeTbl = allAutomobileType.Where(x => x.Id == item.AutomobileTypeId).FirstOrDefault();
                 //element.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus(item.AutomobileTypeTbl.HasCooler, (int)item.AutomobileTypeTbl.IsBus);
-                element.Allocate = _driverRout.GetDriverRoutByRoutId(item.RoutID).Count;
+                element.Allocate = _driverRout.GetDriverRoutByRoutId(item.Id).Count;
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));
@@ -185,7 +185,7 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                rout.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus(rout.HasCooler, rout.IsBus).AutoTypeId;
+                rout.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus(rout.HasCooler, rout.IsBus).Id;
                 rout.StartDate = rout.StartDateString.ToGeorgianDate();
                 rout.EndDate = rout.EndDateString.ToGeorgianDate();
                 rout.IsActive = true;
@@ -256,7 +256,7 @@ namespace SabzGashtTransportation.Controllers
                 obj.StartDate = rout.StartDateString.ToGeorgianDate();
                 obj.EndDate= rout.EndDateString.ToGeorgianDate();
                 obj.IsActive = true;
-                obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus((int)rout.HasCoolerEnum,(int) rout.IsBusEnum).AutoTypeId;
+                obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus((int)rout.HasCoolerEnum,(int) rout.IsBusEnum).Id;
 
                 _rout.AddNewRout(obj);
                 _uow.SaveAllChanges(); 

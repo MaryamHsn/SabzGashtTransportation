@@ -18,8 +18,9 @@ namespace Sabz.DataLayer.Repository
         bool SoftDelete(T entity);
         bool SoftDelete(Expression<Func<T, bool>> where);
         T Get(TU id);
-        ICollection<T> Get(Expression<Func<T, bool>> where);
-        ICollection<T> Get();
+        T Get(Expression<Func<T, bool>> where);
+        ICollection<T> GetAll(Expression<Func<T, bool>> where);
+        ICollection<T> GetAll();
       //  IPagedList<T> GetPage<TOrder>(Page page, Expression<Func<T, bool>> where, Expression<Func<T, TOrder>> order);
 
         Task<T> AddAsync(T entity, CancellationToken ct = default(CancellationToken));
@@ -28,10 +29,10 @@ namespace Sabz.DataLayer.Repository
         Task<bool> DeleteAsync(Expression<Func<T, bool>> where, CancellationToken ct = default(CancellationToken));
         Task<bool> SoftDeleteAsync(T entity, CancellationToken ct = default(CancellationToken));
         Task<bool> SoftDeleteAsync(Expression<Func<T, bool>> where, CancellationToken ct = default(CancellationToken));
-        //Task<T> GetAsync(TU id, CancellationToken ct = default(CancellationToken));
-        Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> where, CancellationToken ct = default(CancellationToken));
-
-        Task<ICollection<T>> GetAsync(CancellationToken ct = default(CancellationToken));
+        Task<T> GetAsync(TU id, CancellationToken ct = default(CancellationToken));
+        Task<T> GetAsync(Expression<Func<T, bool>> where, CancellationToken ct = new CancellationToken());
+        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where, CancellationToken ct = default(CancellationToken));
+        Task<ICollection<T>> GetAllAsync(CancellationToken ct = default(CancellationToken));
       //  Task<IPagedList<T>> GetPageAsync<TOrder>(Page page, Expression<Func<T, bool>> where, Expression<Func<T, TOrder>> order, CancellationToken ct = default(CancellationToken));
         int Count(Expression<Func<T, bool>> @where);
         int Count();

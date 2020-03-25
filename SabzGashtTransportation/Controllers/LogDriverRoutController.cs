@@ -16,24 +16,24 @@ using StructureMap.Configuration.DSL;
 
 namespace SabzGashtTransportation.Controllers
 {
-    public class LogRoutDriverController : Controller
+    public class LogDriverRoutController : Controller
     {
-        readonly ILogRoutDriverService _logRoutDriver;
+        readonly ILogDriverRoutService _LogDriverRout;
         readonly IRoutService _rout;
         readonly IDriverService _driver;
         readonly IDriverRoutService _driverRout;
 
         readonly IUnitOfWork _uow;
-        private LogRoutDriverViewModel common { get; set; }
-        private List<LogRoutDriverViewModel> commonList { get; set; }
+        private LogDriverRoutViewModel common { get; set; }
+        private List<LogDriverRoutViewModel> commonList { get; set; }
 
-        public LogRoutDriverController(IUnitOfWork uow, ILogRoutDriverService logRoutDriver, IRoutService rout,
+        public LogDriverRoutController(IUnitOfWork uow, ILogDriverRoutService LogDriverRout, IRoutService rout,
             IDriverService driver, IDriverRoutService driverRout)
         {
             _driver = driver;
             _rout = rout;
             _driverRout = driverRout;
-            _logRoutDriver = logRoutDriver;
+            _LogDriverRout = LogDriverRout;
             _uow = uow;
         }
 
@@ -44,7 +44,6 @@ namespace SabzGashtTransportation.Controllers
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
             ViewBag.Rout = sortOrder == "rout" ? "rout_desc" : "rout";
-            ViewBag.IsTemporary = sortOrder == "isTemporary" ? "isTemporary_desc" : "isTemporary";
             ViewBag.IsDone = sortOrder == "isDone" ? "isDone_desc" : "isDone";
             ViewBag.DoDate = sortOrder == "doDate" ? "doDate_desc" : "doDate";
             ViewBag.Fine = sortOrder == "fine" ? "fine_desc" : "fine";
@@ -57,24 +56,23 @@ namespace SabzGashtTransportation.Controllers
             {
                 searchString = currentFilter;
             }
-            commonList = new List<LogRoutDriverViewModel>();
+            commonList = new List<LogDriverRoutViewModel>();
             //ViewBag.CurrentFilter = searchString;
-            var log = _logRoutDriver.GetAllLogRoutDrivers();
+            var log = _LogDriverRout.GetAllLogDriverRouts();
             var driverRout = _driverRout.GetAllDriverRouts();
             var routs = _rout.GetAllRouts();
             var drivers = _driver.GetAllDrivers(); 
-            var list = _logRoutDriver.GetAllLogRoutDrivers();
+            var list = _LogDriverRout.GetAllLogDriverRouts();
             foreach (var item in list)
             {
                 item.DriverRoutTbl = driverRout.Where(x => x.Id == item.DriverRoutId).FirstOrDefault();
-                item.DriverRoutTbl.RoutTbl = routs.Where(x => x.RoutID == item.DriverRoutTbl.RoutId).FirstOrDefault();
-                item.DriverRoutTbl.DriverTbl = drivers.Where(x => x.DriverId == item.DriverRoutTbl.DriverId).FirstOrDefault();
+                item.DriverRoutTbl.RoutTbl = routs.Where(x => x.Id == item.DriverRoutTbl.RoutId).FirstOrDefault();
+                item.DriverRoutTbl.DriverTbl = drivers.Where(x => x.Id == item.DriverRoutTbl.DriverId).FirstOrDefault();
 
             }
             if (!String.IsNullOrEmpty(searchString))
             {
                 list = list.Where(s => s.DriverRoutTbl.DriverTbl.FullName.ToString().Contains(searchString)
-                                       || s.IsTemporary.ToString().Contains(searchString)
                                        || s.IsDone.ToString().Contains(searchString)
                                        || s.DriverRoutTbl.RoutTbl.Name.Contains(searchString)
                                        ).ToList();
@@ -89,13 +87,7 @@ namespace SabzGashtTransportation.Controllers
                     break;
                 case "rout_desc":
                     list = list.OrderByDescending(s => s.DriverRoutTbl.RoutTbl.Name).ToList();
-                    break;
-                case "isTemporary":
-                    list = list.OrderBy(s => s.IsTemporary).ToList();
-                    break;
-                case "isTemporary_desc":
-                    list = list.OrderByDescending(s => s.IsTemporary).ToList();
-                    break;
+                    break;             
                 case "isDone":
                     list = list.OrderBy(s => s.IsDone).ToList();
                     break;
@@ -123,7 +115,7 @@ namespace SabzGashtTransportation.Controllers
             int pageNumber = (page ?? 1);
             foreach (var item in list)
             {
-                var element = BaseMapper<LogRoutDriverViewModel, LogRoutDriverTbl>.Map(item);
+                var element = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(item);
                 element.DoDateString = element.DoDate.ToPersianDateString();
                 commonList.Add(element);
             }
@@ -138,13 +130,13 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LogRoutDriverTbl routDriver = _logRoutDriver.GetLogRoutDriver(id);
+            LogDriverRoutTbl routDriver = _LogDriverRout.GetLogDriverRout(id);
             if (routDriver == null)
             {
                 return HttpNotFound();
             }
-            common = new LogRoutDriverViewModel();
-            common = BaseMapper<LogRoutDriverViewModel, LogRoutDriverTbl>.Map(routDriver);
+            common = new LogDriverRoutViewModel();
+            common = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(routDriver);
             common.DoDateString = common.DoDate.ToPersianDateString();
             common.DoDateString = routDriver.DoDate.ToPersianDateString();
             common.DriverRoutTbl = _driverRout.GetDriverRout(common.DriverRoutId);
@@ -156,7 +148,7 @@ namespace SabzGashtTransportation.Controllers
         // GET: Drivers/Create
         public ActionResult Create()
         {
-            common = new LogRoutDriverViewModel();
+            common = new LogDriverRoutViewModel();
             common.DriverTblList = _driver.GetAllDrivers();
             common.RoutTblList = _rout.GetAllRouts();
             return View(common);
@@ -167,19 +159,19 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(LogRoutDriverViewModel routDriver)
+        public ActionResult Create(LogDriverRoutViewModel routDriver)
         {
             if (ModelState.IsValid)
             {
-                // common = new LogRoutDriverViewModel();
-                var obj = BaseMapper<LogRoutDriverViewModel, LogRoutDriverTbl>.Map(routDriver);
+                // common = new LogDriverRoutViewModel();
+                var obj = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(routDriver);
                 obj.IsActive = true;
                 obj.CreatedDate = DateTime.Now;
                 obj.ModifiedDate = DateTime.Now;
                 obj.DoDate = routDriver.DoDateString.ToGeorgianDate();
                    var findDriverRoutTbl = _driverRout.GetDriverRoutByDriverIdRoutId(routDriver.DriverId, routDriver.RoutId);
                 obj.DriverRoutId = findDriverRoutTbl.Id;
-                _logRoutDriver.AddNewLogRoutDriver(obj);
+                _LogDriverRout.AddNewLogDriverRout(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
@@ -192,13 +184,13 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LogRoutDriverTbl logRoutDriver = _logRoutDriver.GetLogRoutDriver(id);
+            LogDriverRoutTbl LogDriverRout = _LogDriverRout.GetLogDriverRout(id);
 
-            if (logRoutDriver == null)
+            if (LogDriverRout == null)
             {
                 return HttpNotFound();
             }
-            var obj = BaseMapper<LogRoutDriverViewModel, LogRoutDriverTbl>.Map(logRoutDriver);
+            var obj = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(LogDriverRout);
             obj.DriverTblList = _driver.GetAllDrivers();
             obj.RoutTblList = _rout.GetAllRouts();
             obj.DriverRoutTbl = _driverRout.GetDriverRout(obj.DriverRoutId);
@@ -223,27 +215,24 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(LogRoutDriverViewModel logRoutDriver)
+        public ActionResult Edit(LogDriverRoutViewModel LogDriverRout)
         {
             if (ModelState.IsValid)
             {
-                logRoutDriver.ModifiedDate = DateTime.Now;
-                logRoutDriver.IsActive = false;
-                _logRoutDriver.Delete(logRoutDriver.Id);
-                var obj = BaseMapper<LogRoutDriverViewModel, LogRoutDriverTbl>.Map(logRoutDriver);
+                LogDriverRout.ModifiedDate = DateTime.Now;
+                LogDriverRout.IsActive = false;
+                _LogDriverRout.Delete(LogDriverRout.Id);
+                var obj = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(LogDriverRout);
                 obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
-                obj.CDate = DateTime.Now;
-                obj.LDate = DateTime.Now;
-                obj.DoDate = logRoutDriver.DoDateString.ToGeorgianDate();
+                obj.ModifiedDate = DateTime.Now; 
+                obj.DoDate = LogDriverRout.DoDateString.ToGeorgianDate();
                 obj.IsActive = true;
-                obj.IsDone = Convert.ToBoolean(logRoutDriver.WorkDoneEnum);
-                obj.IsTemporary = (int) logRoutDriver.WorkTemporaryEnum;
-                //var findDriver = _driver.GetDriverByName(logRoutDriver.DriverFullName);
-                //var findRout = _rout.GetRoutByName(logRoutDriver.RoutName);
-                obj.DriverRoutId = _driverRout.GetDriverRoutByDriverIdRoutId(logRoutDriver.DriverId, logRoutDriver.RoutId).Id;
+                obj.IsDone = Convert.ToBoolean(LogDriverRout.WorkDoneEnum);
+                //var findDriver = _driver.GetDriverByName(LogDriverRout.DriverFullName);
+                //var findRout = _rout.GetRoutByName(LogDriverRout.RoutName);
+                obj.DriverRoutId = _driverRout.GetDriverRoutByDriverIdRoutId(LogDriverRout.DriverId, LogDriverRout.RoutId).Id;
 
-                _logRoutDriver.AddNewLogRoutDriver(obj);
+                _LogDriverRout.AddNewLogDriverRout(obj);
                 _uow.SaveAllChanges();
 
             }
@@ -258,12 +247,12 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LogRoutDriverTbl logRoutDriver = _logRoutDriver.GetLogRoutDriver(id);
-            if (logRoutDriver == null)
+            LogDriverRoutTbl LogDriverRout = _LogDriverRout.GetLogDriverRout(id);
+            if (LogDriverRout == null)
             {
                 return HttpNotFound();
             }
-            var obj = BaseMapper<LogRoutDriverViewModel, LogRoutDriverTbl>.Map(logRoutDriver);
+            var obj = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(LogDriverRout);
             obj.DriverRoutTbl = _driverRout.GetDriverRout(obj.DriverRoutId);
             obj.DriverRoutTbl.DriverTbl = _driver.GetDriver(obj.DriverRoutTbl.DriverId);
             obj.DriverRoutTbl.RoutTbl = _rout.GetRout(obj.DriverRoutTbl.RoutId);
@@ -278,7 +267,7 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _logRoutDriver.Delete(id);
+            _LogDriverRout.Delete(id);
             _uow.SaveAllChanges();
             return RedirectToAction("Index");
         }

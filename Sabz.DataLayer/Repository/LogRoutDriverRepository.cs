@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Sabz.DataLayer.Repository
 {
-    public class LogRoutDriverRepository : BaseRepository<LogRoutDriverTbl, int>, ILogRoutDriverRepository
+    public class LogDriverRoutRepository : BaseRepository<LogDriverRoutTbl, int>, ILogDriverRoutRepository
     {
-        public LogRoutDriverRepository(ApplicationDbContext contextFactory) : base(contextFactory)
+        public LogDriverRoutRepository(ApplicationDbContext contextFactory) : base(contextFactory)
         {
         }
     }

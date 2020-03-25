@@ -78,7 +78,7 @@ namespace SabzGashtTransportation.Controllers
                     list = list.OrderByDescending(s => s.Phone1).ToList();
                     break;
                 default:
-                    list = list.OrderBy(s => s.DriverId).ToList();
+                    list = list.OrderBy(s => s.Id).ToList();
                     break;
             }
 

@@ -15,7 +15,6 @@ using Sabz.ServiceLayer;
 using Sabz.ServiceLayer.Service;
 using Sabz.DataLayer.IRepository;
 using Sabz.DataLayer.Repository;
-using Sabz.DataLayer.Migrations;
 
 namespace Sabz.IocConfig
 {
@@ -165,9 +164,9 @@ namespace Sabz.IocConfig
                     .HybridHttpOrThreadLocalScoped()
                     .Use<DriverRoutRepository>();
 
-                ioc.For<ILogRoutDriverRepository>()
+                ioc.For<ILogDriverRoutRepository>()
                     .HybridHttpOrThreadLocalScoped()
-                    .Use<LogRoutDriverRepository>();
+                    .Use<LogDriverRoutRepository>();
 
                 ioc.For<IPaymentRepository>()
                     .HybridHttpOrThreadLocalScoped()
@@ -188,7 +187,7 @@ namespace Sabz.IocConfig
                 ioc.For(typeof(IAutomobileRepository)).Use(typeof(AutomobileRepository));
                 ioc.For(typeof(IAutomobileTypeRepository)).Use(typeof(AutomobileTypeRepository));
                 ioc.For(typeof(IDriverRepository)).Use(typeof(DriverRepository));
-                ioc.For(typeof(ILogRoutDriverRepository)).Use(typeof(LogRoutDriverRepository));
+                ioc.For(typeof(ILogDriverRoutRepository)).Use(typeof(LogDriverRoutRepository));
                 ioc.For(typeof(IPaymentRepository)).Use(typeof(PaymentRepository));
                 ioc.For(typeof(IRegionRepository)).Use(typeof(RegionRepository));
                 ioc.For(typeof(IRepairmentRepository)).Use(typeof(RepairmentRepository));
@@ -215,9 +214,9 @@ namespace Sabz.IocConfig
                     .HybridHttpOrThreadLocalScoped()
                     .Use<EfDriverService>();
 
-                ioc.For<ILogRoutDriverService>()
+                ioc.For<ILogDriverRoutService>()
                     .HybridHttpOrThreadLocalScoped()
-                    .Use<EfLogRoutDriverService>();
+                    .Use<EfLogDriverRoutService>();
 
                 ioc.For<IRegionService>()
                     .HybridHttpOrThreadLocalScoped()

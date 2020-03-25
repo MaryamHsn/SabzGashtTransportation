@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Sabz.DataLayer.Context;
 using Sabz.DataLayer.IRepository;
@@ -14,39 +15,56 @@ namespace Sabz.ServiceLayer.Service
 { 
     public class EfAccidentService :  IAccidentService
     {
-        //IUnitOfWork _uow;
-        //readonly IDbSet<AccidentTbl> _accidents;
-        readonly IAccidentRepository _accidents;
-        public EfAccidentService(IAccidentRepository accidents)
+        IUnitOfWork _uow;
+        DateTime _now;
+        public EfAccidentService(IUnitOfWork uow)
         {
-            _accidents = accidents;
+            _now = DateTime.Now;
+            _uow = uow;
         }
-        //public EfAccidentService(IUnitOfWork uow)
-        //{
-        //    _uow = uow;
-        //    _accidents = _uow.Set<AccidentTbl>();
-        //}
-        
         public void AddNewAccident(AccidentTbl accident)
         {
-            _accidents.Add(accident);
+            _uow.AccidentRepository.Add(accident);
+            _uow.SaveAllChanges();
         }
-
         public IList<AccidentTbl> GetAllAccidents()
         {
-            return _accidents.Get(x=>x.IsActive).ToList();
+            return _uow.AccidentRepository.GetAll().ToList();
         }
         public AccidentTbl GetAccident(int? id)
         {
-            return _accidents.Get(x=>x.IsActive&&x.AccidentId==id).SingleOrDefault();
+            return _uow.AccidentRepository.GetAll(x=>x.Id==id).SingleOrDefault();
         }
         public bool Delete(int id)
         {
-            var entity = _accidents.Get(id);
-            entity.IsActive = false;
-
-            var accident = _accidents.Delete(entity);
-            return accident;
+            AccidentTbl accident = _uow.AccidentRepository.Get(id);
+            var t =_uow.AccidentRepository.SoftDelete(accident);
+            _uow.SaveAllChanges();
+            return t;
+        }
+        ////Async 
+        public async Task AddNewAccidentAsync(AccidentTbl accident, CancellationToken ct = new CancellationToken())
+        {
+            await   _uow.AccidentRepository.AddAsync(accident,ct);
+            _uow.SaveAllChanges();
+        }
+        public async Task<IList<AccidentTbl>> GetAllAccidentsAsync(CancellationToken ct = new CancellationToken())
+        {
+            var obj = await _uow.AccidentRepository.GetAllAsync(ct);
+            //return obj.Select(PropertyKeyMapper.Map).Where(x => x.IsActive == true).ToList();
+            return obj.ToList();
+        }
+        public async Task<AccidentTbl>  GetAccidentAsync(int? id, CancellationToken ct = new CancellationToken())
+        {
+            var obj= await _uow.AccidentRepository.GetAllAsync(x=>x.Id==id);
+            return obj.FirstOrDefault();
+        }
+        public async Task<bool> DeleteAsync(int id, CancellationToken ct = new CancellationToken())
+        {
+            var accident = await _uow.AccidentRepository.GetAsync(id, ct);
+            var obj =await _uow.AccidentRepository.SoftDeleteAsync(accident);
+            _uow.SaveAllChanges();
+            return obj;
         }
     }
 }

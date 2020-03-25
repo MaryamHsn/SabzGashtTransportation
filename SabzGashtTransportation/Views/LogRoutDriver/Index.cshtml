@@ -2,7 +2,7 @@
 @using PagedList.Mvc
 @using Sabz.ServiceLayer.Enumration
 @using Sabz.ServiceLayer.Extension
-@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.LogRoutDriverViewModel>
+@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.LogDriverRoutViewModel>
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -15,7 +15,7 @@
 
 <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">ثبت جدید</button>
 
-@using (Html.BeginForm("Index", "LogRoutDriver", FormMethod.Get))
+@using (Html.BeginForm("Index", "LogDriverRout", FormMethod.Get))
 {
     <p class="search_table">
         جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)

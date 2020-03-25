@@ -12,21 +12,17 @@ namespace Sabz.DomainClasses.DTO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DriverRoutTbl()
         {
-            LogRoutDriverTbls = new HashSet<LogRoutDriverTbl>();
+            LogDriverRoutTbls = new HashSet<LogDriverRoutTbl>();
         }
-
-        public int Id { get; set; }
-
+        [ForeignKey("DriverTbl")]
         public int DriverId { get; set; }
-
+        [ForeignKey("RoutTbl")]
         public int RoutId { get; set; }
-
         public int IsTemporary { get; set; }
+        public decimal RoutPrice { get; set; }
         public virtual DriverTbl DriverTbl { get; set; }
-
         public virtual RoutTbl RoutTbl { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LogRoutDriverTbl> LogRoutDriverTbls { get; set; }
+      //  [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LogDriverRoutTbl> LogDriverRoutTbls { get; set; }
     }
 }

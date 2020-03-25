@@ -98,12 +98,12 @@ namespace SabzGashtTransportation.Controllers
             {
                 //var element = new AccidentViewModel();
                 var element = BaseMapper<AccidentViewModel, AccidentTbl>.Map(item);
-                element.DriverFirstName = driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault().FirstName : "--";
-                element.DriverLastName = driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault().LastName : "--";
+                element.DriverFirstName = driver.Where(x => x.Id == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.Id == item.DriverId).SingleOrDefault().FirstName : "--";
+                element.DriverLastName = driver.Where(x => x.Id == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.Id == item.DriverId).SingleOrDefault().LastName : "--";
                 element.DriverFullName = element.DriverFirstName + " " + element.DriverLastName;
-                element.AutomobileNumber = autombile.Where(x => x.AutomobileId == item.AutomobileId).SingleOrDefault() != null ? autombile.Where(x => x.AutomobileId == item.AutomobileId).SingleOrDefault().Number : "--";
-                element.Cost = accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault() != null ? accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault().Cost : 0;
-                element.Description = accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault() != null ? accident.Where(x => x.AccidentId == item.AccidentId).SingleOrDefault().Description : "";
+                element.AutomobileNumber = autombile.Where(x => x.Id == item.AutomobileId).SingleOrDefault() != null ? autombile.Where(x => x.Id == item.AutomobileId).SingleOrDefault().Number : "--";
+                element.Cost = accident.Where(x => x.Id == item.Id).SingleOrDefault() != null ? accident.Where(x => x.Id == item.Id).SingleOrDefault().Cost : 0;
+                element.Description = accident.Where(x => x.Id == item.Id).SingleOrDefault() != null ? accident.Where(x => x.Id == item.Id).SingleOrDefault().Description : "";
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));

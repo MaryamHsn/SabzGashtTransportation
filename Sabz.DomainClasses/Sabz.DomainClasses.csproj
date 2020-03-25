@@ -67,7 +67,7 @@
     <Compile Include="DTO\CustomUserRole.cs" />
     <Compile Include="DTO\DriverRoutTbl.cs" />
     <Compile Include="DTO\DriverTbl.cs" />
-    <Compile Include="DTO\LogRoutDriverTbl.cs" />
+    <Compile Include="DTO\LogDriverRoutTbl.cs" />
     <Compile Include="DTO\PaymentTbl.cs" />
     <Compile Include="DTO\RegionTbl.cs" />
     <Compile Include="DTO\RepairmentTbl.cs" />

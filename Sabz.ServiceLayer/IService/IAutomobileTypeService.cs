@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Sabz.DomainClasses.DTO;
 
@@ -13,6 +14,11 @@ namespace Sabz.ServiceLayer.IService
         IList<AutomobileTypeTbl> GetAllAutomobileTypes();
         AutomobileTypeTbl GetAutomobileType(int? id);
         AutomobileTypeTbl GetAutomobileTypeByCoolerBus(int cooler, int bus);
-        int Delete(int id);
+        int Delete(int id); 
+        Task AddNewAutomobileTypeAsync(AutomobileTypeTbl AutomobileType, CancellationToken ct = new CancellationToken());
+        Task<IList<AutomobileTypeTbl>> GetAllAutomobileTypesAsync(CancellationToken ct = new CancellationToken());
+        Task<AutomobileTypeTbl> GetAutomobileTypeAsync(int? id, CancellationToken ct = new CancellationToken());
+        Task<AutomobileTypeTbl> GetAutomobileTypeByCoolerBus(int cooler, int bus, CancellationToken ct = new CancellationToken());
+        Task<bool> DeleteAsync(int id, CancellationToken ct = new CancellationToken());
     }
 }

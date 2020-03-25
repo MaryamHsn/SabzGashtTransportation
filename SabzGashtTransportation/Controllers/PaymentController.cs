@@ -117,8 +117,8 @@ namespace SabzGashtTransportation.Controllers
             foreach (var item in payment)
             {
                 var element = BaseMapper<PaymentViewModel, PaymentTbl>.Map(item);
-                element.DriverFirstName = driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault().FirstName : "--";
-                element.DriverLastName = driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.DriverId == item.DriverId).SingleOrDefault().LastName : "--";
+                element.DriverFirstName = driver.Where(x => x.Id == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.Id == item.DriverId).SingleOrDefault().FirstName : "--";
+                element.DriverLastName = driver.Where(x => x.Id == item.DriverId).SingleOrDefault() != null ? driver.Where(x => x.Id == item.DriverId).SingleOrDefault().LastName : "--";
                 element.DriverFullName = element.DriverFirstName + " " + element.DriverLastName;
                 element.CreateDateString = item.CreateDate.ToPersianDateString();
                 commonList.Add(element);

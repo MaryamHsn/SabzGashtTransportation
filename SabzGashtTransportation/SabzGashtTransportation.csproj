@@ -214,7 +214,7 @@
     <Compile Include="Controllers\DriverRoutController.cs" />
     <Compile Include="Controllers\DriversController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LogRoutDriverController.cs" />
+    <Compile Include="Controllers\LogDriverRoutController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\RegionController.cs" />

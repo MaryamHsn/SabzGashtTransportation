@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Sabz.DataLayer.Repository
 {
-    public  class BaseRepository<T, TU> :IRepository<T, TU>
+    public class BaseRepository<T, TU> : IRepository<T, TU>
        where T : BaseEntity<TU>
        where TU : struct
     {
@@ -31,7 +31,6 @@ namespace Sabz.DataLayer.Repository
             entity.CreatedDate = _now;
             entity.ModifiedDate = _now;
             entity.IsActive = true;
-
             _dbSet.Add(entity);
 
             return entity;
@@ -41,10 +40,8 @@ namespace Sabz.DataLayer.Repository
         {
             var old = Get(entity.Id);
             _context.Entry(old).State = EntityState.Detached;
-
             entity.ModifiedDate = _now;
             entity.CreatedDate = old.CreatedDate;
-
             _context.Entry(entity).State = EntityState.Modified;
 
             return entity;
@@ -53,7 +50,6 @@ namespace Sabz.DataLayer.Repository
         public virtual bool Delete(T entity)
         {
             _dbSet.Remove(entity);
-
             return true;
         }
 
@@ -61,8 +57,7 @@ namespace Sabz.DataLayer.Repository
         {
             var entities = _dbSet.Where(where).AsEnumerable();
             foreach (var entity in entities)
-                _dbSet.Remove(entity);
-
+            _dbSet.Remove(entity);
             return true;
         }
 
@@ -70,7 +65,6 @@ namespace Sabz.DataLayer.Repository
         {
             entity.IsActive = false;
             Update(entity);
-
             return true;
         }
 
@@ -89,17 +83,23 @@ namespace Sabz.DataLayer.Repository
 
         public virtual T Get(TU id)
         {
-            return _dbSet.Find(id);
+            var entity = _dbSet.Where(x => x.IsActive);
+            return entity.FirstOrDefault();
         }
 
-        public virtual ICollection<T> Get(Expression<Func<T, bool>> where)
+        public virtual T Get(Expression<Func<T, bool>> where)
         {
-            return _dbSet.Where(where).ToList();
+            return _dbSet.Where(x => x.IsActive).Where(where).FirstOrDefault();
         }
 
-        public virtual ICollection<T> Get()
+        public virtual ICollection<T> GetAll(Expression<Func<T, bool>> where)
         {
-            return _dbSet.ToList();
+            return _dbSet.Where(x => x.IsActive).Where(where).ToList();
+        }
+
+        public virtual ICollection<T> GetAll()
+        {
+            return _dbSet.Where(x => x.IsActive).ToList();
         }
 
         //public virtual IPagedList<T> GetPage<TOrder>(Page page, Expression<Func<T, bool>> where,
@@ -122,7 +122,6 @@ namespace Sabz.DataLayer.Repository
             entity.ModifiedDate = _now;
             entity.CreatedDate = _now;
             entity.IsActive = true;
-
             _dbSet.Add(entity);
 
             return entity;
@@ -182,19 +181,24 @@ namespace Sabz.DataLayer.Repository
 
         public virtual async Task<T> GetAsync(TU id, CancellationToken ct = new CancellationToken())
         {
-            return _context.Set<T>().Find(ct, id);
-
+            var entity = _context.Set<T>().Where(x => x.IsActive);
+            return  await entity.FirstOrDefaultAsync();
+        }
+        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> where, CancellationToken ct = new CancellationToken())
+        {
+            var entity = _context.Set<T>().Where(x => x.IsActive).Where(where);
+            return  await entity.FirstOrDefaultAsync();
         }
 
-        public virtual async Task<ICollection<T>> GetAsync(Expression<Func<T, bool>> @where,
+        public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> @where,
             CancellationToken ct = new CancellationToken())
         {
-            return await _dbSet.Where(where).ToListAsync(ct);
+            return await _dbSet.Where(x=>x.IsActive).Where(where).ToListAsync(ct);
         }
 
-        public virtual async Task<ICollection<T>> GetAsync(CancellationToken ct = new CancellationToken())
+        public virtual async Task<ICollection<T>> GetAllAsync(CancellationToken ct = new CancellationToken())
         {
-            return await _dbSet.ToListAsync(ct);
+            return await _dbSet.Where(x => x.IsActive).ToListAsync(ct);
         }
 
         //public virtual async Task<IPagedList<T>> GetPageAsync<TOrder>(Page page, Expression<Func<T, bool>> where,

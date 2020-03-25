@@ -6,7 +6,5 @@ namespace  Sabz.DomainClasses.DTO
     {
         public CustomRole() { }
         public CustomRole(string name) { Name = name; }
-
-
     }
 }

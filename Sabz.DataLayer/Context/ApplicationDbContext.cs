@@ -23,13 +23,14 @@ namespace Sabz.DataLayer.Context
         {
             //this.Database.Log = data => System.Diagnostics.Debug.WriteLine(data);
         }
+
         #region Dbset
         public DbSet<AccidentTbl> Accidents { set; get; }
         public DbSet<AutomobileTbl> Automobiles { set; get; }
         public DbSet<AutomobileTypeTbl> AutomobileTypes { set; get; }
         public DbSet<DriverRoutTbl> Rout_Drivers { set; get; }
         public DbSet<DriverTbl> Drivers { set; get; }
-        public DbSet<LogRoutDriverTbl> LogRoutDriver { set; get; }
+        public DbSet<LogDriverRoutTbl> LogDriverRout { set; get; }
         public DbSet<RegionTbl> Regions { set; get; }
         public DbSet<RepairmentTbl> Repairments { set; get; }
         public DbSet<RoutTbl> Routs { set; get; }
@@ -61,7 +62,7 @@ namespace Sabz.DataLayer.Context
         //    builder.Entity<AutomobileTypeTbl>().ToTable("AutomobileType");
         //    builder.Entity<DriverRoutTbl>().ToTable("DriverRout");
         //    builder.Entity<DriverTbl>().ToTable("Driver");
-        //    builder.Entity<LogRoutDriverTbl>().ToTable("LogRoutDriver");
+        //    builder.Entity<LogDriverRoutTbl>().ToTable("LogDriverRout");
         //    builder.Entity<RegionTbl>().ToTable("Region");
         //    builder.Entity<RepairmentTbl>().ToTable("Repairment");
         //    builder.Entity<RoutTbl>().ToTable("Rout");
@@ -96,7 +97,7 @@ namespace Sabz.DataLayer.Context
         //        .WillCascadeOnDelete(false);
 
         //    builder.Entity<DriverRoutTbl>()
-        //        .HasMany(e => e.LogRoutDriverTbls)
+        //        .HasMany(e => e.LogDriverRoutTbls)
         //        .WithRequired(e => e.DriverRoutTbl)
         //        .HasForeignKey(e => e.DriverRoutId)
         //        .WillCascadeOnDelete(false);
@@ -110,7 +111,7 @@ namespace Sabz.DataLayer.Context
         //        .WithRequired(e => e.DriverTbl)
         //        .WillCascadeOnDelete(false);
 
-        //    builder.Entity<LogRoutDriverTbl>()
+        //    builder.Entity<LogDriverRoutTbl>()
         //        .Property(e => e.FinePrice)
         //        .HasPrecision(18, 0);
 
@@ -137,23 +138,107 @@ namespace Sabz.DataLayer.Context
         //        .WillCascadeOnDelete(false);
         //}
         #endregion
-        private BaseRepository<RoutTbl, int> _routs;
-        public IRepository<RoutTbl, int> Rout
+
+        #region defineRepository
+ 
+
+        private BaseRepository<AccidentTbl, int> _accidentsRepository;
+        public IRepository<AccidentTbl, int> AccidentRepository
         {
             get
             {
-                return _routs ??
-                    (_routs = new BaseRepository<RoutTbl, int>(this));
+                return _accidentsRepository ??
+                    (_accidentsRepository = new BaseRepository<AccidentTbl, int>(this));
             }
         }
-        #region defineRepository
-        private BaseRepository<DriverTbl, int> _drivers;
-        public IRepository<DriverTbl, int> Driver
+
+        private BaseRepository<AutomobileTbl, int> _automobilesRepository;
+        public IRepository<AutomobileTbl, int> AutomobileRepository
         {
             get
             {
-                return _drivers ??
-                    (_drivers = new BaseRepository<DriverTbl, int>(this));
+                return _automobilesRepository ??
+                    (_automobilesRepository = new BaseRepository<AutomobileTbl, int>(this));
+            }
+        }
+        
+        private BaseRepository<AutomobileTypeTbl, int> _automobileTypesRepository;
+        public IRepository<AutomobileTypeTbl, int> AutomobileTypeRepository
+        {
+            get
+            {
+                return _automobileTypesRepository ??
+                    (_automobileTypesRepository = new BaseRepository<AutomobileTypeTbl, int>(this));
+            }
+        }
+
+        private BaseRepository<DriverRoutTbl, int> _driverRoutsRepository;
+        public IRepository<DriverRoutTbl, int> DriverRoutRepository
+        {
+            get
+            {
+                return _driverRoutsRepository ??
+                    (_driverRoutsRepository = new BaseRepository<DriverRoutTbl, int>(this));
+            }
+        }
+
+        private BaseRepository<DriverTbl, int> _driversRepository;
+        public IRepository<DriverTbl, int> DriverRepository
+        {
+            get
+            {
+                return _driversRepository ??
+                    (_driversRepository = new BaseRepository<DriverTbl, int>(this));
+            }
+        }
+
+        private BaseRepository<LogDriverRoutTbl, int> _logDriverRoutsRepository;
+        public IRepository<LogDriverRoutTbl, int> LogDriverRoutRepository
+        {
+            get
+            {
+                return _logDriverRoutsRepository ??
+                    (_logDriverRoutsRepository = new BaseRepository<LogDriverRoutTbl, int>(this));
+            }
+        }
+
+        private BaseRepository<PaymentTbl, int> _paymentsRepository;
+        public IRepository<PaymentTbl, int> PaymentRepository
+        {
+            get
+            {
+                return _paymentsRepository ??
+                    (_paymentsRepository = new BaseRepository<PaymentTbl, int>(this));
+            }
+        }
+
+        private BaseRepository<RegionTbl, int> _regionsRepository;
+        public IRepository<RegionTbl, int> RegionRepository
+        {
+            get
+            {
+                return _regionsRepository ??
+                    (_regionsRepository = new BaseRepository<RegionTbl, int>(this));
+            }
+        }
+
+        private BaseRepository<RepairmentTbl, int> _repairmentsRepository;
+        public IRepository<RepairmentTbl, int> RepairmentRepository
+        {
+            get
+            {
+                return _repairmentsRepository ??
+                    (_repairmentsRepository = new BaseRepository<RepairmentTbl, int>(this));
+            }
+        }
+
+        private BaseRepository<RoutTbl, int> _routsRepository;
+        public IRepository<RoutTbl, int> RoutRepository
+        {
+            get
+            {
+                return _routsRepository ??
+                    (_routsRepository = new BaseRepository<RoutTbl, int>(this));
             }
         }
         //public IDriverRepository driverRepository { get; set; }

@@ -32,6 +32,6 @@ namespace SabzGashtTransportation.ViewModel
         public RoutTbl Rout{ get; set; }
 
         public RoutTypeEnum RoutTypeEnum { get; set; }
-        //public virtual ICollection<LogRoutDriverTbl> LogRoutDriverTbls { get; set; }
+        //public virtual ICollection<LogDriverRoutTbl> LogDriverRoutTbls { get; set; }
     }
 }

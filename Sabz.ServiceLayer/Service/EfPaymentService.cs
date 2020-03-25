@@ -12,33 +12,57 @@ namespace Sabz.ServiceLayer.Service
 {
     public class EfPaymentService : IPaymentService 
     {
-        IUnitOfWork _uow;
-        readonly IDbSet<PaymentTbl> _payments;
+        IUnitOfWork _uow; 
         public EfPaymentService(IUnitOfWork uow)
         {
-            _uow = uow;
-            _payments = _uow.Set<PaymentTbl>();
+            _uow = uow; 
         }
 
         public void AddNewPayment(PaymentTbl payment)
         {
-            _payments.Add(payment);
+            _uow.PaymentRepository.Add(payment);
+            _uow.SaveAllChanges();
         }
 
         public IList<PaymentTbl> GetAllPayments()
         {
-            return _payments.Where(x => x.IsActive).ToList();
+            return _uow.PaymentRepository.GetAll().ToList();
         }
         public PaymentTbl GetPayment(int? id)
         {
-            return _payments.Find(id);
+            return _uow.PaymentRepository.Get((int)id);
         }
 
-        public int Delete(int id)
+        public bool Delete(int id)
         {
-            PaymentTbl payment = _payments.Find(id);
-            payment.IsActive = false;
-            return payment.PaymentId;
+            PaymentTbl payment = _uow.PaymentRepository.Get(id); 
+            var t = _uow.PaymentRepository.SoftDelete(payment);
+            _uow.SaveAllChanges();
+            return t;
+        }
+        //Async
+        public async Task AddNewPaymentAsync(PaymentTbl payment)
+        {
+            await _uow.PaymentRepository.AddAsync(payment);
+            _uow.SaveAllChanges();
+        }
+
+        public async Task<IList<PaymentTbl>> GetAllPaymentsAsync()
+        {
+            var obj = await _uow.PaymentRepository.GetAllAsync();
+            return obj.ToList();
+        }
+        public async Task<PaymentTbl> GetPaymentAsync(int? id)
+        {
+            return await _uow.PaymentRepository.GetAsync((int)id);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            PaymentTbl payment = await _uow.PaymentRepository.GetAsync(id);
+            var t = _uow.PaymentRepository.SoftDeleteAsync(payment);
+            _uow.SaveAllChanges();
+            return t;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO;
@@ -13,38 +14,64 @@ namespace Sabz.ServiceLayer.Service
     public class EfAutomobileTypeService : IAutomobileTypeService
     {
         IUnitOfWork _uow;
-        readonly IDbSet<AutomobileTypeTbl> _automobileTypes;
         public EfAutomobileTypeService(IUnitOfWork uow)
         {
-             _uow = uow;
-             _automobileTypes = _uow.Set<AutomobileTypeTbl>();
+            _uow = uow;
         }
-
         public void AddNewAutomobileType(AutomobileTypeTbl automobileType)
         {
-            _automobileTypes.Add(automobileType);
+            _uow.AutomobileTypeRepository.Add(automobileType);
         }
-
         public IList<AutomobileTypeTbl> GetAllAutomobileTypes()
         {
-            return _automobileTypes.Where(x => x.IsActive).ToList();
+            return _uow.AutomobileTypeRepository.GetAll().ToList();
         }
         public AutomobileTypeTbl GetAutomobileType(int? id)
         {
-            return _automobileTypes.Where(x=>x.IsActive&& x.AutoTypeId==id).FirstOrDefault();
+            return _uow.AutomobileTypeRepository.Get((int)id);
         }
         public AutomobileTypeTbl GetAutomobileTypeByCoolerBus(int cooler,int bus)
         {
             var t = Convert.ToBoolean(cooler);
-            var autoType= _automobileTypes.Where(x => x.IsActive && x.HasCooler == t &&x.IsBus==bus).FirstOrDefault();
+            var autoType= _uow.AutomobileTypeRepository.GetAll(x => x.IsActive && x.HasCooler == t &&x.IsBus==bus).FirstOrDefault();
             return autoType;
         }
-
         public int Delete(int id)
         {
-            AutomobileTypeTbl automobileType = _automobileTypes.Find(id);
+            AutomobileTypeTbl automobileType = _uow.AutomobileTypeRepository.Get(id);
             automobileType.IsActive = false;
-            return automobileType.AutoTypeId;
+            return automobileType.Id;
+        }
+
+        ////Async 
+        public async Task AddNewAutomobileTypeAsync(AutomobileTypeTbl AutomobileType, CancellationToken ct = new CancellationToken())
+        {
+            await _uow.AutomobileTypeRepository.AddAsync(AutomobileType, ct);
+            _uow.SaveAllChanges();
+        }
+        public async Task<IList<AutomobileTypeTbl>> GetAllAutomobileTypesAsync(CancellationToken ct = new CancellationToken())
+        {
+            var obj = await _uow.AutomobileTypeRepository.GetAllAsync(ct);
+            //return obj.Select(PropertyKeyMapper.Map).Where(x => x.IsActive == true).ToList();
+            return obj.ToList();
+        }
+        public async Task<AutomobileTypeTbl> GetAutomobileTypeAsync(int? id, CancellationToken ct = new CancellationToken())
+        {
+            var obj = await _uow.AutomobileTypeRepository.GetAllAsync(x => x.Id == id);
+            return obj.FirstOrDefault();
+        }
+        public async Task<AutomobileTypeTbl> GetAutomobileTypeByCoolerBus(int cooler, int bus, CancellationToken ct = new CancellationToken())
+        {
+            var t = Convert.ToBoolean(cooler);
+            var autoType =await  _uow.AutomobileTypeRepository.GetAllAsync(x => x.IsActive && x.HasCooler == t && x.IsBus == bus);
+            return autoType.FirstOrDefault();
+        }
+        public async Task<bool> DeleteAsync(int id, CancellationToken ct = new CancellationToken())
+        {
+            var AutomobileType = await _uow.AutomobileTypeRepository.GetAsync(id, ct);
+            var obj = await _uow.AutomobileTypeRepository.SoftDeleteAsync(AutomobileType);
+            _uow.SaveAllChanges();
+            return obj;
         }
     }
 }
