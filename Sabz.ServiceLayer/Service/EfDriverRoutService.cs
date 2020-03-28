@@ -46,7 +46,10 @@ namespace Sabz.ServiceLayer.Service
             _uow.SaveAllChanges();
             return t;
         }
-
+        public void UpdateDriverRout(DriverRoutTbl driverRout)
+        {
+            _uow.DriverRoutRepository.Update(driverRout);
+        }
         ////Async 
         public async Task AddNewDriverRoutAsync(DriverRoutTbl DriverRout, CancellationToken ct = new CancellationToken())
         {
@@ -79,6 +82,10 @@ namespace Sabz.ServiceLayer.Service
             var obj = await _uow.DriverRoutRepository.SoftDeleteAsync(DriverRout);
             _uow.SaveAllChanges();
             return obj;
+        }
+        public async Task UpdateDriverRoutAsync(DriverRoutTbl driverRout)
+        {
+           await _uow.DriverRoutRepository.UpdateAsync(driverRout);
         }
     }
 }

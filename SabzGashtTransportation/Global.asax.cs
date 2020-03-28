@@ -53,10 +53,7 @@ namespace SabzGashtTransportation
 
         private static void setDbInitializer()
         {
-           // Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Sabz.DataLayer.Migrations.Configuration>());
-            //SmObjectFactory.Container.GetInstance<UnitOfWork>().ForceDatabaseInitialize();
-
             SmObjectFactory.Container.GetInstance<IUnitOfWork>().ForceDatabaseInitialize();
         }
     }

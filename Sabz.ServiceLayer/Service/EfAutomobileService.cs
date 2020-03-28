@@ -33,12 +33,18 @@ namespace Sabz.ServiceLayer.Service
             return _uow.AutomobileRepository.Get((int)id);
         }
 
-        public int Delete(int id)
+        public bool Delete(int id)
         {
-            AutomobileTbl auto = _uow.AutomobileRepository.Get(id);
-            auto.IsActive = false;
-            return auto.Id;
+            AutomobileTbl automobile = _uow.AutomobileRepository.Get(id);
+            var t = _uow.AutomobileRepository.SoftDelete(automobile);
+            _uow.SaveAllChanges();
+            return t;
         }
+        public void UpdateAutomobile(AutomobileTbl automobile)
+        {
+            _uow.AutomobileRepository.Update(automobile);
+        }
+
         ////Async 
         public async Task AddNewAutomobileAsync(AutomobileTbl Automobile, CancellationToken ct = new CancellationToken())
         {
@@ -62,6 +68,10 @@ namespace Sabz.ServiceLayer.Service
             var obj = await _uow.AutomobileRepository.SoftDeleteAsync(Automobile);
             _uow.SaveAllChanges();
             return obj;
+        }
+        public async Task UpdateAutomobileAsync(AutomobileTbl automobile)
+        {
+            await _uow.AutomobileRepository.UpdateAsync(automobile);
         }
 
     }

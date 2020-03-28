@@ -112,6 +112,8 @@ namespace SabzGashtTransportation.Controllers
                 return HttpNotFound();
             }
             var obj = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(driverRout);
+            obj.RoutName = _rout.GetRout(driverRout.RoutId).Name;
+            obj.DriverFullName = _driver.GetDriver(driverRout.DriverId).FullName;
             return View(obj);
         }
 
@@ -133,10 +135,6 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                rout.IsActive = true;
-                rout.CreatedDate = DateTime.Now;
-                rout.ModifiedDate = DateTime.Now;
-
                 _driverRout.AddNewDriverRout(rout);
                 _uow.SaveAllChanges();
             }
@@ -157,6 +155,10 @@ namespace SabzGashtTransportation.Controllers
                 return HttpNotFound();
             }
             var obj = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(driverRout);
+            obj.Driver = _driver.GetDriver(driverRout.DriverId);
+            obj.Rout= _rout.GetRout(driverRout.RoutId);
+            obj.DriverList = _driver.GetAllDrivers();
+            obj.RoutList = _rout.GetAllRouts();
             return View(obj);
         }
 
@@ -169,18 +171,12 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                driverRout.ModifiedDate = DateTime.Now;
-                driverRout.IsActive = false;
-                _driverRout.Delete(driverRout.Id);
                 var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
-                obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
                 obj.IsActive = true;
-                _driverRout.AddNewDriverRout(obj);
+                _driverRout.UpdateDriverRout(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
-
         }
 
         // GET: Drivers/Delete/5
@@ -190,12 +186,14 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DriverRoutTbl rout = _driverRout.GetDriverRout(id);
-            if (rout == null)
+            DriverRoutTbl driverRout = _driverRout.GetDriverRout(id);
+            if (driverRout == null)
             {
                 return HttpNotFound();
             }
-            var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(rout);
+            var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
+            obj.DriverFullName = _driver.GetDriver(driverRout.DriverId).FullName;
+            obj.RoutName = _rout.GetRout(driverRout.RoutId).Name; 
             if (obj.IsTemporary == (int)RoutTypeEnum.Always)
             {
                 ViewBag.IsTemporary = RoutTypeEnum.Always;
@@ -226,8 +224,7 @@ namespace SabzGashtTransportation.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             common=new DriverRoutViewModel();
-           var driverRouts = _driverRout.GetDriverRoutByRoutId((int)id);
-           // ViewBag.Total = _rout.GetRout(routId).Count;
+           var driverRouts = _driverRout.GetDriverRoutByRoutId((int)id); 
             if (driverRouts == null)
             {
                 return HttpNotFound();
@@ -239,21 +236,10 @@ namespace SabzGashtTransportation.Controllers
             var remainDrivers = _driver.GetOtherDriversByIds(allocateDriversKId);
             common.DriverList = remainDrivers;
             common.RoutId =(int) id;
-            common.RoutName = rout.Name;
-                //var element = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(common);
-                //element.DriverTbl = remainDrivers;
-                //element.RoutId = (int)id;
-                //element.CreatedDate=DateTime.Now;
-                //element..ModifiedDate= DateTime.Now;
-                //element.IsTemporary = 0;
-                //commonList.Add(element);
-            
+            common.RoutName = rout.Name; 
             return View(common);
         }
 
-        // POST: Drivers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Allocate(DriverRoutViewModel driverRout)

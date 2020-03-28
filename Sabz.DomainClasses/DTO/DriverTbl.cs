@@ -9,7 +9,6 @@ namespace Sabz.DomainClasses.DTO
     [Table("DriverTbl")]
     public partial class DriverTbl : BaseEntity<int>
     {
-       // [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DriverTbl()
         {
             AccidentTbls = new HashSet<AccidentTbl>();

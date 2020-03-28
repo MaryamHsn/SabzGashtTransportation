@@ -26,7 +26,7 @@
         <div class="form-group">
             <p class="control-label">راننده:</p>
             <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverList, "DriverId", "FullName"),Model.Driver.FullName, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverList, "Id", "FullName"),Model.Driver.FullName, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Driver.FullName, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -34,7 +34,7 @@
         <div class="form-group">
             <p class="control-label">مسیر:</p>
             <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "RoutId", "Name"), Model.Rout.Name,htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), Model.Rout.Name,htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
             </div>
         </div>

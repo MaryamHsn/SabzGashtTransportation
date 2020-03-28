@@ -6,12 +6,12 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "مدل اتومبیل";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
 }
 
-<h2>تصادفات</h2>
+<h2>مدل اتومبیل</h2>
 
 <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">مدل ماشین جدید</button>
 
@@ -53,9 +53,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("ویرایش", "Edit", new { id = item.AutoTypeId }) |
-                @Html.ActionLink("جزئیات", "Details", new { id = item.AutoTypeId }) |
-                @Html.ActionLink("حذف", "Delete", new { id = item.AutoTypeId })
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+                @Html.ActionLink("حذف", "Delete", new { id = item.Id })
             </td> 
         </tr>
     }

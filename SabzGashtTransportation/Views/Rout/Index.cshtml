@@ -27,12 +27,12 @@
         <th>
             @Html.ActionLink("نام مسیر", "Index", new { sortOrder = ViewBag.Name, currentFilter = ViewBag.CurrentFilter })
         </th>
-        <th>
+        @*<th>
             @Html.ActionLink("نوع مسیر", "Index", new { sortOrder = ViewBag.ShiftType, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             @Html.ActionLink("مسیر ورودی/خروجی", "Index", new { sortOrder = ViewBag.ShiftType, currentFilter = ViewBag.CurrentFilter })
-        </th>
+        </th>*@
         <th>
             @Html.ActionLink("ساعت ورود", "Index", new { sortOrder = ViewBag.EnterTime, currentFilter = ViewBag.CurrentFilter })
         </th>
@@ -65,7 +65,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.ShiftType)
             </td>
             <td>
@@ -89,7 +89,7 @@
 
                     }
                 }
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.EnterTime)
             </td>

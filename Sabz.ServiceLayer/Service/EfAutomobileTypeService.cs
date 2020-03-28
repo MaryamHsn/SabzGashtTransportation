@@ -36,11 +36,16 @@ namespace Sabz.ServiceLayer.Service
             var autoType= _uow.AutomobileTypeRepository.GetAll(x => x.IsActive && x.HasCooler == t &&x.IsBus==bus).FirstOrDefault();
             return autoType;
         }
-        public int Delete(int id)
+        public bool Delete(int id)
         {
             AutomobileTypeTbl automobileType = _uow.AutomobileTypeRepository.Get(id);
-            automobileType.IsActive = false;
-            return automobileType.Id;
+            var t = _uow.AutomobileTypeRepository.SoftDelete(automobileType);
+            _uow.SaveAllChanges();
+            return t;
+        }
+        public void UpdateAutomobileType(AutomobileTypeTbl automobileType)
+        {
+            _uow.AutomobileTypeRepository.Update(automobileType);
         }
 
         ////Async 
@@ -72,6 +77,10 @@ namespace Sabz.ServiceLayer.Service
             var obj = await _uow.AutomobileTypeRepository.SoftDeleteAsync(AutomobileType);
             _uow.SaveAllChanges();
             return obj;
+        }
+        public async Task UpdateAutomobileTypeAsync(AutomobileTypeTbl automobileType)
+        {
+            await _uow.AutomobileTypeRepository.UpdateAsync(automobileType);
         }
     }
 }

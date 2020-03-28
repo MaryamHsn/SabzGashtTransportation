@@ -41,6 +41,11 @@ namespace Sabz.ServiceLayer.Service
             _uow.SaveAllChanges();
             return t;
         }
+        public void UpdateRout(RoutTbl rout)
+        {
+            _uow.RoutRepository.Update(rout);
+        }
+
         //Async
         public async Task AddNsewRoutAsync(RoutTbl rout)
         {
@@ -62,6 +67,10 @@ namespace Sabz.ServiceLayer.Service
             var t = await _uow.RoutRepository.SoftDeleteAsync(rout);
             _uow.SaveAllChanges();
             return t;
+        }
+        public async Task UpdateRoutAsync(RoutTbl rout)
+        {
+            await _uow.RoutRepository.UpdateAsync(rout);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Sabz.ServiceLayer.Service
         public async Task<bool> DeleteAsync(int id)
         {
             PaymentTbl payment = await _uow.PaymentRepository.GetAsync(id);
-            var t = _uow.PaymentRepository.SoftDeleteAsync(payment);
+            var t =await _uow.PaymentRepository.SoftDeleteAsync(payment);
             _uow.SaveAllChanges();
             return t;
         }

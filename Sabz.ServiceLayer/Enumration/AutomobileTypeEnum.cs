@@ -3,10 +3,10 @@
 namespace Sabz.ServiceLayer.Enumration
 {
     public enum AutomobileTypeEnum
-    {//, ResourceType=typeof(Resources.Enums)
-        [Display(Name = "اتوبوس")]
-        Bus = 0,
+    {
         [Display(Name = "مینی بوس")]
-        MiniBus = 1
+        MiniBus = 0,
+        [Display(Name = "اتوبوس")]
+        Bus = 1
     }
 }

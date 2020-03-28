@@ -37,6 +37,10 @@ namespace Sabz.ServiceLayer.Service
             _uow.SaveAllChanges();
             return t;
         }
+        public void UpdateRegion(RegionTbl region)
+        {
+            _uow.RegionRepository.Update(region);
+        }
         //Async
         public async Task AddNewRegionAsync(RegionTbl region)
         {
@@ -59,6 +63,10 @@ namespace Sabz.ServiceLayer.Service
             var t = await _uow.RegionRepository.SoftDeleteAsync(region);
             _uow.SaveAllChanges();
             return t;
+        }
+        public async Task UpdateRegionAsync(RegionTbl region)
+        {
+            await _uow.RegionRepository.UpdateAsync(region);
         }
     }
 }

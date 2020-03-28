@@ -165,14 +165,16 @@ namespace SabzGashtTransportation.Controllers
             {
                 // common = new LogDriverRoutViewModel();
                 var obj = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(routDriver);
-                obj.IsActive = true;
-                obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
                 obj.DoDate = routDriver.DoDateString.ToGeorgianDate();
-                   var findDriverRoutTbl = _driverRout.GetDriverRoutByDriverIdRoutId(routDriver.DriverId, routDriver.RoutId);
-                obj.DriverRoutId = findDriverRoutTbl.Id;
-                _LogDriverRout.AddNewLogDriverRout(obj);
-                _uow.SaveAllChanges();
+                obj.IsDone = Convert.ToBoolean(routDriver.WorkDoneEnum);
+                var findDriverRoutTbl = _driverRout.GetDriverRoutByDriverIdRoutId(routDriver.DriverId, routDriver.RoutId);
+                if (findDriverRoutTbl!=null)
+                {
+                    obj.DriverRoutId = findDriverRoutTbl.Id;
+                    _LogDriverRout.AddNewLogDriverRout(obj);
+                    _uow.SaveAllChanges();
+                }
+               
             }
             return RedirectToAction("Index");
         }
@@ -198,14 +200,16 @@ namespace SabzGashtTransportation.Controllers
             obj.RoutTbl = _rout.GetRout(obj.DriverRoutTbl.RoutId);
             obj.DriverFullName = obj.DriverRoutTbl.DriverTbl.FullName;
             obj.RoutName = obj.DriverRoutTbl.RoutTbl.Name;
-            obj.DoDateString = obj.DoDate.ToPersianDateString(); 
-            if (obj.WorkDoneEnum == WorkDoneEnum.Done == Convert.ToBoolean(WorkDoneEnum.Done))
+            obj.DoDateString = obj.DoDate.ToPersianDateString();
+            obj.DriverId = obj.DriverTbl.Id;
+            obj.RoutId= obj.RoutTbl.Id;
+            if (obj.IsDone==Convert.ToBoolean(WorkDoneEnum.Done))
             {
                 obj.WorkDoneEnum = WorkDoneEnum.Done;
             }
             else
             {
-                obj.WorkDoneEnum = WorkDoneEnum.Done;
+                obj.WorkDoneEnum = WorkDoneEnum.NotDone;
             }
             return View(obj);
         }
@@ -219,22 +223,17 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                LogDriverRout.ModifiedDate = DateTime.Now;
-                LogDriverRout.IsActive = false;
-                _LogDriverRout.Delete(LogDriverRout.Id);
                 var obj = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(LogDriverRout);
-                obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now; 
                 obj.DoDate = LogDriverRout.DoDateString.ToGeorgianDate();
                 obj.IsActive = true;
                 obj.IsDone = Convert.ToBoolean(LogDriverRout.WorkDoneEnum);
-                //var findDriver = _driver.GetDriverByName(LogDriverRout.DriverFullName);
-                //var findRout = _rout.GetRoutByName(LogDriverRout.RoutName);
-                obj.DriverRoutId = _driverRout.GetDriverRoutByDriverIdRoutId(LogDriverRout.DriverId, LogDriverRout.RoutId).Id;
-
-                _LogDriverRout.AddNewLogDriverRout(obj);
-                _uow.SaveAllChanges();
-
+                obj.DriverRoutTbl = _driverRout.GetDriverRoutByDriverIdRoutId(LogDriverRout.DriverId, LogDriverRout.RoutId);
+                if (obj.DriverRoutTbl != null)
+                {
+                    obj.DriverRoutId = obj.DriverRoutTbl.Id;
+                    _LogDriverRout.UpdateLogDriverRout(obj);
+                    _uow.SaveAllChanges();
+                }
             }
             return RedirectToAction("Index");
 

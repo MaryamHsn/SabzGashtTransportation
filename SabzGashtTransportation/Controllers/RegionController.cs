@@ -65,6 +65,7 @@ namespace SabzGashtTransportation.Controllers
             foreach (var item in list)
             {
                 var element = BaseMapper<RegionViewModel, RegionTbl>.Map(item);
+                element.RegionId = item.Id;
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));
@@ -122,7 +123,7 @@ namespace SabzGashtTransportation.Controllers
             }
             RegionTbl region = _region.GetRegion(id);
             var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
-
+            obj.RegionId = region.Id;
             if (region == null)
             {
                 return HttpNotFound();
@@ -139,14 +140,10 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                region.IsActive = false;
-                region.ModifiedDate = DateTime.Now;
-                _region.Delete(region.RegionId);
                 var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
-                obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
+                obj.Id = region.RegionId;
                 obj.IsActive = true;
-                _region.AddNewRegion(obj);
+                _region.UpdateRegion(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");

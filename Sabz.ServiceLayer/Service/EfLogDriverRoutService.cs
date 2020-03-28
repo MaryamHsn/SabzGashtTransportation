@@ -40,6 +40,10 @@ namespace Sabz.ServiceLayer.Service
             _uow.SaveAllChanges();
             return t;
         }
+        public void UpdateLogDriverRout(LogDriverRoutTbl logDriverRout)
+        {
+            _uow.LogDriverRoutRepository.Update(logDriverRout);
+        }
         //Async
         public async Task AddNewLogDriverRoutAsync(LogDriverRoutTbl driverRout)
         {
@@ -64,7 +68,9 @@ namespace Sabz.ServiceLayer.Service
             _uow.SaveAllChanges();
             return t;
         }
-
-
+        public async Task UpdateLogDriverRoutAsync(LogDriverRoutTbl logDriverRout)
+        {
+            await _uow.LogDriverRoutRepository.UpdateAsync(logDriverRout);
+        }
     }
 }

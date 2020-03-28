@@ -138,6 +138,7 @@ namespace SabzGashtTransportation.Controllers
                 element.AutomobileTypeTbl = allAutomobileType.Where(x => x.Id == item.AutomobileTypeId).FirstOrDefault();
                 //element.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus(item.AutomobileTypeTbl.HasCooler, (int)item.AutomobileTypeTbl.IsBus);
                 element.Allocate = _driverRout.GetDriverRoutByRoutId(item.Id).Count;
+                element.RoutID = item.Id;
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));
@@ -163,6 +164,7 @@ namespace SabzGashtTransportation.Controllers
             common.EndDateString = rout.EndDate!= null?ConvertDate.ToPersianDateString((DateTime)rout.EndDate) :"";
             common.AutomobileTypeTbl = _automobileType.GetAutomobileType(common.AutomobileTypeId);
             common.RegionName = _region.GetRegion(common.RegionId).RegionName;
+            common.RoutID = rout.Id;
             return View(common);
         }
 
@@ -189,9 +191,8 @@ namespace SabzGashtTransportation.Controllers
                 rout.StartDate = rout.StartDateString.ToGeorgianDate();
                 rout.EndDate = rout.EndDateString.ToGeorgianDate();
                 rout.IsActive = true;
-                rout.CreatedDate = DateTime.Now;
-                rout.ModifiedDate = DateTime.Now;
                 var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
+                obj.Id = rout.RoutID;
                 _rout.AddNewRout(obj);
                 
                 _uow.SaveAllChanges();
@@ -217,6 +218,7 @@ namespace SabzGashtTransportation.Controllers
             obj.StartDateString = obj.StartDate.ToPersianDateString();
             obj.EndDateString= obj.EndDate.ToPersianDateString();
             obj.AutomobileTypeTbl = _automobileType.GetAutomobileType(obj.AutomobileTypeId);
+            obj.RoutID = rout.Id;
             if (obj.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler))
             {
                 obj.HasCoolerEnum = HasCoolerEnum.HasCooler;
@@ -247,18 +249,13 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                rout.ModifiedDate = DateTime.Now;
-                rout.IsActive = false;
-                _rout.Delete(rout.RoutID);
                 var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
-                obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
                 obj.StartDate = rout.StartDateString.ToGeorgianDate();
                 obj.EndDate= rout.EndDateString.ToGeorgianDate();
                 obj.IsActive = true;
                 obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus((int)rout.HasCoolerEnum,(int) rout.IsBusEnum).Id;
-
-                _rout.AddNewRout(obj);
+                obj.Id = rout.RoutID;
+                _rout.UpdateRout(obj);
                 _uow.SaveAllChanges(); 
             }
             return RedirectToAction("Index");

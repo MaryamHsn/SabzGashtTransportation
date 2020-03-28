@@ -14,9 +14,11 @@ namespace Sabz.ServiceLayer.IService
         RoutTbl GetRout(int? id);
        // RoutTbl GetRoutByName(string name);
         bool Delete(int id);
+        void UpdateRout(RoutTbl rout);
         Task AddNsewRoutAsync(RoutTbl rout);
         Task<IList<RoutTbl>> GetAllRoutsAsync();
         Task<RoutTbl> GetRoutAsync(int? id);
         Task<bool> DeleteAsync(int id);
+        Task UpdateRoutAsync(RoutTbl rout);
     }
 }

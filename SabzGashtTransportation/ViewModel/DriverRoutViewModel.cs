@@ -12,6 +12,7 @@ namespace SabzGashtTransportation.ViewModel
         public int DriverId { get; set; }
         public string DriverFirstName { get; set; }
         public string DriverLastName { get; set; }
+        public string DriverFullName { get; set; }
         public int RoutId { get; set; }
         public string RoutName { get; set; }
         public string RoutShiftType { get; set; }

@@ -87,6 +87,7 @@ namespace SabzGashtTransportation.Controllers
             foreach (var item in list)
             { 
                 var element = BaseMapper<DriverViewModel, DriverTbl>.Map(item);
+                element.DriverId = item.Id;
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));
@@ -153,6 +154,7 @@ namespace SabzGashtTransportation.Controllers
             obj.BirthDateString = obj.BirthDate != null
                 ? obj.BirthDate.ToPersianDateString()
                 : driver.BirthDate.ToPersianDateString();
+            obj.DriverId = driver.Id;
             if (driver  == null)
             {
                 return HttpNotFound();

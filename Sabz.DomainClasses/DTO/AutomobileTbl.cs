@@ -9,7 +9,6 @@ namespace Sabz.DomainClasses.DTO
     [Table("AutomobileTbl")]
     public partial class AutomobileTbl : BaseEntity<int>
     {
-     //   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AutomobileTbl()
         {
             DriverTbls = new HashSet<DriverTbl>();
@@ -23,11 +22,8 @@ namespace Sabz.DomainClasses.DTO
 
         [ForeignKey("AutomobileTypeTbl")]
         public int AutomobileTypeId { get; set; }
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; }
-       // [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DriverTbl> DriverTbls { get; set; }
-       // [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccidentTbl> AccidentTbls { get; set; }
     }
 }

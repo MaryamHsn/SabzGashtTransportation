@@ -1,14 +1,18 @@
-﻿@model SabzGashtTransportation.ViewModel.LogDriverRoutViewModel
+﻿@using Sabz.DomainClasses.DTO
+@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Utils
+@model SabzGashtTransportation.ViewModel.LogDriverRoutViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
+    var insurancTextShowDefault = "";
 
 }
 
-<h2>ثبت مسیرهای جاری</h2>
 
+<h2>ویرایش</h2>
 
 @using (Html.BeginForm())
 {
@@ -16,49 +20,62 @@
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
         <div class="form-group">
             <p class="control-label"> راننده:</p>
             <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverTblList, "DriverId", "FullName"), htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
+                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverTblList, "Id", "FullName"),Model.DriverFullName, htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
                 @Html.ValidationMessageFor(x => x.DriverId, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.DriverId)
+                @Html.HiddenFor(model => model.DriverId)
 
             </div>
         </div>
         <div class="form-group">
             <p class="control-label"> مسیر:</p>
             <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutTblList, "RoutId", "Name"), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutTblList, "Id", "Name"), Model.RoutName, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RoutTbl.Name, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.RoutId)
 
             </div>
         </div>
         <div class="form-group">
-            <p class="control-label"> انجام شدن :</p>
+            <p class="control-label"> انجام کار:</p>
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EnumDropDownListFor(x => x.WorkDoneEnum, "انتخاب کنید", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IsDone, "", new { @class = "text-danger" })
-                </div>
+                @Html.EnumDropDownListFor(x => x.WorkDoneEnum, "انتخاب کنید", new { @class = "form-control" })
+                @*  @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.Drivers, "DriverId", "FullName"), htmlAttributes: new {@class = "form-control", id = "DriverSelect"})*@
+                @Html.ValidationMessageFor(x => x.IsDone, "", new { @class = "text-danger" })
+        @*@Html.HiddenFor(model => model.IsDone)*@
+
+            </div>
+        </div>        <div class="form-group">
+            <p class="control-label">  نوع فعالیت:</p>
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(x => x.WorkTemporaryEnum, "انتخاب کنید", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.RoutIsTemporary, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.RoutIsTemporary)
+
             </div>
         </div>
+
         <div class="form-group">
             <p class="control-label">تاریخ انجام:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DoDateString, new { htmlAttributes = new { @class = "form-control" } })
-
                 @Html.ValidationMessageFor(model => model.DoDateString, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group">
-            <p class="control-label">جریمه :</p>
+            <p class="control-label">جریمه:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FinePrice, new { htmlAttributes = new { @class = "form-control" } })
-
                 @Html.ValidationMessageFor(model => model.FinePrice, "", new { @class = "text-danger" })
             </div>
         </div>
+        
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -67,8 +84,7 @@
         </div>
     </div>
 }
-
-
 <div class="link-back">
     @Html.ActionLink("بازگشت به لیست", "Index")
 </div>
+

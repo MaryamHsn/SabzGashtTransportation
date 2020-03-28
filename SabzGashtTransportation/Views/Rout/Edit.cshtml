@@ -33,13 +33,13 @@
         </div>
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         <p class="control-label"> نوع مسیر:</p>
         <div class="col-md-10">
             @Html.EditorFor(model => model.ShiftType, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ShiftType, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         <p class="control-label"> ساعت ورود:</p>
@@ -76,7 +76,7 @@
     <div class="form-group">
         <p class="control-label"> منطقه:</p>
         <div class="col-md-10">
-            @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.RegionTblList, "RegionId", "RegionName"), htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.RegionTblList, "Id", "RegionName"), htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.RegionId, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -126,13 +126,13 @@
         </div>
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         <p class="control-label">بهای پرداخت به راننده :</p>
         <div class="col-md-10">
             @Html.EditorFor(model => model.DriverPrice, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.DriverPrice, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         <p class="control-label">تعداد :</p>

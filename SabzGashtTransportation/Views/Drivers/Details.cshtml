@@ -1,6 +1,6 @@
 ﻿@model SabzGashtTransportation.ViewModel.DriverViewModel
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "جزئیات راننده";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
 }
@@ -15,7 +15,7 @@
         </tr>
         <tr class="tbl-tr-show">
             <th class="tbl-th-show"> نام خانوادگی:</th>
-            <th> @Html.DisplayFor(model => model.LastName)</th>
+            <th> @Html.DisplayFor(model => model.LastName)</th> 
         </tr>
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">نام پدر:</th>

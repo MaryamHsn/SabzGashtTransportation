@@ -38,12 +38,20 @@ namespace Sabz.DataLayer.Repository
 
         public virtual T Update(T entity)
         {
-            var old = Get(entity.Id);
-            _context.Entry(old).State = EntityState.Detached;
-            entity.ModifiedDate = _now;
-            entity.CreatedDate = old.CreatedDate;
-            _context.Entry(entity).State = EntityState.Modified;
+            try
+            {
+                var old = Get(entity.Id);
+                _context.Entry(old).State = EntityState.Detached;
+                entity.ModifiedDate = _now;
+                entity.CreatedDate = old.CreatedDate;
+                _context.Entry(entity).State = EntityState.Modified;
 
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
             return entity;
         }
 
@@ -83,8 +91,7 @@ namespace Sabz.DataLayer.Repository
 
         public virtual T Get(TU id)
         {
-            var entity = _dbSet.Where(x => x.IsActive);
-            return entity.FirstOrDefault();
+            return _dbSet.Find(id);
         }
 
         public virtual T Get(Expression<Func<T, bool>> where)

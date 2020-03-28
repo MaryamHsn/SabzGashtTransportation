@@ -9,7 +9,7 @@ namespace SabzGashtTransportation.ViewModel
     {
         public int RoutID { get; set; }
         public string Name { get; set; }
-        public string ShiftType { get; set; }
+        public int ShiftType { get; set; }
         public int RoutTransactionType { get; set; }
         public TimeSpan EnterTime { get; set; }
         public string EnterTimeString { get; set; }
@@ -25,7 +25,6 @@ namespace SabzGashtTransportation.ViewModel
         public int HasCooler { get; set; }
         public int IsBus { get; set; }
         public decimal AgreementPrice { get; set; }
-        public decimal DriverPrice { get; set; }
         public int Count { get; set; }
         public int Allocate { get; set; }
         public bool IsActive { get; set; }

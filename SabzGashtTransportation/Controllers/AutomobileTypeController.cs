@@ -116,9 +116,11 @@ namespace SabzGashtTransportation.Controllers
             if (ModelState.IsValid)
             {
                 var obj = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
-                obj.IsActive = true;
-                obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
+                //obj.IsActive = true;
+                //obj.CreatedDate = DateTime.Now;
+                //obj.ModifiedDate = DateTime.Now;
+                obj.HasCooler = Convert.ToBoolean(automobile.HasCoolerEnum);
+                obj.IsBus = (int)automobile.IsBusEnum;
                 _automobile.AddNewAutomobileType(obj);
                 _uow.SaveAllChanges();
             }
@@ -170,14 +172,11 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                automobile.ModifiedDate = DateTime.Now;
-                automobile.IsActive = false;
-                _automobile.Delete(automobile.AutoTypeId);
-                var obj = BaseMapper<AutomobileTypeTbl, AutomobileTypeViewModel>.Map(automobile);
-                obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
-                obj.IsActive = true;
-                _automobile.AddNewAutomobileType(obj);
+                automobile.HasCooler = Convert.ToBoolean(automobile.HasCoolerEnum);
+                automobile.IsBus= (int)automobile.IsBusEnum;
+                automobile.IsActive = true;
+                var obj = BaseMapper<AutomobileTypeTbl, AutomobileTypeViewModel>.Map(automobile);         
+                 _automobile.UpdateAutomobileType(obj);
                 _uow.SaveAllChanges();  
             }
             return RedirectToAction("Index");

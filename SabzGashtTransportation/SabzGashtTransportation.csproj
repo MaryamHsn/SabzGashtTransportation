@@ -1279,11 +1279,11 @@
     <Content Include="Views\DriverRout\Details.cshtml" />
     <Content Include="Views\DriverRout\Edit.cshtml" />
     <Content Include="Views\DriverRout\Index.cshtml" />
-    <Content Include="Views\LogRoutDriver\Create.cshtml" />
-    <Content Include="Views\LogRoutDriver\Delete.cshtml" />
-    <Content Include="Views\LogRoutDriver\Details.cshtml" />
-    <Content Include="Views\LogRoutDriver\Edit.cshtml" />
-    <Content Include="Views\LogRoutDriver\Index.cshtml" />
+    <Content Include="Views\LogDriverRout\Create.cshtml" />
+    <Content Include="Views\LogDriverRout\Delete.cshtml" />
+    <Content Include="Views\LogDriverRout\Details.cshtml" />
+    <Content Include="Views\LogDriverRout\Edit.cshtml" />
+    <Content Include="Views\LogDriverRout\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\DriverRout\Delete.cshtml" />
     <Content Include="Views\Payment\Create.cshtml" />
