@@ -15,10 +15,12 @@
 
 @using (Html.BeginForm("Index", "Drivers", FormMethod.Get))
 {
-    <p class="search_table">
-        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="جستجو" />
-    </p>
+<p class="search_table">
+    جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+    <input type="submit" value="جستجو" />
+    <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("index")';return false;">
+
+</p>
 }
 <table id="showList">
     <tr>
@@ -50,8 +52,8 @@
             </td>
             <td>
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.DriverId }) |
-                @Html.ActionLink("جزئیات", "Details", new { id = item.DriverId }) |
-                @Html.ActionLink("حذف", "Delete", new { id = item.DriverId })
+                @Html.ActionLink("جزئیات", "Details", new { id = item.DriverId }) 
+                @*@Html.ActionLink("حذف", "Delete", new { id = item.DriverId })*@
             </td>
         </tr>
     }

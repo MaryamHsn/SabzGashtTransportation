@@ -1,4 +1,6 @@
 ﻿
+@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
 @using PagedList.Mvc
 @model PagedList.IPagedList<SabzGashtTransportation.ViewModel.DriverRoutViewModel>
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
@@ -7,26 +9,65 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
+    var counter = 1;
+    var routTransactionType = "";
 }
 
 <h2>برنامه زمانی</h2>
 
-<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">برنامه جدید</button>
+@*<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">برنامه جدید</button>*@
+<button type="button" onclick="location.href='@Url.Action("index","rout")';return false;" class="btn btn-success">نمایش مسیرها</button>
 
 @using (Html.BeginForm("Index", "DriverRout", FormMethod.Get))
 {
-    <p class="search_table">
-        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="جستجو" />
-    </p>
+    @*<p class="search_table">
+            جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="جستجو" />
+        </p>*@
+
+    <div class="searchBox">
+        <h4>جستجو</h4>
+        <table>
+            <tr>
+                <th>راننده</th>
+                <th>@Html.TextBox("SearchDriver", ViewBag.CurrentFilterDriver as string)</th>
+            </tr>
+            <tr>
+                <th>از تاریخ</th>
+                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
+                <th>تا تاریخ</th>
+                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string)</th>
+            </tr>
+        </table>
+        <p class="search_table">
+            <input type="submit" value="جستجو" id="btnSearchCode" name="search" />
+            <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("index")';return false;">
+        </p>
+
+    </div>
 }
 <table id="showList">
     <tr>
         <th>
+            ردیف
+        </th>
+        <th>
             @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("مسیر", "Index", new { sortOrder = ViewBag.Rout, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("نوع مسیر", "Index", new { sortOrder = ViewBag.RoutTransaction, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink(" مسیر ورودی/خروجی", "Index", new { sortOrder = ViewBag.RoutShiftType, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("محدوده مسیر", "Index", new { sortOrder = ViewBag.RoutRegion, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("ساعت مسیر", "Index", new { sortOrder = ViewBag.RoutTime, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("تاریخ مسیر", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             عملیات
@@ -37,17 +78,51 @@
     {
 <tr>
     <td>
-        @Html.DisplayFor(modelItem => item.Driver.FullName)
+        @counter
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Rout.Name)
+        @Html.DisplayFor(modelItem => item.DriverFullName)
+    </td>
+    @{
+        if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
+        {
+
+            routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
+        }
+        else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
+        {
+            routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
+        }
+        else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
+        {
+            routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
+        }
+        else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
+        {
+            routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
+        }
+    }
+    <td>@routTransactionType</td>
+    <td>
+        @(item.RoutShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())
     </td>
     <td>
-        @Html.ActionLink("ویرایش", "Edit", new { id = item.Id}) |
-        @Html.ActionLink("جزئیات", "Details", new { id = item.Id}) |
-        @Html.ActionLink("حذف", "Delete", new { id = item.Id})
+        @Html.DisplayFor(modelItem => item.RoutRegionName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RoutEnterTimeString)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RoutStartDateString)
+    </td>
+    <td>
+        @*@Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |*@
+        @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+        @Html.ActionLink("حذف", "Delete", new { id = item.Id })
     </td>
 </tr>
+        counter += 1;
+
     }
 
 </table>

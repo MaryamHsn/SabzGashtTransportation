@@ -58,20 +58,13 @@ namespace SabzGashtTransportation.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 list = list.Where(s => s.Number.Contains(searchString)
-                                       || s.Shasi.Contains(searchString)
                                        || s.AutomobileTypeId.ToString().Contains(searchString)).ToList();
             }
             switch (sortOrder)
             {
                 case "number_desc":
                     list = list.OrderByDescending(s => s.Number).ToList();
-                    break;
-                case "shasi":
-                    list = list.OrderBy(s => s.Shasi).ToList();
-                    break;
-                case "shasi_desc":
-                    list = list.OrderByDescending(s => s.Shasi).ToList();
-                    break;
+                    break;          
                 case "automobileType":
                     list = list.OrderBy(s => s.AutomobileTypeId).ToList();
                     break;
@@ -121,8 +114,8 @@ namespace SabzGashtTransportation.Controllers
             common = new AutomobileViewModel();
             common = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
             common.AutomobileType = _automobileType.GetAutomobileType(automobile.AutomobileTypeId);
-            common.CreatedDateString = automobile.CreatedDate.ToPersianDateString();
-            common.ModifiedDateString = ((DateTime)automobile.ModifiedDate).ToPersianDateString();
+            //common.CreatedDateString = automobile.CreatedDate.ToPersianDateString();
+            //common.ModifiedDateString = ((DateTime)automobile.ModifiedDate).ToPersianDateString();
             if (common== null)
             {
                 return HttpNotFound();

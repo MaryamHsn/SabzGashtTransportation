@@ -1,4 +1,4 @@
-namespace Sabz.DomainClasses.DTO
+﻿namespace Sabz.DomainClasses.DTO
 {
     using System;
     using System.Collections.Generic;
@@ -15,22 +15,22 @@ namespace Sabz.DomainClasses.DTO
             DriverRoutTbls = new HashSet<DriverRoutTbl>();
         }
 
-        [Required]
-        [StringLength(50)]
-        public string Name { get; set; }
+        //[Required]
+        //[StringLength(50)]
+        //public string Name { get; set; }
         public int ShiftType { get; set; }
-        public int RoutTransactionType { get; set; }
+        public int RoutTransactionType { get; set; }//عادی- نیمراه تک-
         public TimeSpan EnterTime { get; set; }
-        public TimeSpan? ExitTime { get; set; }
+        //public TimeSpan? ExitTime { get; set; }
         [Column(TypeName = "date")]
-        public DateTime? StartDate { get; set; }
-        [Column(TypeName = "date")]
-        public DateTime? EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        //[Column(TypeName = "date")]
+        //public DateTime? ?EndDate { get; set; }
         [ForeignKey("RegionTbl")]
         public int RegionId { get; set; }
         [ForeignKey("AutomobileTypeTbl")]
         public int AutomobileTypeId { get; set; }
-        public decimal AgreementPrice { get; set; }
+       // public decimal AgreementPrice { get; set; }
         public int Count { get; set; }
 
        // [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

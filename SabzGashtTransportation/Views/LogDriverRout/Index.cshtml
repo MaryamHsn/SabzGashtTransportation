@@ -9,71 +9,190 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
+    var counter = 1;
+    var routTransactionType = "";
 }
 
-<h2>ثبت مسیرهای روزانه</h2>
+<h2>نمایش مسیرهای روزانه</h2>
 
 <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">ثبت جدید</button>
 
 @using (Html.BeginForm("Index", "LogDriverRout", FormMethod.Get))
 {
-    <p class="search_table">
-        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="جستجو" />
-    </p>
+    @*<p class="search_table">
+            جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="جستجو" />
+        </p>*@
+
+    <div class="searchBox">
+        <h4>جستجو</h4>
+        <table>
+            <tr>
+                <th>نام منطقه</th>
+                <th>
+                    @Html.Hidden("dropRegionId")
+                    @Html.DropDownList("RegionItems", "انتخاب کنید")
+                </th>
+            </tr>
+            <tr>
+                <th>راننده</th>
+                <th>@Html.TextBox("SearchDriver", ViewBag.CurrentFilterDriver as string)</th>
+            </tr>
+            <tr>
+                <th>از تاریخ</th>
+                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
+                <th>تا تاریخ</th>
+                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string)</th>
+            </tr>
+
+        </table>
+        <p class="search_table">
+            <input type="submit" value="جستجو" id="btnSearchCode" name="search" />
+            <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("index")';return false;">
+        </p>
+
+    </div>
 }
+@*<table id="showList">
+        <tr>
+            <th>
+                @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink(" انجام", "Index", new { sortOrder = ViewBag.IsDone, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("نوع فعالیت", "Index", new { sortOrder = ViewBag.IsTemporary, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("تاریخ انجام", "Index", new { sortOrder = ViewBag.DoDate, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("جریمه", "Index", new { sortOrder = ViewBag.Fine, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                عملیات
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverRoutTbl.DriverTbl.FullName)
+                </td>
+                <td>
+                    @(item.IsDone == Convert.ToBoolean(WorkDoneEnum.Done) ? WorkDoneEnum.Done.GetDisplayName() : WorkDoneEnum.NotDone.GetDisplayName())
+                </td>
+                <td>
+                    @(item.RoutIsTemporary == (int)WorkTemporaryEnum.IsTemporary ? WorkTemporaryEnum.IsTemporary.GetDisplayName() : WorkTemporaryEnum.IsNotTemporary.GetDisplayName())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DoDateString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinePrice)
+                </td>
+                <td>
+                    @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("حذف", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>*@
 <table id="showList">
     <tr>
+        <th>
+            ردیف
+        </th>
+
+        <th>
+            @Html.ActionLink("محدوده مسیر", "Index", new { sortOrder = ViewBag.RoutRegion, currentFilter = ViewBag.CurrentFilter })
+        </th>
         <th>
             @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("مسیر", "Index", new { sortOrder = ViewBag.Rout, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("نوع مسیر", "Index", new { sortOrder = ViewBag.RoutTransaction, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink(" انجام", "Index", new { sortOrder = ViewBag.IsDone, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink(" مسیر ورودی/خروجی", "Index", new { sortOrder = ViewBag.RoutShiftType, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("نوع فعالیت", "Index", new { sortOrder = ViewBag.IsTemporary, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("ساعت مسیر", "Index", new { sortOrder = ViewBag.RoutTime, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("تاریخ انجام", "Index", new { sortOrder = ViewBag.DoDate, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("تاریخ مسیر", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("جریمه", "Index", new { sortOrder = ViewBag.Fine, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("انجام شده؟", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            عملیات
+            @Html.ActionLink("مبلغ جریمه", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
         </th>
+        @*<th>
+                ثبت
+            </th>*@
     </tr>
 
     @foreach (var item in Model)
     {
 <tr>
     <td>
-        @Html.DisplayFor(modelItem => item.DriverRoutTbl.DriverTbl.FullName)
+        @counter
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.DriverRoutTbl.RoutTbl.Name)
+        @Html.DisplayFor(modelItem => item.RoutRegionName)
     </td>
     <td>
-        @(item.IsDone == Convert.ToBoolean(WorkDoneEnum.Done) ? WorkDoneEnum.Done.GetDisplayName() : WorkDoneEnum.NotDone.GetDisplayName())
+        @Html.DisplayFor(modelItem => item.DriverFullName)
+    </td>
+    @{
+        if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
+        {
+
+            routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
+        }
+        else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
+        {
+            routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
+        }
+        else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
+        {
+            routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
+        }
+        else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
+        {
+            routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
+        }
+    }
+    <td>@routTransactionType</td>
+
+    <td>
+        @(item.RoutShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())
     </td>
     <td>
-        @(item.RoutIsTemporary ==  (int)WorkTemporaryEnum.IsTemporary ? WorkTemporaryEnum.IsTemporary.GetDisplayName() : WorkTemporaryEnum.IsNotTemporary.GetDisplayName())
+        @Html.DisplayFor(modelItem => item.RoutEnterTimeString)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.DoDateString)
+        @Html.DisplayFor(modelItem => item.RoutStartDateString)
+    </td>
+    <td>
+        @Html.CheckBoxFor(modelItem => item.IsDone, new { @disabled = "disabled" })
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.FinePrice)
     </td>
-    <td>
-        @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
-        @Html.ActionLink("حذف", "Delete", new { id = item.Id })
-    </td>
+    @*<td>
+            @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+            @Html.ActionLink("حذف", "Delete", new { id = item.Id })
+        </td>*@
 </tr>
+        counter += 1;
+
     }
 
 </table>
@@ -84,3 +203,14 @@
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(function () {
+        $('select').on('change', function () {
+            $("#dropRegionId").val(this.value);
+        })
+        alert(droppRegionId.val);
+
+    })
+</script>

@@ -12,6 +12,7 @@ using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.Enumration;
 using Sabz.ServiceLayer.IService;
 using Sabz.ServiceLayer.Mapper;
+using Sabz.ServiceLayer.Utils;
 using Sabz.ServiceLayer.ViewModel;
 using SabzGashtTransportation.ViewModel;
 
@@ -22,13 +23,15 @@ namespace SabzGashtTransportation.Controllers
         readonly IDriverRoutService _driverRout;
         readonly IDriverService _driver;
         readonly IRoutService _rout;
+        readonly IRegionService _region;
 
         private DriverRoutViewModel common;
         private List<DriverRoutViewModel> commonList;
 
         readonly IUnitOfWork _uow;
-        public DriverRoutController(IUnitOfWork uow, IDriverRoutService driverRout, IDriverService driver, IRoutService rout)
+        public DriverRoutController(IUnitOfWork uow, IDriverRoutService driverRout, IDriverService driver, IRoutService rout, IRegionService region)
         {
+            _region = region;
             _driver = driver;
             _rout = rout;
             _driverRout = driverRout;
@@ -37,62 +40,156 @@ namespace SabzGashtTransportation.Controllers
 
         // GET: Automobile
         [HttpGet]
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, string SearchDriver, string SearchRout, string SearchDateFrom, string SearchDateTo, int? page)
         {
             commonList = new List<DriverRoutViewModel>();
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
-            ViewBag.Rout = sortOrder == "rout" ? "rout_desc" : "rout";
-            ViewBag.IsTemporary = sortOrder == "isTemporary" ? "isTemporary_desc" : "isTemporary";
+            ViewBag.RoutTransaction = sortOrder == "routTransaction" ? "routTransaction_desc" : "routTransaction";
+            ViewBag.RoutShiftType = sortOrder == "routShiftType" ? "routShiftType_desc" : "routShiftType";
+            ViewBag.RoutRegion = sortOrder == "routRegion" ? "routRegion_desc" : "routRegion";
+            ViewBag.RoutTime = sortOrder == "routTime" ? "routTime_desc" : "routTime";
+            ViewBag.RoutDate = sortOrder == "routDate" ? "routDate_desc" : "routDate";
+            //  ViewBag.IsTemporary = sortOrder == "isTemporary" ? "isTemporary_desc" : "isTemporary";
 
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
+            //if (searchString != null)
+            //{
+            //    page = 1;
+            //}
+            //else
+            //{
+            //    searchString = currentFilter;
+            //}
+            //ViewBag.CurrentFilter = searchString;
             var list = _driverRout.GetAllDriverRouts();
+            var routs = _rout.GetAllRouts();
+            var regions = _region.GetAllRegions();
+            if (!string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver) && !string.IsNullOrWhiteSpace(SearchRout))
+            {
+                if (string.IsNullOrWhiteSpace(SearchDateTo))
+                {
+                    //list = _driverRout.GetDriverRoutByDateByDriverNameByRoutName(SearchDateFrom.ToGeorgianDate(), DateTime.Now, SearchDriver, SearchRout);
+                }
+                else
+                {
+                    //list = _driverRout.GetDriverRoutByDateByDriverNameByRoutName(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate(), SearchDriver, SearchRout);
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver) && string.IsNullOrWhiteSpace(SearchRout))
+            {
+                if (string.IsNullOrWhiteSpace(SearchDateTo))
+                {
+                    list = _driverRout.GetDriverRoutByDateByDriverName(SearchDateFrom.ToGeorgianDate(), DateTime.Now, SearchDriver);
+                }
+                else
+                {
+                    list = _driverRout.GetDriverRoutByDateByDriverName(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate(), SearchDriver);
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(SearchDateFrom) && string.IsNullOrWhiteSpace(SearchDriver) && !string.IsNullOrWhiteSpace(SearchRout))
+            {
+                if (string.IsNullOrWhiteSpace(SearchDateTo))
+                {
+                    //list = _driverRout.GetDriverRoutByDateByRoutName(SearchDateFrom.ToGeorgianDate(), DateTime.Now, SearchRout);
+                }
+                else
+                {
+                   // list = _driverRout.GetDriverRoutByDateByRoutName(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate(), SearchRout);
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(SearchDateFrom) && string.IsNullOrWhiteSpace(SearchDriver) && string.IsNullOrWhiteSpace(SearchRout))
+            {
+                if (string.IsNullOrWhiteSpace(SearchDateTo))
+                {
+                   // list = _driverRout.GetDriverRoutByDate(SearchDateFrom.ToGeorgianDate(), DateTime.Now);
+                }
+                else
+                {
+                   // list = _driverRout.GetDriverRoutByDate(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate());
+                }
+            }
+            else if (string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver) && !string.IsNullOrWhiteSpace(SearchRout))
+            {
+                //list = _driverRout.GetDriverRoutByDriverNameRoutName(SearchRout, SearchDriver);
+            }
+            else if (string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver) && string.IsNullOrWhiteSpace(SearchRout))
+            {
+                list = _driverRout.GetDriverRoutByDriverName(SearchDriver);
+            }
+            else if (string.IsNullOrWhiteSpace(SearchDateFrom) && string.IsNullOrWhiteSpace(SearchDriver) && !string.IsNullOrWhiteSpace(SearchRout))
+            {
+                //list = _driverRout.GetDriverRoutByRoutName(SearchRout);
+            }
+            foreach (var item in list)
+            {
+                //var t= regions.Where(x=>x.RoutTbls.)
+                item.RoutTbl = routs.Where(x => x.Id == item.RoutId).FirstOrDefault();
+                item.RoutTbl.RegionTbl = regions.Where(x => x.Id == item.RoutTbl.RegionId).FirstOrDefault();
+            }
             if (!String.IsNullOrEmpty(searchString))
             {
-                list = list.Where(s => s.DriverTbl.FullName.ToString().Contains(searchString)
-                                       || s.RoutTbl.Name.ToString().Contains(searchString)
-                                       || s.IsTemporary.ToString().Contains(searchString)).ToList();
+                list = list.Where(s => s.DriverTbl.FullName.ToString().Contains(searchString)).ToList();
             }
             switch (sortOrder)
             {
                 case "driver_desc":
                     list = list.OrderByDescending(s => s.DriverTbl.FullName).ToList();
                     break;
-                case "rout":
-                    list = list.OrderBy(s => s.RoutTbl.Name).ToList();
+                case "routRegion":
+                    list = list.OrderBy(s => s.RoutTbl.RegionTbl.RegionName).ToList();
                     break;
-                case "rout_desc":
-                    list = list.OrderByDescending(s => s.RoutTbl.Name).ToList();
+                case "routRegion_desc":
+                    list = list.OrderByDescending(s => s.RoutTbl.RegionTbl.RegionName).ToList();
+                    break; 
+                case "routTransaction":
+                    list = list.OrderBy(s => s.RoutTbl.RoutTransactionType).ToList();
                     break;
-                case "isTemporary":
-                    list = list.OrderBy(s => s.IsTemporary).ToList();
+                case "routTransaction_desc":
+                    list = list.OrderByDescending(s => s.RoutTbl.RoutTransactionType).ToList();
+                    break;              
+                case "routShiftType":
+                    list = list.OrderBy(s => s.RoutTbl.ShiftType).ToList();
                     break;
-                case "isTemporary_desc":
-                    list = list.OrderByDescending(s => s.IsTemporary).ToList();
+                case "routShiftType_desc":
+                    list = list.OrderByDescending(s => s.RoutTbl.ShiftType).ToList();
                     break;
+                case "routTime":
+                    list = list.OrderBy(s => s.RoutTbl.EnterTime).ToList();
+                    break;
+                case "routTime_desc":
+                    list = list.OrderByDescending(s => s.RoutTbl.EnterTime).ToList();
+                    break;
+                case "routDate":
+                    list = list.OrderBy(s => s.RoutTbl.StartDate).ToList();
+                    break;
+                case "routDate_desc":
+                    list = list.OrderByDescending(s => s.RoutTbl.StartDate).ToList();
+                    break;
+                //case "isTemporary":
+                //    list = list.OrderBy(s => s.IsTemporary).ToList();
+                //    break;
+                //case "isTemporary_desc":
+                //    list = list.OrderByDescending(s => s.IsTemporary).ToList();
+                //    break;
                 default:
-                    list = list.OrderBy(s => s.DriverId).ToList();
+                    list = list.OrderBy(s => s.Id).OrderByDescending(x => x.Id).ToList();
                     break;
             }
-
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             var allDrivers = _driver.GetAllDrivers();
-            var allRouts = _rout.GetAllRouts();
             foreach (var item in list)
             {
                 var element = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(item);
                 element.Driver = allDrivers.Where(x => x.Id == item.DriverId).FirstOrDefault();
-                element.Rout = allRouts.Where(x => x.Id == item.RoutId).FirstOrDefault();
+                element.DriverFullName = element.Driver.FullName;
+                //element.Rout = routs.Where(x => x.Id == item.RoutId).FirstOrDefault();
+                element.RoutEnterTimeString = item.RoutTbl.EnterTime.ToString();
+                element.RoutStartDate = item.RoutTbl.StartDate;
+                element.RoutStartDateString = item.RoutTbl.StartDate.ToPersianDateString();
+                element.RoutRegionName = item.RoutTbl.RegionTbl.RegionName;
+                element.RoutShiftType = _rout.GetRout(element.RoutId).ShiftType;
+                element.RoutTransactionType = _rout.GetRout(element.RoutId).RoutTransactionType;
                 commonList.Add(element);
             }
             return View(commonList.ToPagedList(pageNumber, pageSize));
@@ -106,13 +203,17 @@ namespace SabzGashtTransportation.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             DriverRoutTbl driverRout = _driverRout.GetDriverRout(id);
-
             if (driverRout == null)
             {
                 return HttpNotFound();
             }
             var obj = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(driverRout);
-            obj.RoutName = _rout.GetRout(driverRout.RoutId).Name;
+            obj.RoutRegionName = _rout.GetRout(driverRout.RoutId).RegionTbl.RegionName;
+            obj.RoutEnterTimeString = _rout.GetRout(driverRout.RoutId).EnterTime.ToString();
+            obj.RoutStartDateString = _rout.GetRout(driverRout.RoutId).StartDate.ToPersianDateString();
+            obj.Phone1 = _driver.GetDriver(driverRout.DriverId).Phone1;
+            obj.RoutShiftType = _rout.GetRout(driverRout.RoutId).ShiftType;
+            obj.RoutShiftType = _rout.GetRout(driverRout.RoutId).ShiftType;
             obj.DriverFullName = _driver.GetDriver(driverRout.DriverId).FullName;
             return View(obj);
         }
@@ -149,14 +250,13 @@ namespace SabzGashtTransportation.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             DriverRoutTbl driverRout = _driverRout.GetDriverRout(id);
-
             if (driverRout == null)
             {
                 return HttpNotFound();
             }
             var obj = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(driverRout);
             obj.Driver = _driver.GetDriver(driverRout.DriverId);
-            obj.Rout= _rout.GetRout(driverRout.RoutId);
+            obj.Rout = _rout.GetRout(driverRout.RoutId);
             obj.DriverList = _driver.GetAllDrivers();
             obj.RoutList = _rout.GetAllRouts();
             return View(obj);
@@ -193,16 +293,20 @@ namespace SabzGashtTransportation.Controllers
             }
             var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
             obj.DriverFullName = _driver.GetDriver(driverRout.DriverId).FullName;
-            obj.RoutName = _rout.GetRout(driverRout.RoutId).Name; 
-            if (obj.IsTemporary == (int)RoutTypeEnum.Always)
-            {
-                ViewBag.IsTemporary = RoutTypeEnum.Always;
-            }
-            else
-            {
-                ViewBag.IsTemporary = RoutTypeEnum.Temporary;
-            }
-
+            obj.RoutRegionName = _rout.GetRout(driverRout.RoutId).RegionTbl.RegionName;
+            obj.RoutEnterTimeString = _rout.GetRout(driverRout.RoutId).EnterTime.ToString();
+            obj.RoutStartDateString = _rout.GetRout(driverRout.RoutId).StartDate.ToPersianDateString();
+            obj.Phone1 = _driver.GetDriver(driverRout.DriverId).Phone1;
+            obj.RoutShiftType = _rout.GetRout(driverRout.RoutId).ShiftType;
+            obj.RoutShiftType = _rout.GetRout(driverRout.RoutId).ShiftType;
+            //if (obj.IsTemporary == (int)RoutTypeEnum.Always)
+            //{
+            //    ViewBag.IsTemporary = RoutTypeEnum.Always;
+            //}
+            //else
+            //{
+            //    ViewBag.IsTemporary = RoutTypeEnum.Temporary;
+            //}
             return View(obj);
         }
 
@@ -223,20 +327,18 @@ namespace SabzGashtTransportation.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            common=new DriverRoutViewModel();
-           var driverRouts = _driverRout.GetDriverRoutByRoutId((int)id); 
+            common = new DriverRoutViewModel();
+            var driverRouts = _driverRout.GetDriverRoutByRoutId((int)id);
             if (driverRouts == null)
             {
                 return HttpNotFound();
             }
-
             var rout = _rout.GetRout(id);
             var allDrivers = _driver.GetAllDrivers();
             var allocateDriversKId = _driverRout.GetDriverRoutByRoutId((int)id).Select(x => x.DriverId).ToList();
             var remainDrivers = _driver.GetOtherDriversByIds(allocateDriversKId);
             common.DriverList = remainDrivers;
-            common.RoutId =(int) id;
-            common.RoutName = rout.Name; 
+            common.RoutId = (int)id;
             return View(common);
         }
 
@@ -246,18 +348,69 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                driverRout.ModifiedDate = DateTime.Now;
-                driverRout.IsActive = false;
-                _driverRout.Delete(driverRout.Id);
                 var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
-                obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
-                obj.IsActive = true;
                 _driverRout.AddNewDriverRout(obj);
                 _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
 
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult SearchByRout(int? id, int? page)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var driverRoutList = _driverRout.GetDriverRoutByRoutId((int)id);
+            if (driverRoutList == null)
+            {
+                return HttpNotFound();
+            }
+            commonList = new List<DriverRoutViewModel>();
+            int pageSize = 10;
+            var allDrivers = _driver.GetAllDrivers();
+            var rout = _rout.GetRout(id);
+            int pageNumber = (page ?? 1);
+            foreach (var item in driverRoutList)
+            {
+                var element = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(item);
+                element.Driver = allDrivers.Where(x => x.Id == item.DriverId).FirstOrDefault();
+                element.DriverFullName = element.Driver.FullName;
+                //element.Rout = routs.Where(x => x.Id == item.RoutId).FirstOrDefault();
+                element.RoutEnterTimeString = item.RoutTbl.EnterTime.ToString();
+                element.RoutStartDate = item.RoutTbl.StartDate;
+                element.RoutStartDateString = item.RoutTbl.StartDate.ToPersianDateString();
+                element.RoutRegionName = item.RoutTbl.RegionTbl.RegionName;
+                element.RoutShiftType = _rout.GetRout(element.RoutId).ShiftType;
+                commonList.Add(element);
+            }
+            return View("Index", commonList.ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SearchByDate(DateTime? fromDate)
+
+        {
+            if (fromDate == null)
+            {
+                fromDate = DateTime.Now;
+            }
+            //if (toDate == null)
+            //{
+            //    toDate = fromDate;
+            //}
+            var rout = _rout.GetAllRoutsByDate(fromDate);
+            var routIds = rout.Select(x => x.Id).ToList();
+            var driverRouts = _driverRout.GetDriverRoutByRoutIds(routIds);
+            if (driverRouts == null)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

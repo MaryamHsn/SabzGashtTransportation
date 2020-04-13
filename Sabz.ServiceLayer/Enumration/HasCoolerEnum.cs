@@ -9,7 +9,7 @@ namespace Sabz.ServiceLayer.Enumration
 {
     public enum HasCoolerEnum
     {
-        [Display(Name = "کولر ندارد")]
+        [Display(Name = "معمولی")]
         HasNotCooler = 0,
         [Display(Name = "کولر دارد")]
         HasCooler = 1

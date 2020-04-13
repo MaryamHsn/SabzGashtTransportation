@@ -94,6 +94,7 @@
     <Compile Include="Enumration\HasCoolerEnum.cs" />
     <Compile Include="Enumration\RoutTransactionTypeEnum.cs" />
     <Compile Include="Enumration\RoutTypeEnum.cs" />
+    <Compile Include="Enumration\ShiftTypeEnum.cs" />
     <Compile Include="Enumration\WorkDoneEnum.cs" />
     <Compile Include="Enumration\WorkTemporaryEnum.cs" />
     <Compile Include="Exception\DateTimeFormatException.cs" />

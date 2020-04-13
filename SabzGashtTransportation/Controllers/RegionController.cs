@@ -86,6 +86,7 @@ namespace SabzGashtTransportation.Controllers
             }
             common = new RegionViewModel();
             common = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
+            common.RegionId = region.Id;
             return View(common);
         }
 

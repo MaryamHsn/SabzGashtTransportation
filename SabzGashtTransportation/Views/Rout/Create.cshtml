@@ -13,112 +13,80 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <p class="control-label"> نام مسیر:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <p class="control-label"> محدوده:</p>
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.RegionTblList, "Id", "RegionName"), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.RegionId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        @*<div class="form-group">
-            <p class="control-label"> نوع مسیر:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShiftType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShiftType, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            <p class="control-label"> ساعت ورود:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EnterTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EnterTime, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        <p class="control-label"> تاریخ:</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.StartDateString, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.StartDateString, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            <p class="control-label"> ساعت خروج:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ExitTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ExitTime, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        <p class="control-label"> ساعت :</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EnterTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EnterTime, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            <p class="control-label"> تاریخ شروع:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDateString, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartDateString, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        <p class="control-label"> مسیر ورودی/خروجی:</p>
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(x => x.ShiftTypeEnum, "انتخاب کنید", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ShiftType, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            <p class="control-label"> تاریخ پایان:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDateString, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EndDateString, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        <p class="control-label"> نوع مسیر:</p>
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(x => x.RoutTransactionTypeEnum, "انتخاب کنید", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RoutTransactionType, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            <p class="control-label"> منطقه:</p>
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.RegionTblList, "Id", "RegionName"), htmlAttributes: new { @class = "form-control"})
-                @Html.ValidationMessageFor(x => x.RegionId, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        <p class="control-label">نوع اتومبیل:</p>
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(x => x.IsBusEnum, "انتخاب کنید", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IsBusEnum, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            <p class="control-label">کولر دار:</p>
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EnumDropDownListFor(x => x.HasCoolerEnum, "انتخاب کنید", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.HasCooler, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class="control-label">نوع اتومبیل:</p>
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(x => x.IsBusEnum, "انتخاب کنید", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IsBusEnum, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <p class="control-label">بهای دریافتی مسیر :</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AgreementPrice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AgreementPrice, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-            <p class="control-label">بهای پرداخت به راننده :</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DriverPrice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DriverPrice, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            <p class="control-label">تعداد :</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-success">ثبت</button>
+    <div class="form-group">
+        <p class="control-label">کولر دار:</p>
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EnumDropDownListFor(x => x.HasCoolerEnum, "انتخاب کنید", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.HasCooler, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
+
+    <div class="form-group">
+        <p class="control-label">تعداد :</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-success">ثبت</button>
+        </div>
+    </div>
+</div>
 }
 
 <div class="link-back">

@@ -73,6 +73,22 @@
     <Compile Include="Migrations\202003260716567_init.Designer.cs">
       <DependentUpon>202003260716567_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003301741146_changeRout.cs" />
+    <Compile Include="Migrations\202003301741146_changeRout.Designer.cs">
+      <DependentUpon>202003301741146_changeRout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003301748541_changeRoutExitTime.cs" />
+    <Compile Include="Migrations\202003301748541_changeRoutExitTime.Designer.cs">
+      <DependentUpon>202003301748541_changeRoutExitTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004080914010_changeRoutTbl.cs" />
+    <Compile Include="Migrations\202004080914010_changeRoutTbl.Designer.cs">
+      <DependentUpon>202004080914010_changeRoutTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004081120213_changeRoutDriverTbl.cs" />
+    <Compile Include="Migrations\202004081120213_changeRoutDriverTbl.Designer.cs">
+      <DependentUpon>202004081120213_changeRoutDriverTbl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\PaymentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +117,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202003260716567_init.resx">
       <DependentUpon>202003260716567_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301741146_changeRout.resx">
+      <DependentUpon>202003301741146_changeRout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301748541_changeRoutExitTime.resx">
+      <DependentUpon>202003301748541_changeRoutExitTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004080914010_changeRoutTbl.resx">
+      <DependentUpon>202004080914010_changeRoutTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004081120213_changeRoutDriverTbl.resx">
+      <DependentUpon>202004081120213_changeRoutDriverTbl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

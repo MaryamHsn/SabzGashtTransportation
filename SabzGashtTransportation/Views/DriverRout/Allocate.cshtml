@@ -83,16 +83,6 @@
 
 
         <div class="form-group">
-            <p class="control-label">نوع مسیر:</p>
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EnumDropDownListFor(x => x.RoutTypeEnum, "انتخاب کنید", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.RoutTypeEnum, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="submit" class="btn btn-success">ثبت</button>
             </div>

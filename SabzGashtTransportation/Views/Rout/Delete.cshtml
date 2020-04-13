@@ -13,34 +13,22 @@
 <h2>آیا مطمئن از حذف هستید؟ </h2>
 <div>
     <table class="tbl-show">
+
         <tr class="tbl-tr-show">
-            <th class="tbl-th-show">نام مسیر:</th>
-            <th> @Html.DisplayFor(model => model.Name)</th>
+            <th class="tbl-th-show">منطقه:</th>
+            <th> @Html.DisplayFor(model => model.RegionName)</th>
         </tr>
-        @*<tr class="tbl-tr-show">
+        <tr class="tbl-tr-show">
             <th class="tbl-th-show">نوع مسیر:</th>
-            <th> @Html.DisplayFor(model => model.ShiftType)</th>
-        </tr>*@
+            <th> @(Model.ShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())</th>
+        </tr>
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">ساعت ورورد:</th>
             <th> @Html.DisplayFor(model => model.EnterTime)</th>
         </tr>
         <tr class="tbl-tr-show">
-            <th class="tbl-th-show">ساعت خروج:</th>
-            <th> @Html.DisplayFor(model => model.ExitTime)</th>
-        </tr>
-        <tr class="tbl-tr-show">
             <th class="tbl-th-show">تاریخ شروع:</th>
             <th> @Html.DisplayFor(model => model.StartDateString)</th>
-        </tr>
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show">تاریخ پایان:</th>
-            <th> @Html.DisplayFor(model => model.EndDateString)</th>
-        </tr>
-
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show">منطقه:</th>
-            <th> @Html.DisplayFor(model => model.RegionName)</th>
         </tr>
     </table>
 

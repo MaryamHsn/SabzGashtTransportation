@@ -9,13 +9,13 @@ namespace Sabz.ServiceLayer.Enumration
 { 
     public enum RoutTransactionTypeEnum
     {
-        [Display(Name = " ورودی")]
-        Enter = 0,
-        [Display(Name = "  خروجی")]
-        Exit = 1,
-            [Display(Name = "خروجی ناقص رفت")]
-        EnterExit1 = 2,
-        [Display(Name = "خروجی ناقص برگشت")]
-        EnterExit2 = 3
+        [Display(Name = " تک نیمراه")]
+        Single = 0,
+        [Display(Name = "عادی")]
+        Regular = 1,
+        [Display(Name = "سه و چهار نیمراه")]
+        ThereeFour = 2,
+        [Display(Name = "پنج و هفت نیمراه")]
+        FiveSeven = 3
     }
 }

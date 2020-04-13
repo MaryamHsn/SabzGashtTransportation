@@ -15,8 +15,8 @@ namespace Sabz.DomainClasses.DTO
         }
         [StringLength(13)]
         public string Number { get; set; }
-        [StringLength(10)]
-        public string Shasi { get; set; }
+        //[StringLength(10)]
+        //public string Shasi { get; set; }
         [StringLength(10)]
         public string CreateYear { get; set; }
 

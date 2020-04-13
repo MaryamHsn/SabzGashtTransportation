@@ -38,7 +38,23 @@
                 @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group">
+            <p class="control-label">مسیر:</p>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), Model.Rout.Name,htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label">مسیر:</p>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), Model.Rout.Name,htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*<div class="form-group">
             <p class="control-label">نوع مسیر:</p>
             <div class="col-md-10">
                 <div class="checkbox">
@@ -56,7 +72,7 @@
                     @Html.ValidationMessageFor(model => model.RoutTypeEnum, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div> 
+        </div>*@ 
 
 
         <div class="form-group">

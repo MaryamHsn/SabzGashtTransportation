@@ -108,6 +108,7 @@ namespace SabzGashtTransportation.Controllers
             }
             var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
             obj.BirthDateString = driver.BirthDate != null ? driver.BirthDate.ToPersianDateString() : "";
+            obj.DriverId = driver.Id;
             return View(obj);
         }
 

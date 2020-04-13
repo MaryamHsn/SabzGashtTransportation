@@ -7,57 +7,67 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
+    var routTransactionType = "";
 }
 
 <h2>اطلاعات بیشتر</h2>
 
 <div>
     <table class="tbl-show">
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show">نام مسیر:</th>
-            <th> @Html.DisplayFor(model => model.Name)</th>
-        </tr>
-        @*<tr class="tbl-tr-show">
-            <th class="tbl-th-show"> نوع مسیر:</th>
-            <th> @Html.DisplayFor(model => model.ShiftType)</th>
-        </tr>*@
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show">ساعت ورود:</th>
-            <th> @Html.DisplayFor(model => model.EnterTime)</th>
-        </tr>
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show">ساعت خروج:</th>
-            <th> @Html.DisplayFor(model => model.ExitTime)</th>
-        </tr>
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show"> تاریخ شروع:</th>
-            <th> @Html.DisplayFor(model => model.StartDateString)</th>
-        </tr>
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show">تاریخ پایان:</th>
-            <th> @Html.DisplayFor(model => model.EndDateString)</th>
-        </tr>
 
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">منطقه:</th>
             <th> @Html.DisplayFor(model => model.RegionName)</th>
         </tr>
+
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> تاریخ:</th>
+            <th> @Html.DisplayFor(model => model.StartDateString)</th>
+        </tr>
+
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">ساعت ورود/خروج:</th>
+            <th> @Html.DisplayFor(model => model.EnterTime)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> مسیر ورودی/خروجی:</th>
+            <th> @(Model.ShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> نوع مسیر:</th>
+
+            @{
+                if (Model.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
+                {
+                    routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
+                }
+                else if (Model.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
+                {
+                    routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
+                }
+                else if (Model.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
+                {
+                    routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
+                }
+                else if (Model.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
+                {
+                    routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
+                }
+            }
+            <th>
+                @routTransactionType
+            </th>
+        </tr>
+
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">نوع اتومبیل:</th>
+            <th> @(Model.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())</th>
+        </tr>
+
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">وضعیت کولر:</th>
             <th> @(Model.AutomobileTypeTbl.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())</th>
         </tr>
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show">نوع ماشین:</th>
-            <th> @(Model.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())</th>
-        </tr>
-        <tr class="tbl-tr-show">
-            <th class="tbl-th-show"> بهای دریافتی مسیر:</th>
-            <th> @Html.DisplayFor(model => model.AgreementPrice)</th>
-        </tr>
-        @*<tr class="tbl-tr-show">
-            <th class="tbl-th-show"> بهای پرداخت به راننده:</th>
-            <th> @Html.DisplayFor(model => model.DriverPrice)</th>
-        </tr>*@
         <tr class="tbl-tr-show">
             <th class="tbl-th-show"> تعداد:</th>
             <th> @Html.DisplayFor(model => model.Count)</th>

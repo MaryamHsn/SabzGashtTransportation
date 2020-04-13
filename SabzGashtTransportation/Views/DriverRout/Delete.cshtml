@@ -18,13 +18,34 @@
             <th> @Html.DisplayFor(model => model.DriverFullName)</th>
         </tr>
         <tr class="tbl-tr-show">
-            <th class="tbl-th-show"> مسیر:</th>
+            <th class="tbl-th-show">نام مسیر:</th>
             <th> @Html.DisplayFor(model => model.RoutName)</th>
         </tr>
         <tr class="tbl-tr-show">
-            <th class="tbl-th-show">مسیر همیشگی</th>
-            <th> @(Model.IsTemporary == (int)RoutTypeEnum.Temporary ? RoutTypeEnum.Temporary.GetDisplayName() : RoutTypeEnum.Always.GetDisplayName())</th>
+            <th class="tbl-th-show"> محدوده مسیر:</th>
+            <th> @Html.DisplayFor(model => model.RoutRegionName)</th>
         </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show"> ساعت مسیر:</th>
+            <th> @Html.DisplayFor(model => model.RoutEnterTimeString)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">تاریخ مسیر:</th>
+            <th> @Html.DisplayFor(model => model.RoutStartDateString)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">شماره راننده:</th>
+            <th> @Html.DisplayFor(model => model.Phone1)</th>
+        </tr>
+        <tr class="tbl-tr-show">
+            <th class="tbl-th-show">:مسیر ورودی/خروجی</th>
+            <th> @(Model.RoutShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())</th>
+
+        </tr>
+        @*<tr class="tbl-tr-show">
+                <th class="tbl-th-show">مسیر همیشگی؟</th>
+                <th> @(Model.IsTemporary == (int)RoutTypeEnum.Temporary? RoutTypeEnum.Temporary.GetDisplayName() : RoutTypeEnum.Always.GetDisplayName())</th>
+            </tr>*@
 
     </table>
     @using (Html.BeginForm())

@@ -1,74 +1,245 @@
-﻿@model SabzGashtTransportation.ViewModel.LogDriverRoutViewModel
+﻿@*@model SabzGashtTransportation.ViewModel.LogDriverRoutViewModel
+
+    @{
+        ViewBag.Title = "Create";
+        Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+        @Styles.Render("~/css/style.css");
+
+    }
+
+    <h2>ثبت مسیرهای جاری</h2>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <p class="control-label"> راننده:</p>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverTblList, "Id", "FullName"), htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
+                    @Html.ValidationMessageFor(x => x.DriverId, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.DriverId)
+
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="control-label"> مسیر:</p>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutTblList, "Id", "Name"), htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoutTbl.Name, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.RoutId)
+
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="control-label"> انجام شدن :</p>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EnumDropDownListFor(x => x.WorkDoneEnum, "انتخاب کنید", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IsDone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="control-label">تاریخ انجام:</p>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DoDateString, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.DoDateString, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="control-label">جریمه :</p>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FinePrice, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.FinePrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-success">ثبت</button>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <div class="link-back">
+        @Html.ActionLink("بازگشت به لیست", "Index")
+    </div>*@
+
+
+
+@using PagedList.Mvc
+@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
+@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.LogDriverRoutViewModel>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
     @Styles.Render("~/css/style.css");
+    var counter = 1;
+    var routTransactionType = "";
 
 }
 
-<h2>ثبت مسیرهای جاری</h2>
+<h2>ثبت مسیرهای روزانه</h2>
 
+@using (Html.BeginForm("create", "LogDriverRout", FormMethod.Get))
+{
+    <div class="searchBox">
+        <h4>جستجو</h4>
+        <table>
+            <tr>
+                <th>نام منطقه</th>
+                <th>
+                    @Html.Hidden("dropRegionId")
+                    @Html.DropDownList("RegionItems", "انتخاب کنید")
+                </th>
+            </tr>
+            <tr>
+                <th>راننده</th>
+                <th>@Html.TextBox("SearchDriver", ViewBag.CurrentFilterDriver as string)</th>
+            </tr>
+            <tr>
+                <th>از تاریخ</th>
+                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
+                <th>تا تاریخ</th>
+                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string)</th>
+            </tr>
+
+        </table>
+        <p class="search_table">
+            <input type="submit" value="جستجو" id="btnSearchCode" name="search" />
+            <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("index")';return false;">
+        </p>
+
+    </div>
+}
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    <table id="showList">
+        <tr>
+            <th>
+                ردیف
+            </th>
+            <th>
+                @Html.ActionLink("محدوده مسیر", "Index", new { sortOrder = ViewBag.RoutRegion, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("نوع مسیر", "Index", new { sortOrder = ViewBag.RoutTransaction, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink(" مسیر ورودی/خروجی", "Index", new { sortOrder = ViewBag.RoutShiftType, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("ساعت مسیر", "Index", new { sortOrder = ViewBag.RoutTime, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("تاریخ مسیر", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("انجام شده؟", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("مبلغ جریمه", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
+            </th>
+        </tr>
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <p class="control-label"> راننده:</p>
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverTblList, "Id", "FullName"), htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
-                @Html.ValidationMessageFor(x => x.DriverId, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.DriverId)
+        @for (int i = 0; i < Model.Count; i++)
+        //{ (var item in Model)
+        {
+            <tr>
+                <td>
+                    @counter
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem[i].RoutRegionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem[i].DriverFullName)
+                    @Html.HiddenFor(modelItem => modelItem[i].DriverRoutId)
+                </td>
+                @{
+                    if (Model[i].RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
+                    {
 
-            </div>
-        </div>
-        <div class="form-group">
-            <p class="control-label"> مسیر:</p>
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutTblList, "Id", "Name"), htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RoutTbl.Name, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.RoutId)
+                        routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
+                    }
+                    else if (Model[i].RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
+                    }
+                    else if (Model[i].RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
+                    }
+                    else if (Model[i].RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
+                    }
+                }
+                <td>@routTransactionType</td>
+                <td>
+                    @(Model[i].RoutShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem[i].RoutEnterTimeString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem[i].RoutStartDateString)
+                    @Html.HiddenFor(modelItem => modelItem[i].RoutStartDateString)
+                    @Html.ValidationMessageFor(modelItem => modelItem[i].RoutStartDateString, "", new { @class = "text-danger" })
 
-            </div>
-        </div>
-        <div class="form-group">
-            <p class="control-label"> انجام شدن :</p>
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EnumDropDownListFor(x => x.WorkDoneEnum, "انتخاب کنید", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IsDone, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <p class="control-label">تاریخ انجام:</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DoDateString, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => modelItem[i].IsDone)
+                    @Html.ValidationMessageFor(modelItem => modelItem[i].IsDone, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem[i].FinePrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(modelItem => modelItem[i].FinePrice, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            counter += 1;
+        }
 
-                @Html.ValidationMessageFor(model => model.DoDateString, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <p class="control-label">جریمه :</p>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FinePrice, new { htmlAttributes = new { @class = "form-control" } })
+    </table>
+    <br />
+    <p class="showPage">
+        صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+    </p>
 
-                @Html.ValidationMessageFor(model => model.FinePrice, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-success">ثبت</button>
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-success">ثبت</button>
         </div>
     </div>
+
+    @Html.PagedListPager(Model, page => Url.Action("create",
+                                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
 }
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(function () {
+        $('select').on('change', function () {
+            $("#dropRegionId").val(this.value);
+        })
+        alert(droppRegionId.val);
 
-
-<div class="link-back">
-    @Html.ActionLink("بازگشت به لیست", "Index")
-</div>
+    })
+</script>

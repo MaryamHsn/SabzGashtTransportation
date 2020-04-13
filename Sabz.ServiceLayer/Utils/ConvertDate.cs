@@ -64,11 +64,11 @@ namespace Sabz.ServiceLayer.Utils
             DateTime resultDateTime = new DateTime();
             if (dateParts[0].Length == 4)
             {
-                resultDateTime = persianCalendar.ToDateTime(Convert.ToInt32(dateParts[0]), Convert.ToInt32(dateParts[1]), Convert.ToInt32(dateParts[2]), DateTime.Now.Hour, DateTime.Now.Minute, 0, 0);
+                resultDateTime = persianCalendar.ToDateTime(Convert.ToInt32(dateParts[0]), Convert.ToInt32(dateParts[1]), Convert.ToInt32(dateParts[2]),0, 0, 0, 0);
             }
             else
             {
-                resultDateTime = persianCalendar.ToDateTime(Convert.ToInt32(dateParts[2]), Convert.ToInt32(dateParts[1]), Convert.ToInt32(dateParts[0]), DateTime.Now.Hour, DateTime.Now.Minute, 0, 0);
+                resultDateTime = persianCalendar.ToDateTime(Convert.ToInt32(dateParts[0]), Convert.ToInt32(dateParts[1]), Convert.ToInt32(dateParts[2]), 0, 0, 0, 0);
             }
             return resultDateTime;
         }

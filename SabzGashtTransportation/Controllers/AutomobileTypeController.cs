@@ -95,8 +95,8 @@ namespace SabzGashtTransportation.Controllers
             }
             common = new AutomobileTypeViewModel();
             common = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
-            common.CreatedDateString = automobile.CreatedDate.ToPersianDateString();
-            common.ModifiedDateString = ((DateTime)automobile.ModifiedDate).ToPersianDateString();
+            //common.CreatedDateString = automobile.CreatedDate.ToPersianDateString();
+            //common.ModifiedDateString = ((DateTime)automobile.ModifiedDate).ToPersianDateString();
             return View(common);
         }
 
