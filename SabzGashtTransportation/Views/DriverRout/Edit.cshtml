@@ -5,14 +5,13 @@
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
-    var RoutTextShowDefault  = "";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css"); 
 
 }
 
 
-<h2>ویرایش</h2>
+<h2 class="style-h2">ویرایش</h2>
 
 @using (Html.BeginForm())
 {
@@ -26,53 +25,53 @@
         <div class="form-group">
             <p class="control-label">راننده:</p>
             <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverList, "Id", "FullName"),Model.Driver.FullName, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Driver.FullName, "", new {@class = "text-danger"})
+                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverList, "Id", "FullName"), Model.Driver.FullName, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Driver.FullName, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <p class="control-label">مسیر:</p>
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), Model.Rout.Name,htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class="control-label">مسیر:</p>
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), Model.Rout.Name,htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class="control-label">مسیر:</p>
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), Model.Rout.Name,htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
         @*<div class="form-group">
-            <p class="control-label">نوع مسیر:</p>
+            <p class="control-label">مسیر:</p>
             <div class="col-md-10">
-                <div class="checkbox">
-                    @{
-                        if (Model.IsTemporary== (int)RoutTypeEnum.Always)
-                        {
-                            RoutTextShowDefault  = RoutTypeEnum.Always.ToString();
-                        }
-                        else
-                        {
-                            RoutTextShowDefault = RoutTypeEnum.Temporary.ToString();
-                        }
-                    }
-                    @Html.EnumDropDownListFor(x => x.RoutTypeEnum, RoutTextShowDefault , new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.RoutTypeEnum, "", new { @class = "text-danger" })
-                </div>
+                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), Model.RoutName, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
             </div>
-        </div>*@ 
+        </div>
+
+        <div class="form-group">
+            <p class="control-label">مسیر:</p>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), Model.RoutName, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label">مسیر:</p>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), Model.RoutName, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        @*<div class="form-group">
+                <p class="control-label">نوع مسیر:</p>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @{
+                            if (Model.IsTemporary== (int)RoutTypeEnum.Always)
+                            {
+                                RoutTextShowDefault  = RoutTypeEnum.Always.ToString();
+                            }
+                            else
+                            {
+                                RoutTextShowDefault = RoutTypeEnum.Temporary.ToString();
+                            }
+                        }
+                        @Html.EnumDropDownListFor(x => x.RoutTypeEnum, RoutTextShowDefault , new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.RoutTypeEnum, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
 
 
         <div class="form-group">

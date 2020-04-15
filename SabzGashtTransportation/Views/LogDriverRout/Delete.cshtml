@@ -4,15 +4,15 @@
 
 
 @{
-    ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
+    ViewBag.Title = "حذف  مسیرهای روزانه ";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
 
 }
 
-<h2>آیا مطمئن از حذف هستید؟ </h2>
+<h2 class="style-h2">آیا مطمئن از حذف هستید؟ </h2>
 <div>
-   
+
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

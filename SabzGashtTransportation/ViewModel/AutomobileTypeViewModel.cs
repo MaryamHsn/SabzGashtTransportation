@@ -7,7 +7,8 @@ namespace SabzGashtTransportation.ViewModel
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations; 
     public class AutomobileTypeViewModel
-    {  
+    {
+        public int Id { get; set; }
         public bool HasCooler { get; set; }
         public string Description { get; set; }
         public int? IsBus { get; set; }

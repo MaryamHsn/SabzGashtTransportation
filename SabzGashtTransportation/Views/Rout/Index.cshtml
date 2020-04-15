@@ -4,23 +4,22 @@
 @model PagedList.IPagedList<SabzGashtTransportation.ViewModel.RoutViewModel>
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Index";
-    //Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
+    ViewBag.Title = "Index"; 
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     @Styles.Render("~/css/css/style.css");
     var counter = 1;
     var routTransactionType = "";
 }
 
-<h2>مسیرها</h2>
+<h2 class="style-h2">مسیرها</h2>
 
-<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">مسیر جدید</button>
+<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn  btn-success">مسیر جدید</button>
 
 @using (Html.BeginForm("Index", "Rout", FormMethod.Get))
 {
 
     <div class="searchBox">
-        <h4>جستجو</h4>
+        <h4 class="style-h4">جستجو</h4>
         <table>
             @*<tr>
                     <th>  جستجو در جدول</th>
@@ -31,16 +30,17 @@
                     <th>@Html.TextBox("SearchDate", ViewBag.CurrentFilterDate as string)</th>
                 </tr>*@
             <tr>
-                <th>از تاریخ</th>
-                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
-                <th>تا تاریخ</th>
-                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string)</th>
+                <th class="font-small" >از تاریخ</th>
+                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string )</th>
+                <th class="font-small" >تا تاریخ</th>
+                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string )</th>
             </tr>
             <tr>
-                <th>نام منطقه</th>
+                <th class="font-small" >نام منطقه</th>
                 <th>
-                    @Html.Hidden("dropRegionId")
                     @Html.DropDownList("RegionItems", "انتخاب کنید")
+                    @Html.Hidden("dropRegionId")
+
                 </th>
             </tr>
         </table>
@@ -50,7 +50,7 @@
         </p>
 
     </div>
-    <div class="searchBox">
+    @*<div class="searchBox">
         <h4>آمار کلی</h4>
         <table>
             <tr>
@@ -66,7 +66,7 @@
                 </th>
             </tr>
         </table>
-    </div>
+    </div>*@
 }
 <table id="showList">
     <tr>
@@ -183,11 +183,11 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
+    
     $(function () {
         $('select').on('change', function () {
             $("#dropRegionId").val(this.value);
         })
-        alert(droppRegionId.val);
 
     })
 </script>

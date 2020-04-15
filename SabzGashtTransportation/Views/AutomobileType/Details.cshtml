@@ -1,15 +1,15 @@
 ﻿@using Sabz.ServiceLayer.Enumration
 @using Sabz.ServiceLayer.Extension
 @using Sabz.ServiceLayer.Utils
-@model SabzGashtTransportation.ViewModel.AutomobileTypeViewModel 
+@model SabzGashtTransportation.ViewModel.AutomobileTypeViewModel
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
+    ViewBag.Title = "جزئیات مدل اتومبیل";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
 }
 
-<h2>اطلاعات بیشتر</h2>
+<h2 class="style-h2">جزئیات مدل اتومبیل</h2>
 
 <div>
     <table class="tbl-show">
@@ -19,13 +19,13 @@
         </tr>
         <tr class="tbl-tr-show">
             <th class="tbl-th-show"> مدل اتومبیل:</th>
-            <th> @(Model.IsBus== (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())</th>
+            <th> @(Model.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())</th>
         </tr>
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">توضیحات:</th>
             <th> @Html.DisplayFor(model => model.Description)</th>
         </tr>
-      
+
     </table>
 </div>
 <p>

@@ -9,9 +9,58 @@
     src: url( "../fonts/W_YEKAN_0.TTF" );
     src: local( "?" ), url( "../fonts/W_YEKAN_0.TTF" )format( "truetype" );
 }
-* {
-    font-family: "Yekan", "Trebuchet MS", "PT Sans", "Helvetica Neue", "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
+@font-face {
+    font-family: "yekan";
+    font-style: normal;
+    font-weight: normal;
+    src: url('../../fonts/yekan/yekan-regular.eot') format("embedded-opentype"), url('../fonts/yekan/yekan-regular.woff') format("woff"), url('../fonts/yekan/yekan-regular.ttf') format("truetype");
 }
+
+@font-face {
+    font-family: "Yekan";
+    src: url( "../../fonts/W_YEKAN_0.TTF" );
+    src: local( "?" ), url( "../fonts/W_YEKAN_0.TTF" )format( "truetype" );
+}
+
+
+
+@font-face {
+    font-family: 'PTSansRegular';
+    src: url('../../fonts/PTS55F-webfont.eot');
+    src: url('../../fonts/PTS55F-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/PTS55F-webfont.woff') format('woff'), url('../fonts/PTS55F-webfont.ttf') format('truetype'), url('../fonts/PTS55F-webfont.svg#PTSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PTSansBold';
+    src: url('../../fonts/PTS75F-webfont.eot');
+    src: url('../../fonts/PTS75F-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/PTS75F-webfont.woff') format('woff'), url('../fonts/PTS75F-webfont.ttf') format('truetype'), url('../fonts/PTS75F-webfont.svg#PTSansBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PTSansItalic';
+    src: url('../../fonts/PTS56F-webfont.eot');
+    src: url('../../fonts/PTS56F-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/PTS56F-webfont.woff') format('woff'), url('../fonts/PTS56F-webfont.ttf') format('truetype'), url('../fonts/PTS56F-webfont.svg#PTSansItalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nazanin';
+    src: url('~/fonts/Nazanin.eot') format('eot'), url('~/fonts/Nazanin.woff') format('woff'), url('~/fonts/Nazanin.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Iranian Sans';
+    src: url('../../fonts/Iranian Sans.ttf') format('truetype');
+}
+
+
 @font-face {
     font-family: 'PTSansRegular';
     src: url('../fonts/PTS55F-webfont.eot');
@@ -57,7 +106,9 @@
     src: url('../fonts/Iranian Sans.ttf') format('truetype');
 }
 
-
+* {
+    font-family: "Iranian Sans","Nazanin","Yekan", "Trebuchet MS", "PT Sans", "Helvetica Neue", "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
+}
 html {
     font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
 
@@ -5627,7 +5678,7 @@ button.list-group-item-danger.active:focus {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .panel-body {
-  padding: 15px;
+  padding: 30px;
 }
 .panel-heading {
   padding: 10px 15px;

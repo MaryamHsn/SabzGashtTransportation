@@ -6,14 +6,14 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
+    ViewBag.Title = "برنامه زمانی";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
     var counter = 1;
     var routTransactionType = "";
 }
 
-<h2>برنامه زمانی</h2>
+<h2 class="style-h2">برنامه زمانی</h2>
 
 @*<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">برنامه جدید</button>*@
 <button type="button" onclick="location.href='@Url.Action("index","rout")';return false;" class="btn btn-success">نمایش مسیرها</button>
@@ -76,51 +76,51 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @counter
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DriverFullName)
-    </td>
-    @{
-        if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
-        {
+        <tr>
+            <td>
+                @counter
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriverFullName)
+            </td>
+            @{
+                if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
+                {
 
-            routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
-        }
-        else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
-        {
-            routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
-        }
-        else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
-        {
-            routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
-        }
-        else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
-        {
-            routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
-        }
-    }
-    <td>@routTransactionType</td>
-    <td>
-        @(item.RoutShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.RoutRegionName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.RoutEnterTimeString)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.RoutStartDateString)
-    </td>
-    <td>
-        @*@Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |*@
-        @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
-        @Html.ActionLink("حذف", "Delete", new { id = item.Id })
-    </td>
-</tr>
+                    routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
+                }
+                else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
+                {
+                    routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
+                }
+                else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
+                {
+                    routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
+                }
+                else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
+                {
+                    routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
+                }
+            }
+            <td>@routTransactionType</td>
+            <td>
+                @(item.RoutShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutRegionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutEnterTimeString)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutStartDateString)
+            </td>
+            <td>
+                @*@Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |*@
+                @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+                @Html.ActionLink("حذف", "Delete", new { id = item.Id })
+            </td>
+        </tr>
         counter += 1;
 
     }

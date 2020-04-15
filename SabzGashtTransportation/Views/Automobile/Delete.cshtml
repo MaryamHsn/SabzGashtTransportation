@@ -4,23 +4,22 @@
 
 
 @{
-    ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
-
+    ViewBag.Title = " حذف اتومبیل";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
 }
 
-<h2>آیا مطمئن از حذف هستید؟ </h2>
+<h2 class="style-h2">آیا مطمئن از حذف هستید؟ </h2>
 <div>
     <table class="tbl-show">
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">شماره پلاک:</th>
             <th> @Html.DisplayFor(model => model.Number)</th>
         </tr>
-        <tr class="tbl-tr-show">
+        @*<tr class="tbl-tr-show">
             <th class="tbl-th-show">شماره شاسی:</th>
             <th> @Html.DisplayFor(model => model.Shasi)</th>
-        </tr>
+        </tr>*@
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">سال ساخت:</th>
             <th> @Html.DisplayFor(model => model.CreateYear)</th>

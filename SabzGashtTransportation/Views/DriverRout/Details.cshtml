@@ -4,12 +4,11 @@
 @model SabzGashtTransportation.ViewModel.DriverRoutViewModel
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
+    ViewBag.Title = "جزئیات برنامه زمانی";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
 }
-
-<h2>اطلاعات بیشتر</h2>
+<h2 class="style-h2">جزئیات برنامه زمانی</h2>
 
 <div>
     <table class="tbl-show">
@@ -35,13 +34,13 @@
         </tr>
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">:مسیر ورودی/خروجی</th>
-            <th> @(Model.RoutShiftType== (int)ShiftTypeEnum.Enter? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())</th>
+            <th> @(Model.RoutShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())</th>
 
         </tr>
         @*<tr class="tbl-tr-show">
-            <th class="tbl-th-show">مسیر همیشگی؟</th>
-            <th> @(Model.IsTemporary == (int)RoutTypeEnum.Temporary? RoutTypeEnum.Temporary.GetDisplayName() : RoutTypeEnum.Always.GetDisplayName())</th>
-        </tr>*@
+                <th class="tbl-th-show">مسیر همیشگی؟</th>
+                <th> @(Model.IsTemporary == (int)RoutTypeEnum.Temporary? RoutTypeEnum.Temporary.GetDisplayName() : RoutTypeEnum.Always.GetDisplayName())</th>
+            </tr>*@
 
     </table>
 </div>

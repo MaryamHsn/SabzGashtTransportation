@@ -6,12 +6,13 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
+    ViewBag.Title = "مناطق";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
+    var counter = 1;
 }
 
-<h2>مناطق</h2>
+<h2 class="style-h2">مناطق</h2>
 
 <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">منطقه جدید</button>
 
@@ -25,25 +26,34 @@
 <table id="showList">
     <tr>
         <th>
+            ردیف
+        </th>
+        <th>
             @Html.ActionLink("کولر دار", "Index", new { sortOrder = ViewBag.RegionName, currentFilter = ViewBag.CurrentFilter })
-        </th> 
+        </th>
         <th>
             عملیات
-        </th> 
+        </th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr> 
+        <tr>
+            <td>
+                @counter
+            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.RegionName)
             </td>
             <td>
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.RegionId }) |
-                @Html.ActionLink("جزئیات", "Details", new { id = item.RegionId}) |
+                @Html.ActionLink("جزئیات", "Details", new { id = item.RegionId }) |
                 @Html.ActionLink("حذف", "Delete", new { id = item.RegionId })
-            </td> 
+            </td>
         </tr>
+        counter += 1;
+
     }
 
 </table>

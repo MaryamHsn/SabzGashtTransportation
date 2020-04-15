@@ -4,23 +4,22 @@
 
 
 @{
-    ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
-
+    ViewBag.Title = "حذف برنامه زمانی";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
 }
 
-<h2>آیا مطمئن از حذف هستید؟ </h2>
+<h2 class="style-h2">آیا مطمئن از حذف هستید؟ </h2>
 <div>
     <table class="tbl-show">
         <tr class="tbl-tr-show">
             <th class="tbl-th-show">راننده:</th>
             <th> @Html.DisplayFor(model => model.DriverFullName)</th>
         </tr>
-        <tr class="tbl-tr-show">
+        @*<tr class="tbl-tr-show">
             <th class="tbl-th-show">نام مسیر:</th>
             <th> @Html.DisplayFor(model => model.RoutName)</th>
-        </tr>
+        </tr>*@
         <tr class="tbl-tr-show">
             <th class="tbl-th-show"> محدوده مسیر:</th>
             <th> @Html.DisplayFor(model => model.RoutRegionName)</th>

@@ -4,15 +4,15 @@
 @model SabzGashtTransportation.ViewModel.LogDriverRoutViewModel
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
+    ViewBag.Title = "ویرایش مسیرهای روزانه";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
     var insurancTextShowDefault = "";
 
 }
 
 
-<h2>ویرایش</h2>
+<h2 class="style-h2"> ویرایش مسیرهای روزانه </h2>
 
 @using (Html.BeginForm())
 {
@@ -25,13 +25,13 @@
         <div class="form-group">
             <p class="control-label"> راننده:</p>
             <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverTblList, "Id", "FullName"),Model.DriverFullName, htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
+                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverTblList, "Id", "FullName"), Model.DriverFullName, htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
                 @Html.ValidationMessageFor(x => x.DriverId, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.DriverId)
 
             </div>
         </div>
-        <div class="form-group">
+        @*<div class="form-group">
             <p class="control-label"> مسیر:</p>
             <div class="col-md-10">
                 @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutTblList, "Id", "Name"), Model.RoutName, htmlAttributes: new { @class = "form-control" })
@@ -39,14 +39,14 @@
                 @Html.HiddenFor(model => model.RoutId)
 
             </div>
-        </div>
+        </div>*@
         <div class="form-group">
             <p class="control-label"> انجام کار:</p>
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(x => x.WorkDoneEnum, "انتخاب کنید", new { @class = "form-control" })
                 @*  @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.Drivers, "DriverId", "FullName"), htmlAttributes: new {@class = "form-control", id = "DriverSelect"})*@
                 @Html.ValidationMessageFor(x => x.IsDone, "", new { @class = "text-danger" })
-        @*@Html.HiddenFor(model => model.IsDone)*@
+                @*@Html.HiddenFor(model => model.IsDone)*@
 
             </div>
         </div>        <div class="form-group">
@@ -54,7 +54,7 @@
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(x => x.WorkTemporaryEnum, "انتخاب کنید", new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.RoutIsTemporary, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.RoutIsTemporary)
+                @Html.HiddenFor(model => model.RoutIsTemporary)
 
             </div>
         </div>
@@ -74,7 +74,7 @@
                 @Html.ValidationMessageFor(model => model.FinePrice, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
 
 
         <div class="form-group">

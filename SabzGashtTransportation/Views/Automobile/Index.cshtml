@@ -7,12 +7,13 @@
 
 @{
 
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
+    ViewBag.Title = "اتومبیل ها";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
+    var counter = 1;
 }
 
-<h2>اتومبیل ها</h2>
+<h2 class="style-h2">اتومبیل ها</h2>
 
 <p>
     <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">اتومبیل جدید</button>
@@ -29,10 +30,10 @@
 <table id="showList">
     <tr>
         <th>
-            @Html.ActionLink("شماره پلاک", "Index", new { sortOrder = ViewBag.Number, currentFilter = ViewBag.CurrentFilter })
+            ردیف
         </th>
         <th>
-            @Html.ActionLink("شماره شاسی", "Index", new { sortOrder = ViewBag.Shasi, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("شماره پلاک", "Index", new { sortOrder = ViewBag.Number, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             @Html.ActionLink("مدل اتومبیل", "Index", new { sortOrder = ViewBag.AutomobileType, currentFilter = ViewBag.CurrentFilter })
@@ -47,10 +48,11 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Number)
+                @counter
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Shasi)
+                @Html.DisplayFor(modelItem => item.Number)
             </td>
             <td>
                 @(item.AutomobileType.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())
@@ -64,6 +66,8 @@
                 @Html.ActionLink("حذف", "Delete", new { id = item.AutoId })
             </td>
         </tr>
+        counter += 1;
+
     }
 
 </table>

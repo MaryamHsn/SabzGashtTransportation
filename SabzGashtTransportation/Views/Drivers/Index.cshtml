@@ -4,26 +4,30 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
+    ViewBag.Title = "کارمندان";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
+    var counter = 1;
 }
 
-<h2>کارمندان</h2>
+<h2 class="style-h2">کارمندان</h2>
 
 <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">کارمند جدید</button>
 
 @using (Html.BeginForm("Index", "Drivers", FormMethod.Get))
 {
-<p class="search_table">
-    جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-    <input type="submit" value="جستجو" />
-    <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("index")';return false;">
+    <p class="search_table">
+        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="جستجو" />
+        <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("index")';return false;">
 
-</p>
+    </p>
 }
 <table id="showList">
     <tr>
+        <th>
+            ردیف
+        </th>
         <th>
             @Html.ActionLink("نام", "Index", new { sortOrder = ViewBag.FirstName, currentFilter = ViewBag.CurrentFilter })
         </th>
@@ -42,6 +46,9 @@
     {
         <tr>
             <td>
+                @counter
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
@@ -52,10 +59,12 @@
             </td>
             <td>
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.DriverId }) |
-                @Html.ActionLink("جزئیات", "Details", new { id = item.DriverId }) 
+                @Html.ActionLink("جزئیات", "Details", new { id = item.DriverId })
                 @*@Html.ActionLink("حذف", "Delete", new { id = item.DriverId })*@
             </td>
         </tr>
+        counter += 1;
+
     }
 
 </table>

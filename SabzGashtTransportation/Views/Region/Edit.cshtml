@@ -4,15 +4,13 @@
 @model SabzGashtTransportation.ViewModel.RegionViewModel
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
-    var insurancTextShowDefault = "";
-
+    ViewBag.Title = "ویرایش مناطق";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
 }
 
 
-<h2>ویرایش</h2>
+<h2 class="style-h2">ویرایش مناطق</h2>
 
 @using (Html.BeginForm())
 {

@@ -1,54 +1,53 @@
 ﻿@model SabzGashtTransportation.ViewModel.DriverRoutViewModel
 
 @{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_LayoutPageDealer.cshtml";
-    @Styles.Render("~/css/style.css");
-
+    ViewBag.Title = "ثبت برنامه زمانی";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
 }
 
-<h2>ثبت برنامه</h2>
+    <h2 class="style-h2">ثبت برنامه زمانی</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        <p class="control-label">راننده:</p>
-        <div class="col-md-10">
-            @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverList, "Id", "FullName"), htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Driver.FullName, "", new {@class = "text-danger"})
-        </div>
-    </div>
-
-    @*<div class="form-group">
-        <p class="control-label">مسیر:</p>
-        <div class="col-md-10">
-            @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
-
-    @*<div class="form-group">
-        <p class="control-label">نوع مسیر:</p>
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EnumDropDownListFor(x => x., "انتخاب کنید", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RoutTypeEnum, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <p class="control-label">راننده:</p>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverList, "Id", "FullName"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Driver.FullName, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>*@ 
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-success">ثبت</button>
+        @*<div class="form-group">
+                <p class="control-label">مسیر:</p>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x => Model.RoutId, new SelectList(Model.RoutList, "Id", "Name"), htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Rout.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        @*<div class="form-group">
+                <p class="control-label">نوع مسیر:</p>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EnumDropDownListFor(x => x., "انتخاب کنید", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.RoutTypeEnum, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-success">ثبت</button>
+            </div>
         </div>
     </div>
-</div>
 }
 
 
