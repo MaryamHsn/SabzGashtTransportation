@@ -6,7 +6,7 @@ namespace SabzGashtTransportation.Models
     {
         [Required]
         [Phone]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "شماه تلفن")]
         public string Number { get; set; }
     }
 }

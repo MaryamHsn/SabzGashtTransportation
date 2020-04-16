@@ -40,7 +40,7 @@ namespace SabzGashtTransportation.Controllers
 
         // GET: Automobile
         [HttpGet]
-        public ActionResult Index(string sortOrder, string searchDateFrom,string searchDateTo,string dropRegionId, int? page)//string SearchRout, string currentFilter, string searchString
+        public ActionResult Index(string sortOrder, string searchDateFrom, string searchDateTo, string dropRegionId, int? page)//string SearchRout, string currentFilter, string searchString
         {
             commonList = new List<RoutViewModel>();
             int pageSize = 10;
@@ -69,7 +69,7 @@ namespace SabzGashtTransportation.Controllers
                 //dropRegionId = allRegion.FirstOrDefault().Id.ToString();
                 dropRegionId = "0";
             }
-            var list = _rout.GetAllRouts().Where(x=>x.RegionId== int.Parse(dropRegionId));
+            var list = _rout.GetAllRouts().Where(x => x.RegionId == int.Parse(dropRegionId));
             //if (!string.IsNullOrWhiteSpace(searchDate))
             //{
             //    list = _rout.GetAllRoutsByDateByRegionId((DateTime)searchDate.ToGeorgianDate(), int.Parse(dropRegionId)).ToList();
@@ -81,7 +81,7 @@ namespace SabzGashtTransportation.Controllers
             else if (!string.IsNullOrWhiteSpace(searchDateFrom) && string.IsNullOrWhiteSpace(searchDateTo))
             {
                 list = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)searchDateFrom.ToGeorgianDate(), DateTime.Now, int.Parse(dropRegionId)).ToList();
-            } 
+            }
 
             ViewBag.TotalRoutCount = list.Sum(x => x.Count);
             #region
@@ -168,12 +168,12 @@ namespace SabzGashtTransportation.Controllers
                     break;
                 case "count_desc":
                     list = list.OrderByDescending(s => s.Count).ToList();
-                    break;         
+                    break;
                 default:
                     list = list.OrderBy(s => s.Id).ToList();
                     break;
             }
-            
+
             var allAutomobileType = _automobileType.GetAllAutomobileTypes();
             var allocateRoutCount = 0;
             foreach (var item in list)
@@ -187,7 +187,6 @@ namespace SabzGashtTransportation.Controllers
                 element.RoutID = item.Id;
                 commonList.Add(element);
                 allocateRoutCount += element.Allocate;
-
             }
             ViewBag.AllocateRoutCount = allocateRoutCount;
             return View(commonList.ToPagedList(pageNumber, pageSize));
@@ -338,6 +337,7 @@ namespace SabzGashtTransportation.Controllers
             _uow.SaveAllChanges();
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SearchByDate(DateTime? fromDate)
@@ -358,6 +358,115 @@ namespace SabzGashtTransportation.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult FullInformation(string searchDateFrom, string searchDateTo, string dropRegionId)
+        {
+            IEnumerable<SelectListItem> regionItems = _region.GetAllRegions().Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.RegionName
+
+            });
+            ViewBag.RegionItems = regionItems;
+            var allRegion = _region.GetAllRegions();
+            var routs = new List<RoutTbl>();
+            if (string.IsNullOrEmpty(dropRegionId))
+            {
+                //dropRegionId = allRegion.FirstOrDefault().Id.ToString();
+                dropRegionId = "0";
+            }
+            if (!string.IsNullOrWhiteSpace(searchDateFrom) && string.IsNullOrWhiteSpace(searchDateTo))
+            {
+                routs = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)searchDateFrom.ToGeorgianDate(), DateTime.Now.AddDays(1), int.Parse(dropRegionId)).ToList();
+            }
+            else if (string.IsNullOrWhiteSpace(searchDateFrom) )
+            {
+                routs = _rout.GetAllRoutsByDateFromByDateToByRegionId(DateTime.Now, DateTime.Now.AddDays(1), int.Parse(dropRegionId)).ToList();
+            }
+            else if (!string.IsNullOrWhiteSpace(searchDateFrom) && !string.IsNullOrWhiteSpace(searchDateTo))
+            {
+                routs = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)searchDateFrom.ToGeorgianDate(), (DateTime)searchDateTo.ToGeorgianDate(), int.Parse(dropRegionId)).ToList();
+            }
+            if (routs == null)
+            {
+                return HttpNotFound();
+            }
+            var automobileType = _automobileType.GetAllAutomobileTypes();
+            var hasCooler = automobileType.Where(x => x.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.IsActive).Select(x => x.Id);
+            var hasNotCooler = automobileType.Where(x => x.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.IsActive).Select(x => x.Id);
+            var hasCoolerBus = automobileType.Where(x => x.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.IsBus == (int)AutomobileTypeEnum.Bus && x.IsActive).FirstOrDefault().Id;
+            var hasNotCoolerBus = automobileType.Where(x => x.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.IsBus == (int)AutomobileTypeEnum.Bus && x.IsActive).FirstOrDefault().Id;
+            var hasCoolerMiniBus = automobileType.Where(x => x.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.IsBus == (int)AutomobileTypeEnum.MiniBus && x.IsActive).FirstOrDefault().Id;
+            var hasNotCoolerMiniBus = automobileType.Where(x => x.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.IsBus == (int)AutomobileTypeEnum.MiniBus && x.IsActive).FirstOrDefault().Id;
+       
+            common = new RoutViewModel();
+            if (int.Parse(dropRegionId) != 0 )
+            {
+                common.RegionName = _region.GetRegion(int.Parse(dropRegionId)).RegionName;
+            }
+
+            common.EnterShiftType = routs.Where(x => x.ShiftType == (int)ShiftTypeEnum.Enter).Count();
+            common.ExitShiftType = routs.Where(x => x.ShiftType == (int)ShiftTypeEnum.Exit).Count();
+
+            common.HasCoolerEnter = routs.Where(x => hasCooler.Contains(x.AutomobileTypeId) && x.ShiftType == (int)ShiftTypeEnum.Enter).Count();
+            common.HasNotCoolerEnter = routs.Where(x => hasNotCooler.Contains(x.AutomobileTypeId) && x.ShiftType == (int)ShiftTypeEnum.Enter).Count();
+            common.HasCoolerExit = routs.Where(x => hasCooler.Contains(x.AutomobileTypeId) && x.ShiftType == (int)ShiftTypeEnum.Exit).Count();
+            common.HasNotCoolerExit = routs.Where(x => hasNotCooler.Contains(x.AutomobileTypeId) && x.ShiftType == (int)ShiftTypeEnum.Exit).Count();
+
+            common.HasCoolerEnterBus = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter).Count();
+            common.HasCoolerEnterMiniBus = routs.Where(x =>x.AutomobileTypeId== hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter).Count();
+            common.HasNotCoolerEnterBus = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter).Count();
+            common.HasNotCoolerEnterMiniBus = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter).Count();
+
+            common.HasCoolerExitBus = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit).Count();
+            common.HasCoolerExitMiniBus = routs.Where(x =>x.AutomobileTypeId== hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit).Count();
+            common.HasNotCoolerExitBus = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit).Count();
+            common.HasNotCoolerExitMiniBus = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit).Count();
+            ////
+            common.HasCoolerEnterBusRoutTransactionSingle = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Single).Count();
+            common.HasCoolerEnterBusRoutTransactionRegular = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Regular).Count();
+            common.HasCoolerEnterBusRoutTransactionThereeFour = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.ThereeFour).Count();
+            common.HasCoolerEnterBusRoutTransactionFiveSeven = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.FiveSeven).Count();
+
+            common.HasCoolerEnterMiniBusRoutTransactionSingle = routs.Where(x => x.AutomobileTypeId == hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Single).Count();
+            common.HasCoolerEnterMiniBusRoutTransactionRegular = routs.Where(x => x.AutomobileTypeId == hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Regular).Count();
+            common.HasCoolerEnterMiniBusRoutTransactionThereeFour = routs.Where(x => x.AutomobileTypeId == hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.ThereeFour).Count();
+            common.HasCoolerEnterMiniBusRoutTransactionFiveSeven = routs.Where(x => x.AutomobileTypeId == hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.FiveSeven).Count();
+
+            common.HasNotCoolerEnterBusRoutTransactionSingle = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Single).Count();
+            common.HasNotCoolerEnterBusRoutTransactionRegular = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Regular).Count();
+            common.HasNotCoolerEnterBusRoutTransactionThereeFour = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.ThereeFour).Count();
+            common.HasNotCoolerEnterBusRoutTransactionFiveSeven = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.FiveSeven).Count();
+
+            common.HasNotCoolerEnterMiniBusRoutTransactionSingle = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Single).Count();
+            common.HasNotCoolerEnterMiniBusRoutTransactionRegular = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Regular).Count();
+            common.HasNotCoolerEnterMiniBusRoutTransactionThereeFour = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.ThereeFour).Count();
+            common.HasNotCoolerEnterMiniBusRoutTransactionFiveSeven = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Enter && x.RoutTransactionType==(int)RoutTransactionTypeEnum.FiveSeven).Count();
+             //// 
+            common.HasCoolerExitBusRoutTransactionSingle = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Single).Count();
+            common.HasCoolerExitBusRoutTransactionRegular = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Regular).Count();
+            common.HasCoolerExitBusRoutTransactionThereeFour = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.ThereeFour).Count();
+            common.HasCoolerExitBusRoutTransactionFiveSeven = routs.Where(x => x.AutomobileTypeId == hasCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.FiveSeven).Count();
+
+            common.HasCoolerExitMiniBusRoutTransactionSingle = routs.Where(x => x.AutomobileTypeId == hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Single).Count();
+            common.HasCoolerExitMiniBusRoutTransactionRegular = routs.Where(x => x.AutomobileTypeId == hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Regular).Count();
+            common.HasCoolerExitMiniBusRoutTransactionThereeFour = routs.Where(x => x.AutomobileTypeId == hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.ThereeFour).Count();
+            common.HasCoolerExitMiniBusRoutTransactionFiveSeven = routs.Where(x => x.AutomobileTypeId == hasCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.FiveSeven).Count();
+
+            common.HasNotCoolerExitBusRoutTransactionSingle = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Single).Count();
+            common.HasNotCoolerExitBusRoutTransactionRegular = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Regular).Count();
+            common.HasNotCoolerExitBusRoutTransactionThereeFour = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.ThereeFour).Count();
+            common.HasNotCoolerExitBusRoutTransactionFiveSeven = routs.Where(x => x.AutomobileTypeId == hasNotCoolerBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.FiveSeven).Count();
+
+            common.HasNotCoolerExitMiniBusRoutTransactionSingle = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Single).Count();
+            common.HasNotCoolerExitMiniBusRoutTransactionRegular = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.Regular).Count();
+            common.HasNotCoolerExitMiniBusRoutTransactionThereeFour = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.ThereeFour).Count();
+            common.HasNotCoolerExitMiniBusRoutTransactionFiveSeven = routs.Where(x => x.AutomobileTypeId == hasNotCoolerMiniBus && x.ShiftType == (int)ShiftTypeEnum.Exit && x.RoutTransactionType==(int)RoutTransactionTypeEnum.FiveSeven).Count();
+             ////
+        
+            return View(common);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -366,5 +475,6 @@ namespace SabzGashtTransportation.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

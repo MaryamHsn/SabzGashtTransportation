@@ -8,10 +8,14 @@ namespace SabzGashtTransportation.Models
     {
         public int Id { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
-        [Display(Name = "Email")]
+        //[Required(AllowEmptyStrings = false)]
+        [Display(Name = "ایمیل")]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "نام کاربری")]
+        public string UserName { get; set; }
 
         public IEnumerable<SelectListItem> RolesList { get; set; }
     }

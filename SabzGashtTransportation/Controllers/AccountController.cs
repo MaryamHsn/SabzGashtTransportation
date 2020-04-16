@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Mvc; 
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Sabz.DomainClasses.DTO; 
+using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.IService;
 using SabzGashtTransportation.Helpers;
 using SabzGashtTransportation.Models;
@@ -75,7 +75,7 @@ namespace SabzGashtTransportation.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName= loginInfo.Email });
             }
         }
 
@@ -88,7 +88,8 @@ namespace SabzGashtTransportation.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                //return RedirectToAction("Index", "Manage");
+                return RedirectToAction("Index", "Admin");
             }
 
             if (ModelState.IsValid)
@@ -99,7 +100,7 @@ namespace SabzGashtTransportation.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName};//, Email = model.Email 
                 var result = await _userManager.CreateAsync(user).ConfigureAwait(false);
                 if (result.Succeeded)
                 {
@@ -142,7 +143,7 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.Email).ConfigureAwait(false);
+                var user = await _userManager.FindByNameAsync(model.UserName).ConfigureAwait(false);
                 if (user == null || !await _userManager.IsEmailConfirmedAsync(user.Id).ConfigureAwait(false))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -189,7 +190,11 @@ namespace SabzGashtTransportation.Controllers
             {
                 return View(model);
             }
-
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                // UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
+                returnUrl = this.Url.Action("Index", "Admin", null);
+            }
             // NOTE: You must add your claims **before** sign the user in.
             // At the end of its execution chain SignInManager.PasswordSignInAsync method calls for SignInAsync method
             // which is basically responsible for setting an authentication cookie which contains multiple claims about
@@ -197,7 +202,7 @@ namespace SabzGashtTransportation.Controllers
 
             // This doesn't count login failures towards lockout only two factor authentication
             // To enable password failures to trigger lockout, change to shouldLockout: true
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false).ConfigureAwait(false);
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false).ConfigureAwait(false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -242,7 +247,7 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName };
                 var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
                 if (result.Succeeded)
                 {

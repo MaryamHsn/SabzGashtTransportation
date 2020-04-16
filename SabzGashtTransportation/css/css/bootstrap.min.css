@@ -4226,12 +4226,16 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
     margin-right: -15px;
     margin-left: -15px;
+    float :right;
+    direction:rtl;
 }
 
 @media (min-width:768px) {
     .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
         margin-right: 0;
         margin-left: 0;
+        direction: rtl;
+        float:right;
     }
 }
 
@@ -4670,6 +4674,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 
     .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
         border-color: #101010;
+        float:left;
     }
 
     .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {

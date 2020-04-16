@@ -6,18 +6,18 @@ namespace SabzGashtTransportation.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "رمز عبور فعلی")]
         public string OldPassword { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "رمز عبور جدید")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "تکرار رمز عبور جدید")]
+        [Compare("NewPassword", ErrorMessage = "رمز عبور های وترد شده مطابق هم نیستتند")]
         public string ConfirmPassword { get; set; }
     }
 }

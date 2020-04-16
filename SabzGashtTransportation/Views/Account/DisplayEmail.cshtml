@@ -1,14 +1,14 @@
 ﻿@{
-    ViewBag.Title = "DEMO purpose Email Link"; 
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
-
+    ViewBag.Title = "ثبت نام";
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
 }
-<h2>@ViewBag.Title.</h2>
+<h2 class="style-h2">اطلاعیه</h2>
 <p class="text-info">
-    Please check your email and confirm your email address.
+    ثبت نام شما با موفقیت انجام شد. لطفا برای تائید با مدیریت تماس بگیرید.
 </p>
-<p class="text-danger">
+@*<p class="text-danger">
     For DEMO only: You can click this link to confirm the email: <a href="@ViewBag.Link">link</a>
     Please change this code to register an email service in IdentityConfig to send an email.
-</p>
+</p>*@

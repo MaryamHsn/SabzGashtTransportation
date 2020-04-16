@@ -4,9 +4,12 @@ namespace SabzGashtTransportation.Models
 {
     public class ForgotPasswordViewModel
     {
+        //[Required]
+        //[EmailAddress]
+        //[Display(Name = "ایمیل")]
+        //public string Email { get; set; }
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "نام کاربری")]
+        public string UserName { get; set; }
     }
 }

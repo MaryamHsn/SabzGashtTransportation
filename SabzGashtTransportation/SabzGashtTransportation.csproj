@@ -222,7 +222,6 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\RoutController.cs" />
     <Compile Include="Controllers\SignalRTestController.cs" />
-    <Compile Include="Controllers\TeHomeController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\WebApiTestController.cs" />
     <Compile Include="Global.asax.cs">
@@ -553,6 +552,7 @@
     <Content Include="js\jcarousellite.js" />
     <Content Include="js\jquery-1.10.2.js" />
     <Content Include="js\jquery-1.8.3.min.js" />
+    <Content Include="js\jquery-3.3.1.min.js" />
     <Content Include="js\jquery.bxslider.js" />
     <Content Include="js\jquery.bxslider.min.js" />
     <Content Include="js\jquery.carousel.js" />
@@ -575,6 +575,7 @@
     <Content Include="js\js\easypiechart.js" />
     <Content Include="js\js\html5shiv.min.js" />
     <Content Include="js\js\jquery-1.11.1.min.js" />
+    <Content Include="js\js\jquery-3.3.1.min.js" />
     <Content Include="js\js\lumino.glyphs.js" />
     <Content Include="js\js\respond.min.js" />
     <Content Include="js\main.js" />
@@ -590,6 +591,12 @@
     <Content Include="js\plugins\morris\morris.js" />
     <Content Include="js\plugins\morris\raphael-2.1.0.min.js" />
     <Content Include="js\sb-admin.js" />
+    <Content Include="images\LOGO\20160403173645-سایپارنو.jpg.jpg" />
+    <Content Include="images\LOGO\images.jpg" />
+    <Content Include="images\LOGO\images.png" />
+    <Content Include="images\LOGO\parsKHodro.png" />
+    <Content Include="images\LOGO\saipa.png" />
+    <Content Include="images\LOGO\Untitled-4-1030x1030.png" />
     <Content Include="pages\charts.html" />
     <Content Include="pages\forms.html" />
     <Content Include="pages\icons.html" />
@@ -1284,7 +1291,6 @@
     <Content Include="Views\SignalRTest\Index.cshtml" />
     <Content Include="Views\WebApiTest\Index.cshtml" />
     <Content Include="Views\Manage\RemoveLogin.cshtml" />
-    <Content Include="Views\TeHome\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPageDealer.cshtml" />
     <Content Include="Views\Drivers\Create.cshtml" />
     <Content Include="Views\Drivers\Delete.cshtml" />
@@ -1334,8 +1340,9 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Home\home.cshtml" />
     <Content Include="Views\DriverRout\Allocate.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Rout\FullInformation.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

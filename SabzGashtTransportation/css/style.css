@@ -5121,20 +5121,18 @@ item {
     line-height: 40px;
     color: #887972;
     text-shadow: 0 0 0 #887972;
-    padding: 0 0 32px 0;
-    margin: 0 0 20px 0;
-    padding: 20px 60px 20px 0;
-    margin: 0 0 20px 0;
+    padding: 0 0 32px 0px;
+    margin: 0 0 10px 0px;
+    padding: 20px 60px 10px 0;
 }
 .box-Subcontent  {
     font-weight: normal;
-    font-size: 22px;
+    font-size: 17px;
     line-height: 40px;
     color: #a7968d;
     text-shadow: 0 0 0 #887972;
-    padding: 0 0 32px 0;
-    margin: 0 0 20px 0;
-    padding: 20px 80px 20px 0;
+    margin: 0 0 20px 10px;
+    padding: 20px 50px 20px 40px;
     margin: 0 0 20px 0;
 }
 .liner {
@@ -5406,12 +5404,14 @@ button {
     border-collapse: collapse;
     width: 80%;
     margin: 10px 30px 10px 0;
+    text-align:center;
 }
 
-    #showList td, #showList th {
+    #showList td, #showList th , #showList tr th {
         font-family: Iranian Sans,Nazanin,Arial,sans-serif;
         border: 1px solid #ddd;
         padding: 8px;
+        text-align: center;
     }
 
     #showList tr:nth-child(even) {

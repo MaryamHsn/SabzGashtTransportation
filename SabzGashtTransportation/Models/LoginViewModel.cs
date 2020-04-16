@@ -4,17 +4,21 @@ namespace SabzGashtTransportation.Models
 {
     public class LoginViewModel
     {
+        //[Required]
+        //[Display(Name = "ایمیل")]
+        //[EmailAddress]
+        //public string Email { get; set; }
+
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "نام کاربری")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "رمز عبور")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "مرابه خاطر بسپار")]
         public bool RememberMe { get; set; }
     }
 }

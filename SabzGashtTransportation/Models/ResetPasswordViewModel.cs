@@ -4,20 +4,24 @@ namespace SabzGashtTransportation.Models
 {
     public class ResetPasswordViewModel
     {
-        [Required]
+        //[Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "ایمیل")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "نام کاربری")]
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "رمز عبور")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "تایید رمز عبور")]
+        [Compare("Password", ErrorMessage = "رمز عبور و تکرار آن برابر نمی باشد")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

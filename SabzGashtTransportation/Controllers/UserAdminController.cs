@@ -36,7 +36,7 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
+                var user = new ApplicationUser { UserName = userViewModel.UserName, Email = userViewModel.UserName };
                 var adminresult = await _userManager.CreateAsync(user, userViewModel.Password).ConfigureAwait(false);
 
                 //Add User to the selected Roles
@@ -148,6 +148,7 @@ namespace SabzGashtTransportation.Controllers
             {
                 Id = user.Id,
                 Email = user.Email,
+                UserName =user.UserName,
                 RolesList = (await _roleManager.GetAllCustomRolesAsync().ConfigureAwait(false)).Select(x => new SelectListItem
                 {
                     Selected = userRoles.Contains(x.Name),
@@ -171,7 +172,7 @@ namespace SabzGashtTransportation.Controllers
                     return HttpNotFound();
                 }
 
-                user.UserName = editUser.Email;
+                user.UserName = editUser.UserName;
                 user.Email = editUser.Email;
 
                 var userRoles = await _userManager.GetRolesAsync(user.Id).ConfigureAwait(false);

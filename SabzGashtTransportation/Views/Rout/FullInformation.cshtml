@@ -1,0 +1,158 @@
+﻿@model SabzGashtTransportation.ViewModel.RoutViewModel
+<script src="~/js/jquery-3.3.1.min.js"></script>
+@{
+    ViewBag.Title = "آمار کلی";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
+
+}
+
+<h2 class="style-h2">آمار کلی مسیرها</h2>
+@using (Html.BeginForm("FullInformation", "Rout", FormMethod.Get))
+{
+
+    <div class="searchBox">
+        <h4 class="style-h4">جستجو</h4>
+        <table>
+            <tr>
+                <th class="font-small">از تاریخ</th>
+                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
+                <th class="font-small">تا تاریخ</th>
+                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string)</th>
+            </tr>
+            <tr>
+                <th class="font-small">نام منطقه</th>
+                <th>
+                    @Html.DropDownList("RegionItems", "انتخاب کنید")
+                    @Html.Hidden("dropRegionId")
+
+                </th>
+            </tr>
+        </table>
+        <p class="search_table">
+            <input type="submit" value="جستجو" id="btnSearchCode" name="search" />
+            <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("FullInformation")';return false;">
+        </p>
+
+    </div>
+}
+@if (!string.IsNullOrWhiteSpace(Model.RegionName))
+{
+    <label style="margin-right:40px">نام منطقه : @(Model.RegionName) </label>
+
+}
+<table id="showList">
+
+    <tr>
+        <th colspan="32">مسیرها</th>
+    </tr>
+    <tr>
+        <th colspan="16">@(Model.EnterShiftType) :ورودی</th>
+        <th colspan="16">@(Model.ExitShiftType) :خروجی</th>
+
+    </tr>
+    <tr>
+        <th colspan="8">@(Model.HasCoolerEnter) :کولر دار</th>
+        <th colspan="8">@(Model.HasNotCoolerEnter) :معمولی</th>
+        <th colspan="8">@(Model.HasCoolerExit) :کولر دار</th>
+        <th colspan="8">@(Model.HasNotCoolerExit) :معمولی</th>
+    </tr>
+    <tr>
+        <td colspan="4">@(Model.HasCoolerEnterBus) :اتوبوس</td>
+        <td colspan="4">@(Model.HasCoolerEnterMiniBus) :مینی بوس</td>
+        <td colspan="4">@(Model.HasNotCoolerEnterBus) :اتوبوس</td>
+        <td colspan="4">@(Model.HasNotCoolerEnterMiniBus) :مینی بوس</td>
+        <td colspan="4">@(Model.HasCoolerExitBus) :اتوبوس</td>
+        <td colspan="4">@(Model.HasCoolerExitMiniBus) :مینی بوس</td>
+        <td colspan="4">@(Model.HasNotCoolerExitBus) :اتوبوس</td>
+        <td colspan="4">@(Model.HasNotCoolerExitMiniBus) :مینی بوس</td>
+
+    </tr>
+    <tr>
+        <td>تک نیمراه</td>
+        <td>عادی</td>
+        <td>سه چهار نیمراه</td>
+        <td>پنج هفت نیمراه</td>
+        <td>تک نیمراه</td>
+        <td>عادی</td>
+        <td>سه چهار نیمراه</td>
+        <td>پنج هفت نیمراه</td>
+        <td>تک نیمراه</td>
+        <td>عادی</td>
+        <td>سه چهار نیمراه</td>
+        <td>پنج هفت نیمراه</td>
+        <td>تک نیمراه</td>
+        <td>عادی</td>
+        <td>سه چهار نیمراه</td>
+        <td>پنج هفت نیمراه</td>
+        <td>تک نیمراه</td>
+        <td>عادی</td>
+        <td>سه چهار نیمراه</td>
+        <td>پنج هفت نیمراه</td>
+        <td>تک نیمراه</td>
+        <td>عادی</td>
+        <td>سه چهار نیمراه</td>
+        <td>پنج هفت نیمراه</td>
+        <td>تک نیمراه</td>
+        <td>عادی</td>
+        <td>سه چها رنیمراه </td>
+        <td>پنج هفت نیمراه</td>
+        <td>تک نیمراه</td>
+        <td>عادی</td>
+        <td>سه چهار نیمراه</td>
+        <td>پنج هفت نیمراه</td>
+    </tr>
+    <tr>
+        <td>@(Model.HasCoolerEnterBusRoutTransactionSingle)</td>
+        <td>@(Model.HasCoolerEnterBusRoutTransactionRegular)</td>
+        <td>@(Model.HasCoolerEnterBusRoutTransactionThereeFour)</td>
+        <td>@(Model.HasCoolerEnterBusRoutTransactionFiveSeven)</td>
+
+        <td>@(Model.HasCoolerEnterMiniBusRoutTransactionSingle)</td>
+        <td>@(Model.HasCoolerEnterMiniBusRoutTransactionRegular)</td>
+        <td>@(Model.HasCoolerEnterMiniBusRoutTransactionThereeFour)</td>
+        <td>@(Model.HasCoolerEnterMiniBusRoutTransactionFiveSeven)</td>
+
+        <td>@(Model.HasNotCoolerEnterBusRoutTransactionSingle)</td>
+        <td>@(Model.HasNotCoolerEnterBusRoutTransactionRegular)</td>
+        <td>@(Model.HasNotCoolerEnterBusRoutTransactionThereeFour)</td>
+        <td>@(Model.HasNotCoolerEnterBusRoutTransactionFiveSeven)</td>
+
+        <td>@(Model.HasNotCoolerEnterMiniBusRoutTransactionSingle)</td>
+        <td>@(Model.HasNotCoolerEnterMiniBusRoutTransactionRegular)</td>
+        <td>@(Model.HasNotCoolerEnterMiniBusRoutTransactionThereeFour)</td>
+        <td>@(Model.HasNotCoolerEnterMiniBusRoutTransactionFiveSeven)</td>
+
+        <td>@(Model.HasCoolerExitBusRoutTransactionSingle)</td>
+        <td>@(Model.HasCoolerExitBusRoutTransactionRegular)</td>
+        <td>@(Model.HasCoolerExitBusRoutTransactionThereeFour)</td>
+        <td>@(Model.HasCoolerExitBusRoutTransactionFiveSeven)</td>
+
+        <td>@(Model.HasCoolerExitMiniBusRoutTransactionSingle)</td>
+        <td>@(Model.HasCoolerExitMiniBusRoutTransactionRegular)</td>
+        <td>@(Model.HasCoolerExitMiniBusRoutTransactionThereeFour)</td>
+        <td>@(Model.HasCoolerExitMiniBusRoutTransactionFiveSeven)</td>
+
+        <td>@(Model.HasNotCoolerExitBusRoutTransactionSingle)</td>
+        <td>@(Model.HasNotCoolerExitBusRoutTransactionRegular)</td>
+        <td>@(Model.HasNotCoolerExitBusRoutTransactionThereeFour)</td>
+        <td>@(Model.HasNotCoolerExitBusRoutTransactionFiveSeven)</td>
+
+        <td>@(Model.HasNotCoolerExitMiniBusRoutTransactionSingle)</td>
+        <td>@(Model.HasNotCoolerExitMiniBusRoutTransactionRegular)</td>
+        <td>@(Model.HasNotCoolerExitMiniBusRoutTransactionThereeFour)</td>
+        <td>@(Model.HasNotCoolerExitMiniBusRoutTransactionFiveSeven)</td>
+
+    </tr>
+</table>
+@*<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>*@
+<script>
+
+    $(function () {
+        $('select').on('change', function () {
+            $("#dropRegionId").val(this.value);
+        })
+
+    })
+</script>
+
