@@ -5,8 +5,8 @@ namespace SabzGashtTransportation.Models
     public class ExternalLoginConfirmationViewModel
     {
         //[Required]
-        //[Display(Name = "ایمیل")]
-        //public string Email { get; set; }
+        [Display(Name = "ایمیل")]
+        public string Email { get; set; }
 
         [Required]
         [Display(Name = "نام کاربری")]

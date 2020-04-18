@@ -8,11 +8,11 @@ namespace SabzGashtTransportation.Models
         public string Provider { get; set; }
 
         [Required]
-        [Display(Name = "Code")]
+        [Display(Name = "کد")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = "در حافظه  مرورگر ذخیره شود؟")]
         public bool RememberBrowser { get; set; }
     }
 }

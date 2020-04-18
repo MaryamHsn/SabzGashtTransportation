@@ -6,7 +6,7 @@ namespace SabzGashtTransportation.Models
     {
         public int Id { get; set; }
         [Required(AllowEmptyStrings = false)]
-        [Display(Name = "RoleName")]
+        [Display(Name = "دسترسی")]
         public string Name { get; set; }
     }
 }

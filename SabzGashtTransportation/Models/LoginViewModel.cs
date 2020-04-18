@@ -5,9 +5,9 @@ namespace SabzGashtTransportation.Models
     public class LoginViewModel
     {
         //[Required]
-        //[Display(Name = "ایمیل")]
-        //[EmailAddress]
-        //public string Email { get; set; }
+        [Display(Name = "ایمیل")]
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
         [Display(Name = "نام کاربری")]

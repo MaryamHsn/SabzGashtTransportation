@@ -5,12 +5,12 @@ namespace SabzGashtTransportation.Models
     public class RegisterViewModel
     {
         //[Required]
-        //[EmailAddress]
-        //[Display(Name = "Email")]
-        //public string Email { get; set; }
+        [EmailAddress]
+        [Display(Name = "ایمیل")]
+        public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "حداقل طول{0} باید {2} کاراکتر باشد", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "رمز عبور")]
         public string Password { get; set; }
