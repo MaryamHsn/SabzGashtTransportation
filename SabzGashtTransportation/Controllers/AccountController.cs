@@ -192,7 +192,6 @@ namespace SabzGashtTransportation.Controllers
             }
             if (string.IsNullOrEmpty(returnUrl))
             {
-                // UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
                 returnUrl = this.Url.Action("Index", "Admin", null);
             }
             // NOTE: You must add your claims **before** sign the user in.
@@ -252,13 +251,12 @@ namespace SabzGashtTransportation.Controllers
                 if (result.Succeeded)
                 {
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id).ConfigureAwait(false);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account",
-                        new { userId = user.Id, code }, protocol: Request.Url.Scheme);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
+
                     await _userManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>").ConfigureAwait(false);
                     ViewBag.Link = callbackUrl;
                     return View("DisplayEmail");
-                }
-                addErrors(result);
+                } 
             }
 
             // If we got this far, something failed, redisplay form
