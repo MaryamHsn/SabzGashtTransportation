@@ -89,6 +89,10 @@
     <Compile Include="Migrations\202004081120213_changeRoutDriverTbl.Designer.cs">
       <DependentUpon>202004081120213_changeRoutDriverTbl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004211231565_identityTable.cs" />
+    <Compile Include="Migrations\202004211231565_identityTable.Designer.cs">
+      <DependentUpon>202004211231565_identityTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\PaymentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -129,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004081120213_changeRoutDriverTbl.resx">
       <DependentUpon>202004081120213_changeRoutDriverTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211231565_identityTable.resx">
+      <DependentUpon>202004211231565_identityTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -47,15 +47,15 @@ namespace Sabz.DataLayer.Context
         //    //Note: defaultConnectionFactory in the web.config file should be set.
         //}
 
-        //protected override void OnModelCreating(DbModelBuilder builder)
-        //{
-        //    base.OnModelCreating(builder);
+        protected override void OnModelCreating(DbModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
-        //    builder.Entity<ApplicationUser>().ToTable("Users");
-        //    builder.Entity<CustomRole>().ToTable("Roles");
-        //    builder.Entity<CustomUserClaim>().ToTable("UserClaims");
-        //    builder.Entity<CustomUserRole>().ToTable("UserRoles");
-        //    builder.Entity<CustomUserLogin>().ToTable("UserLogins");
+            builder.Entity<ApplicationUser>().ToTable("Users");
+            builder.Entity<CustomRole>().ToTable("Roles");
+            builder.Entity<CustomUserClaim>().ToTable("UserClaims");
+            builder.Entity<CustomUserRole>().ToTable("UserRoles");
+            builder.Entity<CustomUserLogin>().ToTable("UserLogins");
 
         //    builder.Entity<AccidentTbl>().ToTable("Accident");
         //    builder.Entity<AutomobileTbl>().ToTable("Automobile");
@@ -67,80 +67,80 @@ namespace Sabz.DataLayer.Context
         //    builder.Entity<RepairmentTbl>().ToTable("Repairment");
         //    builder.Entity<RoutTbl>().ToTable("Rout");
 
-        //    builder.Entity<AccidentTbl>()
-        //    .Property(e => e.Cost)
-        //    .HasPrecision(18, 0);
+            //    builder.Entity<AccidentTbl>()
+            //    .Property(e => e.Cost)
+            //    .HasPrecision(18, 0);
 
-        //    builder.Entity<AutomobileTbl>()
-        //        .Property(e => e.Shasi)
-        //        .IsFixedLength();
+            //    builder.Entity<AutomobileTbl>()
+            //        .Property(e => e.Shasi)
+            //        .IsFixedLength();
 
-        //    builder.Entity<AutomobileTbl>()
-        //        .Property(e => e.CreateYear)
-        //        .IsFixedLength();
+            //    builder.Entity<AutomobileTbl>()
+            //        .Property(e => e.CreateYear)
+            //        .IsFixedLength();
 
-        //    builder.Entity<AutomobileTbl>()
-        //        .HasMany(e => e.DriverTbls)
-        //        .WithRequired(e => e.AutomobileTbl)
-        //        .HasForeignKey(e => e.AutomobileId)
-        //        .WillCascadeOnDelete(false);
+            //    builder.Entity<AutomobileTbl>()
+            //        .HasMany(e => e.DriverTbls)
+            //        .WithRequired(e => e.AutomobileTbl)
+            //        .HasForeignKey(e => e.AutomobileId)
+            //        .WillCascadeOnDelete(false);
 
-        //    builder.Entity<AutomobileTypeTbl>()
-        //        .HasMany(e => e.AutomobileTbls)
-        //        .WithOptional(e => e.AutomobileTypeTbl)
-        //        .HasForeignKey(e => e.AutomobileTypeId);
+            //    builder.Entity<AutomobileTypeTbl>()
+            //        .HasMany(e => e.AutomobileTbls)
+            //        .WithOptional(e => e.AutomobileTypeTbl)
+            //        .HasForeignKey(e => e.AutomobileTypeId);
 
-        //    builder.Entity<AutomobileTypeTbl>()
-        //        .HasMany(e => e.RoutTbls)
-        //        .WithRequired(e => e.AutomobileTypeTbl)
-        //        .HasForeignKey(e => e.AutomobileTypeId)
-        //        .WillCascadeOnDelete(false);
+            //    builder.Entity<AutomobileTypeTbl>()
+            //        .HasMany(e => e.RoutTbls)
+            //        .WithRequired(e => e.AutomobileTypeTbl)
+            //        .HasForeignKey(e => e.AutomobileTypeId)
+            //        .WillCascadeOnDelete(false);
 
-        //    builder.Entity<DriverRoutTbl>()
-        //        .HasMany(e => e.LogDriverRoutTbls)
-        //        .WithRequired(e => e.DriverRoutTbl)
-        //        .HasForeignKey(e => e.DriverRoutId)
-        //        .WillCascadeOnDelete(false);
+            //    builder.Entity<DriverRoutTbl>()
+            //        .HasMany(e => e.LogDriverRoutTbls)
+            //        .WithRequired(e => e.DriverRoutTbl)
+            //        .HasForeignKey(e => e.DriverRoutId)
+            //        .WillCascadeOnDelete(false);
 
-        //    builder.Entity<DriverTbl>()
-        //        .Property(e => e.NationalCode)
-        //        .IsFixedLength();
+            //    builder.Entity<DriverTbl>()
+            //        .Property(e => e.NationalCode)
+            //        .IsFixedLength();
 
-        //    builder.Entity<DriverTbl>()
-        //        .HasMany(e => e.DriverRoutTbls)
-        //        .WithRequired(e => e.DriverTbl)
-        //        .WillCascadeOnDelete(false);
+            //    builder.Entity<DriverTbl>()
+            //        .HasMany(e => e.DriverRoutTbls)
+            //        .WithRequired(e => e.DriverTbl)
+            //        .WillCascadeOnDelete(false);
 
-        //    builder.Entity<LogDriverRoutTbl>()
-        //        .Property(e => e.FinePrice)
-        //        .HasPrecision(18, 0);
+            //    builder.Entity<LogDriverRoutTbl>()
+            //        .Property(e => e.FinePrice)
+            //        .HasPrecision(18, 0);
 
-        //    builder.Entity<RegionTbl>()
-        //        .HasMany(e => e.RoutTbls)
-        //        .WithRequired(e => e.RegionTbl)
-        //        .WillCascadeOnDelete(false);
+            //    builder.Entity<RegionTbl>()
+            //        .HasMany(e => e.RoutTbls)
+            //        .WithRequired(e => e.RegionTbl)
+            //        .WillCascadeOnDelete(false);
 
-        //    builder.Entity<RepairmentTbl>()
-        //        .Property(e => e.Cost)
-        //        .HasPrecision(18, 0);
+            //    builder.Entity<RepairmentTbl>()
+            //        .Property(e => e.Cost)
+            //        .HasPrecision(18, 0);
 
-        //    builder.Entity<RoutTbl>()
-        //        .Property(e => e.AgreementPrice)
-        //        .HasPrecision(18, 0);
+            //    builder.Entity<RoutTbl>()
+            //        .Property(e => e.AgreementPrice)
+            //        .HasPrecision(18, 0);
 
-        //    builder.Entity<RoutTbl>()
-        //        .Property(e => e.DriverPrice)
-        //        .HasPrecision(18, 0);
+            //    builder.Entity<RoutTbl>()
+            //        .Property(e => e.DriverPrice)
+            //        .HasPrecision(18, 0);
 
-        //    builder.Entity<RoutTbl>()
-        //        .HasMany(e => e.DriverRoutTbls)
-        //        .WithRequired(e => e.RoutTbl)
-        //        .WillCascadeOnDelete(false);
-        //}
-        #endregion
+            //    builder.Entity<RoutTbl>()
+            //        .HasMany(e => e.DriverRoutTbls)
+            //        .WithRequired(e => e.RoutTbl)
+            //        .WillCascadeOnDelete(false);
+            }
+            #endregion
 
-        #region defineRepository
- 
+            #region defineRepository
+
 
         private BaseRepository<AccidentTbl, int> _accidentsRepository;
         public IRepository<AccidentTbl, int> AccidentRepository

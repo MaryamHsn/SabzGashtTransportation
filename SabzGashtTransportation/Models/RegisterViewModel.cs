@@ -5,7 +5,7 @@ namespace SabzGashtTransportation.Models
     public class RegisterViewModel
     {
         //[Required]
-        [EmailAddress]
+        ////////[EmailAddress]
         [Display(Name = "ایمیل")]
         public string Email { get; set; }
 

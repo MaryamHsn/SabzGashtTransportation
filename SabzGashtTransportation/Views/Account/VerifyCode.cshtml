@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "text-danger" })
     @Html.Hidden("provider", @Model.Provider)
-    @Html.Hidden("rememberMe", @Model.RememberMe)
+    @Html.Hidden("rememberMe", @Model.RememberBrowser)
     <h4>@ViewBag.Status</h4>
     <hr />
     <div class="form-group">

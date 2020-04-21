@@ -10,7 +10,7 @@ namespace SabzGashtTransportation.Models
 
         //[Required(AllowEmptyStrings = false)]
         [Display(Name = "ایمیل")]
-        [EmailAddress]
+        //[EmailAddress]
         public string Email { get; set; }
 
         [Required]
