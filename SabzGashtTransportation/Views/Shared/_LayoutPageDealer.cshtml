@@ -65,7 +65,7 @@
                     <span>صفحه نخست</span>
                     <ul>
                         <li class="current"> @Html.ActionLink("صفحه نخست", "index", "Home", null, null) </li>
-                        <li> @Html.ActionLink("درباره ما", "index", "Rout", null, null) </li>
+                        <li> <a href="">درباره ما</a></li>
                         <li>  @Html.ActionLink("ورود", "login", "Account", null, null) </li>
                         <li>  @Html.ActionLink("ثبت نام", "Register", "Account", null, null) </li>
                     </ul>
@@ -83,79 +83,60 @@
     <!--BEGIN CONTENT-->
     <!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
     <div id="content" class="content">
-      @RenderBody()
+        @RenderBody()
     </div>
     <!--EOF CONTENT-->
     <!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
     <!--BEGIN FOOTER-->
     <div id="footer">
-     
+
         <div class="bottom_footer">
             <div class="f_widget ">
                 <h3>درباره ما</h3>
                 <ul>
-                    <li>  @Html.ActionLink("تصادفات", "index", "AccidentTbls", null, null) </li>
-                    <li>  @Html.ActionLink("اتومبیل ها", "index", "Automobile", null, null) </li>
-                    <li>  @Html.ActionLink("انواع اتومبیل", "index", "AutomobileType", null, null) </li>
-                    <li>  @Html.ActionLink(" منطقه", "index", "Region", null, null) </li>
+                    @*<li>  @Html.ActionLink("تصادفات", "index", "AccidentTbls", null, null) </li>
+                        <li>  @Html.ActionLink("اتومبیل ها", "index", "Automobile", null, null) </li>
+                        <li>  @Html.ActionLink("انواع اتومبیل", "index", "AutomobileType", null, null) </li>
+                        <li>  @Html.ActionLink(" منطقه", "index", "Region", null, null) </li>*@
 
-                    @*<li><a href="#">تماس ما</a></li>
-                    <li><a href="#">همکاران ما</a></li>
-                    <li><a href="#">تبلیغات آنلاین</a></li>
-                    <li><a href="#">نقشه سایت</a></li>*@
-                </ul>
-            </div>
-            
-            <div class="f_widget ">
-                <h3>درباره ما</h3>
-                <ul>
-                    <li>  @Html.ActionLink(" کارمندان", "index", "Drivers", null, null) </li>
-                    <li>  @Html.ActionLink("مسیرها", "index", "Rout", null, null) </li>
-                    <li>  @Html.ActionLink("برنامه زمانی", "index", "DriverRout", null, null) </li>
-                    <li>  @Html.ActionLink("ثبت روزانه", "index", "LogDriverRout", null, null) </li>
-                    <li>  @Html.ActionLink("پرداخت ها", "index", "Payment", null, null) </li>
-
-                    @*<li><a href="#">تماس ما</a></li>
-        <li><a href="#">همکاران ما</a></li>
-        <li><a href="#">تبلیغات آنلاین</a></li>
-        <li><a href="#">نقشه سایت</a></li>*@
-                </ul>
-            </div>
-            @*<div class="f_widget ">
-                <h3>درباره ما</h3>
-                <ul>
                     <li><a href="#">تماس ما</a></li>
                     <li><a href="#">همکاران ما</a></li>
                     <li><a href="#">تبلیغات آنلاین</a></li>
                     <li><a href="#">نقشه سایت</a></li>
                 </ul>
             </div>
-            <div class="fwidget_separator"></div>
-            <div class="f_widget">
-                <h3>نقشه سایت</h3>
+
+            <div class="f_widget ">
+                <h3>ارتباط با ما</h3>
                 <ul>
+                    @*<li>  @Html.ActionLink(" کارمندان", "index", "Drivers", null, null) </li>
+        <li>  @Html.ActionLink("مسیرها", "index", "Rout", null, null) </li>
+        <li>  @Html.ActionLink("برنامه زمانی", "index", "DriverRout", null, null) </li>
+        <li>  @Html.ActionLink("ثبت روزانه", "index", "LogDriverRout", null, null) </li>
+        <li>  @Html.ActionLink("پرداخت ها", "index", "Payment", null, null) </li>*@
+
                     <li><a href="#">اضافه کردن یک پیشنهاد</a></li>
                     <li><a href="#">ثبت نام فروشنده</a></li>
                     <li><a href="#">ورود فروشنده</a></li>
                     <li><a href="#">اخبار</a></li>
                 </ul>
-            </div>*@
-            <div class="f_widget divide last">
+            </div>
+            @*<div class="f_widget divide last">
                 <h3><strong>پیدا کردن</strong>ما در اینجا</h3>
                 <ul class="horizontal">
                     <li><a href="#"><img src="images/fb_icon.png" alt=""></a></li>
                     <li><a href="#"><img src="images/twitter_icon.png" alt=""></a></li>
                     <li><a href="#"><img src="images/in_icon.png" alt=""></a></li>
                 </ul>
-            </div>
+            </div>*@
         </div>
         <div class="copyleft_wrapper">
             <div class="copyleft">&copy; کلیه حقوق مادی و معنوی برای مجموعه برنامه نویسان محفوظ می باشد . هر گونه کپی برداری از محتوای آموزشی با ذکر منبع مجاز می باشد.</div>
         </div>
     </div>
     <!--EOF FOOTER-->
-<!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
-@*@RenderSection("Scripts", true)*@
+    <!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
+    @*@RenderSection("Scripts", true)*@
 
 </body>
 </html>

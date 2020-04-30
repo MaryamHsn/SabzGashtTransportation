@@ -109,6 +109,7 @@
     <Compile Include="ApplicationUserManager.cs" />
     <Compile Include="CustomRoleStore.cs" />
     <Compile Include="CustomUserStore.cs" />
+    <Compile Include="CustomUserValidator.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="Enumration\AutomobileTypeEnum.cs" />
     <Compile Include="Enumration\HasCoolerEnum.cs" />

@@ -14,6 +14,7 @@ namespace SabzGashtTransportation.Models
         public string UserName { get; set; }
 
         [Required]
+        //[Required(ErrorMessage = "Postal Code is required")]
         [DataType(DataType.Password)]
         [Display(Name = "رمز عبور")]
         public string Password { get; set; }

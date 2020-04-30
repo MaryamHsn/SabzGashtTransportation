@@ -252,11 +252,11 @@ namespace SabzGashtTransportation.Controllers
                 {
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id).ConfigureAwait(false);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
-
                     await _userManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>").ConfigureAwait(false);
                     ViewBag.Link = callbackUrl;
                     return View("DisplayEmail");
-                } 
+                }
+                addErrors(result);
             }
 
             // If we got this far, something failed, redisplay form

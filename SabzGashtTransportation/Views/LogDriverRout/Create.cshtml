@@ -87,6 +87,7 @@
     @Styles.Render("~/css/css/style.css");
     var counter = 1;
     var routTransactionType = "";
+    string regionDropDown = ViewBag.Region;
 
 }
 
@@ -99,6 +100,10 @@
         <table>
             <tr>
                 <th>نام منطقه</th>
+                @if (regionDropDown == null)
+                {
+                    regionDropDown = "انتخاب کنید";
+                }
                 <th>
                     @Html.Hidden("dropRegionId")
                     @Html.DropDownList("RegionItems", "انتخاب کنید")

@@ -56,5 +56,24 @@ namespace SabzGashtTransportation
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Sabz.DataLayer.Migrations.Configuration>());
             SmObjectFactory.Container.GetInstance<IUnitOfWork>().ForceDatabaseInitialize();
         }
+
+        //protected void Application_AuthenticateRequest(object sender, EventArgs args)
+        //{
+        //    if (Context.User != null)
+        //    {
+        //        IEnumerable<Role> roles = new UsersService.UsersClient().GetUserRoles(
+        //                                                Context.User.Identity.Name);
+
+
+        //        string[] rolesArray = new string[roles.Count()];
+        //        for (int i = 0; i < roles.Count(); i++)
+        //        {
+        //            rolesArray[i] = roles.ElementAt(i).RoleName;
+        //        }
+
+        //        GenericPrincipal gp = new GenericPrincipal(Context.User.Identity, rolesArray);
+        //        Context.User = gp;
+        //    }
+        //}
     }
 }

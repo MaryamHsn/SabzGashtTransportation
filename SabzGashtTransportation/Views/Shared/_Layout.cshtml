@@ -26,10 +26,10 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
 
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin")) {
+                    @*@if (Request.IsAuthenticated && User.IsInRole("Admin")) {
                         <li>@Html.ActionLink("مدیر", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("کاربر", "Index", "UsersAdmin")</li>
-                    }
+                    }*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

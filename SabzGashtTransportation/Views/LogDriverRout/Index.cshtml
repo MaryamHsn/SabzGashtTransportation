@@ -4,6 +4,7 @@
 @using Sabz.ServiceLayer.Extension
 @model PagedList.IPagedList<SabzGashtTransportation.ViewModel.LogDriverRoutViewModel>
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<script src="~/js/jquery-3.3.1.min.js"></script>
 
 @{
     ViewBag.Title = "نمایش مسیرهای روزانه";
@@ -11,6 +12,10 @@
     @Styles.Render("~/css/css/style.css");
     var counter = 1;
     var routTransactionType = "";
+    string regionDropDown = ViewBag.Region;
+    string driverDropDown = ViewBag.Driverdrop;
+
+
 }
 
 <h2 class="style-h2">نمایش مسیرهای روزانه</h2>
@@ -28,15 +33,31 @@
         <h4>جستجو</h4>
         <table>
             <tr>
-                <th>نام منطقه</th>
+                <th class="font-small">نام منطقه</th>
+                @if (regionDropDown == null)
+                {
+                    regionDropDown = "انتخاب کنید";
+                }
                 <th>
+                    @* @Html.DropDownList("RegionItems", new List<SelectListItem> { new SelectListItem() { Text = "Get Married", Value = "5" }, new SelectListItem() { Text = "Have a Baby", Value = "100" }, new SelectListItem() { Text = "Adopt a Child", Value = "90" }, }, "Select Type", new { @class = "form-control", id = "dropRegionId" })*@
+                    @*@Html.DropDownList(regionDropDown, ViewBag.RegionItems, new { id = "dropRegionId" })*@
+                    @*@Html.DropDownList("RegionItems", (IEnumerable<SelectListItem>)ViewBag.RegionItems, regionDropDown, new { onchange = "regionFunc();" })*@
+                    @Html.DropDownList("RegionItems", regionDropDown)
                     @Html.Hidden("dropRegionId")
-                    @Html.DropDownList("RegionItems", "انتخاب کنید")
                 </th>
             </tr>
             <tr>
                 <th>راننده</th>
-                <th>@Html.TextBox("SearchDriver", ViewBag.CurrentFilterDriver as string)</th>
+                @*@if (driverDropDown == null)
+                    {
+                        driverDropDown = "انتخاب کنید";
+                    }*@
+
+                <th>@Html.TextBox("dropDriverId", ViewBag.CurrentFilterDriver as string)</th>
+                @*<th>
+                        @Html.DropDownList("driverItems", driverDropDown)
+                        @Html.Hidden("dropDriverId")
+                    </th>*@
             </tr>
             <tr>
                 <th>از تاریخ</th>
@@ -206,11 +227,11 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
+
     $(function () {
         $('select').on('change', function () {
             $("#dropRegionId").val(this.value);
         })
-        alert(droppRegionId.val);
 
     })
 </script>

@@ -8,7 +8,7 @@ using SabzGashtTransportation.Models;
 
 namespace SabzGashtTransportation.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public class UsersAdminController : Controller
     {
         private readonly IApplicationRoleManager _roleManager;

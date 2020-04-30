@@ -17,6 +17,7 @@ using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
+    [Authorize]
     public class AutomobileTypeController : Controller
     {
         readonly IAutomobileTypeService _automobile;

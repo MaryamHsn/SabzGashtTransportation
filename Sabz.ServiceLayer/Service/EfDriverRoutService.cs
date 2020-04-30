@@ -35,6 +35,10 @@ namespace Sabz.ServiceLayer.Service
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && ids.Contains(x.Id)).ToList();
         }
+        public IList<DriverRoutTbl> GetAllDriverRoutsByRegionIdByIds(int regionId,List<int> ids)
+        {
+            return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive&& x.RoutTbl.RegionId==regionId && ids.Contains(x.Id)).ToList();
+        }
         public DriverRoutTbl GetDriverRout(int? id)
         {
             return _uow.DriverRoutRepository.Get(x => x.Id == id);
@@ -83,9 +87,17 @@ namespace Sabz.ServiceLayer.Service
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.DriverTbl.FullName.Contains(driverName) && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo).ToList();
         }
+        public List<DriverRoutTbl> GetDriverRoutByDateByDriverNameByRegionIdByIds(DateTime datFrom, DateTime dateTo, string driverName, int regionId,List<int>ids)
+        {
+            return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.DriverTbl.FullName.Contains(driverName) && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo && ids.Contains(x.Id)).ToList();
+        }
         public List<DriverRoutTbl> GetDriverRoutByDateByRegionId(DateTime datFrom, DateTime dateTo, int regionId)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo).ToList();
+        }
+        public List<DriverRoutTbl> GetDriverRoutByDateByRegionIdByIds(DateTime datFrom, DateTime dateTo, int regionId,List<int> ids)
+        {
+            return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo && ids.Contains(x.Id)).ToList();
         }
         //public List<DriverRoutTbl> GetDriverRoutByDateByRoutName(DateTime datFrom, DateTime dateTo, string routName)
         //{

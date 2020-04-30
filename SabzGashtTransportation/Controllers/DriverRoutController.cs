@@ -38,11 +38,33 @@ namespace SabzGashtTransportation.Controllers
             _uow = uow;
         }
 
-        // GET: Automobile
         [HttpGet]
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, string SearchDriver, string SearchRout, string SearchDateFrom, string SearchDateTo, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, string SearchDriver, string dropRegionId, string SearchDateFrom, string SearchDateTo, int? page)
         {
             commonList = new List<DriverRoutViewModel>();
+            IEnumerable<SelectListItem> regionItems = _region.GetAllRegions().Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.RegionName
+            });
+          
+            if (!string.IsNullOrWhiteSpace(dropRegionId))
+            {
+                //if (TempData["Region"] == null)
+                //{
+                //    TempData["Region"] = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
+                //}
+                ViewBag.Region = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
+               // TempData["Region"] = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
+
+            }
+            else
+            {
+                //dropRegionId = allRegion.FirstOrDefault().Id.ToString();
+                 dropRegionId = ViewBag.Region != null ? ViewBag.Rgion : "0";
+               // dropRegionId = TempData["Region"] != null ? TempData["Region"].ToString() : "0";
+            }
+            ViewBag.RegionItems = regionItems;
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
             ViewBag.RoutTransaction = sortOrder == "routTransaction" ? "routTransaction_desc" : "routTransaction";
@@ -61,64 +83,44 @@ namespace SabzGashtTransportation.Controllers
             //    searchString = currentFilter;
             //}
             //ViewBag.CurrentFilter = searchString;
-            var list = _driverRout.GetAllDriverRouts();
+            DateTime startDate = DateTime.Now.Date;
+            DateTime endDate = DateTime.Now.AddDays(1).Date;       
+            var list = new List<DriverRoutTbl>();
             var routs = _rout.GetAllRouts();
             var regions = _region.GetAllRegions();
-            if (!string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver) && !string.IsNullOrWhiteSpace(SearchRout))
+             if (!string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver))
             {
                 if (string.IsNullOrWhiteSpace(SearchDateTo))
                 {
-                    //list = _driverRout.GetDriverRoutByDateByDriverNameByRoutName(SearchDateFrom.ToGeorgianDate(), DateTime.Now, SearchDriver, SearchRout);
+                    list = _driverRout.GetDriverRoutByDateByDriverNameByRegionId(SearchDateFrom.ToGeorgianDate(), endDate, SearchDriver,int.Parse(dropRegionId));
                 }
                 else
                 {
-                    //list = _driverRout.GetDriverRoutByDateByDriverNameByRoutName(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate(), SearchDriver, SearchRout);
+                    list = _driverRout.GetDriverRoutByDateByDriverNameByRegionId(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate(), SearchDriver, int.Parse(dropRegionId));
                 }
             }
-            else if (!string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver) && string.IsNullOrWhiteSpace(SearchRout))
+            else if (!string.IsNullOrWhiteSpace(SearchDateFrom) && string.IsNullOrWhiteSpace(SearchDriver))
             {
                 if (string.IsNullOrWhiteSpace(SearchDateTo))
                 {
-                    list = _driverRout.GetDriverRoutByDateByDriverName(SearchDateFrom.ToGeorgianDate(), DateTime.Now, SearchDriver);
+                    list = _driverRout.GetDriverRoutByDateByRegionId(SearchDateFrom.ToGeorgianDate(),endDate, int.Parse(dropRegionId));
                 }
                 else
                 {
-                    list = _driverRout.GetDriverRoutByDateByDriverName(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate(), SearchDriver);
+                    list = _driverRout.GetDriverRoutByDateByRegionId(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate(), int.Parse(dropRegionId));
                 }
             }
-            else if (!string.IsNullOrWhiteSpace(SearchDateFrom) && string.IsNullOrWhiteSpace(SearchDriver) && !string.IsNullOrWhiteSpace(SearchRout))
+            else if (string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver))
             {
-                if (string.IsNullOrWhiteSpace(SearchDateTo))
-                {
-                    //list = _driverRout.GetDriverRoutByDateByRoutName(SearchDateFrom.ToGeorgianDate(), DateTime.Now, SearchRout);
-                }
-                else
-                {
-                   // list = _driverRout.GetDriverRoutByDateByRoutName(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate(), SearchRout);
-                }
+                list = _driverRout.GetDriverRoutByDateByDriverNameByRegionId(startDate,endDate,SearchDriver,int.Parse(dropRegionId));
             }
-            else if (!string.IsNullOrWhiteSpace(SearchDateFrom) && string.IsNullOrWhiteSpace(SearchDriver) && string.IsNullOrWhiteSpace(SearchRout))
+            else if (string.IsNullOrWhiteSpace(SearchDateFrom) && string.IsNullOrWhiteSpace(SearchDriver))
             {
-                if (string.IsNullOrWhiteSpace(SearchDateTo))
-                {
-                   // list = _driverRout.GetDriverRoutByDate(SearchDateFrom.ToGeorgianDate(), DateTime.Now);
-                }
-                else
-                {
-                   // list = _driverRout.GetDriverRoutByDate(SearchDateFrom.ToGeorgianDate(), SearchDateTo.ToGeorgianDate());
-                }
+                list = _driverRout.GetDriverRoutByDateByRegionId(startDate, endDate, int.Parse(dropRegionId));
             }
-            else if (string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver) && !string.IsNullOrWhiteSpace(SearchRout))
+            else
             {
-                //list = _driverRout.GetDriverRoutByDriverNameRoutName(SearchRout, SearchDriver);
-            }
-            else if (string.IsNullOrWhiteSpace(SearchDateFrom) && !string.IsNullOrWhiteSpace(SearchDriver) && string.IsNullOrWhiteSpace(SearchRout))
-            {
-                list = _driverRout.GetDriverRoutByDriverName(SearchDriver);
-            }
-            else if (string.IsNullOrWhiteSpace(SearchDateFrom) && string.IsNullOrWhiteSpace(SearchDriver) && !string.IsNullOrWhiteSpace(SearchRout))
-            {
-                //list = _driverRout.GetDriverRoutByRoutName(SearchRout);
+                list =_driverRout.GetAllDriverRouts().ToList();
             }
             foreach (var item in list)
             {
@@ -183,8 +185,9 @@ namespace SabzGashtTransportation.Controllers
                 var element = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(item);
                 element.Driver = allDrivers.Where(x => x.Id == item.DriverId).FirstOrDefault();
                 element.DriverFullName = element.Driver.FullName;
-                //element.Rout = routs.Where(x => x.Id == item.RoutId).FirstOrDefault();
                 element.RoutEnterTimeString = item.RoutTbl.EnterTime.ToString();
+                element.Rout = item.RoutTbl;
+                element.Rout.EnterTime = item.RoutTbl.EnterTime;
                 element.RoutStartDate = item.RoutTbl.StartDate;
                 element.RoutStartDateString = item.RoutTbl.StartDate.ToPersianDateString();
                 element.RoutRegionName = item.RoutTbl.RegionTbl.RegionName;
@@ -192,7 +195,9 @@ namespace SabzGashtTransportation.Controllers
                 element.RoutTransactionType = _rout.GetRout(element.RoutId).RoutTransactionType;
                 commonList.Add(element);
             }
-            return View(commonList.ToPagedList(pageNumber, pageSize));
+ 
+            // return View(commonList.OrderBy(x=> new { x.RoutStartDate, x.Rout.EnterTime }).ToPagedList(pageNumber, pageSize));
+            return View(commonList.OrderBy(x=> x.RoutStartDate).ThenBy(x=> x.Rout.EnterTime).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Drivers/Details/5
@@ -349,6 +354,8 @@ namespace SabzGashtTransportation.Controllers
             if (ModelState.IsValid)
             {
                 var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
+                ViewBag.Region = driverRout.Rout.RegionId;
+               // TempData["Region"] = driverRout.Rout.RegionId;
                 _driverRout.AddNewDriverRout(obj);
                 _uow.SaveAllChanges();
             }
@@ -397,7 +404,7 @@ namespace SabzGashtTransportation.Controllers
         {
             if (fromDate == null)
             {
-                fromDate = DateTime.Now;
+                fromDate = DateTime.Now.Date;
             }
             //if (toDate == null)
             //{

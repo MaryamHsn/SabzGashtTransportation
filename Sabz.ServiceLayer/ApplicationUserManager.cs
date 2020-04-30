@@ -153,8 +153,11 @@ namespace Sabz.ServiceLayer
 
         private void createApplicationUserManager()
         {
+            //var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+
             // Configure validation logic for usernames
-            this.UserValidator = new UserValidator<ApplicationUser, int>(this)
+            //this.UserValidator = new UserValidator<ApplicationUser, int>(this)
+            this.UserValidator = new CustomUserValidator<ApplicationUser>(this)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
