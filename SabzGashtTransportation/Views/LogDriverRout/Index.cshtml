@@ -38,13 +38,13 @@
                 {
                     regionDropDown = "انتخاب کنید";
                 }
-                <th>
-                    @* @Html.DropDownList("RegionItems", new List<SelectListItem> { new SelectListItem() { Text = "Get Married", Value = "5" }, new SelectListItem() { Text = "Have a Baby", Value = "100" }, new SelectListItem() { Text = "Adopt a Child", Value = "90" }, }, "Select Type", new { @class = "form-control", id = "dropRegionId" })*@
-                    @*@Html.DropDownList(regionDropDown, ViewBag.RegionItems, new { id = "dropRegionId" })*@
-                    @*@Html.DropDownList("RegionItems", (IEnumerable<SelectListItem>)ViewBag.RegionItems, regionDropDown, new { onchange = "regionFunc();" })*@
-                    @Html.DropDownList("RegionItems", regionDropDown)
-                    @Html.Hidden("dropRegionId")
-                </th>
+            <th>
+                @* @Html.DropDownList("RegionItems", new List<SelectListItem> { new SelectListItem() { Text = "Get Married", Value = "5" }, new SelectListItem() { Text = "Have a Baby", Value = "100" }, new SelectListItem() { Text = "Adopt a Child", Value = "90" }, }, "Select Type", new { @class = "form-control", id = "dropRegionId" })*@               
+                @*@Html.DropDownList(regionDropDown, ViewBag.RegionItems, new { id = "dropRegionId" })*@
+                @*@Html.DropDownList("RegionItems", (IEnumerable<SelectListItem>)ViewBag.RegionItems, regionDropDown, new { onchange = "regionFunc();" })*@
+                @Html.DropDownList("RegionItems", regionDropDown)
+                @Html.Hidden("dropRegionId")
+            </th>
             </tr>
             <tr>
                 <th>راننده</th>
@@ -227,11 +227,11 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-
     $(function () {
         $('select').on('change', function () {
             $("#dropRegionId").val(this.value);
         })
+        alert(droppRegionId.val);
 
     })
 </script>
