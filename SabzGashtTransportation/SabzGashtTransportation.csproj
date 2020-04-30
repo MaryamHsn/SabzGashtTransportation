@@ -280,6 +280,7 @@
     <Compile Include="ViewModel\AutomobileTypeViewModel.cs" />
     <Compile Include="ViewModel\DriverViewModel.cs" />
     <Compile Include="ViewModel\DriverRoutViewModel.cs" />
+    <Compile Include="ViewModel\LogDriverRoutFullViewModel.cs" />
     <Compile Include="ViewModel\LogRoutDriverViewModel.cs" />
     <Compile Include="ViewModel\PaymentViewModel.cs" />
     <Compile Include="ViewModel\RegionViewModel.cs" />

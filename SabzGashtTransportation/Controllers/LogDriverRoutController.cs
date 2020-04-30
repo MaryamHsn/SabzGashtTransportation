@@ -40,32 +40,18 @@ namespace SabzGashtTransportation.Controllers
 
         // GET: Automobile
         [HttpGet]
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, string searchDriver, string searchRout, string searchDateFrom, string searchDateTo, string dropRegionId, int? page)
+        public ActionResult Index(LogDriverRoutFullViewModel fullLog,string sortOrder, int? page)
         {
             commonList = new List<LogDriverRoutViewModel>();
+            var FullcommonList = new LogDriverRoutFullViewModel();
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             var allDrivers = _driver.GetAllDrivers();
             var regions = _region.GetAllRegions();
+            FullcommonList.Drivers = allDrivers;
+            FullcommonList.Regions = regions;
             DateTime startDate = DateTime.Now.Date;
-            DateTime endDate = DateTime.Now.AddDays(1).Date;
-            IEnumerable<SelectListItem> regionItems = regions.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.RegionName
-            });
-            if (!string.IsNullOrWhiteSpace(dropRegionId))
-            {
-                ViewBag.Region = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
-                //  TempData["Region"] = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
-            }
-            else
-            {
-                //dropRegionId = allRegion.FirstOrDefault().Id.ToString();
-                dropRegionId = ViewBag.Region != null ? ViewBag.Rgion : "0";
-                //dropRegionId = TempData["Region"] != null ? TempData["Region"].ToString() : "0";
-            }
-            ViewBag.RegionItems = regionItems;
+            DateTime endDate = DateTime.Now.AddDays(1).Date; 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
             ViewBag.IsDone = sortOrder == "isDone" ? "isDone_desc" : "isDone";
@@ -76,49 +62,40 @@ namespace SabzGashtTransportation.Controllers
             ViewBag.RoutRegion = sortOrder == "routRegion" ? "routRegion_desc" : "routRegion";
             ViewBag.RoutTime = sortOrder == "routTime" ? "routTime_desc" : "routTime";
             ViewBag.RoutDate = sortOrder == "routDate" ? "routDate_desc" : "routDate";
-            //if (searchString != null)
-            //{
-            //    page = 1;
-            //}
-            //else
-            //{
-            //    searchString = currentFilter;
-            //}
-            //ViewBag.CurrentFilter = searchString;
             var log = _LogDriverRout.GetAllLogDriverRouts();
             var driverRout = _driverRout.GetAllDriverRouts();
             var routs = _rout.GetAllRouts();
             var drivers = _driver.GetAllDrivers();
             var list = new List<LogDriverRoutTbl>();
-            if (!string.IsNullOrWhiteSpace(searchDateFrom) && !string.IsNullOrWhiteSpace(searchDriver))
+            if (!string.IsNullOrWhiteSpace(fullLog.SearchDateFrom) && fullLog.DriverId!=0)
             {
-                if (string.IsNullOrWhiteSpace(searchDateTo))
+                if (string.IsNullOrWhiteSpace(fullLog.SearchDateTo))
                 {
-                    list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(searchDriver, int.Parse(dropRegionId), searchDateFrom.ToGeorgianDate(), endDate).ToList();
+                    list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(allDrivers.Where(x=>x.Id== fullLog.DriverId).FirstOrDefault().FullName, fullLog.RegionId, fullLog.SearchDateFrom.ToGeorgianDate(), endDate).ToList();
                 }
                 else
                 {
-                    list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(searchDriver, int.Parse(dropRegionId), searchDateFrom.ToGeorgianDate(), searchDateTo.ToGeorgianDate()).ToList();
+                    list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(allDrivers.Where(x => x.Id == fullLog.DriverId).FirstOrDefault().FullName, fullLog.RegionId, fullLog.SearchDateFrom.ToGeorgianDate(), fullLog.SearchDateTo.ToGeorgianDate()).ToList();
                 }
             }
-            else if (!string.IsNullOrWhiteSpace(searchDateFrom) && string.IsNullOrWhiteSpace(searchDriver))
+            else if (!string.IsNullOrWhiteSpace(fullLog.SearchDateFrom) && fullLog.DriverId == 0)
             {
-                if (string.IsNullOrWhiteSpace(searchDateTo))
+                if (string.IsNullOrWhiteSpace(fullLog.SearchDateTo))
                 {
-                    list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(int.Parse(dropRegionId), searchDateFrom.ToGeorgianDate(),endDate).ToList();
+                    list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(fullLog.RegionId, fullLog.SearchDateFrom.ToGeorgianDate(),endDate).ToList();
                 }
                 else
                 {
-                    list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(int.Parse(dropRegionId), searchDateFrom.ToGeorgianDate(), searchDateTo.ToGeorgianDate()).ToList();
+                    list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(fullLog.RegionId, fullLog.SearchDateFrom.ToGeorgianDate(), fullLog.SearchDateTo.ToGeorgianDate()).ToList();
                 }
             }
-            else if (string.IsNullOrWhiteSpace(searchDateFrom) && !string.IsNullOrWhiteSpace(searchDriver))
+            else if (string.IsNullOrWhiteSpace(fullLog.SearchDateFrom) && fullLog.DriverId!=0)
             {
-                list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(searchDriver, int.Parse(dropRegionId),startDate,endDate).ToList();
+                list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(allDrivers.Where(x => x.Id == fullLog.DriverId).FirstOrDefault().FullName, fullLog.RegionId,startDate,endDate).ToList();
             }
             else
             {
-                 list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(int.Parse(dropRegionId), startDate,endDate).ToList();
+                 list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(fullLog.RegionId, startDate,endDate).ToList();
 
             }
             foreach (var item in list)
@@ -171,7 +148,8 @@ namespace SabzGashtTransportation.Controllers
                 element.RoutTransactionType = item.DriverRoutTbl.RoutTbl.RoutTransactionType;
                 commonList.Add(element);
             }
-            return View(commonList.ToPagedList(pageNumber, pageSize));
+            FullcommonList.LogDriverRoutViewModels = commonList.ToPagedList(pageNumber, pageSize);
+            return View(FullcommonList);
         }
 
         // GET: Drivers/Details/5

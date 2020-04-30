@@ -2,7 +2,8 @@
 @using PagedList.Mvc
 @using Sabz.ServiceLayer.Enumration
 @using Sabz.ServiceLayer.Extension
-@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.LogDriverRoutViewModel>
+@model SabzGashtTransportation.ViewModel.LogDriverRoutFullViewModel 
+
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 <script src="~/js/jquery-3.3.1.min.js"></script>
 
@@ -11,9 +12,9 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     @Styles.Render("~/css/css/style.css");
     var counter = 1;
-    var routTransactionType = "";
-    string regionDropDown = ViewBag.Region;
-    string driverDropDown = ViewBag.Driverdrop;
+    var routTransactionType = ""; 
+    string driverDropDown =Model.DriverId != 0 ? Model.Drivers.Where(x=>x.Id ==Model.DriverId).FirstOrDefault().FullName : "";
+    string regionDropDown =Model.RegionId !=0 ? Model.Regions.Where(x=>x.Id ==Model.RegionId).FirstOrDefault().RegionName : "";
 
 
 }
@@ -34,31 +35,37 @@
         <table>
             <tr>
                 <th class="font-small">نام منطقه</th>
-                @if (regionDropDown == null)
+                @if (string.IsNullOrEmpty(regionDropDown))
                 {
                     regionDropDown = "انتخاب کنید";
                 }
-            <th>
-                @* @Html.DropDownList("RegionItems", new List<SelectListItem> { new SelectListItem() { Text = "Get Married", Value = "5" }, new SelectListItem() { Text = "Have a Baby", Value = "100" }, new SelectListItem() { Text = "Adopt a Child", Value = "90" }, }, "Select Type", new { @class = "form-control", id = "dropRegionId" })*@               
-                @*@Html.DropDownList(regionDropDown, ViewBag.RegionItems, new { id = "dropRegionId" })*@
-                @*@Html.DropDownList("RegionItems", (IEnumerable<SelectListItem>)ViewBag.RegionItems, regionDropDown, new { onchange = "regionFunc();" })*@
-                @Html.DropDownList("RegionItems", regionDropDown)
-                @Html.Hidden("dropRegionId")
-            </th>
+                <th>
+                    @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.Regions, "Id", "RegionName"),regionDropDown, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })
+                   
+                   
+                    @* @Html.DropDownList("RegionItems", new List<SelectListItem> { new SelectListItem() { Text = "Get Married", Value = "5" }, new SelectListItem() { Text = "Have a Baby", Value = "100" }, new SelectListItem() { Text = "Adopt a Child", Value = "90" }, }, "Select Type", new { @class = "form-control", id = "dropRegionId" })*@
+                    @*@Html.DropDownList(regionDropDown, ViewBag.RegionItems, new { id = "dropRegionId" })*@
+                    @*@Html.DropDownList("RegionItems", (IEnumerable<SelectListItem>)ViewBag.RegionItems, regionDropDown, new { onchange = "regionFunc();" })*@
+                    @*@Html.DropDownList("RegionItems", regionDropDown)
+                        @Html.Hidden("dropRegionId")*@
+                </th>
             </tr>
             <tr>
-                <th>راننده</th>
-                @*@if (driverDropDown == null)
+                <th>راننده</th> 
+                    @if (string.IsNullOrEmpty(driverDropDown))
+
                     {
                         driverDropDown = "انتخاب کنید";
-                    }*@
+                    }
 
-                <th>@Html.TextBox("dropDriverId", ViewBag.CurrentFilterDriver as string)</th>
-                @*<th>
-                        @Html.DropDownList("driverItems", driverDropDown)
-                        @Html.Hidden("dropDriverId")
-                    </th>*@
-            </tr>
+                @*<th>@Html.TextBox("dropDriverId", ViewBag.CurrentFilterDriver as string)</th>*@
+                    <th>
+                        @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.Drivers, "Id", "FullName"), driverDropDown, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DriverId, "", new { @class = "text-danger" })
+
+                    </th>
+                </tr>
             <tr>
                 <th>از تاریخ</th>
                 <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
@@ -158,7 +165,7 @@
             </th>*@
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.LogDriverRoutViewModels)
     {
         <tr>
             <td>
@@ -219,10 +226,10 @@
 </table>
 <br />
 <p class="showPage">
-    صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+    صفحه @(Model.LogDriverRoutViewModels.PageCount < Model.LogDriverRoutViewModels.PageNumber ? 0 : Model.LogDriverRoutViewModels.PageNumber) از @Model.LogDriverRoutViewModels.PageCount
 </p>
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
+@Html.PagedListPager(Model.LogDriverRoutViewModels, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
