@@ -203,6 +203,7 @@ namespace SabzGashtTransportation.Controllers
                 //element.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus(item.AutomobileTypeTbl.HasCooler, (int)item.AutomobileTypeTbl.IsBus);
                 element.StartDateString = item.StartDate.ToPersianDateString();
                 element.Allocate = _driverRout.GetDriverRoutByRoutId(item.Id).Count;
+                element.RemainAllocate = element.Count - element.Allocate;
                 element.RoutID = item.Id;
                 element.IsBus = (int)item.AutomobileTypeTbl.IsBus;
                 commonList.Add(element);

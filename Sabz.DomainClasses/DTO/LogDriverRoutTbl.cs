@@ -10,6 +10,7 @@ namespace Sabz.DomainClasses.DTO
     public partial class LogDriverRoutTbl : BaseEntity<int>
     {
         public bool IsDone { get; set; }
+        public bool HasDelay { get; set; }
         public decimal? FinePrice { get; set; }
         [Column(TypeName = "date")]
         public DateTime DoDate { get; set; }

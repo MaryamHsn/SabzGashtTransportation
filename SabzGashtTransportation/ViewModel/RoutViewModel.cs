@@ -24,6 +24,7 @@ namespace SabzGashtTransportation.ViewModel
         public int IsBus { get; set; }
         public int Count { get; set; }
         public int Allocate { get; set; }
+        public int RemainAllocate { get; set; }
         public bool IsActive { get; set; }
         //public DateTime CreatedDate { get; set; }
         //public string CreatedDateString { get; set; }

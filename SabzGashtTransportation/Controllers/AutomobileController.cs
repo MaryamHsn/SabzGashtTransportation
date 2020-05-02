@@ -17,7 +17,6 @@ using SabzGashtTransportation.ViewModel;
 
 namespace SabzGashtTransportation.Controllers
 {
-   // [Authorize(Roles = "admin")]
     public class AutomobileController : Controller
     {
         readonly IAutomobileService _automobile;
@@ -125,6 +124,7 @@ namespace SabzGashtTransportation.Controllers
         }
 
         // GET: Drivers/Create
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
@@ -135,6 +135,7 @@ namespace SabzGashtTransportation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Create(AutomobileViewModel automobile)
         {
             if (ModelState.IsValid)

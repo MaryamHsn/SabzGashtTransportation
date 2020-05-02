@@ -93,6 +93,10 @@
     <Compile Include="Migrations\202004211231565_identityTable.Designer.cs">
       <DependentUpon>202004211231565_identityTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004301238300_addField2LogRoutDriver.cs" />
+    <Compile Include="Migrations\202004301238300_addField2LogRoutDriver.Designer.cs">
+      <DependentUpon>202004301238300_addField2LogRoutDriver.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\PaymentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004211231565_identityTable.resx">
       <DependentUpon>202004211231565_identityTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004301238300_addField2LogRoutDriver.resx">
+      <DependentUpon>202004301238300_addField2LogRoutDriver.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

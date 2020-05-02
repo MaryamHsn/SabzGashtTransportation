@@ -1,0 +1,190 @@
+﻿@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.LogDriverRoutViewModel>
+@*@model SabzGashtTransportation.ViewModel.RoutViewModel*@
+<script src="~/js/jquery-3.3.1.min.js"></script>
+@{
+    ViewBag.Title = " آمار کلی کارکرد";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    @Styles.Render("~/css/css/style.css");
+    string regionDropDown = ViewBag.Region;
+
+    int SumRoutTransactionSingleBus = 0;
+    int SumRoutTransactionSingleMiniBus = 0;
+    int SumRoutTransactionSingleHasCoolerBus = 0;
+    int SumRoutTransactionSingleHasCoolerMiniBus = 0;
+    int SumRoutTransactionRegularBus = 0;
+    int SumRoutTransactionRegularMiniBus = 0;
+    int SumRoutTransactionRegularHasCoolerBus = 0;
+    int SumRoutTransactionRegularHasCoolerMiniBus = 0;
+    int SumRoutTransactionThereeFourBus = 0;
+    int SumRoutTransactionThereeFourMiniBus = 0;
+    int SumRoutTransactionThereeFourHasCoolerBus = 0;
+    int SumRoutTransactionThereeFourHasCoolerMiniBus = 0;
+    int SumRoutTransactionFiveSevenBus = 0;
+    int SumRoutTransactionFiveSevenMiniBus = 0;
+    int SumRoutTransactionFiveSevenHasCoolerBus = 0;
+    int SumRoutTransactionFiveSevenHasCoolerMiniBus = 0;
+}
+
+<h2 class="style-h2">آمار کلی مسیرها</h2>
+@using (Html.BeginForm("FullInformation", "Rout", FormMethod.Get))
+{
+
+    <div class="searchBox">
+        <h4 class="style-h4">جستجو</h4>
+        <table>
+            <tr>
+                <th class="font-small">از تاریخ</th>
+                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
+                <th class="font-small">تا تاریخ</th>
+                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string)</th>
+            </tr>
+            <tr>
+                <th class="font-small">نام منطقه</th>
+                @if (regionDropDown == null)
+                {
+                    regionDropDown = "انتخاب کنید";
+                }
+                <th>
+                    @Html.DropDownList("RegionItems", "انتخاب کنید")
+                    @Html.Hidden("dropRegionId")
+
+                </th>
+            </tr>
+        </table>
+        <p class="search_table">
+            <input type="submit" value="جستجو" id="btnSearchCode" name="search" />
+            <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("FullInformation")';return false;">
+        </p>
+
+    </div>
+}
+<table id="showList">
+    <tr>
+        <th colspan="2" rowspan="2">تاریخ </th>
+        <th colspan="2" rowspan="1">تک نیمراه </th>
+        <th colspan="2" rowspan="1"> تک نیمراه 85 به بالا </th>
+        <th colspan="2" rowspan="1"> سه چهار نیمراه </th>
+        <th colspan="2" rowspan="1"> سه چهار نیمراه 85 به بالا </th>
+        <th colspan="2" rowspan="1"> پنج هفت نیمراه </th>
+        <th colspan="2" rowspan="1"> پنج هفت نیمراه 85 به بالا </th>
+    </tr>
+    <tr>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td colspan="2">
+                @Html.DisplayFor(modelItem => item.DoDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionSingleBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionSingleMiniBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionSingleHasCoolerBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionSingleHasCoolerMiniBus)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularMiniBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerMiniBus)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourMiniBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourHasCoolerBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourHasCoolerMiniBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenMiniBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenHasCoolerBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenHasCoolerMiniBus)
+            </td>
+
+        </tr>
+        SumRoutTransactionSingleBus += item.RoutTransactionSingleBus;
+        SumRoutTransactionSingleMiniBus += item.RoutTransactionSingleMiniBus;
+        SumRoutTransactionSingleHasCoolerBus += item.RoutTransactionSingleHasCoolerBus;
+        SumRoutTransactionSingleHasCoolerMiniBus += item.RoutTransactionSingleHasCoolerMiniBus;
+        SumRoutTransactionRegularBus += item.RoutTransactionRegularBus;
+        SumRoutTransactionRegularMiniBus += item.RoutTransactionRegularMiniBus;
+        SumRoutTransactionRegularHasCoolerBus += item.RoutTransactionRegularHasCoolerBus;
+        SumRoutTransactionRegularHasCoolerMiniBus += item.RoutTransactionRegularHasCoolerMiniBus;
+        SumRoutTransactionThereeFourBus += item.RoutTransactionThereeFourBus;
+        SumRoutTransactionThereeFourMiniBus += item.RoutTransactionThereeFourMiniBus;
+        SumRoutTransactionThereeFourHasCoolerBus += item.RoutTransactionThereeFourHasCoolerBus;
+        SumRoutTransactionThereeFourHasCoolerMiniBus += item.RoutTransactionThereeFourHasCoolerMiniBus;
+        SumRoutTransactionFiveSevenBus += item.RoutTransactionFiveSevenBus;
+        SumRoutTransactionFiveSevenMiniBus += item.RoutTransactionFiveSevenMiniBus;
+        SumRoutTransactionFiveSevenHasCoolerBus += item.RoutTransactionFiveSevenHasCoolerBus;
+        SumRoutTransactionFiveSevenHasCoolerMiniBus += item.RoutTransactionFiveSevenHasCoolerMiniBus;
+    }
+    <tr>
+        <td colspan="2">مجموع</td>
+        <td>@SumRoutTransactionSingleBus </td>
+        <td>@SumRoutTransactionSingleMiniBus </td>
+        <td>@SumRoutTransactionSingleHasCoolerBus </td>
+        <td>@SumRoutTransactionSingleHasCoolerMiniBus</td>
+        @*<td>@SumRoutTransactionRegularBus </td>
+            <td>@SumRoutTransactionRegularMiniBus </td>
+            <td>@SumRoutTransactionRegularHasCoolerBus </td>
+            <td>@SumRoutTransactionRegularHasCoolerMiniBus </td>*@
+        <td>@SumRoutTransactionThereeFourBus </td>
+        <td>@SumRoutTransactionThereeFourMiniBus</td>
+        <td>@SumRoutTransactionThereeFourHasCoolerBus </td>
+        <td>@SumRoutTransactionThereeFourHasCoolerMiniBus </td>
+        <td>@SumRoutTransactionFiveSevenBus </td>
+        <td>@SumRoutTransactionFiveSevenMiniBus</td>
+        <td>@SumRoutTransactionFiveSevenHasCoolerBus</td>
+        <td>@SumRoutTransactionFiveSevenHasCoolerMiniBus</td>
+    </tr>
+</table>
+@*<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>*@
+<script>
+
+    $(function () {
+        $('select').on('change', function () {
+            $("#dropRegionId").val(this.value);
+        })
+
+    })
+</script>
+

@@ -156,15 +156,17 @@
                 @Html.ActionLink("تاریخ مسیر", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("انجام شده؟", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
+                @Html.ActionLink("انجام شده؟", "Index", new { sortOrder = ViewBag.IsDone, currentFilter = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("مبلغ جریمه", "Index", new { sortOrder = ViewBag.RoutDate, currentFilter = ViewBag.CurrentFilter })
+                @Html.ActionLink(" تاخیر داشته؟", "Index", new { sortOrder = ViewBag.HasDelay, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("مبلغ جریمه", "Index", new { sortOrder = ViewBag.Fine, currentFilter = ViewBag.CurrentFilter })
             </th>
         </tr>
 
         @for (int i = 0; i < Model.Count; i++)
-        //{ (var item in Model)
         {
             <tr>
                 <td>
@@ -212,6 +214,10 @@
                 <td>
                     @Html.CheckBoxFor(modelItem => modelItem[i].IsDone)
                     @Html.ValidationMessageFor(modelItem => modelItem[i].IsDone, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => modelItem[i].HasDelay)
+                    @Html.ValidationMessageFor(modelItem => modelItem[i].HasDelay, "", new { @class = "text-danger" })
                 </td>
                 <td>
                     @Html.EditorFor(modelItem => modelItem[i].FinePrice, new { htmlAttributes = new { @class = "form-control" } })

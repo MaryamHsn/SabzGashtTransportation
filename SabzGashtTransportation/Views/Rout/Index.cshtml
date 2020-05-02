@@ -182,7 +182,9 @@
                 @Html.ActionLink(item.Allocate.ToString(), "SearchByRout", "DriverRout", new { id = item.RoutID }, null)
             </td>
             <td>
-                @((((int)item.Count) - ((int)item.Allocate)).ToString())
+                @*@((((int)item.Count) - ((int)item.Allocate)).ToString())*@
+                @Html.DisplayFor(modelItem => item.RemainAllocate)
+
             </td>
             <td>
                 @if (item.Allocate < item.Count)
