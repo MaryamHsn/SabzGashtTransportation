@@ -54,19 +54,19 @@ namespace Sabz.ServiceLayer
         {
             if (string.IsNullOrWhiteSpace(user.UserName))
             {
-                errors.Add(String.Format(CultureInfo.CurrentCulture,"از نام کاربری با کاراکتر بیشتر استفاده کنید.", "Name"));//Resources.PropertyTooShort, 
+                errors.Add(String.Format(CultureInfo.CurrentCulture, "از نام کاربری با کاراکتر بیشتر استفاده کنید.", "Name"));//Resources.PropertyTooShort, 
             }
             else if (AllowOnlyAlphanumericUserNames && !Regex.IsMatch(user.UserName, @"^[A-Za-z0-9@_\.]+$"))
             {
                 // If any characters are not letters or digits, its an illegal user name
-                errors.Add(String.Format(CultureInfo.CurrentCulture, "از کاراکتر معتبر استفاده کنید.",user.UserName));//Resources.InvalidUserName, 
+                errors.Add(String.Format(CultureInfo.CurrentCulture, "از کاراکتر معتبر استفاده کنید.", user.UserName));//Resources.InvalidUserName, 
             }
             else
             {
                 var owner = await Manager.FindByNameAsync(user.UserName);
                 if (owner != null && !EqualityComparer<int>.Default.Equals(owner.Id, user.Id))
                 {
-                    errors.Add(String.Format(CultureInfo.CurrentCulture,"این نام کاربری قبلا ثبت شده است.", user.UserName));//Resources.DuplicateName, 
+                    errors.Add(String.Format(CultureInfo.CurrentCulture, "این نام کاربری قبلا ثبت شده است.", user.UserName));//Resources.DuplicateName, 
                 }
             }
         }
@@ -76,25 +76,25 @@ namespace Sabz.ServiceLayer
         {
             //if (!user.Email.IsNullOrWhiteSpace())
             //{
-                if (string.IsNullOrWhiteSpace(user.Email))
-                {
-                    errors.Add(String.Format(CultureInfo.CurrentCulture, "از ایمیل با کاراکتر بیشتر استفاده کنید.", "Email"));//Resources.PropertyTooShort,
+            if (string.IsNullOrWhiteSpace(user.Email))
+            {
+                errors.Add(String.Format(CultureInfo.CurrentCulture, "از ایمیل با کاراکتر بیشتر استفاده کنید.", "Email"));//Resources.PropertyTooShort,
                 return;
-                }
-                try
-                {
-                    var m = new MailAddress(user.Email);
-                }
-                catch (FormatException)
-                {
-                    errors.Add(String.Format(CultureInfo.CurrentCulture,"ایمیل نامعتبر است.", user.Email));//Resources.InvalidEmail, 
+            }
+            try
+            {
+                var m = new MailAddress(user.Email);
+            }
+            catch (FormatException)
+            {
+                errors.Add(String.Format(CultureInfo.CurrentCulture, "ایمیل نامعتبر است.", user.Email));//Resources.InvalidEmail, 
                 return;
-                }
+            }
             //}
             var owner = await Manager.FindByEmailAsync(user.Email);
             if (owner != null && !EqualityComparer<int>.Default.Equals(owner.Id, user.Id))
             {
-                errors.Add(String.Format(CultureInfo.CurrentCulture,"این ایمیل قبلا ثبت شده است",user.Email));//Resources.DuplicateEmail,
+                errors.Add(String.Format(CultureInfo.CurrentCulture, "این ایمیل قبلا ثبت شده است", user.Email));//Resources.DuplicateEmail,
             }
         }
     }

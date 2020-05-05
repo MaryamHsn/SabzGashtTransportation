@@ -6984,3 +6984,8 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+navigation-actie-hover {
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 #00369F;
+    background-color: darkseagreen;
+}

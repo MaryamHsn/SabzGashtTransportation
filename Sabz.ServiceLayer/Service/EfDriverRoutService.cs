@@ -62,7 +62,7 @@ namespace Sabz.ServiceLayer.Service
         public List<DriverRoutTbl> GetDriverRoutByRoutId(int routId)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutId == routId).ToList();
-        }
+        } 
         public List<DriverRoutTbl> GetDriverRoutByRoutIds(List<int> routIds)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && routIds.Contains(x.RoutId)).ToList();

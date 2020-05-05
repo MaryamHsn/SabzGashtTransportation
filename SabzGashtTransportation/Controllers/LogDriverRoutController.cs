@@ -39,18 +39,18 @@ namespace SabzGashtTransportation.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(LogDriverRoutFullViewModel fullLog,string sortOrder, int? page)
+        public ActionResult Index(LogDriverRoutFullViewModel fullLog, string sortOrder, int? page)
         {
             commonList = new List<LogDriverRoutViewModel>();
             var FullcommonList = new LogDriverRoutFullViewModel();
-            int pageSize = 10;
+            int pageSize = 1000;
             int pageNumber = (page ?? 1);
             var allDrivers = _driver.GetAllDrivers();
             var regions = _region.GetAllRegions();
             FullcommonList.Drivers = allDrivers;
             FullcommonList.Regions = regions;
             DateTime startDate = DateTime.Now.Date;
-            DateTime endDate = DateTime.Now.AddDays(1).Date; 
+            DateTime endDate = DateTime.Now.AddDays(1).Date;
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Driver = String.IsNullOrEmpty(sortOrder) ? "driver_desc" : "";
             ViewBag.IsDone = sortOrder == "isDone" ? "isDone_desc" : "isDone";
@@ -67,11 +67,11 @@ namespace SabzGashtTransportation.Controllers
             var routs = _rout.GetAllRouts();
             var drivers = _driver.GetAllDrivers();
             var list = new List<LogDriverRoutTbl>();
-            if (!string.IsNullOrWhiteSpace(fullLog.SearchDateFrom) && fullLog.DriverId!=0)
+            if (!string.IsNullOrWhiteSpace(fullLog.SearchDateFrom) && fullLog.DriverId != 0)
             {
                 if (string.IsNullOrWhiteSpace(fullLog.SearchDateTo))
                 {
-                    list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(allDrivers.Where(x=>x.Id== fullLog.DriverId).FirstOrDefault().FullName, fullLog.RegionId, fullLog.SearchDateFrom.ToGeorgianDate(), endDate).ToList();
+                    list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(allDrivers.Where(x => x.Id == fullLog.DriverId).FirstOrDefault().FullName, fullLog.RegionId, fullLog.SearchDateFrom.ToGeorgianDate(), endDate).ToList();
                 }
                 else
                 {
@@ -82,20 +82,20 @@ namespace SabzGashtTransportation.Controllers
             {
                 if (string.IsNullOrWhiteSpace(fullLog.SearchDateTo))
                 {
-                    list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(fullLog.RegionId, fullLog.SearchDateFrom.ToGeorgianDate(),endDate).ToList();
+                    list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(fullLog.RegionId, fullLog.SearchDateFrom.ToGeorgianDate(), endDate).ToList();
                 }
                 else
                 {
                     list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(fullLog.RegionId, fullLog.SearchDateFrom.ToGeorgianDate(), fullLog.SearchDateTo.ToGeorgianDate()).ToList();
                 }
             }
-            else if (string.IsNullOrWhiteSpace(fullLog.SearchDateFrom) && fullLog.DriverId!=0)
+            else if (string.IsNullOrWhiteSpace(fullLog.SearchDateFrom) && fullLog.DriverId != 0)
             {
-                list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(allDrivers.Where(x => x.Id == fullLog.DriverId).FirstOrDefault().FullName, fullLog.RegionId,startDate,endDate).ToList();
+                list = _LogDriverRout.GetAllLogDriverRoutsByDriverNameByDateByRegionId(allDrivers.Where(x => x.Id == fullLog.DriverId).FirstOrDefault().FullName, fullLog.RegionId, startDate, endDate).ToList();
             }
             else
             {
-                 list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(fullLog.RegionId, startDate,endDate).ToList();
+                list = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(fullLog.RegionId, startDate, endDate).ToList();
 
             }
             foreach (var item in list)
@@ -154,7 +154,7 @@ namespace SabzGashtTransportation.Controllers
                 element.RoutTransactionType = item.DriverRoutTbl.RoutTbl.RoutTransactionType;
                 commonList.Add(element);
             }
-            FullcommonList.LogDriverRoutViewModels = commonList.OrderBy(x => x.RoutStartDate).ToPagedList(pageNumber, pageSize);
+            FullcommonList.LogDriverRoutViewModels = commonList.OrderBy(x => x.RoutStartDate).ThenBy(x=>x.DriverRoutTbl.RoutTbl.EnterTime).ToPagedList(pageNumber, pageSize);
             return View(FullcommonList);
         }
 
@@ -238,18 +238,18 @@ namespace SabzGashtTransportation.Controllers
             {
                 if (string.IsNullOrWhiteSpace(searchDateTo))
                 {
-                    list = _driverRout.GetDriverRoutByDateByDriverNameByRegionIdByIds(searchDateFrom.ToGeorgianDate(),endDate, searchDriver, int.Parse(dropRegionId), listId.ToList());
+                    list = _driverRout.GetDriverRoutByDateByDriverNameByRegionIdByIds(searchDateFrom.ToGeorgianDate(), endDate, searchDriver, int.Parse(dropRegionId), listId.ToList());
                 }
                 else
                 {
-                    list = _driverRout.GetDriverRoutByDateByDriverNameByRegionIdByIds(searchDateFrom.ToGeorgianDate(), searchDateTo.ToGeorgianDate(), searchDriver, int.Parse(dropRegionId),listId.ToList());
+                    list = _driverRout.GetDriverRoutByDateByDriverNameByRegionIdByIds(searchDateFrom.ToGeorgianDate(), searchDateTo.ToGeorgianDate(), searchDriver, int.Parse(dropRegionId), listId.ToList());
                 }
             }
             else if (!string.IsNullOrWhiteSpace(searchDateFrom) && string.IsNullOrWhiteSpace(searchDriver))
             {
                 if (string.IsNullOrWhiteSpace(searchDateTo))
                 {
-                    list = _driverRout.GetDriverRoutByDateByRegionIdByIds( searchDateFrom.ToGeorgianDate(), endDate, int.Parse(dropRegionId), listId.ToList());
+                    list = _driverRout.GetDriverRoutByDateByRegionIdByIds(searchDateFrom.ToGeorgianDate(), endDate, int.Parse(dropRegionId), listId.ToList());
                 }
                 else
                 {
@@ -259,16 +259,16 @@ namespace SabzGashtTransportation.Controllers
             }
             else if (string.IsNullOrWhiteSpace(searchDateFrom) && !string.IsNullOrWhiteSpace(searchDriver))
             {
-                list = _driverRout.GetDriverRoutByDateByDriverNameByRegionIdByIds(startDate,endDate,searchDriver,int.Parse(dropRegionId),listId.ToList());
+                list = _driverRout.GetDriverRoutByDateByDriverNameByRegionIdByIds(startDate, endDate, searchDriver, int.Parse(dropRegionId), listId.ToList());
             }
             else
             {
-                list = _driverRout.GetDriverRoutByDateByRegionIdByIds(startDate,endDate,int.Parse(dropRegionId),listId.ToList()).ToList();
+                list = _driverRout.GetDriverRoutByDateByRegionIdByIds(startDate, endDate, int.Parse(dropRegionId), listId.ToList()).ToList();
             }
             ///////////
             if (!String.IsNullOrEmpty(searchString))
             {
-                list = list.Where(s => s.DriverTbl.FullName.ToString().Contains(searchString) ).ToList();
+                list = list.Where(s => s.DriverTbl.FullName.ToString().Contains(searchString)).ToList();
             }
             switch (sortOrder)
             {
@@ -299,9 +299,10 @@ namespace SabzGashtTransportation.Controllers
                 element.RoutShiftType = routs.Where(x => x.Id == item.RoutId).FirstOrDefault().ShiftType;
                 element.RoutTransactionType = routs.Where(x => x.Id == item.RoutId).FirstOrDefault().RoutTransactionType;
                 element.DriverRoutId = item.Id;
+                element.RoutEnterTime = item.RoutTbl.EnterTime;
                 commonList.Add(element);
             }
-            return View(commonList.OrderBy(x => x.RoutStartDate).ToPagedList(pageNumber, pageSize));
+            return View(commonList.OrderBy(x => x.RoutStartDate).ThenBy(x=>x.RoutEnterTime).ToPagedList(pageNumber, pageSize));
         }
 
         // POST: Drivers/Create
@@ -319,7 +320,7 @@ namespace SabzGashtTransportation.Controllers
                     obj.DoDate = routDriver.RoutStartDateString.ToGeorgianDate();
                     obj.IsDone = Convert.ToBoolean(routDriver.IsDone);
                     obj.DriverRoutId = routDriver.DriverRoutId;
-                    obj.FinePrice= routDriver.FinePrice == null ? 0 : routDriver.FinePrice;
+                    obj.FinePrice = routDriver.FinePrice == null ? 0 : routDriver.FinePrice;
                     _LogDriverRout.AddNewLogDriverRout(obj);
                 }
                 _uow.SaveAllChanges();
@@ -372,6 +373,10 @@ namespace SabzGashtTransportation.Controllers
             obj.DoDateString = obj.DoDate.ToPersianDateString();
             obj.DriverId = obj.DriverTbl.Id;
             obj.RoutId = obj.RoutTbl.Id;
+            obj.RoutRegionName = obj.RoutTbl.RegionTbl.RegionName;
+            obj.RoutShiftType = obj.RoutTbl.ShiftType;
+            obj.RoutStartDateString = obj.RoutTbl.StartDate.ToPersianDateString();
+            obj.RoutEnterTimeString = obj.RoutTbl.EnterTime.ToString();
             if (obj.IsDone == Convert.ToBoolean(WorkDoneEnum.Done))
             {
                 obj.WorkDoneEnum = WorkDoneEnum.Done;
@@ -392,22 +397,18 @@ namespace SabzGashtTransportation.Controllers
         {
             if (ModelState.IsValid)
             {
+                var entity = _LogDriverRout.GetLogDriverRout(LogDriverRout.Id);
                 var obj = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(LogDriverRout);
-                obj.DoDate = LogDriverRout.DoDateString.ToGeorgianDate();
+                obj.DoDate = LogDriverRout.DoDate;
                 obj.IsActive = true;
                 obj.IsDone = Convert.ToBoolean(LogDriverRout.WorkDoneEnum);
-                obj.DriverRoutTbl = _driverRout.GetDriverRoutByDriverIdRoutId(LogDriverRout.DriverId, LogDriverRout.RoutId);
-                if (obj.DriverRoutTbl != null)
-                {
-                    obj.DriverRoutId = obj.DriverRoutTbl.Id;
-                    _LogDriverRout.UpdateLogDriverRout(obj);
-                    _uow.SaveAllChanges();
-                }
+                _LogDriverRout.UpdateLogDriverRout(obj);
+                _uow.SaveAllChanges();
             }
             return RedirectToAction("Index");
 
         }
-   
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -463,20 +464,20 @@ namespace SabzGashtTransportation.Controllers
             var allRegion = _region.GetAllRegions();
             var logRouts = new List<LogDriverRoutTbl>();
 
-            if (!string.IsNullOrWhiteSpace(searchDateFrom) )
+            if (!string.IsNullOrWhiteSpace(searchDateFrom))
             {
                 if (string.IsNullOrWhiteSpace(searchDateTo))
                 {
-                    logRouts = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(int.Parse(dropRegionId),(DateTime)searchDateFrom.ToGeorgianDate(), endDate).ToList();
+                    logRouts = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(int.Parse(dropRegionId), (DateTime)searchDateFrom.ToGeorgianDate(), endDate).ToList();
                 }
                 else
                 {
                     logRouts = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(int.Parse(dropRegionId), (DateTime)searchDateFrom.ToGeorgianDate(), (DateTime)searchDateTo.ToGeorgianDate()).ToList();
                 }
             }
-            else 
+            else
             {
-                logRouts = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(int.Parse(dropRegionId),startDate,endDate).ToList();
+                logRouts = _LogDriverRout.GetAllLogDriverRoutsByDateByRegionId(int.Parse(dropRegionId), startDate, endDate).ToList();
             }
             if (logRouts == null)
             {
@@ -486,22 +487,23 @@ namespace SabzGashtTransportation.Controllers
             {
                 common = new LogDriverRoutViewModel();
                 common.DoDate = item.Select(x => x.DoDate).FirstOrDefault();
-                common.RoutTransactionSingleBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Single && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionSingleMiniBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Single && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionSingleHasCoolerBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Single && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionSingleHasCoolerMiniBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Single && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionRegularBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionRegularMiniBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionRegularHasCoolerBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionRegularHasCoolerMiniBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionThereeFourBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionThereeFourMiniBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionThereeFourHasCoolerBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionThereeFourHasCoolerMiniBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionFiveSevenBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionFiveSevenMiniBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionFiveSevenHasCoolerBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
-                common.RoutTransactionFiveSevenHasCoolerMiniBus = item.Where(x => x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Sum(x => x.DriverRoutTbl.RoutTbl.Count);
+                common.DoDateString = item.Select(x => x.DoDate).FirstOrDefault().ToPersianDateString();
+                common.RoutTransactionSingleBus = item.Where(x =>x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Single && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Count();
+                common.RoutTransactionSingleMiniBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Single && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Count();
+                common.RoutTransactionSingleHasCoolerBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Single && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Count();
+                common.RoutTransactionSingleHasCoolerMiniBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Single && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Count();
+                common.RoutTransactionRegularBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Count();
+                common.RoutTransactionRegularMiniBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Count();
+                common.RoutTransactionRegularHasCoolerBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Count();
+                common.RoutTransactionRegularHasCoolerMiniBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Count();
+                common.RoutTransactionThereeFourBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Count();
+                common.RoutTransactionThereeFourMiniBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Count();
+                common.RoutTransactionThereeFourHasCoolerBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Count();
+                common.RoutTransactionThereeFourHasCoolerMiniBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Count();
+                common.RoutTransactionFiveSevenBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Count();
+                common.RoutTransactionFiveSevenMiniBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasNotCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Count();
+                common.RoutTransactionFiveSevenHasCoolerBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus).Count();
+                common.RoutTransactionFiveSevenHasCoolerMiniBus = item.Where(x => x.IsDone && x.IsActive && x.DriverRoutTbl.RoutTbl.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler) && x.DriverRoutTbl.RoutTbl.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.MiniBus).Count();
                 commonList.Add(common);
 
             }

@@ -155,9 +155,9 @@
         <th>
             @Html.ActionLink("مبلغ جریمه", "Index", new { sortOrder = ViewBag.Fine, currentFilter = ViewBag.CurrentFilter })
         </th>
-        @*<th>
-                ثبت
-            </th>*@
+        <th>
+                عملیات
+            </th>
     </tr>
 
     @foreach (var item in Model.LogDriverRoutViewModels)
@@ -211,11 +211,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FinePrice)
             </td>
-            @*<td>
-                    @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("حذف", "Delete", new { id = item.Id })
-                </td>*@
+            <td>
+                    @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) 
+                </td>
         </tr>
         counter += 1;
 

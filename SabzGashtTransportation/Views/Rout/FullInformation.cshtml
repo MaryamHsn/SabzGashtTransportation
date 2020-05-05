@@ -45,7 +45,7 @@
                     regionDropDown = "انتخاب کنید";
                 }
                 <th>
-                    @Html.DropDownList("RegionItems", "انتخاب کنید")
+                    @Html.DropDownList("RegionItems", regionDropDown)
                     @Html.Hidden("dropRegionId")
 
                 </th>
@@ -172,12 +172,18 @@
         <th colspan="2" rowspan="2">تاریخ </th>
         <th colspan="2" rowspan="1">تک نیمراه </th>
         <th colspan="2" rowspan="1"> تک نیمراه 85 به بالا </th>
+        <th colspan="2" rowspan="1">عادی   </th>
+        <th colspan="2" rowspan="1"> عادی 85 به بالا </th>
         <th colspan="2" rowspan="1"> سه چهار نیمراه </th>
         <th colspan="2" rowspan="1"> سه چهار نیمراه 85 به بالا </th>
         <th colspan="2" rowspan="1"> پنج هفت نیمراه </th>
         <th colspan="2" rowspan="1"> پنج هفت نیمراه 85 به بالا </th>
     </tr>
     <tr>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
         <th colspan="1" rowspan="1">اتوبوس</th>
         <th colspan="1" rowspan="1">مینی بوس</th>
         <th colspan="1" rowspan="1">اتوبوس</th>
@@ -211,7 +217,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RoutTransactionSingleHasCoolerMiniBus)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.RoutTransactionRegularBus)
             </td>
             <td>
@@ -222,7 +228,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerMiniBus)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourBus)
             </td>
@@ -272,10 +278,10 @@
         <td>@SumRoutTransactionSingleMiniBus </td>
         <td>@SumRoutTransactionSingleHasCoolerBus </td>
         <td>@SumRoutTransactionSingleHasCoolerMiniBus</td>
-        @*<td>@SumRoutTransactionRegularBus </td>
-            <td>@SumRoutTransactionRegularMiniBus </td>
-            <td>@SumRoutTransactionRegularHasCoolerBus </td>
-            <td>@SumRoutTransactionRegularHasCoolerMiniBus </td>*@
+        <td>@SumRoutTransactionRegularBus </td>
+        <td>@SumRoutTransactionRegularMiniBus </td>
+        <td>@SumRoutTransactionRegularHasCoolerBus </td>
+        <td>@SumRoutTransactionRegularHasCoolerMiniBus </td>
         <td>@SumRoutTransactionThereeFourBus </td>
         <td>@SumRoutTransactionThereeFourMiniBus</td>
         <td>@SumRoutTransactionThereeFourHasCoolerBus </td>

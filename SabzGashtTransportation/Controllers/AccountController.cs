@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Sabz.DomainClasses.DTO;
+using Sabz.ServiceLayer;
 using Sabz.ServiceLayer.IService;
 using SabzGashtTransportation.Helpers;
 using SabzGashtTransportation.Models;
@@ -211,7 +212,7 @@ namespace SabzGashtTransportation.Controllers
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "نام کاربری یا رمز عبور اشتباه است");
                     return View(model);
             }
         }
@@ -247,6 +248,7 @@ namespace SabzGashtTransportation.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName+"@gmail.com",PurePassword=model.Password };
+                //var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
                 var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
                 if (result.Succeeded)
                 {

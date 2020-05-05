@@ -10,6 +10,7 @@ namespace SabzGashtTransportation.ViewModel
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }
+        public string FullName { get; set; }
         public string NationalCode { get; set; }
         public string LicenceCode { get; set; }
         public DateTime BirthDate { get; set; }
@@ -18,7 +19,7 @@ namespace SabzGashtTransportation.ViewModel
         public string Address { get; set; }
         public string Phone1 { get; set; }
         public string Phone2 { get; set; }
-
+        public bool IsSelected { get; set; }
         //public virtual ICollection<AccidentTbl> Accidents { get; set; }
         //public  AutomobileTbl Automobile { get; set; }
         public IEnumerable<AutomobileTbl >Automobiles { get; set; }

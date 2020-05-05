@@ -32,6 +32,8 @@ namespace SabzGashtTransportation.ViewModel
         public int RoutTransactionType { get; set; }//عادی- نیمراه تک-
         public RoutTransactionTypeEnum RoutTransactionTypeEnum { get; set; }
         public string RoutEnterTimeString { get; set; }
+        public TimeSpan RoutEnterTime { get; set; }
+
         public string RoutExitTimeString { get; set; }
         public  DriverRoutTbl DriverRoutTbl { get; set; }
         public  DriverTbl DriverTbl { get; set; }

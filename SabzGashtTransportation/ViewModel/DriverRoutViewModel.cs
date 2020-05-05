@@ -27,11 +27,11 @@ namespace SabzGashtTransportation.ViewModel
         public string CreateDateString { get; set; }
         public DateTime ModifiedDate { get; set; }
         public string ModifiedDateString { get; set; }
-        public IEnumerable<DriverTbl> DriverList{ get; set; }
-        public IEnumerable<DriverTbl> AllocateDriverList{ get; set; }
-        public IEnumerable<DriverTbl> RemailDriverList{ get; set; }
-        public IEnumerable<RoutTbl> RoutList { get; set; }
-        public DriverTbl Driver{ get; set; }
+        public IList<DriverViewModel> DriverList{ get; set; }
+        public IList<DriverViewModel> AllocateDriverList{ get; set; }
+        public IList<DriverViewModel> RemailDriverList{ get; set; }
+        public IList<RoutTbl> RoutList { get; set; }
+        public DriverViewModel Driver { get; set; }
         public RoutTbl Rout{ get; set; }
     }
 }

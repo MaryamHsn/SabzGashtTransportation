@@ -43,7 +43,7 @@ namespace SabzGashtTransportation.Controllers
         public ActionResult Index(string sortOrder, string searchDateFrom, string searchDateTo, string dropRegionId, int? page)//string SearchRout, string currentFilter, string searchString
         {
             commonList = new List<RoutViewModel>();
-            int pageSize = 10;
+            int pageSize = 1000;
             int pageNumber = (page ?? 1);
             IEnumerable<SelectListItem> regionItems = _region.GetAllRegions().Select(c => new SelectListItem
             {
@@ -218,7 +218,7 @@ namespace SabzGashtTransportation.Controllers
             }
             ViewBag.AllocateRoutCountBus = allocateRoutCountBus;
             ViewBag.AllocateRoutCountMiniBus = allocateRoutCountMiniBus;
-            return View(commonList.ToPagedList(pageNumber, pageSize));
+            return View(commonList.OrderBy(x=>x.StartDate).ThenBy(x=>x.EnterTime).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Drivers/Details/5

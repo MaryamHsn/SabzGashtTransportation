@@ -338,11 +338,17 @@ cite{
         text-decoration: none;
         padding: 11px 23px 0 23px;
     }
-#navigation ul li.current a,
-#navigation ul li:hover a{
+#navigation ul li.current a
+/*#navigation ul li:hover a*/ 
+{
 	/*background: url(../images/bg_menu.jpg) repeat-x 0 0;*/
 	color: #FFFFFF;
 	text-shadow:0 -1px 0 #00369F;
+    background-color: darkseagreen;
+}
+.navigation-actie-hover:hover a {
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 #00369F;
     background-color: darkseagreen;
 }
 /*
@@ -350,12 +356,12 @@ cite{
 |                                     CONTENT                                  |
 ================================================================================
 */
-#content{
-	width:100%;
-	background: url(../images/bg_content.jpg) repeat-x 0 0;
-	text-align:right;
-	min-width: 980px;
-	margin: 0 auto;
+#content {
+    width: 100%;
+    background: url(../images/bg_content.jpg) repeat-x 0 0;
+    text-align: right;
+    min-width: 980px;
+    margin: 0 auto;
 }
 .content{
 	width: 940px;

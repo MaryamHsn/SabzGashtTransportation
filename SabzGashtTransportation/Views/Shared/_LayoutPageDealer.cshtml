@@ -64,10 +64,14 @@
                 <div id="navigation">
                     <span>صفحه نخست</span>
                     <ul>
-                        <li class="current"> @Html.ActionLink("صفحه نخست", "index", "Home", null, null) </li>
-                        <li> <a href="">درباره ما</a></li>
-                        <li>  @Html.ActionLink("ورود", "login", "Account", null, null) </li>
-                        <li>  @Html.ActionLink("ثبت نام", "Register", "Account", null, null) </li>
+                        <li class="current navigation-actie-hover"> @Html.ActionLink("صفحه نخست", "index", "Home", null, null) </li>
+                        <li class="navigation-actie-hover"> <a  href="">درباره ما</a></li>
+                        @*<li>  @Html.ActionLink("ورود", "login", "Account", null, null) </li>
+                        <li>  @Html.ActionLink("ثبت نام", "Register", "Account", null, null) </li>*@
+                        <li>
+                            @Html.Partial("_LoginPartial")
+
+                        </li>
                     </ul>
                 </div>
                 <div id="search_form">

@@ -45,7 +45,7 @@ namespace Sabz.ServiceLayer
             this.SmsService = smsService;
             this.EmailService = emailService;
 
-            createApplicationUserManager();
+            CreateAsync();
         }
 
         public ApplicationUser FindById(int userId)
@@ -151,26 +151,27 @@ namespace Sabz.ServiceLayer
             }
         }
 
-        private void createApplicationUserManager()
+        private void CreateAsync()
         {
             //var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
 
             // Configure validation logic for usernames
             //this.UserValidator = new UserValidator<ApplicationUser, int>(this)
-            this.UserValidator = new CustomUserValidator<ApplicationUser>(this)
+           this.UserValidator = new CustomUserValidator<ApplicationUser>(this)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
+                
             };
 
             // Configure validation logic for passwords
             this.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             // Configure user lockout defaults

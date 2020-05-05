@@ -25,8 +25,8 @@
     int SumRoutTransactionFiveSevenHasCoolerMiniBus = 0;
 }
 
-<h2 class="style-h2">آمار کلی مسیرها</h2>
-@using (Html.BeginForm("FullInformation", "Rout", FormMethod.Get))
+<h2 class="style-h2">آمار کلی کارکرد</h2>
+@using (Html.BeginForm("FullInformation", "LogDriverRout", FormMethod.Get))
 {
 
     <div class="searchBox">
@@ -45,7 +45,7 @@
                     regionDropDown = "انتخاب کنید";
                 }
                 <th>
-                    @Html.DropDownList("RegionItems", "انتخاب کنید")
+                    @Html.DropDownList("RegionItems", regionDropDown)
                     @Html.Hidden("dropRegionId")
 
                 </th>
@@ -63,6 +63,8 @@
         <th colspan="2" rowspan="2">تاریخ </th>
         <th colspan="2" rowspan="1">تک نیمراه </th>
         <th colspan="2" rowspan="1"> تک نیمراه 85 به بالا </th>
+        <th colspan="2" rowspan="1">عادی   </th>
+        <th colspan="2" rowspan="1"> عادی 85 به بالا </th>
         <th colspan="2" rowspan="1"> سه چهار نیمراه </th>
         <th colspan="2" rowspan="1"> سه چهار نیمراه 85 به بالا </th>
         <th colspan="2" rowspan="1"> پنج هفت نیمراه </th>
@@ -81,13 +83,17 @@
         <th colspan="1" rowspan="1">مینی بوس</th>
         <th colspan="1" rowspan="1">اتوبوس</th>
         <th colspan="1" rowspan="1">مینی بوس</th>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
+        <th colspan="1" rowspan="1">اتوبوس</th>
+        <th colspan="1" rowspan="1">مینی بوس</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
             <td colspan="2">
-                @Html.DisplayFor(modelItem => item.DoDate)
+                @Html.DisplayFor(modelItem => item.DoDateString)
             </td>
 
             <td>
@@ -102,18 +108,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RoutTransactionSingleHasCoolerMiniBus)
             </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularBus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularMiniBus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerBus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerMiniBus)
-                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionRegularBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionRegularMiniBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerBus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerMiniBus)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourBus)
             </td>
@@ -163,10 +169,10 @@
         <td>@SumRoutTransactionSingleMiniBus </td>
         <td>@SumRoutTransactionSingleHasCoolerBus </td>
         <td>@SumRoutTransactionSingleHasCoolerMiniBus</td>
-        @*<td>@SumRoutTransactionRegularBus </td>
-            <td>@SumRoutTransactionRegularMiniBus </td>
-            <td>@SumRoutTransactionRegularHasCoolerBus </td>
-            <td>@SumRoutTransactionRegularHasCoolerMiniBus </td>*@
+        <td>@SumRoutTransactionRegularBus </td>
+        <td>@SumRoutTransactionRegularMiniBus </td>
+        <td>@SumRoutTransactionRegularHasCoolerBus </td>
+        <td>@SumRoutTransactionRegularHasCoolerMiniBus </td>
         <td>@SumRoutTransactionThereeFourBus </td>
         <td>@SumRoutTransactionThereeFourMiniBus</td>
         <td>@SumRoutTransactionThereeFourHasCoolerBus </td>
