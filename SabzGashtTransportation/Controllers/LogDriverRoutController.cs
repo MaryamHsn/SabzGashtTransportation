@@ -38,6 +38,7 @@ namespace SabzGashtTransportation.Controllers
             _uow = uow;
         }
 
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpGet]
         public ActionResult Index(LogDriverRoutFullViewModel fullLog, string sortOrder, int? page)
         {
@@ -158,6 +159,7 @@ namespace SabzGashtTransportation.Controllers
             return View(FullcommonList);
         }
 
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -187,6 +189,7 @@ namespace SabzGashtTransportation.Controllers
             return View(common);
         }
 
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Create(string sortOrder, string currentFilter, string searchString, string searchDriver, string searchRout, string searchDateFrom, string searchDateTo, string dropRegionId, int? page)
         {
             var commonList = new List<LogDriverRoutViewModel>();
@@ -305,9 +308,7 @@ namespace SabzGashtTransportation.Controllers
             return View(commonList.OrderBy(x => x.RoutStartDate).ThenBy(x=>x.RoutEnterTime).ToPagedList(pageNumber, pageSize));
         }
 
-        // POST: Drivers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(List<LogDriverRoutViewModel> routDrivers)
@@ -328,29 +329,8 @@ namespace SabzGashtTransportation.Controllers
             }
             return RedirectToAction("Index");
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(LogDriverRoutViewModel routDriver)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // common = new LogDriverRoutViewModel();
-        //        var obj = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(routDriver);
-        //        obj.DoDate = routDriver.RoutStartDateString.ToGeorgianDate();
-        //        obj.IsDone = Convert.ToBoolean(routDriver.WorkDoneEnum);
-        //        var findDriverRoutTbl = _driverRout.GetDriverRoutByDriverIdRoutId(routDriver.DriverId, routDriver.RoutId);
-        //        if (findDriverRoutTbl != null)
-        //        {
-        //            obj.DriverRoutId = findDriverRoutTbl.Id;
-        //            _LogDriverRout.AddNewLogDriverRout(obj);
-        //            _uow.SaveAllChanges();
-        //        }
 
-        //    }
-        //    return RedirectToAction("Index");
-        //}
-
-        // GET: Drivers/Edit/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -388,9 +368,7 @@ namespace SabzGashtTransportation.Controllers
             return View(obj);
         }
 
-        // POST: Drivers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(LogDriverRoutViewModel LogDriverRout)
@@ -409,6 +387,7 @@ namespace SabzGashtTransportation.Controllers
 
         }
 
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -429,6 +408,7 @@ namespace SabzGashtTransportation.Controllers
             return View(obj);
         }
 
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -438,6 +418,7 @@ namespace SabzGashtTransportation.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult FullInformation(string searchDateFrom, string searchDateTo, string dropRegionId, int? page)
         {
 

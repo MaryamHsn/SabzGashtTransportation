@@ -38,6 +38,7 @@ namespace SabzGashtTransportation.Controllers
             _uow = uow;
         }
 
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, string SearchDriver, string dropRegionId, string SearchDateFrom, string SearchDateTo, int? page)
         {
@@ -200,7 +201,7 @@ namespace SabzGashtTransportation.Controllers
             return View(commonList.OrderBy(x => x.RoutStartDate).ThenBy(x => x.Rout.EnterTime).ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: Drivers/Details/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -223,7 +224,7 @@ namespace SabzGashtTransportation.Controllers
             return View(obj);
         }
 
-        // GET: Drivers/Create
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Create()
         {
             common = new DriverRoutViewModel();
@@ -232,9 +233,7 @@ namespace SabzGashtTransportation.Controllers
             return View(common);
         }
 
-        // POST: Drivers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(DriverRoutTbl rout)
@@ -247,7 +246,7 @@ namespace SabzGashtTransportation.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Drivers/Edit/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -267,9 +266,7 @@ namespace SabzGashtTransportation.Controllers
             return View(obj);
         }
 
-        // POST: Drivers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(DriverRoutViewModel driverRout)
@@ -284,7 +281,7 @@ namespace SabzGashtTransportation.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Drivers/Delete/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -315,7 +312,7 @@ namespace SabzGashtTransportation.Controllers
             return View(obj);
         }
 
-        // POST: Drivers/Delete/5
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -325,7 +322,7 @@ namespace SabzGashtTransportation.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Drivers/Allocate/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Allocate(int? id)
         {
             if (id == null)
@@ -376,6 +373,7 @@ namespace SabzGashtTransportation.Controllers
             return View(common);
         }
 
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Allocate(DriverRoutViewModel driverRout)
@@ -415,8 +413,7 @@ namespace SabzGashtTransportation.Controllers
 
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult SearchByRout(int? id, int? page,string dropRegionId)
         {
             if (id == null)
@@ -473,6 +470,7 @@ namespace SabzGashtTransportation.Controllers
             return View("Index", commonList.ToPagedList(pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SearchByDate(DateTime? fromDate)

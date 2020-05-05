@@ -31,7 +31,7 @@ namespace SabzGashtTransportation.Controllers
             _uow = uow;
         }
 
-        // GET: Automobile
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -82,7 +82,7 @@ namespace SabzGashtTransportation.Controllers
             return View(commonList.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: Drivers/Details/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -101,7 +101,7 @@ namespace SabzGashtTransportation.Controllers
             return View(common);
         }
 
-        // GET: Drivers/Create
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Create()
         {
             return View();
@@ -111,6 +111,7 @@ namespace SabzGashtTransportation.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin , SuperViser")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(AutomobileTypeViewModel automobile)
         {
@@ -128,7 +129,7 @@ namespace SabzGashtTransportation.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Drivers/Edit/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -168,6 +169,7 @@ namespace SabzGashtTransportation.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin , SuperViser")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(AutomobileTypeViewModel automobile)
         {
@@ -184,7 +186,7 @@ namespace SabzGashtTransportation.Controllers
 
         }
 
-        // GET: Drivers/Delete/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -209,7 +211,7 @@ namespace SabzGashtTransportation.Controllers
             return View(obj);
         }
 
-        // POST: Drivers/Delete/5
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

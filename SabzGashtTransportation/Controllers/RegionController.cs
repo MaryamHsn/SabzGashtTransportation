@@ -28,7 +28,7 @@ namespace SabzGashtTransportation.Controllers
             _uow = uow;
         }
 
-        // GET: Automobile
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -71,7 +71,7 @@ namespace SabzGashtTransportation.Controllers
             return View(commonList.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: Drivers/Details/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -90,15 +90,13 @@ namespace SabzGashtTransportation.Controllers
             return View(common);
         }
 
-        // GET: Drivers/Create
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Drivers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(RegionViewModel region)
@@ -115,7 +113,7 @@ namespace SabzGashtTransportation.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Drivers/Edit/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -132,9 +130,7 @@ namespace SabzGashtTransportation.Controllers
             return View(obj);
         }
 
-        // POST: Drivers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(RegionViewModel region)
@@ -151,7 +147,7 @@ namespace SabzGashtTransportation.Controllers
 
         }
 
-        // GET: Drivers/Delete/5
+        [Authorize(Roles = "admin , SuperViser")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -167,7 +163,7 @@ namespace SabzGashtTransportation.Controllers
             return View(obj);
         }
 
-        // POST: Drivers/Delete/5
+        [Authorize(Roles = "admin , SuperViser")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
