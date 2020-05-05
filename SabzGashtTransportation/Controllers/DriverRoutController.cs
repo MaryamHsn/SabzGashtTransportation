@@ -411,7 +411,7 @@ namespace SabzGashtTransportation.Controllers
                 }
                 _uow.SaveAllChanges();
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Rout");
 
         }
 

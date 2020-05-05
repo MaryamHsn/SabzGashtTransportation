@@ -285,6 +285,7 @@
     <Compile Include="ViewModel\PaymentViewModel.cs" />
     <Compile Include="ViewModel\RegionViewModel.cs" />
     <Compile Include="ViewModel\RepairmentViewModel.cs" />
+    <Compile Include="ViewModel\RoutFullViewModel.cs" />
     <Compile Include="ViewModel\RoutViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

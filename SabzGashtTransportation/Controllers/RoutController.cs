@@ -40,28 +40,35 @@ namespace SabzGashtTransportation.Controllers
 
         // GET: Automobile
         [HttpGet]
-        public ActionResult Index(string sortOrder, string searchDateFrom, string searchDateTo, string dropRegionId, int? page)//string SearchRout, string currentFilter, string searchString
+        public ActionResult Index(RoutFullViewModel fullRout,string sortOrder, int? page)//string SearchRout, string currentFilter, string searchString
         {
             commonList = new List<RoutViewModel>();
+            var FullcommonList = new RoutFullViewModel();
             int pageSize = 1000;
             int pageNumber = (page ?? 1);
-            IEnumerable<SelectListItem> regionItems = _region.GetAllRegions().Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.RegionName
-            });
-            if (!string.IsNullOrWhiteSpace(dropRegionId))
-            {
-                ViewBag.Region = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
-              //  TempData["Region"] = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
-            }
-            else
-            {
-                //dropRegionId = allRegion.FirstOrDefault().Id.ToString();
-                dropRegionId = ViewBag.Region != null ? ViewBag.Rgion : "0";
-                //dropRegionId = TempData["Region"] != null ? TempData["Region"].ToString() : "0";
-            }
-            ViewBag.RegionItems = regionItems;
+            var allRegion = _region.GetAllRegions();
+            var list = new List<RoutTbl>();
+            DateTime startDate = DateTime.Now.Date;
+            DateTime endDate = DateTime.Now.AddDays(1).Date;
+            FullcommonList.Regions = allRegion;
+
+            //IEnumerable<SelectListItem> regionItems = _region.GetAllRegions().Select(c => new SelectListItem
+            //{
+            //    Value = c.Id.ToString(),
+            //    Text = c.RegionName
+            //});
+            //if (!string.IsNullOrWhiteSpace(dropRegionId))
+            //{
+            //    ViewBag.Region = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
+            //  //  TempData["Region"] = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
+            //}
+            //else
+            //{
+            //    //dropRegionId = allRegion.FirstOrDefault().Id.ToString();
+            //    dropRegionId = ViewBag.Region != null ? ViewBag.Rgion : "0";
+            //    //dropRegionId = TempData["Region"] != null ? TempData["Region"].ToString() : "0";
+            //}
+           // ViewBag.RegionItems = regionItems;
             ViewBag.CurrentSort = sortOrder;
             ViewBag.ShiftType = String.IsNullOrEmpty(sortOrder) ? "shiftType_desc" : "";
             ViewBag.RegionId = sortOrder == "region" ? "region_desc" : "region";
@@ -71,31 +78,27 @@ namespace SabzGashtTransportation.Controllers
             ViewBag.AutomobileTypeBus = sortOrder == "automobileTypeBus" ? "automobileTypeBus_desc" : "automobileTypeBus";
             ViewBag.AutomobileTypeCooler = sortOrder == "automobileTypeCooler" ? "automobileTypeCooler_desc" : "automobileTypeCooler";
             ViewBag.Count = sortOrder == "count" ? "count_desc" : "count";
-            var allRegion = _region.GetAllRegions();
-            var list = new List<RoutTbl>();
-            DateTime startDate = DateTime.Now.Date;
-            DateTime endDate = DateTime.Now.AddDays(1).Date;
-
+           
 
             //if (!string.IsNullOrWhiteSpace(searchDate))
             //{
             //    list = _rout.GetAllRoutsByDateByRegionId((DateTime)searchDate.ToGeorgianDate(), int.Parse(dropRegionId)).ToList();
             //}
-            if (!string.IsNullOrWhiteSpace(searchDateFrom) && !string.IsNullOrWhiteSpace(searchDateTo))
+            if (!string.IsNullOrWhiteSpace(fullRout.SearchDateFrom) && !string.IsNullOrWhiteSpace(fullRout.SearchDateTo))
             {
-                list = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)searchDateFrom.ToGeorgianDate(), (DateTime)searchDateTo.ToGeorgianDate(), int.Parse(dropRegionId)).ToList();
+                list = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)fullRout.SearchDateFrom.ToGeorgianDate(), (DateTime)fullRout.SearchDateTo.ToGeorgianDate(), fullRout.RegionId).ToList();
             }
-            else if (!string.IsNullOrWhiteSpace(searchDateFrom) && string.IsNullOrWhiteSpace(searchDateTo))
+            else if (!string.IsNullOrWhiteSpace(fullRout.SearchDateFrom) && string.IsNullOrWhiteSpace(fullRout.SearchDateTo))
             {
-                list = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)searchDateFrom.ToGeorgianDate(), endDate, int.Parse(dropRegionId)).ToList();
+                list = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)fullRout.SearchDateFrom.ToGeorgianDate(), endDate, fullRout.RegionId).ToList();
             }
-            else if (string.IsNullOrWhiteSpace(searchDateFrom))
+            else if (string.IsNullOrWhiteSpace(fullRout.SearchDateFrom))
             {
-                list = _rout.GetAllRoutsByDateFromByDateToByRegionId(startDate, endDate, int.Parse(dropRegionId)).ToList();
+                list = _rout.GetAllRoutsByDateFromByDateToByRegionId(startDate, endDate, fullRout.RegionId).ToList();
             }
             else
             {
-                list = _rout.GetAllRouts().Where(x => x.RegionId == int.Parse(dropRegionId)).ToList();
+                list = _rout.GetAllRouts().Where(x => x.RegionId == fullRout.RegionId).ToList();
             }
 
             //ViewBag.TotalRoutCount = list.Sum(x => x.Count);
@@ -218,7 +221,8 @@ namespace SabzGashtTransportation.Controllers
             }
             ViewBag.AllocateRoutCountBus = allocateRoutCountBus;
             ViewBag.AllocateRoutCountMiniBus = allocateRoutCountMiniBus;
-            return View(commonList.OrderBy(x=>x.StartDate).ThenBy(x=>x.EnterTime).ToPagedList(pageNumber, pageSize));
+            FullcommonList.RoutViewModels = commonList.OrderBy(x => x.StartDate).ThenBy(x => x.EnterTime).ToPagedList(pageNumber, pageSize);
+            return View(FullcommonList);
         }
 
         // GET: Drivers/Details/5

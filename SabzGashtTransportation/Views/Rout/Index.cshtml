@@ -1,7 +1,8 @@
 ﻿@using PagedList.Mvc
 @using Sabz.ServiceLayer.Enumration
 @using Sabz.ServiceLayer.Extension
-@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.RoutViewModel>
+@*@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.RoutViewModel>*@
+@model SabzGashtTransportation.ViewModel.RoutFullViewModel
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 <script src="~/js/jquery-3.3.1.min.js"></script>
 @{
@@ -10,8 +11,9 @@
     @Styles.Render("~/css/css/style.css");
     var counter = 1;
     var routTransactionType = "";
-    string regionDropDown = ViewBag.Region;
+    //string regionDropDown = ViewBag.Region;
     //string regionDropDown =   TempData["Region"] != null ? TempData["Region"].ToString() : "" ;
+    string regionDropDown = Model.RegionId != 0 ? Model.Regions.Where(x => x.Id == Model.RegionId).FirstOrDefault().RegionName : "";
 
 }
 
@@ -41,12 +43,14 @@
             </tr>
             <tr>
                 <th class="font-small">نام منطقه</th>
-                @if (regionDropDown == null)
+                @if (string.IsNullOrEmpty(regionDropDown))
                 {
                     regionDropDown = "انتخاب کنید";
                 }
                 <th>
-                    @Html.DropDownList("RegionItems", regionDropDown)
+                    @*@Html.DropDownList("RegionItems", regionDropDown)*@
+                    @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.Regions, "Id", "RegionName"), regionDropDown)
+
                     @Html.Hidden("dropRegionId")
 
                 </th>
@@ -129,7 +133,7 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.RoutViewModels)
     {
         <tr>
             <td>
@@ -188,9 +192,9 @@
             </td>
             <td>
                 @*@if (item.Allocate < item.Count)
-        {
-            @Html.ActionLink("اختصاص |", "Allocate", "DriverRout", new { id = item.RoutID }, null)
-        }*@
+                    {
+                        @Html.ActionLink("اختصاص |", "Allocate", "DriverRout", new { id = item.RoutID }, null)
+                    }*@
                 @Html.ActionLink("اختصاص ", "Allocate", "DriverRout", new { id = item.RoutID }, null) |
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.RoutID }) |
                 @Html.ActionLink("جزئیات", "Details", new { id = item.RoutID }) |
@@ -203,10 +207,10 @@
 </table>
 <br />
 <p class="showPage">
-    صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+    صفحه @(Model.RoutViewModels.PageCount < Model.RoutViewModels.PageNumber ? 0 : Model.RoutViewModels.PageNumber) از @Model.RoutViewModels.PageCount
 </p>
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
+@Html.PagedListPager(Model.RoutViewModels, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 
