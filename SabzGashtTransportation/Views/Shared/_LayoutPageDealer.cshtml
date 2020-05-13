@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿ <!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>@ViewBag.Title -سبز گشت میعاد</title>
@@ -7,8 +8,8 @@
     <!-- Facebook APP ID -->
     <meta property="fb:app_id" content="12345" />
 
-    @*<meta name="keywords" content="Car-Dealer, auto-salon, automobile, business, car, car-gallery, car-selling-template, cars, dealer, marketplace, mobile, real estate, responsive, sell, vehicle" />
-    <meta name="description" content="Auto Dealer HTML - Responsive HTML Auto Dealer Template" />*@
+    <meta name="keywords" content="Car-Dealer, auto-salon, automobile, business, car, car-gallery, car-selling-template, cars, dealer, marketplace, mobile, real estate, responsive, sell, vehicle" />
+    <meta name="description" content="Auto Dealer HTML - Responsive HTML Auto Dealer Template" />
 
     <!-- Open Graph -->
     <meta property="og:site_name" content="Auto Dealer HTML" />
@@ -16,6 +17,7 @@
     <meta property="og:url" content="http://localhost/01_index.html" />
     <meta property="og:image" content="http://cdn.winterjuice.com/example/autodealer/image.jpg" />
     <meta property="og:description" content="Auto Dealer HTML - Responsive HTML Auto Dealer Template" />
+    <!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
     <!-- Page Title -->
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
@@ -29,16 +31,16 @@
     <!--[if IE]>
         <link href="css/style_ie.css" rel="stylesheet" type="text/css"/>
     <![endif]-->
-    @*<script src="./Scripts/jquery-3.3.1.min.js"></script>
-         <script type="text/javascript" src="./js/jquery-1.8.3.min.js"></script>
-         <script type="text/javascript" src="./js/jquery.easing.1.3.js"></script>
-        <script type="text/javascript" src="./js/jquery.bxslider.js"></script>
-         <script type="text/javascript" src="./js/jquery.mousewheel.js"></script>
-         <script type="text/javascript" src="./js/jquery.selectik.js"></script>
-         <script type="text/javascript" src="./js/jquery.fancybox-1.3.4.pack.js"></script>
-         <script type="text/javascript" src="./js/jquery.countdown.js"></script>
-         <script type="text/javascript" src="./js/jquery.checkbox.js"></script>
-         <script type="text/javascript" src="./js/js.js"></script>*@
+    <script src="./Scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="./js/jquery.bxslider.js"></script>
+    <script type="text/javascript" src="./js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="./js/jquery.selectik.js"></script>
+    <script type="text/javascript" src="./js/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="./js/jquery.countdown.js"></script>
+    <script type="text/javascript" src="./js/jquery.checkbox.js"></script>
+    <script type="text/javascript" src="./js/js.js"></script>
 </head>
 <body class="page">
     <!--BEGIN HEADER-->
@@ -51,11 +53,11 @@
                 <div class="phone">شرکت سبز گشت میعاد</div>
                 <div>نامی مطمئن در حمل و نقل</div>
             </div>
-            @*<div class="socials">
-                <a href="#"><img src="~/images/fb_icon.png" alt=""></a>
-                <a href="#"><img src="~/images/twitter_icon.png" alt=""></a>
-                <a href="#"><img src="~/images/in_icon.png" alt=""></a>
-            </div>*@
+            <div class="socials">
+                <a href="#"><img src="images/fb_icon.png" alt=""></a>
+                <a href="#"><img src="images/twitter_icon.png" alt=""></a>
+                <a href="#"><img src="images/in_icon.png" alt=""></a>
+            </div>
         </div>
         <div class="bg_navigation">
             <div class="navigation_wrapper">
@@ -63,11 +65,11 @@
                     @*<span>صفحه نخست</span>*@
                     <ul>
                         <li class="current navigation-actie-hover"> @Html.ActionLink("صفحه نخست", "index", "Home", null, null) </li>
-                        <li class="navigation-actie-hover"> <a  href="">درباره ما</a></li>
+                        <li class="navigation-actie-hover"> <a href="">درباره ما</a></li>
                         @*<li>  @Html.ActionLink("ورود", "login", "Account", null, null) </li>
-                        <li>  @Html.ActionLink("ثبت نام", "Register", "Account", null, null) </li>*@
-                        <li >
-                            @Html.Partial("_LoginPartialDealer")
+                            <li>  @Html.ActionLink("ثبت نام", "Register", "Account", null, null) </li>*@
+                        <li>
+                            @Html.Partial("_LoginPartial")
 
                         </li>
                     </ul>
@@ -83,10 +85,12 @@
     </div>
     <!--EOF HEADER-->
     <!--BEGIN CONTENT-->
+    <!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
     <div id="content" class="content">
         @RenderBody()
     </div>
     <!--EOF CONTENT-->
+    <!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
     <!--BEGIN FOOTER-->
     <div id="footer">
 
@@ -110,10 +114,10 @@
                 <h3>ارتباط با ما</h3>
                 <ul>
                     @*<li>  @Html.ActionLink(" کارمندان", "index", "Drivers", null, null) </li>
-        <li>  @Html.ActionLink("مسیرها", "index", "Rout", null, null) </li>
-        <li>  @Html.ActionLink("برنامه زمانی", "index", "DriverRout", null, null) </li>
-        <li>  @Html.ActionLink("ثبت روزانه", "index", "LogDriverRout", null, null) </li>
-        <li>  @Html.ActionLink("پرداخت ها", "index", "Payment", null, null) </li>*@
+                        <li>  @Html.ActionLink("مسیرها", "index", "Rout", null, null) </li>
+                        <li>  @Html.ActionLink("برنامه زمانی", "index", "DriverRout", null, null) </li>
+                        <li>  @Html.ActionLink("ثبت روزانه", "index", "LogDriverRout", null, null) </li>
+                        <li>  @Html.ActionLink("پرداخت ها", "index", "Payment", null, null) </li>*@
 
                     <li><a href="#">اضافه کردن یک پیشنهاد</a></li>
                     <li><a href="#">ثبت نام فروشنده</a></li>
@@ -122,19 +126,20 @@
                 </ul>
             </div>
             @*<div class="f_widget divide last">
-                <h3><strong>پیدا کردن</strong>ما در اینجا</h3>
-                <ul class="horizontal">
-                    <li><a href="#"><img src="images/fb_icon.png" alt=""></a></li>
-                    <li><a href="#"><img src="images/twitter_icon.png" alt=""></a></li>
-                    <li><a href="#"><img src="images/in_icon.png" alt=""></a></li>
-                </ul>
-            </div>*@
+                    <h3><strong>پیدا کردن</strong>ما در اینجا</h3>
+                    <ul class="horizontal">
+                        <li><a href="#"><img src="images/fb_icon.png" alt=""></a></li>
+                        <li><a href="#"><img src="images/twitter_icon.png" alt=""></a></li>
+                        <li><a href="#"><img src="images/in_icon.png" alt=""></a></li>
+                    </ul>
+                </div>*@
         </div>
         <div class="copyleft_wrapper">
-            <div class="copyleft">&copy; کلیه حقوق مادی و معنوی برای شرکت سبز گشت میعاد محفوظ می باشد .</div>
+            <div class="copyleft">&copy; کلیه حقوق مادی و معنوی برای مجموعه برنامه نویسان محفوظ می باشد . هر گونه کپی برداری از محتوای آموزشی با ذکر منبع مجاز می باشد.</div>
         </div>
     </div>
-    <!--EOF FOOTER--> 
+    <!--EOF FOOTER-->
+    <!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
     @*@RenderSection("Scripts", true)*@
 
 </body>

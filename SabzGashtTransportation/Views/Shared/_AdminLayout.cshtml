@@ -31,11 +31,6 @@
     <script type="text/javascript" src="/js/js.js"></script>
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 
-    @*<script src="/Scripts/jquery-3.3.1.js"></script>
-    <script src="/Scripts/bootstrap.js"></script>
-    <script src="/Scripts/respond.js"></script>
-    <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
-    <script src="/Scripts/jquery.validate.js"></script>*@
     <script>
         // www.moisrex.rozblog.com
         function replace(txt, replacer, withthis) { return txt.replace(new RegExp(replacer, "gim"), withthis); }
@@ -89,38 +84,35 @@
 
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
-            <div class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        @*@Html.ActionLink("خانه", "Index", "Admin", null, new { @class = "navbar-brand" })*@
-                        @Html.ActionLink("صفحه اصلی", "Index", "home", null, new { @class = "navbar-brand" })
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("خانه", "Index", "Admin", null, new { @class = "navbar-brand" })*@
+                @Html.ActionLink("صفحه اصلی", "Index", "home", null, new { @class = "navbar-brand" })
 
-                        <ul class="user-menu">
-                            @*<li class="dropdown pull-right">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> کاربران <span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> مشخصات</a></li>
-                                        <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> تنظیمات</a></li>
-                                        <li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> خروج</a></li>
-                                    </ul>
-                                </li>
-                                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                                        {
-                                            <li>@Html.ActionLink("مدیر", "Index", "RolesAdmin")</li>
-                                            <li>@Html.ActionLink("کاربر", "Index", "UsersAdmin")</li>
-                                        }*@
-                        </ul>
-                        @Html.Partial("_LoginPartial")
+                <ul class="user-menu">
+                    @*<li class="dropdown pull-right">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> کاربران <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> مشخصات</a></li>
+                                <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> تنظیمات</a></li>
+                                <li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> خروج</a></li>
+                            </ul>
+                        </li>
+                                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <li>@Html.ActionLink("مدیر", "Index", "RolesAdmin")</li>
+                                    <li>@Html.ActionLink("کاربر", "Index", "UsersAdmin")</li>
+                                }*@
+                </ul>
+                @Html.Partial("_LoginPartial")
 
-                    </div>
-                </div>
             </div>
+
         </div>
     </nav>
 
@@ -196,22 +188,22 @@
     <script src="/js/js/bootstrap-datepicker.js"></script>
 
     <script>
-        $('#calendar').datepicker({
-        });
+		$('#calendar').datepicker({
+		});
 
-        !function ($) {
-            $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
-                $(this).find('em:first').toggleClass("glyphicon-minus");
-            });
-            $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-        }(window.jQuery);
+		!function ($) {
+		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+		        $(this).find('em:first').toggleClass("glyphicon-minus");
+		    });
+		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
 
-        $(window).on('resize', function () {
-            if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-        })
-        $(window).on('resize', function () {
-            if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-        })
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
     </script>
 
 </body>

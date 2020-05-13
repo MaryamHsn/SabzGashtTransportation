@@ -286,14 +286,16 @@ cite{
 .bg_navigation{
 	width: 100%;
 	min-width: 980px;
-	background: url(../images/bg_navigation.jpg) repeat-x 0 0 #DBDCDC;
+	/*background: url(../images/bg_navigation.jpg) repeat-x 0 0 #DBDCDC;*/
 	margin: 0 auto;
 }
-.navigation_wrapper{
-	width: 1000px;
-	overflow: hidden;
-	padding: 0 20px;
-	margin: 0 auto;
+.navigation_wrapper {
+    width: auto;
+    padding: 15px 0 15px 0;
+    overflow: visible;
+    /*overflow: hidden; 
+    padding: 0 20px;
+    margin: 0 auto;*/
 }
 #navigation{
 	width: 670px;
@@ -302,7 +304,7 @@ cite{
 }
     #navigation span {
         height: 29px;
-        display: none;
+        /*display: none;*/
         font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
         font-weight: bold;
         color: #FFFFFF;
@@ -340,7 +342,7 @@ cite{
     }
 
 #navigation ul li.current a
-#navigation ul li:hover a 
+/*#navigation ul li:hover a*/ 
 {
 	/*background: url(../images/bg_menu.jpg) repeat-x 0 0;*/
 	color: #FFFFFF;
