@@ -286,7 +286,7 @@ cite{
 .bg_navigation{
 	width: 100%;
 	min-width: 980px;
-	/*background: url(../images/bg_navigation.jpg) repeat-x 0 0 #DBDCDC;*/
+	background: url(../images/bg_navigation.jpg) repeat-x 0 0 #DBDCDC;
 	margin: 0 auto;
 }
 .navigation_wrapper {
@@ -296,6 +296,18 @@ cite{
     /*overflow: hidden; 
     padding: 0 20px;
     margin: 0 auto;*/
+}
+@media only screen and (min-width: 100px) and (max-width: 400px), only screen and (min-device-width: 100px) and (max-device-width: 400px) {
+    .navigation_wrapper {
+        width: auto;
+        /*padding: 15px 0 15px 0;*/
+        overflow: visible; 
+        font-size:5px;
+    }
+    .bg_navigation {
+        width: 100%;
+        min-width: 100px;
+    }
 }
 #navigation{
 	width: 670px;
