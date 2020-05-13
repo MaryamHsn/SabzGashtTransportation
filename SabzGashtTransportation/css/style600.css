@@ -57,7 +57,7 @@ only screen and (min-device-width: 500px) and (max-device-width: 600px){
 		padding: 15px 0 15px 0;
 		overflow: visible;
 	}
-	#navigation{
+	/*#navigation{
 		width: 200px;
 		float: none;
 		padding: 0 0 0 0;
@@ -93,7 +93,7 @@ only screen and (min-device-width: 500px) and (max-device-width: 600px){
 		color: #FFFFFF;
 		padding:0 15px;
 		text-shadow:none;
-	}
+	}*/
 	/*
 	================================================================================
 	|                                     CONTENT                                  |

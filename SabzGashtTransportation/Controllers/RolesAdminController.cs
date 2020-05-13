@@ -10,13 +10,11 @@ using SabzGashtTransportation.Models;
 
 namespace SabzGashtTransportation.Controllers
 {
-    //[Authorize(Roles = "Admin")]
     public class RolesAdminController : Controller
     {
         private readonly IApplicationRoleManager _roleManager;
         private readonly IApplicationUserManager _userManager;
-        public RolesAdminController(IApplicationUserManager userManager,
-                                    IApplicationRoleManager roleManager)
+        public RolesAdminController(IApplicationUserManager userManager, IApplicationRoleManager roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;

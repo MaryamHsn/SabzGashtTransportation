@@ -338,8 +338,9 @@ cite{
         text-decoration: none;
         padding: 11px 23px 0 23px;
     }
+
 #navigation ul li.current a
-/*#navigation ul li:hover a*/ 
+#navigation ul li:hover a 
 {
 	/*background: url(../images/bg_menu.jpg) repeat-x 0 0;*/
 	color: #FFFFFF;

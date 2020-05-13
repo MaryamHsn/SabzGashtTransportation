@@ -32,184 +32,238 @@ namespace SabzGashtTransportation.Controllers
             _uow = uow;
         }
 
-        [Authorize(Roles = "admin , SuperViser")]
+        //[Authorize(Roles = "admin , SuperViser")]
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            commonList = new List<DriverViewModel>();
-
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
-            ViewBag.LastName = sortOrder == "lastName" ? "lastName_desc" : "lastName";
-            ViewBag.Phone = sortOrder == "phone" ? "phone_desc" : "phone";
-
-            if (searchString != null)
+            if (User.Identity.IsAuthenticated)
             {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+                if (User.IsInRole("Admin"))
+                {
+                    commonList = new List<DriverViewModel>();
+                    ViewBag.CurrentSort = sortOrder;
+                    ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
+                    ViewBag.LastName = sortOrder == "lastName" ? "lastName_desc" : "lastName";
+                    ViewBag.Phone = sortOrder == "phone" ? "phone_desc" : "phone";
 
-            ViewBag.CurrentFilter = searchString;
-            var list = _drivers.GetAllDrivers();
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                list = list.Where(s => s.FirstName.Contains(searchString)
-                                       || s.LastName.Contains(searchString)
-                                       || s.Phone1.Contains(searchString)).ToList();
-            }
-            switch (sortOrder)
-            {
-                case "firstName_desc":
-                    list = list.OrderByDescending(s => s.FirstName).ToList();
-                    break;
-                case "lastName":
-                    list = list.OrderBy(s => s.LastName).ToList();
-                    break;
-                case "lastName_desc":
-                    list = list.OrderByDescending(s => s.LastName).ToList();
-                    break;
-                case "phone":
-                    list = list.OrderBy(s => s.Phone1).ToList();
-                    break;
-                case "phone_desc":
-                    list = list.OrderByDescending(s => s.Phone1).ToList();
-                    break;
-                default:
-                    list = list.OrderBy(s => s.Id).ToList();
-                    break;
-            }
+                    if (searchString != null)
+                    {
+                        page = 1;
+                    }
+                    else
+                    {
+                        searchString = currentFilter;
+                    }
 
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            foreach (var item in list)
-            { 
-                var element = BaseMapper<DriverViewModel, DriverTbl>.Map(item);
-                element.DriverId = item.Id;
-                commonList.Add(element);
+                    ViewBag.CurrentFilter = searchString;
+                    var list = _drivers.GetAllDrivers();
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        list = list.Where(s => s.FirstName.Contains(searchString)
+                                               || s.LastName.Contains(searchString)
+                                               || s.Phone1.Contains(searchString)).ToList();
+                    }
+                    switch (sortOrder)
+                    {
+                        case "firstName_desc":
+                            list = list.OrderByDescending(s => s.FirstName).ToList();
+                            break;
+                        case "lastName":
+                            list = list.OrderBy(s => s.LastName).ToList();
+                            break;
+                        case "lastName_desc":
+                            list = list.OrderByDescending(s => s.LastName).ToList();
+                            break;
+                        case "phone":
+                            list = list.OrderBy(s => s.Phone1).ToList();
+                            break;
+                        case "phone_desc":
+                            list = list.OrderByDescending(s => s.Phone1).ToList();
+                            break;
+                        default:
+                            list = list.OrderBy(s => s.Id).ToList();
+                            break;
+                    }
+
+                    int pageSize = 10;
+                    int pageNumber = (page ?? 1);
+                    foreach (var item in list)
+                    {
+                        var element = BaseMapper<DriverViewModel, DriverTbl>.Map(item);
+                        element.DriverId = item.Id;
+                        commonList.Add(element);
+                    }
+                    return View(commonList.ToPagedList(pageNumber, pageSize));
+                }
             }
-            return View(commonList.ToPagedList(pageNumber, pageSize));
-        
+            return RedirectToAction("login", "Account");
         }
 
-        [Authorize(Roles = "admin , SuperViser")]
+        //[Authorize(Roles = "admin , SuperViser")]
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (User.IsInRole("Admin"))
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    DriverTbl driver = _drivers.GetDriver(id);
+                    if (driver == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                    obj.BirthDateString = driver.BirthDate != null ? driver.BirthDate.ToPersianDateString() : "";
+                    obj.DriverId = driver.Id;
+                    return View(obj);
+                }
             }
-            DriverTbl driver = _drivers.GetDriver(id);
-            if (driver == null)
-            {
-                return HttpNotFound();
-            }
-            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-            obj.BirthDateString = driver.BirthDate != null ? driver.BirthDate.ToPersianDateString() : "";
-            obj.DriverId = driver.Id;
-            return View(obj);
+            return RedirectToAction("login", "Account");
         }
 
-        [Authorize(Roles = "admin , SuperViser")]
+        //[Authorize(Roles = "admin , SuperViser")]
         public ActionResult Create()
         {
-            common = new DriverViewModel()
+            if (User.Identity.IsAuthenticated)
             {
-                Automobiles = _automobile.GetAllAutomobiles()
-            };
-            return View(common);
+                if (User.IsInRole("Admin"))
+                {
+                    common = new DriverViewModel()
+                    {
+                        Automobiles = _automobile.GetAllAutomobiles()
+                    };
+                    return View(common);
+                }
+            }
+            return RedirectToAction("login", "Account");
         }
 
-        [Authorize(Roles = "admin , SuperViser")]
+        //[Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( DriverViewModel driver)
+        public ActionResult Create(DriverViewModel driver)
         {
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
-                obj.IsActive = true;
-                obj.CreatedDate=DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
-                _drivers.AddNewDriver(obj);
-                //_uow.SaveAllChanges();
+                if (User.IsInRole("Admin"))
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                        obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
+                        obj.IsActive = true;
+                        obj.CreatedDate = DateTime.Now;
+                        obj.ModifiedDate = DateTime.Now;
+                        _drivers.AddNewDriver(obj);
+                        //_uow.SaveAllChanges();
+                    }
+                    return RedirectToAction("Index");
+                }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("login", "Account");
         }
 
-        [Authorize(Roles = "admin , SuperViser")]
+        //[Authorize(Roles = "admin , SuperViser")]
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            } 
-            DriverTbl driver =_drivers.GetDriver(id);
-            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-            obj.Automobiles = _automobile.GetAllAutomobiles();
-            obj.BirthDateString = obj.BirthDate != null
-                ? obj.BirthDate.ToPersianDateString()
-                : driver.BirthDate.ToPersianDateString();
-            obj.DriverId = driver.Id;
-            if (driver  == null)
-            {
-                return HttpNotFound();
+                if (User.IsInRole("Admin"))
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    DriverTbl driver = _drivers.GetDriver(id);
+                    var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                    obj.Automobiles = _automobile.GetAllAutomobiles();
+                    obj.BirthDateString = obj.BirthDate != null
+                        ? obj.BirthDate.ToPersianDateString()
+                        : driver.BirthDate.ToPersianDateString();
+                    obj.DriverId = driver.Id;
+                    if (driver == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(obj);
+                }
             }
-            return View(obj);
+            return RedirectToAction("login", "Account");
         }
 
-        [Authorize(Roles = "admin , SuperViser")]
+        //[Authorize(Roles = "admin , SuperViser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( DriverViewModel driver)
+        public ActionResult Edit(DriverViewModel driver)
         {
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                //driver.ModifiedDate=DateTime.Now;
-                //_drivers.Delete(driver.DriverId);
-                var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
-                obj.CreatedDate = DateTime.Now;
-                obj.ModifiedDate = DateTime.Now;
-                obj.IsActive = true;
-                //_drivers.AddNewDriver(obj);
-                //_uow.SaveAllChanges(); 
-                obj.Id = driver.DriverId;
-                _drivers.UpdateDriver(obj);
-                //_uow.SaveAllChanges();
+                if (User.IsInRole("Admin"))
+                {
+                    if (ModelState.IsValid)
+                    {
+                        //driver.ModifiedDate=DateTime.Now;
+                        //_drivers.Delete(driver.DriverId);
+                        var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                        obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
+                        obj.CreatedDate = DateTime.Now;
+                        obj.ModifiedDate = DateTime.Now;
+                        obj.IsActive = true;
+                        //_drivers.AddNewDriver(obj);
+                        //_uow.SaveAllChanges(); 
+                        obj.Id = driver.DriverId;
+                        _drivers.UpdateDriver(obj);
+                        //_uow.SaveAllChanges();
+                    }
+                    return RedirectToAction("Index");
+                }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("login", "Account");
 
         }
 
-        [Authorize(Roles = "admin , SuperViser")]
+        //[Authorize(Roles = "admin , SuperViser")]
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (User.IsInRole("Admin"))
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    DriverTbl driver = _drivers.GetDriver(id);
+                    if (driver == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                    obj.BirthDateString = driver.BirthDate.ToPersianDateString();
+                    return View(obj);
+                }
             }
-            DriverTbl driver= _drivers.GetDriver(id);
-            if (driver == null)
-            {
-                return HttpNotFound();
-            }
-            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-            obj.BirthDateString = driver.BirthDate.ToPersianDateString();
-            return View(obj);
+            return RedirectToAction("login", "Account");
         }
 
-        [Authorize(Roles = "admin , SuperViser")]
+        //[Authorize(Roles = "admin , SuperViser")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _drivers.Delete(id);
-          //  _uow.SaveAllChanges(); 
-            return RedirectToAction("Index");
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    _drivers.Delete(id);
+                    //  _uow.SaveAllChanges(); 
+                    return RedirectToAction("Index");
+                }
+            }
+            return RedirectToAction("login", "Account");
         }
 
         protected override void Dispose(bool disposing)

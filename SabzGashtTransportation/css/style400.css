@@ -83,18 +83,18 @@ only screen and (min-device-width: 10px) and (max-device-width: 400px){
 		padding: 15px 0 15px 0;
 		overflow: visible;
 	}
-	#navigation{
-		width: 200px;
+    #navigation{
+		/*width: 200px;
 		float: none;
 		padding: 0 0 0 0;
 		background: url(../images/bg_small_navigation.jpg) repeat-x 0 0;
 		height: 29px;
 		margin: 0 auto;
 		border-radius: 5px;
-		position: relative;
+		position: relative;*/
 	}
 	#navigation span{
-		display: block;
+		/*display: block;*/
 	}
 	#navigation ul{
 		display: none;
