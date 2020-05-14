@@ -297,10 +297,10 @@ cite{
     padding: 0 20px;
     margin: 0 auto;*/
 }
-@media only screen and (min-width: 100px) and (max-width: 400px), only screen and (min-device-width: 100px) and (max-device-width: 400px) {
+/*@media only screen and (min-width: 100px) and (max-width: 400px), only screen and (min-device-width: 100px) and (max-device-width: 400px) {
     .navigation_wrapper {
         width: auto;
-        /*padding: 15px 0 15px 0;*/
+        padding: 15px 0 15px 0;
         overflow: visible; 
         font-size:5px;
     }
@@ -308,7 +308,7 @@ cite{
         width: 100%;
         min-width: 100px;
     }
-}
+}*/
 #navigation{
 	width: 670px;
 	float: right;

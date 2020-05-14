@@ -4230,14 +4230,14 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
     direction:rtl;
 }
 
-@media (min-width:768px) {
+/*@media (min-width:768px) {
     .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
         margin-right: 0;
         margin-left: 0;
         direction: rtl;
         float:right;
     }
-}
+}*/
 
 .navbar-static-top {
     z-index: 1000;

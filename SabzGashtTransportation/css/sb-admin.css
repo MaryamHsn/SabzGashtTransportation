@@ -147,7 +147,7 @@ body {
     }
 }
 
-@media(max-height:600px) and (max-width:767px) {
+/*@media(max-height:600px) and (max-width:767px) {
     .sidebar-collapse {
         max-height: 300px;
         overflow-y: scroll;
@@ -159,7 +159,7 @@ body {
         max-height: 200px;
         overflow-y: scroll;
     }
-}
+}*/
 
 /* Buttons */
 

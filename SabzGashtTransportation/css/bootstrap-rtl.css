@@ -4350,13 +4350,13 @@ textarea.input-group-sm > .input-group-btn > .btn {
     margin-left: -15px;
 }
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
     .container > .navbar-header,
     .container > .navbar-collapse {
         margin-right: 0;
         margin-left: 0;
     }
-}
+}*/
 
 .navbar-static-top {
     border-width: 0 0 1px;
