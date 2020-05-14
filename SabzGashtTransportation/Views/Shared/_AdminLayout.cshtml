@@ -85,12 +85,12 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                @*<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>*@
                 @*@Html.ActionLink("خانه", "Index", "Admin", null, new { @class = "navbar-brand" })*@
                 @Html.ActionLink("صفحه اصلی", "Index", "home", null, new { @class = "navbar-brand" })
 
@@ -135,28 +135,29 @@
             <li><a onclick="location.href='@Url.Action("index","AutomobileType")';return false;"><svg class="glyph stroked app-window"><use xlink:href="#stroked-app-window"></use></svg>انواع اتومبیل</a></li>
             <li><a onclick="location.href='@Url.Action("index","region")';return false;"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> شرکت ها</a></li>
             @*<li class="parent ">
-                    <a href="#">
-                        <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> منو کشویی
+            <a href="#">
+                <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> منو کشویی
+            </a>
+            <ul class="children collapse" id="sub-item-1">
+                <li>
+                    <a class="" href="#">
+                        <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> آیتم 1
                     </a>
-                    <ul class="children collapse" id="sub-item-1">
-                        <li>
-                            <a class="" href="#">
-                                <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> آیتم 1
-                            </a>
-                        </li>
-                                <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> آیتم 2
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> آیتم 3
-                            </a>
-                        </li>
-                    </ul>
-                </li>*@
-            <li>
-                <a class="" href="#">
-            <li role="presentation" class="divider"></li>
+                </li>
+                 <li>
+                    <a class="" href="#">
+                        <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> آیتم 2
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="#">
+                        <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> آیتم 3
+                    </a>
+                </li>
+            </ul>
+        </li>*@
+            @*<li role="presentation" class="divider"></li>*@
+
             <li><a onclick="location.href='@Url.Action("login","Account")';return false;"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> ورود کاربران</a></li>
         </ul>
 
@@ -188,22 +189,22 @@
     <script src="/js/js/bootstrap-datepicker.js"></script>
 
     <script>
-		$('#calendar').datepicker({
-		});
+        $('#calendar').datepicker({
+        });
 
-		!function ($) {
-		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){
-		        $(this).find('em:first').toggleClass("glyphicon-minus");
-		    });
-		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-		}(window.jQuery);
+        !function ($) {
+            $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+                $(this).find('em:first').toggleClass("glyphicon-minus");
+            });
+            $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+        }(window.jQuery);
 
-		$(window).on('resize', function () {
-		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-		})
-		$(window).on('resize', function () {
-		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-		})
+        $(window).on('resize', function () {
+            if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+        })
+        $(window).on('resize', function () {
+            if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+        })
     </script>
 
 </body>

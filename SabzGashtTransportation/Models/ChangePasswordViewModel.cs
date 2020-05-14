@@ -4,12 +4,12 @@ namespace SabzGashtTransportation.Models
 {
     public class ChangePasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
         [DataType(DataType.Password)]
         [Display(Name = "رمز عبور فعلی")]
         public string OldPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
         [StringLength(100, ErrorMessage = "حداقل طول{0} باید {2} کاراکتر باشد", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "رمز عبور جدید")]

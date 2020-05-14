@@ -4,10 +4,10 @@ namespace SabzGashtTransportation.Models
 {
     public class VerifyCodeViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
         public string Provider { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
         [Display(Name = "کد")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }

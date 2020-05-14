@@ -8,7 +8,7 @@ namespace SabzGashtTransportation.Models
         [Display(Name = "ایمیل")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
         [Display(Name = "نام کاربری")]
         public string UserName { get; set; }
     }

@@ -9,11 +9,11 @@ namespace SabzGashtTransportation.Models
         [Display(Name = "ایمیل")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
         [Display(Name = "نام کاربری")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
         [StringLength(100, ErrorMessage = "حداقل طول{0} باید {2} کاراکتر باشد", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "رمز عبور")]
