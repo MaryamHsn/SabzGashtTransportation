@@ -4,17 +4,17 @@
 @model SabzGashtTransportation.ViewModel.RegionViewModel
 
 @{
-    ViewBag.Title = " جزئیات مناطق";
+    ViewBag.Title = " جزئیات شرکت ها";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     @Styles.Render("~/css/css/style.css");
 }
 
-<h2 class="style-h2"> جزئیات مناطق</h2>
+<h2 class="style-h2"> جزئیات شرکت ها</h2>
 
 <div>
     <table class="tbl-show">
         <tr class="tbl-tr-show">
-            <th class="tbl-th-show">نام منطقه:</th>
+            <th class="tbl-th-show">نام شرکت :</th>
             <th> @Html.DisplayFor(model => model.RegionName)</th>
         </tr>
 

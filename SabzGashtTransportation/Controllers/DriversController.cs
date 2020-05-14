@@ -45,6 +45,7 @@ namespace SabzGashtTransportation.Controllers
                     ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
                     ViewBag.LastName = sortOrder == "lastName" ? "lastName_desc" : "lastName";
                     ViewBag.Phone = sortOrder == "phone" ? "phone_desc" : "phone";
+                    ViewBag.BankAccount = sortOrder == "bankAccount" ? "bankAccount_desc" : "bankAccount";
 
                     if (searchString != null)
                     {
@@ -61,6 +62,7 @@ namespace SabzGashtTransportation.Controllers
                     {
                         list = list.Where(s => s.FirstName.Contains(searchString)
                                                || s.LastName.Contains(searchString)
+                                               || s.BankAccountNumber.Contains(searchString)
                                                || s.Phone1.Contains(searchString)).ToList();
                     }
                     switch (sortOrder)
@@ -80,12 +82,18 @@ namespace SabzGashtTransportation.Controllers
                         case "phone_desc":
                             list = list.OrderByDescending(s => s.Phone1).ToList();
                             break;
+                        case "bankAccount":
+                            list = list.OrderBy(s => s.BankAccountNumber).ToList();
+                            break;
+                        case "bankAccount_desc":
+                            list = list.OrderByDescending(s => s.BankAccountNumber).ToList();
+                            break;
                         default:
                             list = list.OrderBy(s => s.Id).ToList();
                             break;
                     }
 
-                    int pageSize = 10;
+                    int pageSize = 1000;
                     int pageNumber = (page ?? 1);
                     foreach (var item in list)
                     {

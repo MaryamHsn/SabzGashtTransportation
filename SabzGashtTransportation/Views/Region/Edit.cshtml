@@ -4,13 +4,13 @@
 @model SabzGashtTransportation.ViewModel.RegionViewModel
 
 @{
-    ViewBag.Title = "ویرایش مناطق";
+    ViewBag.Title = "ویرایش شرکت ها";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     @Styles.Render("~/css/css/style.css");
 }
 
 
-<h2 class="style-h2">ویرایش مناطق</h2>
+<h2 class="style-h2">ویرایش شرکت</h2>
 
 @using (Html.BeginForm())
 {
@@ -21,7 +21,7 @@
         @Html.HiddenFor(model => model.RegionId)
 
         <div class="form-group">
-            <p class="control-label">نام منطقه:</p>
+            <p class="control-label">نام شرکت:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.RegionName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RegionName, "", new { @class = "text-danger" })

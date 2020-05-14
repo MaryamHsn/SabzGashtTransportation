@@ -11,6 +11,7 @@ namespace SabzGashtTransportation.ViewModel
         public string LastName { get; set; }
         public string FatherName { get; set; }
         public string FullName { get; set; }
+        public string BankAccountNumber { get; set; }
         public string NationalCode { get; set; }
         public string LicenceCode { get; set; }
         public DateTime BirthDate { get; set; }

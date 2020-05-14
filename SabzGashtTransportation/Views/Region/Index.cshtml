@@ -6,15 +6,15 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "مناطق";
+    ViewBag.Title = "شرکت ها";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     @Styles.Render("~/css/css/style.css");
     var counter = 1;
 }
 
-<h2 class="style-h2">مناطق</h2>
+<h2 class="style-h2">شرکت ها</h2>
 
-<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">منطقه جدید</button>
+<button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">شرکت جدید</button>
 
 @using (Html.BeginForm("Index", "Region", FormMethod.Get))
 {
@@ -29,7 +29,7 @@
             ردیف
         </th>
         <th>
-            @Html.ActionLink("کولر دار", "Index", new { sortOrder = ViewBag.RegionName, currentFilter = ViewBag.CurrentFilter })
+           نام شرکت
         </th>
         <th>
             عملیات

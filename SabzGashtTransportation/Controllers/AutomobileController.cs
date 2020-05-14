@@ -86,7 +86,7 @@ namespace SabzGashtTransportation.Controllers
                             break;
                     }
 
-                    int pageSize = 10;
+                    int pageSize = 1000;
                     int pageNumber = (page ?? 1);
                     var AutomobileTypes = _automobileType.GetAllAutomobileTypes();
 
@@ -164,6 +164,14 @@ namespace SabzGashtTransportation.Controllers
                     if (ModelState.IsValid)
                     {
                         var obj = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
+                        if (automobile.Number == null)
+                        {
+                            obj.Number = "";
+                        }
+                        if (automobile.CreateYear == null)
+                        {
+                            obj.CreateYear= "";
+                        }
                         obj.IsActive = true;
                         obj.CreatedDate = DateTime.Now;
                         obj.ModifiedDate = DateTime.Now;

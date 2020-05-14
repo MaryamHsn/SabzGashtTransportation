@@ -31,6 +31,8 @@ namespace Sabz.DomainClasses.DTO
         }
         [StringLength(50)]
         public string FatherName { get; set; }
+        [StringLength(50)]
+        public string BankAccountNumber { get; set; }
         [StringLength(10)]
         public string NationalCode { get; set; }
         [StringLength(10)]
