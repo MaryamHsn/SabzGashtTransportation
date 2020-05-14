@@ -658,7 +658,7 @@ a.bg-danger:hover {
         margin-bottom: 20px;
     }
 
-@media (min-width: 768px) {
+@media (min-width: 300px) {
     .sidebar {
         display: block;
         position: fixed;
