@@ -5097,7 +5097,7 @@ item {
 /**********bambino****************/
 .box-image {
     width: calc(100% - 80px);
-    height: 350px;
+    height:550px;
     background-color: darkseagreen;
     margin: 24px 20px 20px 20px;
     padding: 24px 20px 20px 20px;
