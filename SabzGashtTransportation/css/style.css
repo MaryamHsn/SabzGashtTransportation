@@ -3442,6 +3442,8 @@ ul.personal_list li .grey_area span{
 }
 
     .container .bottom-slider {
+        /*width: calc(100% - 80px);
+        padding: 24px 20px 20px 20px;*/
         /*width: 1130px;*/
         /*width: calc(100% - 40px);*/
         z-index: 99;
@@ -3460,7 +3462,7 @@ ul.personal_list li .grey_area span{
             float: right;
             position: absolute;
             top: 14px;
-            right: 400px;
+            right: 300px;
             z-index: 100;
         }
 
@@ -3475,7 +3477,7 @@ ul.personal_list li .grey_area span{
 
         .container .bottom-slider .slides {
             margin: auto;
-            width: 1130px !important;
+            /*width: 1130px !important;*/
             direction: ltr;
         }
 
@@ -3486,7 +3488,7 @@ ul.personal_list li .grey_area span{
             float: right;
             position: absolute;
             top: 14px;
-            left: 400px;
+            left: 300px;
             z-index: 100;
         }
 
@@ -4255,7 +4257,8 @@ item {
     }
 
         .container .bottom-slider .slides {
-            width: 904px !important;
+            /*width: 904px !important;*/
+            width: 700px !important;
         }
 
     .footer-content ul.left_side {
