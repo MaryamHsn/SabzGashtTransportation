@@ -649,7 +649,7 @@ a.bg-danger:hover {
     display: block;
     background-color: #fff;
     padding: 0;
-    display: none;
+    /*display: none;*/
 }
 
     .sidebar form {
