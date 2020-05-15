@@ -402,6 +402,7 @@
     <Content Include="images\in_icon.png" />
     <Content Include="images\line_1.gif" />
     <Content Include="images\line_2.gif" />
+    <Content Include="images\logo.png" />
     <Content Include="images\main.jpg" />
     <Content Include="images\marker_1.gif" />
     <Content Include="images\marker_2.gif" />

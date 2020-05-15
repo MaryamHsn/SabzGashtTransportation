@@ -196,7 +196,18 @@ cite{
 	width: 319px;
 	float: right;
 	padding: 0px 0 0 1px;
+    height:100px;
 }
+    #header .top_info .logo img {
+        width: 319px;
+        float: right;
+        padding: 10px;
+        height: 60px;
+        transform: rotate(-1deg);
+        height: 264px;
+        margin-top: -46px;
+        margin-right: -30px;
+    }
     #header .top_info .logo a {
         font-family: Iranian Sans,Nazanin,'PTSansBold',Arial,sans-serif;
         font-size: 48px;
