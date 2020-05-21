@@ -176,8 +176,24 @@ namespace SabzGashtTransportation.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
+
+                    //main dashboard
+                }
+                else
+                {
+                    return View("AccessDeny");
+                }
+            }
+            else
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                return View();
+            }
         }
 
         //
@@ -187,33 +203,49 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                return View(model);
-            }
-            if (string.IsNullOrEmpty(returnUrl))
-            {
-                returnUrl = this.Url.Action("Index", "Admin", null);
-            }
-            // NOTE: You must add your claims **before** sign the user in.
-            // At the end of its execution chain SignInManager.PasswordSignInAsync method calls for SignInAsync method
-            // which is basically responsible for setting an authentication cookie which contains multiple claims about
-            // a user (one of them is its name).
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
 
-            // This doesn't count login failures towards lockout only two factor authentication
-            // To enable password failures to trigger lockout, change to shouldLockout: true
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false).ConfigureAwait(false);
-            switch (result)
+                    //main dashboard
+                }
+                else
+                {
+                    return View("AccessDeny");
+                }
+            }
+            else
             {
-                case SignInStatus.Success:
-                    return redirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
-                default:
-                    ModelState.AddModelError("", "نام کاربری یا رمز عبور اشتباه است");
+                if (!ModelState.IsValid)
+                {
                     return View(model);
+                }
+                if (string.IsNullOrEmpty(returnUrl))
+                {
+                    returnUrl = this.Url.Action("Index", "Admin", null);
+                }
+                // NOTE: You must add your claims **before** sign the user in.
+                // At the end of its execution chain SignInManager.PasswordSignInAsync method calls for SignInAsync method
+                // which is basically responsible for setting an authentication cookie which contains multiple claims about
+                // a user (one of them is its name).
+
+                // This doesn't count login failures towards lockout only two factor authentication
+                // To enable password failures to trigger lockout, change to shouldLockout: true
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false).ConfigureAwait(false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return redirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
+                    default:
+                        ModelState.AddModelError("", "نام کاربری یا رمز عبور اشتباه است");
+                        return View(model);
+                }
             }
         }
 
@@ -235,7 +267,23 @@ namespace SabzGashtTransportation.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
+
+                    //main dashboard
+                }
+                else
+                {
+                    return View("AccessDeny");
+                }
+            }
+            else
+            { 
+                return View();
+            }
         }
 
         //
@@ -245,24 +293,40 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName+"@gmail.com",PurePassword=model.Password };
-                //var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
-                var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
-                if (result.Succeeded)
+                if (User.IsInRole("Admin"))
                 {
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id).ConfigureAwait(false);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
-                    await _userManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>").ConfigureAwait(false);
-                    ViewBag.Link = callbackUrl;
-                    return View("DisplayEmail");
-                }
-                addErrors(result);
-            }
+                    return RedirectToAction("Index", "Admin");
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+                    //main dashboard
+                }
+                else
+                {
+                    return View("AccessDeny");
+                }
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName + "@gmail.com", PurePassword = model.Password };
+                    //var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
+                    var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
+                    if (result.Succeeded)
+                    {
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id).ConfigureAwait(false);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
+                        await _userManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>").ConfigureAwait(false);
+                        ViewBag.Link = callbackUrl;
+                        return View("DisplayEmail");
+                    }
+                    addErrors(result);
+                }
+
+                // If we got this far, something failed, redisplay form
+                return View(model);
+            }
         }
 
         //
