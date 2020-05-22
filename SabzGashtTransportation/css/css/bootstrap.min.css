@@ -1355,6 +1355,7 @@ h6, .h6 {
 p {
     margin: 0 0 10px;
     text-align:justify;
+    /*float:right;*/
 }
 
 .lead {
@@ -3129,8 +3130,8 @@ textarea.input-lg, select[multiple].input-lg {
 }
 
 .form-horizontal .form-group {
-    margin-right: -15px;
-    margin-left: -15px;
+    /*margin-right: -15px;
+    margin-left: -15px;*/
 }
 
 @media (min-width:768px) {
