@@ -648,8 +648,7 @@ a.bg-danger:hover {
 .sidebar {
     display: block;
     background-color: #fff;
-    padding: 0;
-    /*display: none;*/
+    padding: 0; 
 }
 
     .sidebar form {
@@ -684,7 +683,7 @@ a.bg-danger:hover {
         .sidebar {
             display: block;
             position: fixed;
-            top: 50px;
+            top: 50px;  
             bottom: 0;
             right: 0;
             z-index: 1000;
@@ -1280,7 +1279,7 @@ a.bg-danger:hover {
     }
 
     button, input, select[multiple], textarea {
-        background-image: none;
+        /*background-image: none;*/
     }
 
     input, button, select, textarea {

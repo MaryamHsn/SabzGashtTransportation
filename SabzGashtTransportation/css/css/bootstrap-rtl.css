@@ -256,9 +256,13 @@ blockquote.pull-left {
     .col-sm-offset-3 {
         margin-right: 25%;
         margin-left: 0;
-        width: 60%;  
+        width: 74%;
         float: right;
-        top:35px;
+        top: 97px;
+        position: fixed; 
+        overflow-x: auto;
+        /*overflow-y: auto;*/
+        height: 82%;
     } 
  
     .col-sm-3 {

@@ -34,12 +34,10 @@
         </div>
         <div class="form-group">
             <p class="control-label">کولر دار:</p>
-            <div class="col-md-10">
-                <div class="checkbox">
+            <div class="col-md-10"> 
                     @Html.EnumDropDownListFor(x => x.HasCoolerEnum, "انتخاب کنید", new { @class = "form-control" })
                     @*  @Html.DropDownList("کولر", (IEnumerable<SelectListItem>)ViewBag.AutomobileType, "--", htmlAttributes: new { @class = "form-control" })*@
                     @Html.ValidationMessageFor(model => model.HasCooler, "", new { @class = "text-danger" })
-                </div>
             </div>
         </div>
 
