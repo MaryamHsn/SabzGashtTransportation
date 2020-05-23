@@ -9,7 +9,6 @@
     [Table("RoutTbl")]
     public partial class RoutTbl : BaseEntity<int>
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RoutTbl()
         {
             DriverRoutTbls = new HashSet<DriverRoutTbl>();
@@ -33,7 +32,6 @@
        // public decimal AgreementPrice { get; set; }
         public int Count { get; set; }
 
-       // [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DriverRoutTbl> DriverRoutTbls { get; set; }
         public virtual RegionTbl RegionTbl { get; set; }
         public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; }

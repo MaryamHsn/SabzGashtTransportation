@@ -11,7 +11,7 @@ namespace Sabz.DomainClasses.DTO
     {
         public DriverTbl()
         {
-            AccidentTbls = new HashSet<AccidentTbl>();
+           // AccidentTbls = new HashSet<AccidentTbl>();
             DriverRoutTbls = new HashSet<DriverRoutTbl>();
             RepairmentTbls = new HashSet<RepairmentTbl>();
         }
@@ -37,16 +37,16 @@ namespace Sabz.DomainClasses.DTO
         public string NationalCode { get; set; }
         [StringLength(10)]
         public string LicenceCode { get; set; }
-        public DateTime BirthDate { get; set; }
-        [ForeignKey("AutomobileTbl")]
-        public int AutomobileId { get; set; }
+        public DateTime? BirthDate { get; set; }
+       // [ForeignKey("AutomobileTbl")]
+        public int? AutomobileId { get; set; }
         public string Address { get; set; }
         [StringLength(15)]
         public string Phone1 { get; set; }
         [StringLength(15)]
         public string Phone2 { get; set; }
-        public virtual ICollection<AccidentTbl> AccidentTbls { get; set; }
-        public virtual AutomobileTbl AutomobileTbl { get; set; }
+       // public virtual ICollection<AccidentTbl> AccidentTbls { get; set; }
+       // public virtual AutomobileTbl AutomobileTbl { get; set; }
         public virtual ICollection<DriverRoutTbl> DriverRoutTbls { get; set; }
         public virtual ICollection<RepairmentTbl> RepairmentTbls { get; set; }
         public virtual ICollection<PaymentTbl> PaymentTbls { get; set; }

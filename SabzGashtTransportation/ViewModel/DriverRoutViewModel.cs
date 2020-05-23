@@ -10,13 +10,13 @@ namespace SabzGashtTransportation.ViewModel
         public string RoutRegionName { get; set; }
         public DateTime RoutStartDate { get; set; }
         public string RoutStartDateString { get; set; }
-        public int DriverId { get; set; }
+        public int? DriverId { get; set; }
         public string DriverFullName { get; set; }
-        public int RoutId { get; set; }
+        public int? RoutId { get; set; }
         public string RoutName { get; set; }
-        public int RoutShiftType { get; set; }
+        public int? RoutShiftType { get; set; }
         public ShiftTypeEnum ShiftTypeEnum { get; set; }
-        public int RoutTransactionType { get; set; }//عادی- نیمراه تک-
+        public int? RoutTransactionType { get; set; }//عادی- نیمراه تک-
         public RoutTransactionTypeEnum RoutTransactionTypeEnum { get; set; }
         public string RoutEnterTimeString { get; set; }
         public string RoutExitTimeString { get; set; }
@@ -25,7 +25,7 @@ namespace SabzGashtTransportation.ViewModel
         public bool IsActive { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreateDateString { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public string ModifiedDateString { get; set; }
         public IList<DriverViewModel> DriverList{ get; set; }
         public IList<DriverViewModel> AllocateDriverList{ get; set; }

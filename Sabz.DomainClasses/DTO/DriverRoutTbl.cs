@@ -9,8 +9,7 @@ namespace Sabz.DomainClasses.DTO
     [Table("DriverRoutTbl")]
     public partial class DriverRoutTbl : BaseEntity<int>
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DriverRoutTbl()
+       public DriverRoutTbl()
         {
             LogDriverRoutTbls = new HashSet<LogDriverRoutTbl>();
         }
@@ -18,10 +17,8 @@ namespace Sabz.DomainClasses.DTO
         public int DriverId { get; set; }
         [ForeignKey("RoutTbl")]
         public int RoutId { get; set; }
-        //public int IsTemporary { get; set; }
         public virtual DriverTbl DriverTbl { get; set; }
         public virtual RoutTbl RoutTbl { get; set; }
-      //  [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LogDriverRoutTbl> LogDriverRoutTbls { get; set; }
     }
 }

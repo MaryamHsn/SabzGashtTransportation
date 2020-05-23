@@ -11,8 +11,8 @@ namespace SabzGashtTransportation.ViewModel
 
         public string SearchDateFrom { get; set; }
         public string SearchDateTo { get; set; }
-        public int RegionId { get; set; }
-        public int DriverId { get; set; }
+        public int? RegionId { get; set; }
+        public int? DriverId { get; set; }
 
         public IEnumerable<RegionTbl> Regions { get; set; }
         public PagedList.IPagedList<SabzGashtTransportation.ViewModel.RoutViewModel> RoutViewModels { get; set; }

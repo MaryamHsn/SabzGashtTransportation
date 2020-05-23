@@ -13,10 +13,10 @@ namespace Sabz.DomainClasses.DTO
         public decimal? Cost { get; set; }
         public string Description { get; set; }
         [ForeignKey("DriverTbl")]
-        public int DriverId { get; set; }
+        public int? DriverId { get; set; }
         public virtual DriverTbl DriverTbl { get; set; }
         [ForeignKey("AutomobileTbl")]
-        public int AutomobileId { get; set; }
+        public int? AutomobileId { get; set; }
         public virtual AutomobileTbl AutomobileTbl { get; set; }
 
     }

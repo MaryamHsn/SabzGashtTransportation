@@ -124,7 +124,7 @@ namespace SabzGashtTransportation.Controllers
                         return HttpNotFound();
                     }
                     var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                    obj.BirthDateString = driver.BirthDate != null ? driver.BirthDate.ToPersianDateString() : "";
+                    obj.BirthDateString = driver.BirthDate != null ? ((DateTime)(driver.BirthDate)).ToPersianDateString() : "";
                     obj.DriverId = driver.Id;
                     return View(obj);
                 }
@@ -161,7 +161,8 @@ namespace SabzGashtTransportation.Controllers
                     if (ModelState.IsValid)
                     {
                         var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                        obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
+                        if (driver.BirthDateString != null)
+                            obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
                         obj.IsActive = true;
                         obj.CreatedDate = DateTime.Now;
                         obj.ModifiedDate = DateTime.Now;
@@ -190,7 +191,7 @@ namespace SabzGashtTransportation.Controllers
                     obj.Automobiles = _automobile.GetAllAutomobiles();
                     obj.BirthDateString = obj.BirthDate != null
                         ? obj.BirthDate.ToPersianDateString()
-                        : driver.BirthDate.ToPersianDateString();
+                        : ((DateTime)(driver.BirthDate)).ToPersianDateString();
                     obj.DriverId = driver.Id;
                     if (driver == null)
                     {
@@ -250,7 +251,7 @@ namespace SabzGashtTransportation.Controllers
                         return HttpNotFound();
                     }
                     var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                    obj.BirthDateString = driver.BirthDate.ToPersianDateString();
+                    obj.BirthDateString = ((DateTime)(driver.BirthDate)).ToPersianDateString();
                     return View(obj);
                 }
             }

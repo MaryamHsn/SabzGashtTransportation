@@ -101,6 +101,10 @@
     <Compile Include="Migrations\202005132006314_addColomn2DriverTbl.Designer.cs">
       <DependentUpon>202005132006314_addColomn2DriverTbl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005231126541_chngeRelationAndAllowNull.cs" />
+    <Compile Include="Migrations\202005231126541_chngeRelationAndAllowNull.Designer.cs">
+      <DependentUpon>202005231126541_chngeRelationAndAllowNull.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\PaymentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005132006314_addColomn2DriverTbl.resx">
       <DependentUpon>202005132006314_addColomn2DriverTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005231126541_chngeRelationAndAllowNull.resx">
+      <DependentUpon>202005231126541_chngeRelationAndAllowNull.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

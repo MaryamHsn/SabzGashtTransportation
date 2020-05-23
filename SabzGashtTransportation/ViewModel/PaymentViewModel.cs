@@ -13,11 +13,11 @@ namespace SabzGashtTransportation.ViewModel
         public decimal? Tax { get; set; }
         public decimal? AccidentCost { get; set; }
         public bool IsActive { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string CreatedDateString { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public string ModifiedDateString { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string CreateDateString { get; set; }
         public int? DriverId { get; set; }
         public string DriverFirstName { get; set; }

@@ -12,8 +12,8 @@ namespace SabzGashtTransportation.ViewModel
         public string Number { get; set; }
         public string CreateYear { get; set; }
         public int? AutomobileTypeId { get; set; }
-        public int HasCooler { get; set; }
-        public int IsBus { get; set; }
+        public int? HasCooler { get; set; }
+        public int? IsBus { get; set; }
         public  AutomobileTypeTbl AutomobileType { get; set; }
         public AutomobileTypeEnum IsBusEnum { get; set; }
         public HasCoolerEnum HasCoolerEnum { get; set; }

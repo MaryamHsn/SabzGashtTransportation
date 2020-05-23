@@ -9,21 +9,19 @@ namespace Sabz.DomainClasses.DTO
     [Table("AutomobileTbl")]
     public partial class AutomobileTbl : BaseEntity<int>
     {
-        public AutomobileTbl()
-        {
-            DriverTbls = new HashSet<DriverTbl>();
-        }
+        //public AutomobileTbl()
+        //{
+        //    DriverTbls = new HashSet<DriverTbl>();
+        //}
         [StringLength(13)]
-        public string Number { get; set; }
-        //[StringLength(10)]
-        //public string Shasi { get; set; }
+        public string Number { get; set; } 
         [StringLength(10)]
         public string CreateYear { get; set; }
 
-        [ForeignKey("AutomobileTypeTbl")]
-        public int AutomobileTypeId { get; set; }
+        //[ForeignKey("AutomobileTypeTbl")]
+        public int? AutomobileTypeId { get; set; }
         public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; }
-        public virtual ICollection<DriverTbl> DriverTbls { get; set; }
-        public virtual ICollection<AccidentTbl> AccidentTbls { get; set; }
+        //public virtual ICollection<DriverTbl> DriverTbls { get; set; }
+        //public virtual ICollection<AccidentTbl> AccidentTbls { get; set; }
     }
 }

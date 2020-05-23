@@ -9,22 +9,22 @@ namespace SabzGashtTransportation.ViewModel
     {
         public int RoutID { get; set; }
         //  public string Name { get; set; }
-        public int ShiftType { get; set; }
+        public int? ShiftType { get; set; }
         public ShiftTypeEnum ShiftTypeEnum { get; set; }
-        public int RoutTransactionType { get; set; }
+        public int? RoutTransactionType { get; set; }
         public RoutTransactionTypeEnum RoutTransactionTypeEnum { get; set; }
         public TimeSpan EnterTime { get; set; }
         public string EnterTimeString { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public string StartDateString { get; set; }
-        public int RegionId { get; set; }
+        public int? RegionId { get; set; }
         public string RegionName { get; set; }
-        public int AutomobileTypeId { get; set; }
-        public int HasCooler { get; set; }
-        public int IsBus { get; set; }
-        public int Count { get; set; }
-        public int Allocate { get; set; }
-        public int RemainAllocate { get; set; }
+        public int? AutomobileTypeId { get; set; }
+        public int? HasCooler { get; set; }
+        public int? IsBus { get; set; }
+        public int? Count { get; set; }
+        public int? Allocate { get; set; }
+        public int? RemainAllocate { get; set; }
         public bool IsActive { get; set; }
         //public DateTime CreatedDate { get; set; }
         //public string CreatedDateString { get; set; }
@@ -88,22 +88,22 @@ namespace SabzGashtTransportation.ViewModel
         //public int HasNotCoolerExitMiniBusRoutTransactionFiveSeven { get; set; }
 
 
-        public int RoutTransactionSingleBus { get; set; }
-        public int RoutTransactionSingleMiniBus { get; set; }
-        public int RoutTransactionSingleHasCoolerBus { get; set; }
-        public int RoutTransactionSingleHasCoolerMiniBus { get; set; }
-        public int RoutTransactionRegularBus { get; set; }
-        public int RoutTransactionRegularMiniBus { get; set; }
-        public int RoutTransactionRegularHasCoolerBus { get; set; }
-        public int RoutTransactionRegularHasCoolerMiniBus { get; set; }
-        public int RoutTransactionThereeFourBus { get; set; }
-        public int RoutTransactionThereeFourMiniBus { get; set; }
-        public int RoutTransactionThereeFourHasCoolerBus { get; set; }
-        public int RoutTransactionThereeFourHasCoolerMiniBus { get; set; }
-        public int RoutTransactionFiveSevenBus { get; set; }
-        public int RoutTransactionFiveSevenMiniBus { get; set; }
-        public int RoutTransactionFiveSevenHasCoolerBus { get; set; }
-        public int RoutTransactionFiveSevenHasCoolerMiniBus { get; set; }
+        public int? RoutTransactionSingleBus { get; set; }
+        public int? RoutTransactionSingleMiniBus { get; set; }
+        public int? RoutTransactionSingleHasCoolerBus { get; set; }
+        public int? RoutTransactionSingleHasCoolerMiniBus { get; set; }
+        public int? RoutTransactionRegularBus { get; set; }
+        public int? RoutTransactionRegularMiniBus { get; set; }
+        public int? RoutTransactionRegularHasCoolerBus { get; set; }
+        public int? RoutTransactionRegularHasCoolerMiniBus { get; set; }
+        public int? RoutTransactionThereeFourBus { get; set; }
+        public int? RoutTransactionThereeFourMiniBus { get; set; }
+        public int? RoutTransactionThereeFourHasCoolerBus { get; set; }
+        public int? RoutTransactionThereeFourHasCoolerMiniBus { get; set; }
+        public int? RoutTransactionFiveSevenBus { get; set; }
+        public int? RoutTransactionFiveSevenMiniBus { get; set; }
+        public int? RoutTransactionFiveSevenHasCoolerBus { get; set; }
+        public int? RoutTransactionFiveSevenHasCoolerMiniBus { get; set; }
 
 
 
