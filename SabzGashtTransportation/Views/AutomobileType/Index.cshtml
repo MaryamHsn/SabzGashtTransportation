@@ -16,13 +16,15 @@
 
 <button type="button" onclick="location.href='@Url.Action("create")';return false;" class="btn btn-success">مدل ماشین جدید</button>
 
-@using (Html.BeginForm("Index", "AutomobileType", FormMethod.Get))
+@*@using (Html.BeginForm("Index", "AutomobileType", FormMethod.Get))
 {
     <p class="search_table">
         جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="جستجو" />
+        <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("index")';return false;">
+
     </p>
-}
+}*@
 <table id="showList">
     <tr>
         <th>
@@ -37,9 +39,9 @@
         <th>
             توضیحات
         </th>
-        <th>
+        @*<th>
             عملیات
-        </th>
+        </th>*@
     </tr>
 
     @foreach (var item in Model)
@@ -59,11 +61,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
+            @*<td>
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
                 @Html.ActionLink("حذف", "Delete", new { id = item.Id })
-            </td>
+            </td>*@
         </tr>
         counter += 1;
 

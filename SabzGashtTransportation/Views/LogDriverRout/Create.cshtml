@@ -220,7 +220,7 @@
                     @Html.ValidationMessageFor(modelItem => modelItem[i].HasDelay, "", new { @class = "text-danger" })
                 </td>
                 <td>
-                    @Html.EditorFor(modelItem => modelItem[i].FinePrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(modelItem => modelItem[i].FinePrice)
                     @Html.ValidationMessageFor(modelItem => modelItem[i].FinePrice, "", new { @class = "text-danger" })
                 </td>
             </tr>

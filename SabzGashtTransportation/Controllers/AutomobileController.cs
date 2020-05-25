@@ -38,71 +38,71 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    commonList = new List<AutomobileViewModel>();
-                    ViewBag.CurrentSort = sortOrder;
-                    ViewBag.Number = String.IsNullOrEmpty(sortOrder) ? "number_desc" : "";
-                    ViewBag.Shasi = sortOrder == "shasi" ? "shasi_desc" : "shasi";
-                    ViewBag.AutomobileType = sortOrder == "automobileType" ? "automobileType_desc" : "automobileType";
-                    ViewBag.AutomobileTypeCooler = sortOrder == "automobileTypeCooler" ? "automobileTypeCooler_desc" : "automobileTypeCooler";
-                    if (searchString != null)
+                    if (User.IsInRole("Admin"))
                     {
-                        page = 1;
-                    }
-                    else
-                    {
-                        searchString = currentFilter;
-                    }
+                            commonList = new List<AutomobileViewModel>();
+                        ViewBag.CurrentSort = sortOrder;
+                        ViewBag.Number = String.IsNullOrEmpty(sortOrder) ? "number_desc" : ""; 
+                        ViewBag.AutomobileType = sortOrder == "automobileType" ? "automobileType_desc" : "automobileType";
+                        ViewBag.AutomobileTypeCooler = sortOrder == "automobileTypeCooler" ? "automobileTypeCooler_desc" : "automobileTypeCooler";
+                        int pageSize = 1000;
+                        int pageNumber = (page ?? 1);
+                        if (searchString != null)
+                            page = 1;
+                        else
+                            searchString = currentFilter;
+                        ViewBag.CurrentFilter = searchString;
+                        var list = _automobile.GetAllAutomobiles();
+                        if (!String.IsNullOrEmpty(searchString))
+                        {
+                            list = list.Where(s => s.Number.Contains(searchString)
+                                                   || s.AutomobileTypeId.ToString().Contains(searchString)).ToList();
+                        }
+                        switch (sortOrder)
+                        {
+                            case "number_desc":
+                                list = list.OrderByDescending(s => s.Number).ToList();
+                                break;
+                            case "automobileType":
+                                list = list.OrderBy(s => s.AutomobileTypeId).ToList();
+                                break;
+                            case "automobileType_desc":
+                                list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
+                                break;
+                            case "automobileTypeCooler":
+                                list = list.OrderBy(s => s.AutomobileTypeId).ToList();
+                                break;
+                            case "automobileTypeCooler_desc":
+                                list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
+                                break;
+                            default:
+                                list = list.OrderBy(s => s.Number).ToList();
+                                break;
+                        }
 
-                    ViewBag.CurrentFilter = searchString;
-                    var list = _automobile.GetAllAutomobiles();
-                    if (!String.IsNullOrEmpty(searchString))
-                    {
-                        list = list.Where(s => s.Number.Contains(searchString)
-                                               || s.AutomobileTypeId.ToString().Contains(searchString)).ToList();
+                        var AutomobileTypes = _automobileType.GetAllAutomobileTypes();
+                        foreach (var item in list)
+                        {
+                            var element = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(item);
+                            element.AutomobileType =
+                                AutomobileTypes.Where(x => x.Id == item.AutomobileTypeId).FirstOrDefault();
+                            element.AutoId = item.Id;
+                            element.AutomobileTypeId = item.AutomobileTypeId;
+                            commonList.Add(element);
+                        }
+                        return View(commonList.ToPagedList(pageNumber, pageSize));
                     }
-                    switch (sortOrder)
-                    {
-                        case "number_desc":
-                            list = list.OrderByDescending(s => s.Number).ToList();
-                            break;
-                        case "automobileType":
-                            list = list.OrderBy(s => s.AutomobileTypeId).ToList();
-                            break;
-                        case "automobileType_desc":
-                            list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
-                            break;
-                        case "automobileTypeCooler":
-                            list = list.OrderBy(s => s.AutomobileTypeId).ToList();
-                            break;
-                        case "automobileTypeCooler_desc":
-                            list = list.OrderByDescending(s => s.AutomobileTypeId).ToList();
-                            break;
-                        default:
-                            list = list.OrderBy(s => s.Number).ToList();
-                            break;
-                    }
-
-                    int pageSize = 1000;
-                    int pageNumber = (page ?? 1);
-                    var AutomobileTypes = _automobileType.GetAllAutomobileTypes();
-
-                    foreach (var item in list)
-                    {
-                        var element = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(item);
-                        element.AutomobileType =
-                            AutomobileTypes.Where(x => x.Id == item.AutomobileTypeId).FirstOrDefault();
-                        element.AutoId = item.Id;
-                        element.AutomobileTypeId = item.AutomobileTypeId;
-                        commonList.Add(element);
-                    }
-                    return View(commonList.ToPagedList(pageNumber, pageSize));
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]
@@ -157,33 +157,37 @@ namespace SabzGashtTransportation.Controllers
         //[Authorize(Roles = "admin , SuperViser")]
         public ActionResult Create(AutomobileViewModel automobile)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    if (ModelState.IsValid)
+                    if (User.IsInRole("Admin"))
                     {
-                        var obj = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
-                        if (automobile.Number == null)
+                        if (ModelState.IsValid)
                         {
-                            obj.Number = "";
+                            var obj = BaseMapper<AutomobileViewModel, AutomobileTbl>.Map(automobile);
+                            if (automobile.Number == null)
+                                obj.Number = "";
+                            if (automobile.CreateYear == null)
+                                obj.CreateYear = "";
+                            obj.IsActive = true;
+                            obj.CreatedDate = DateTime.Now;
+                            obj.ModifiedDate = DateTime.Now;
+                            obj.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus((int)automobile.HasCoolerEnum, (int)automobile.IsBusEnum);
+                            if (obj.AutomobileTypeTbl != null)
+                                obj.AutomobileTypeId = obj.AutomobileTypeTbl.Id;
+                            _automobile.AddNewAutomobile(obj);
+                            _uow.SaveAllChanges();
                         }
-                        if (automobile.CreateYear == null)
-                        {
-                            obj.CreateYear= "";
-                        }
-                        obj.IsActive = true;
-                        obj.CreatedDate = DateTime.Now;
-                        obj.ModifiedDate = DateTime.Now;
-                        obj.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus((int)automobile.HasCoolerEnum, (int)automobile.IsBusEnum);
-                        obj.AutomobileTypeId = obj.AutomobileTypeTbl.Id;
-                        _automobile.AddNewAutomobile(obj);
-                        _uow.SaveAllChanges();
+                        return View();
                     }
-                    return RedirectToAction("Index");
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]
@@ -219,25 +223,37 @@ namespace SabzGashtTransportation.Controllers
         //[Authorize(Roles = "admin , SuperViser")]
         public ActionResult Edit(AutomobileViewModel automobile)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    if (ModelState.IsValid)
+                    if (User.IsInRole("Admin"))
                     {
-                        automobile.IsBus = (int)automobile.IsBusEnum;
-                        automobile.HasCooler = (int)automobile.HasCoolerEnum;
-                        var obj = BaseMapper<AutomobileTbl, AutomobileViewModel>.Map(automobile);
-                        obj.Id = automobile.AutoId;
-                        obj.IsActive = true;
-                        obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus(automobile.HasCooler, automobile.IsBus).Id;
-                        _automobile.UpdateAutomobile(obj);
-                        _uow.SaveAllChanges();
+                        if (ModelState.IsValid)
+                        {
+                            automobile.IsBus = (int)automobile.IsBusEnum;
+                            automobile.HasCooler = (int)automobile.HasCoolerEnum;
+                            var obj = BaseMapper<AutomobileTbl, AutomobileViewModel>.Map(automobile);
+                            if (automobile.AutoId != 0)
+                                obj.Id = automobile.AutoId;
+                            obj.IsActive = true;
+                            var autoType = _automobileType.GetAutomobileTypeByCoolerBus((int)automobile.HasCooler, (int)automobile.IsBus);
+                            if (autoType != null)
+                            {
+                                obj.AutomobileTypeId = autoType.Id;
+                            }
+                            _automobile.UpdateAutomobile(obj);
+                            _uow.SaveAllChanges();
+                        }
+                        return View();
                     }
-                    return RedirectToAction("Index");
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]

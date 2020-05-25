@@ -115,23 +115,31 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(RegionViewModel region)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    if (ModelState.IsValid)
+                    if (User.IsInRole("Admin"))
                     {
-                        var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
-                        obj.IsActive = true;
-                        obj.CreatedDate = DateTime.Now;
-                        obj.ModifiedDate = DateTime.Now;
-                        _region.AddNewRegion(obj);
-                        _uow.SaveAllChanges();
+                        if (ModelState.IsValid)
+                        {
+                            var obj = BaseMapper<RegionViewModel, RegionTbl>.Map(region);
+                            obj.IsActive = true;
+                            obj.CreatedDate = DateTime.Now;
+                            obj.ModifiedDate = DateTime.Now;
+                            _region.AddNewRegion(obj);
+                            _uow.SaveAllChanges();
+                        }
+                        return RedirectToAction("Index");
                     }
-                    return RedirectToAction("Index");
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]

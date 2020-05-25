@@ -19,7 +19,7 @@
         <div class="form-group">
             <p class="control-label"> محدوده:</p>
             <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.RegionTblList, "Id", "RegionName"), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.RegionTblList, "Id", "RegionName"), "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.RegionId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -89,4 +89,4 @@
 
 <div class="link-back">
     @Html.ActionLink("بازگشت به لیست", "Index")
-</div>
+</div> 

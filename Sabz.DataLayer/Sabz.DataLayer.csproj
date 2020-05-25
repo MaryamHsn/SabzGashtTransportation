@@ -105,6 +105,18 @@
     <Compile Include="Migrations\202005231126541_chngeRelationAndAllowNull.Designer.cs">
       <DependentUpon>202005231126541_chngeRelationAndAllowNull.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005231555599_update.cs" />
+    <Compile Include="Migrations\202005231555599_update.Designer.cs">
+      <DependentUpon>202005231555599_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005231907000_checkNullRoutTbl.cs" />
+    <Compile Include="Migrations\202005231907000_checkNullRoutTbl.Designer.cs">
+      <DependentUpon>202005231907000_checkNullRoutTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005240842361_NullableRoutTbl.cs" />
+    <Compile Include="Migrations\202005240842361_NullableRoutTbl.Designer.cs">
+      <DependentUpon>202005240842361_NullableRoutTbl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\PaymentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,6 +169,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005231126541_chngeRelationAndAllowNull.resx">
       <DependentUpon>202005231126541_chngeRelationAndAllowNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005231555599_update.resx">
+      <DependentUpon>202005231555599_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005231907000_checkNullRoutTbl.resx">
+      <DependentUpon>202005231907000_checkNullRoutTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005240842361_NullableRoutTbl.resx">
+      <DependentUpon>202005240842361_NullableRoutTbl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

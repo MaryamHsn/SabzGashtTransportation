@@ -18,10 +18,12 @@
 
 @using (Html.BeginForm("Index", "Region", FormMethod.Get))
 {
-    <p class="search_table">
-        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="جستجو" />
-    </p>
+<p class="search_table">
+    جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+    <input type="submit" value="جستجو" />
+    <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("index")';return false;">
+
+</p>
 }
 <table id="showList">
     <tr>

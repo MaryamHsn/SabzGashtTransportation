@@ -1,21 +1,23 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.Enumration;
 
 namespace SabzGashtTransportation.ViewModel
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class RoutViewModel
     {
-        public int RoutID { get; set; }
-        //  public string Name { get; set; }
-        public int? ShiftType { get; set; }
+        public int RoutID { get; set; } 
+        public int ShiftType { get; set; }
+        public string ShiftTypeString { get; set; }
         public ShiftTypeEnum ShiftTypeEnum { get; set; }
-        public int? RoutTransactionType { get; set; }
+        public int RoutTransactionType { get; set; } 
         public RoutTransactionTypeEnum RoutTransactionTypeEnum { get; set; }
         public TimeSpan EnterTime { get; set; }
-        public string EnterTimeString { get; set; }
-        public DateTime? StartDate { get; set; }
+        public DateTime StartDate { get; set; }
+        [RegularExpression(@"^$|^((1[34][0-9][0-9] |[0-9][0-9])(\/|\-)([0 ۰]{0,1}[۱-۶ 1-6])(\/|\-)([0 ۰]{0,1}[۱-۹ 1-9]|[۱۲12][۰-۹ 0-9]|[3۳][01۰۱])|[1۱][۰-۹ 0-9]{3}(\/|\-)([۰0]{0,1}[۷-۹ 7-9]|[1۱][۰۱۲012])(\/|\-)([۰0]{0,1}[1-9 ۱-۹]|[12۱۲][0-9 ۰-۹]|(30|۳۰)))$", ErrorMessage = "تاریخ وارد شده نامعتبر است.فرمت صحیح به صورت سال/ماه/روز است")]
         public string StartDateString { get; set; }
         public int? RegionId { get; set; }
         public string RegionName { get; set; }
@@ -26,68 +28,6 @@ namespace SabzGashtTransportation.ViewModel
         public int? Allocate { get; set; }
         public int? RemainAllocate { get; set; }
         public bool IsActive { get; set; }
-        //public DateTime CreatedDate { get; set; }
-        //public string CreatedDateString { get; set; }
-        //public DateTime ModifiedDate { get; set; }
-        //public string ModifiedDateString { get; set; }
-
-        // public int EnterShiftType { get; set; }
-        // public int ExitShiftType { get; set; }
-        // public int HasCoolerEnter { get; set; }
-        // public int HasNotCoolerEnter { get; set; }
-        // public int HasCoolerExit { get; set; }
-        // public int HasNotCoolerExit { get; set; } 
-        //public int HasCoolerEnterBus { get; set; }
-        //public int HasCoolerEnterMiniBus { get; set; }
-        // public int HasNotCoolerEnterBus { get; set; }
-        // public int HasNotCoolerEnterMiniBus { get; set; }
-        // public int HasCoolerExitBus { get; set; }
-        // public int HasCoolerExitMiniBus { get; set; }
-        // public int HasNotCoolerExitBus { get; set; }  
-        // public int HasNotCoolerExitMiniBus { get; set; }
-
-
-        //public int HasCoolerEnterBusRoutTransactionSingle { get; set; }
-        //public int HasCoolerEnterBusRoutTransactionRegular { get; set; }
-        //public int HasCoolerEnterBusRoutTransactionThereeFour { get; set; }
-        //public int HasCoolerEnterBusRoutTransactionFiveSeven { get; set; }
-
-        //public int HasCoolerEnterMiniBusRoutTransactionSingle { get; set; }
-        //public int HasCoolerEnterMiniBusRoutTransactionRegular { get; set; }
-        //public int HasCoolerEnterMiniBusRoutTransactionThereeFour { get; set; }
-        //public int HasCoolerEnterMiniBusRoutTransactionFiveSeven { get; set; }
-
-        //public int HasNotCoolerEnterBusRoutTransactionSingle { get; set; }
-        //public int HasNotCoolerEnterBusRoutTransactionRegular { get; set; }
-        //public int HasNotCoolerEnterBusRoutTransactionThereeFour { get; set; }
-        //public int HasNotCoolerEnterBusRoutTransactionFiveSeven { get; set; }
-
-        //public int HasNotCoolerEnterMiniBusRoutTransactionSingle { get; set; }
-        //public int HasNotCoolerEnterMiniBusRoutTransactionRegular { get; set; }
-        //public int HasNotCoolerEnterMiniBusRoutTransactionThereeFour { get; set; }
-        //public int HasNotCoolerEnterMiniBusRoutTransactionFiveSeven { get; set; }
-
-        //public int HasCoolerExitBusRoutTransactionSingle { get; set; }
-        //public int HasCoolerExitBusRoutTransactionRegular { get; set; }
-        //public int HasCoolerExitBusRoutTransactionThereeFour { get; set; }
-        //public int HasCoolerExitBusRoutTransactionFiveSeven { get; set; }
-
-        //public int HasCoolerExitMiniBusRoutTransactionSingle { get; set; }
-        //public int HasCoolerExitMiniBusRoutTransactionRegular { get; set; }
-        //public int HasCoolerExitMiniBusRoutTransactionThereeFour { get; set; }
-        //public int HasCoolerExitMiniBusRoutTransactionFiveSeven { get; set; }
-
-        //public int HasNotCoolerExitBusRoutTransactionSingle { get; set; }
-        //public int HasNotCoolerExitBusRoutTransactionRegular { get; set; }
-        //public int HasNotCoolerExitBusRoutTransactionThereeFour { get; set; }
-        //public int HasNotCoolerExitBusRoutTransactionFiveSeven { get; set; }
-
-        //public int HasNotCoolerExitMiniBusRoutTransactionSingle { get; set; }
-        //public int HasNotCoolerExitMiniBusRoutTransactionRegular { get; set; }
-        //public int HasNotCoolerExitMiniBusRoutTransactionThereeFour { get; set; }
-        //public int HasNotCoolerExitMiniBusRoutTransactionFiveSeven { get; set; }
-
-
         public int? RoutTransactionSingleBus { get; set; }
         public int? RoutTransactionSingleMiniBus { get; set; }
         public int? RoutTransactionSingleHasCoolerBus { get; set; }
@@ -104,16 +44,9 @@ namespace SabzGashtTransportation.ViewModel
         public int? RoutTransactionFiveSevenMiniBus { get; set; }
         public int? RoutTransactionFiveSevenHasCoolerBus { get; set; }
         public int? RoutTransactionFiveSevenHasCoolerMiniBus { get; set; }
-
-
-
-
         public AutomobileTypeTbl AutomobileTypeTbl { get; set; }
         public ICollection<RegionTbl> RegionTblList { get; set; }
         public AutomobileTypeEnum IsBusEnum { get; set; }
         public HasCoolerEnum HasCoolerEnum { get; set; }
-
-        //public virtual ICollection<DriverRoutTbl> DriverRoutTbls { get; set; }
-        //public virtual RegionTbl RegionTbl { get; set; }
     }
 }

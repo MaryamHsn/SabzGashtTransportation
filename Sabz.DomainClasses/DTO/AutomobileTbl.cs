@@ -17,8 +17,7 @@ namespace Sabz.DomainClasses.DTO
         public string Number { get; set; } 
         [StringLength(10)]
         public string CreateYear { get; set; }
-
-        //[ForeignKey("AutomobileTypeTbl")]
+        [ForeignKey("AutomobileTypeTbl")]
         public int? AutomobileTypeId { get; set; }
         public virtual AutomobileTypeTbl AutomobileTypeTbl { get; set; }
         //public virtual ICollection<DriverTbl> DriverTbls { get; set; }

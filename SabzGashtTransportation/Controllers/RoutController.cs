@@ -10,6 +10,7 @@ using PagedList;
 using Sabz.DataLayer.Context;
 using Sabz.DomainClasses.DTO;
 using Sabz.ServiceLayer.Enumration;
+using Sabz.ServiceLayer.Extension;
 using Sabz.ServiceLayer.IService;
 using Sabz.ServiceLayer.Mapper;
 using Sabz.ServiceLayer.Utils;
@@ -39,196 +40,202 @@ namespace SabzGashtTransportation.Controllers
 
         // [Authorize(Roles = "admin , SuperViser")]
         [HttpGet]
-        public ActionResult Index(RoutFullViewModel fullRout, string sortOrder, int? page)//string SearchRout, string currentFilter, string searchString
+        public ActionResult Index(RoutFullViewModel fullRout)//string SearchRout, string currentFilter, string searchString
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    commonList = new List<RoutViewModel>();
-                    var FullcommonList = new RoutFullViewModel();
-                    int pageSize = 1000;
-                    int pageNumber = (page ?? 1);
-                    var allRegion = _region.GetAllRegions();
-                    var list = new List<RoutTbl>();
-                    DateTime startDate = DateTime.Now.Date;
-                    DateTime endDate = DateTime.Now.AddDays(1).Date;
-                    FullcommonList.Regions = allRegion;
-
-                    //IEnumerable<SelectListItem> regionItems = _region.GetAllRegions().Select(c => new SelectListItem
-                    //{
-                    //    Value = c.Id.ToString(),
-                    //    Text = c.RegionName
-                    //});
-                    //if (!string.IsNullOrWhiteSpace(dropRegionId))
-                    //{
-                    //    ViewBag.Region = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
-                    //  //  TempData["Region"] = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
-                    //}
-                    //else
-                    //{
-                    //    //dropRegionId = allRegion.FirstOrDefault().Id.ToString();
-                    //    dropRegionId = ViewBag.Region != null ? ViewBag.Rgion : "0";
-                    //    //dropRegionId = TempData["Region"] != null ? TempData["Region"].ToString() : "0";
-                    //}
-                    // ViewBag.RegionItems = regionItems;
-                    ViewBag.CurrentSort = sortOrder;
-                    ViewBag.ShiftType = String.IsNullOrEmpty(sortOrder) ? "shiftType_desc" : "";
-                    ViewBag.RegionId = sortOrder == "region" ? "region_desc" : "region";
-                    ViewBag.Date = sortOrder == "date" ? "date_desc" : "date";
-                    ViewBag.EnterTime = sortOrder == "enterTime" ? "enterTime_desc" : "enterTime";
-                    ViewBag.TransactionType = sortOrder == "transactionType" ? "transactionType_desc" : "transactionType";
-                    ViewBag.AutomobileTypeBus = sortOrder == "automobileTypeBus" ? "automobileTypeBus_desc" : "automobileTypeBus";
-                    ViewBag.AutomobileTypeCooler = sortOrder == "automobileTypeCooler" ? "automobileTypeCooler_desc" : "automobileTypeCooler";
-                    ViewBag.Count = sortOrder == "count" ? "count_desc" : "count";
-
-
-                    //if (!string.IsNullOrWhiteSpace(searchDate))
-                    //{
-                    //    list = _rout.GetAllRoutsByDateByRegionId((DateTime)searchDate.ToGeorgianDate(), int.Parse(dropRegionId)).ToList();
-                    //}
-                    if (!string.IsNullOrWhiteSpace(fullRout.SearchDateFrom) && !string.IsNullOrWhiteSpace(fullRout.SearchDateTo))
+                    if (User.IsInRole("Admin"))
                     {
-                        list = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)fullRout.SearchDateFrom.ToGeorgianDate(), (DateTime)fullRout.SearchDateTo.ToGeorgianDate(), fullRout.RegionId).ToList();
-                    }
-                    else if (!string.IsNullOrWhiteSpace(fullRout.SearchDateFrom) && string.IsNullOrWhiteSpace(fullRout.SearchDateTo))
-                    {
-                        list = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)fullRout.SearchDateFrom.ToGeorgianDate(), endDate, fullRout.RegionId).ToList();
-                    }
-                    else if (string.IsNullOrWhiteSpace(fullRout.SearchDateFrom))
-                    {
-                        list = _rout.GetAllRoutsByDateFromByDateToByRegionId(startDate, endDate, fullRout.RegionId).ToList();
-                    }
-                    else
-                    {
-                        list = _rout.GetAllRouts().Where(x => x.RegionId == fullRout.RegionId).ToList();
-                    }
+                        commonList = new List<RoutViewModel>();
+                        int pageSize = 1000;
+                        int pageNumber = (fullRout.page ?? 1);
+                        var allRegion = _region.GetAllRegions();
+                        var list = new List<RoutTbl>();
+                        DateTime startDate = DateTime.Now.Date;
+                        DateTime endDate = DateTime.Now.AddDays(1).Date;
+                        fullRout.Regions = allRegion;
 
-                    //ViewBag.TotalRoutCount = list.Sum(x => x.Count);
-                    ViewBag.TotalRoutCountBus = list.Where(x => x.AutomobileTypeTbl.IsBus == 1).Sum(x => x.Count);
-                    ViewBag.TotalRoutCountMiniBus = list.Where(x => x.AutomobileTypeTbl.IsBus == 0).Sum(x => x.Count);
+                        //IEnumerable<SelectListItem> regionItems = _region.GetAllRegions().Select(c => new SelectListItem
+                        //{
+                        //    Value = c.Id.ToString(),
+                        //    Text = c.RegionName
+                        //});
+                        //if (!string.IsNullOrWhiteSpace(dropRegionId))
+                        //{
+                        //    ViewBag.Region = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
+                        //  //  TempData["Region"] = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
+                        //}
+                        //else
+                        //{
+                        //    //dropRegionId = allRegion.FirstOrDefault().Id.ToString();
+                        //    dropRegionId = ViewBag.Region != null ? ViewBag.Rgion : "0";
+                        //    //dropRegionId = TempData["Region"] != null ? TempData["Region"].ToString() : "0";
+                        //}
+                        // ViewBag.RegionItems = regionItems;
+                        ViewBag.CurrentSort = fullRout.sortOrder;
+                        ViewBag.ShiftType = String.IsNullOrEmpty(fullRout.sortOrder) ? "shiftType_desc" : "";
+                        ViewBag.RegionId = fullRout.sortOrder == "region" ? "region_desc" : "region";
+                        ViewBag.Date = fullRout.sortOrder == "date" ? "date_desc" : "date";
+                        ViewBag.EnterTime = fullRout.sortOrder == "enterTime" ? "enterTime_desc" : "enterTime";
+                        ViewBag.TransactionType = fullRout.sortOrder == "transactionType" ? "transactionType_desc" : "transactionType";
+                        ViewBag.AutomobileTypeBus = fullRout.sortOrder == "automobileTypeBus" ? "automobileTypeBus_desc" : "automobileTypeBus";
+                        ViewBag.AutomobileTypeCooler = fullRout.sortOrder == "automobileTypeCooler" ? "automobileTypeCooler_desc" : "automobileTypeCooler";
+                        ViewBag.Count = fullRout.sortOrder == "count" ? "count_desc" : "count";
 
-                    #region
-                    //if (!string.IsNullOrWhiteSpace(SearchDate) && !string.IsNullOrWhiteSpace(SearchRout))
-                    //{
-                    //    //list = _rout.GetAllRoutsByDateByRoutName(SearchDate.ToGeorgianDate(), SearchRout).ToList();
-                    //}
-                    //else if (!string.IsNullOrWhiteSpace(SearchDate) && string.IsNullOrWhiteSpace(SearchRout))
-                    //{
-                    //    list = _rout.GetAllRoutsByDate((DateTime)SearchDate.ToGeorgianDate()).ToList();
 
-                    //}
-                    //else if (string.IsNullOrWhiteSpace(SearchDate) && !string.IsNullOrWhiteSpace(SearchRout))
-                    //{
-                    //    //list = _rout.GetAllRoutsByRoutName(SearchRout).ToList();
-
-                    //}
-                    //if (searchString != null)
-                    //{
-                    //    page = 1;
-                    //}
-                    //else
-                    //{
-                    //    searchString = currentFilter;
-                    //}
-
-                    //ViewBag.CurrentFilter = searchString;
-                    //if (!String.IsNullOrEmpty(searchString))
-                    //{
-                    //    list = list.Where(s => s.ShiftType.ToString().Contains(searchString)
-                    //                           || s.EnterTime.ToString().Contains(searchString)
-                    //                           || s.Name.ToString().Contains(searchString)
-                    //                           //|| s.ExitTime.ToString().Contains(searchString)
-                    //                           //|| s.StartDate.ToString().Contains(searchString)
-                    //                           || s.RegionTbl.RegionName.Contains(searchString)
-                    //                           || s.AutomobileTypeTbl.HasCooler.ToString().Contains(searchString)
-                    //                           || s.AutomobileTypeTbl.IsBus.ToString().Contains(searchString)
-                    //                           || s.Count.ToString().Contains(searchString)).ToList();
-                    //}
-                    #endregion
-                    switch (sortOrder)
-                    {
-                        case "shiftType_desc":
-                            list = list.OrderByDescending(s => s.ShiftType).ToList();
-                            break;
-                        case "region":
-                            list = list.OrderBy(s => s.RegionTbl.RegionName).ToList();
-                            break;
-                        case "region_desc":
-                            list = list.OrderByDescending(s => s.RegionTbl.RegionName).ToList();
-                            break;
-                        case "date":
-                            list = list.OrderBy(s => s.StartDate).ToList();
-                            break;
-                        case "date_desc":
-                            list = list.OrderByDescending(s => s.StartDate).ToList();
-                            break;
-                        case "enterTime":
-                            list = list.OrderBy(s => s.EnterTime).ToList();
-                            break;
-                        case "enterTime_desc":
-                            list = list.OrderByDescending(s => s.EnterTime).ToList();
-                            break;
-                        case "transactionType":
-                            list = list.OrderBy(s => s.RoutTransactionType).ToList();
-                            break;
-                        case "transactionType_desc":
-                            list = list.OrderByDescending(s => s.RoutTransactionType).ToList();
-                            break;
-                        case "automobileTypeBus":
-                            list = list.OrderBy(s => s.AutomobileTypeTbl.IsBus).ToList();
-                            break;
-                        case "automobileTypeBus_desc":
-                            list = list.OrderByDescending(s => s.AutomobileTypeTbl.IsBus).ToList();
-                            break;
-                        case "automobileTypeCooler":
-                            list = list.OrderBy(s => s.AutomobileTypeTbl.HasCooler).ToList();
-                            break;
-                        case "automobileTypeCooler_desc":
-                            list = list.OrderByDescending(s => s.AutomobileTypeTbl.HasCooler).ToList();
-                            break;
-                        case "count":
-                            list = list.OrderBy(s => s.Count).ToList();
-                            break;
-                        case "count_desc":
-                            list = list.OrderByDescending(s => s.Count).ToList();
-                            break;
-                        default:
-                            list = list.OrderBy(s => s.Id).ToList();
-                            break;
-                    }
-
-                    var allAutomobileType = _automobileType.GetAllAutomobileTypes();
-                    var allocateRoutCountBus = 0;
-                    var allocateRoutCountMiniBus = 0;
-                    foreach (var item in list)
-                    {
-                        var element = BaseMapper<RoutViewModel, RoutTbl>.Map(item);
-                        element.RegionName = allRegion.Where(x => x.Id == element.RegionId).FirstOrDefault().RegionName;
-                        element.AutomobileTypeTbl = allAutomobileType.Where(x => x.Id == item.AutomobileTypeId).FirstOrDefault();
-                        //element.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus(item.AutomobileTypeTbl.HasCooler, (int)item.AutomobileTypeTbl.IsBus);
-                        element.StartDateString = item.StartDate.ToPersianDateString();
-                        element.Allocate = _driverRout.GetDriverRoutByRoutId(item.Id).Count;
-                        element.RemainAllocate = element.Count - element.Allocate;
-                        element.RoutID = item.Id;
-                        element.IsBus = (int)item.AutomobileTypeTbl.IsBus;
-                        commonList.Add(element);
-                        if (element.IsBus == 1)
+                        //if (!string.IsNullOrWhiteSpace(searchDate))
+                        //{
+                        //    list = _rout.GetAllRoutsByDateByRegionId((DateTime)searchDate.ToGeorgianDate(), int.Parse(dropRegionId)).ToList();
+                        //}
+                        if (!string.IsNullOrWhiteSpace(fullRout.SearchDateFrom) && !string.IsNullOrWhiteSpace(fullRout.SearchDateTo))
                         {
-                            allocateRoutCountBus += element.Allocate;
+                            list = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)fullRout.SearchDateFrom.ToGeorgianDate(), (DateTime)fullRout.SearchDateTo.ToGeorgianDate(), (int)fullRout.RegionId).ToList();
+                        }
+                        else if (!string.IsNullOrWhiteSpace(fullRout.SearchDateFrom) && string.IsNullOrWhiteSpace(fullRout.SearchDateTo))
+                        {
+                            list = _rout.GetAllRoutsByDateFromByDateToByRegionId((DateTime)fullRout.SearchDateFrom.ToGeorgianDate(), endDate, (int)fullRout.RegionId).ToList();
+                        }
+                        else if (string.IsNullOrWhiteSpace(fullRout.SearchDateFrom))
+                        {
+                            list = _rout.GetAllRoutsByDateFromByDateToByRegionId(startDate, endDate, fullRout.RegionId).ToList();
                         }
                         else
                         {
-                            allocateRoutCountMiniBus += element.Allocate;
+                            list = _rout.GetAllRouts().Where(x => x.RegionId == fullRout.RegionId).ToList();
                         }
+
+                        //ViewBag.TotalRoutCount = list.Sum(x => x.Count);
+                        ViewBag.TotalRoutCountBus = list.Where(x => x.AutomobileTypeTbl.IsBus == 1).Sum(x => x.Count);
+                        ViewBag.TotalRoutCountMiniBus = list.Where(x => x.AutomobileTypeTbl.IsBus == 0).Sum(x => x.Count);
+
+                        #region
+                        //if (!string.IsNullOrWhiteSpace(SearchDate) && !string.IsNullOrWhiteSpace(SearchRout))
+                        //{
+                        //    //list = _rout.GetAllRoutsByDateByRoutName(SearchDate.ToGeorgianDate(), SearchRout).ToList();
+                        //}
+                        //else if (!string.IsNullOrWhiteSpace(SearchDate) && string.IsNullOrWhiteSpace(SearchRout))
+                        //{
+                        //    list = _rout.GetAllRoutsByDate((DateTime)SearchDate.ToGeorgianDate()).ToList();
+
+                        //}
+                        //else if (string.IsNullOrWhiteSpace(SearchDate) && !string.IsNullOrWhiteSpace(SearchRout))
+                        //{
+                        //    //list = _rout.GetAllRoutsByRoutName(SearchRout).ToList();
+
+                        //}
+                        //if (searchString != null)
+                        //{
+                        //    page = 1;
+                        //}
+                        //else
+                        //{
+                        //    searchString = currentFilter;
+                        //}
+
+                        //ViewBag.CurrentFilter = searchString;
+                        //if (!String.IsNullOrEmpty(searchString))
+                        //{
+                        //    list = list.Where(s => s.ShiftType.ToString().Contains(searchString)
+                        //                           || s.EnterTime.ToString().Contains(searchString)
+                        //                           || s.Name.ToString().Contains(searchString)
+                        //                           //|| s.ExitTime.ToString().Contains(searchString)
+                        //                           //|| s.StartDate.ToString().Contains(searchString)
+                        //                           || s.RegionTbl.RegionName.Contains(searchString)
+                        //                           || s.AutomobileTypeTbl.HasCooler.ToString().Contains(searchString)
+                        //                           || s.AutomobileTypeTbl.IsBus.ToString().Contains(searchString)
+                        //                           || s.Count.ToString().Contains(searchString)).ToList();
+                        //}
+                        #endregion
+                        switch (fullRout.sortOrder)
+                        {
+                            case "shiftType_desc":
+                                list = list.OrderByDescending(s => s.ShiftType).ToList();
+                                break;
+                            case "region":
+                                list = list.OrderBy(s => s.RegionTbl.RegionName).ToList();
+                                break;
+                            case "region_desc":
+                                list = list.OrderByDescending(s => s.RegionTbl.RegionName).ToList();
+                                break;
+                            case "date":
+                                list = list.OrderBy(s => s.StartDate).ToList();
+                                break;
+                            case "date_desc":
+                                list = list.OrderByDescending(s => s.StartDate).ToList();
+                                break;
+                            case "enterTime":
+                                list = list.OrderBy(s => s.EnterTime).ToList();
+                                break;
+                            case "enterTime_desc":
+                                list = list.OrderByDescending(s => s.EnterTime).ToList();
+                                break;
+                            case "transactionType":
+                                list = list.OrderBy(s => s.RoutTransactionType).ToList();
+                                break;
+                            case "transactionType_desc":
+                                list = list.OrderByDescending(s => s.RoutTransactionType).ToList();
+                                break;
+                            case "automobileTypeBus":
+                                list = list.OrderBy(s => s.AutomobileTypeTbl.IsBus).ToList();
+                                break;
+                            case "automobileTypeBus_desc":
+                                list = list.OrderByDescending(s => s.AutomobileTypeTbl.IsBus).ToList();
+                                break;
+                            case "automobileTypeCooler":
+                                list = list.OrderBy(s => s.AutomobileTypeTbl.HasCooler).ToList();
+                                break;
+                            case "automobileTypeCooler_desc":
+                                list = list.OrderByDescending(s => s.AutomobileTypeTbl.HasCooler).ToList();
+                                break;
+                            case "count":
+                                list = list.OrderBy(s => s.Count).ToList();
+                                break;
+                            case "count_desc":
+                                list = list.OrderByDescending(s => s.Count).ToList();
+                                break;
+                            default:
+                                list = list.OrderBy(s => s.Id).ToList();
+                                break;
+                        }
+
+                        var allAutomobileType = _automobileType.GetAllAutomobileTypes();
+                        var allocateRoutCountBus = 0;
+                        var allocateRoutCountMiniBus = 0;
+                        foreach (var item in list)
+                        {
+                            var element = BaseMapper<RoutViewModel, RoutTbl>.Map(item);
+                            element.RegionName = allRegion.Where(x => x.Id == element.RegionId).FirstOrDefault().RegionName;
+                            element.AutomobileTypeTbl = allAutomobileType.Where(x => x.Id == item.AutomobileTypeId).FirstOrDefault();
+                            //element.AutomobileTypeTbl = _automobileType.GetAutomobileTypeByCoolerBus(item.AutomobileTypeTbl.HasCooler, (int)item.AutomobileTypeTbl.IsBus);
+                            element.StartDateString = item.StartDate.ToPersianDateString();
+                            element.Allocate = _driverRout.GetDriverRoutByRoutId(item.Id).Count;
+                            element.RemainAllocate = element.Count - element.Allocate;
+                            element.RoutID = item.Id;
+                            element.IsBus = (int)item.AutomobileTypeTbl.IsBus;
+                            commonList.Add(element);
+                            if (element.IsBus == 1)
+                            {
+                                allocateRoutCountBus += (int)element.Allocate;
+                            }
+                            else
+                            {
+                                allocateRoutCountMiniBus += (int)element.Allocate;
+                            }
+                        }
+                        ViewBag.AllocateRoutCountBus = allocateRoutCountBus;
+                        ViewBag.AllocateRoutCountMiniBus = allocateRoutCountMiniBus;
+                        fullRout.RoutViewModels = commonList.OrderBy(x => x.StartDate).ThenBy(x => x.EnterTime).ToPagedList(pageNumber, pageSize);
+                        return View(fullRout);
                     }
-                    ViewBag.AllocateRoutCountBus = allocateRoutCountBus;
-                    ViewBag.AllocateRoutCountMiniBus = allocateRoutCountMiniBus;
-                    FullcommonList.RoutViewModels = commonList.OrderBy(x => x.StartDate).ThenBy(x => x.EnterTime).ToPagedList(pageNumber, pageSize);
-                    return View(FullcommonList);
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // [Authorize(Roles = "admin , SuperViser")]
@@ -283,27 +290,44 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(RoutViewModel rout)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    if (ModelState.IsValid)
+                    if (User.IsInRole("Admin"))
                     {
-                        rout.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus((int)rout.HasCoolerEnum, (int)rout.IsBusEnum).Id;
-                        rout.StartDate = rout.StartDateString.ToGeorgianDate();
-                        //rout.EndDate = rout.EndDateString.ToGeorgianDate();
-                        rout.IsActive = true;
-                        var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
-                        obj.Id = rout.RoutID;
-                        obj.RoutTransactionType = (int)rout.RoutTransactionTypeEnum;
-                        obj.ShiftType = (int)rout.ShiftTypeEnum;
-                        _rout.AddNewRout(obj);
-                        _uow.SaveAllChanges();
+                        if (ModelState.IsValid)
+                        {
+                            rout.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus((int)rout.HasCoolerEnum, (int)rout.IsBusEnum).Id;
+                            if (rout.RegionId == 0)
+                            {
+                                return RedirectToAction("Index");
+                            }
+                            if (rout.StartDateString == null)
+                                return RedirectToAction("Index");
+                            else
+                            {
+                                rout.StartDate = rout.StartDateString.ToGeorgianDate();
+                            }
+                            //rout.EndDate = rout.EndDateString.ToGeorgianDate();
+                            rout.IsActive = true;
+                            var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
+                            //if (rout.RoutID != 0)
+                            //    obj.Id = rout.RoutID;
+                            obj.RoutTransactionType = (int)rout.RoutTransactionTypeEnum;
+                            obj.ShiftType = (int)rout.ShiftTypeEnum;
+                            _rout.AddNewRout(obj);
+                            _uow.SaveAllChanges();
+                        }
                         return RedirectToAction("Index");
                     }
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]
@@ -324,10 +348,34 @@ namespace SabzGashtTransportation.Controllers
                     }
                     var obj = BaseMapper<RoutViewModel, RoutTbl>.Map(rout);
                     obj.RegionTblList = _region.GetAllRegions();
-                    obj.StartDateString = obj.StartDate.ToPersianDateString();
+                    obj.StartDateString = ((DateTime)(obj.StartDate)).ToPersianDateString();
                     obj.AutomobileTypeTbl = _automobileType.GetAutomobileType(obj.AutomobileTypeId);
-                    obj.ShiftType = rout.ShiftType;
                     obj.RoutID = rout.Id;
+                    obj.ShiftType = rout.ShiftType;
+                    if (obj.ShiftType == (int)ShiftTypeEnum.Enter)
+                    {
+                        obj.ShiftTypeEnum = ShiftTypeEnum.Enter;
+                    }
+                    else if (obj.ShiftType == (int)ShiftTypeEnum.Exit)
+                    {
+                        obj.ShiftTypeEnum = ShiftTypeEnum.Exit;
+                    }
+                    if (obj.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
+                    {
+                        obj.RoutTransactionTypeEnum = RoutTransactionTypeEnum.Single;
+                    }
+                    else if (obj.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
+                    {
+                        obj.RoutTransactionTypeEnum = RoutTransactionTypeEnum.Regular;
+                    }
+                    else if (obj.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
+                    {
+                        obj.RoutTransactionTypeEnum = RoutTransactionTypeEnum.ThereeFour;
+                    }
+                    else if (obj.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
+                    {
+                        obj.RoutTransactionTypeEnum = RoutTransactionTypeEnum.FiveSeven;
+                    }
                     if (obj.AutomobileTypeTbl.HasCooler == Convert.ToBoolean(HasCoolerEnum.HasCooler))
                     {
                         obj.HasCoolerEnum = HasCoolerEnum.HasCooler;
@@ -362,11 +410,14 @@ namespace SabzGashtTransportation.Controllers
                     if (ModelState.IsValid)
                     {
                         var obj = BaseMapper<RoutTbl, RoutViewModel>.Map(rout);
-                        obj.StartDate = rout.StartDateString.ToGeorgianDate();
-                        //obj.EndDate= rout.EndDateString.ToGeorgianDate();
+                        if (rout.StartDateString != null)
+                            obj.StartDate = rout.StartDateString.ToGeorgianDate();
+                        obj.RoutTransactionType = (int)rout.RoutTransactionTypeEnum;
+                        obj.ShiftType = (int)rout.ShiftTypeEnum;
                         obj.IsActive = true;
                         obj.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus((int)rout.HasCoolerEnum, (int)rout.IsBusEnum).Id;
-                        obj.Id = rout.RoutID;
+                        if (rout.RoutID != 0)
+                            obj.Id = rout.RoutID;
                         _rout.UpdateRout(obj);
                         _uow.SaveAllChanges();
                     }

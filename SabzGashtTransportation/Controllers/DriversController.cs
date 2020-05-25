@@ -158,9 +158,20 @@ namespace SabzGashtTransportation.Controllers
             {
                 if (User.IsInRole("Admin"))
                 {
+                    driver.Automobiles = _automobile.GetAllAutomobiles();
                     if (ModelState.IsValid)
                     {
                         var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                        if (string.IsNullOrEmpty(obj.FirstName))
+                        {
+                            ModelState.AddModelError("", "نام کاربری یا رمز عبور اشتباه است");
+                            return View(driver);
+                            //return RedirectToAction("Index");
+                        }
+                        if (string.IsNullOrEmpty(obj.LastName))
+                        {
+                            return RedirectToAction("Index");
+                        }
                         if (driver.BirthDateString != null)
                             obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
                         obj.IsActive = true;
@@ -169,7 +180,8 @@ namespace SabzGashtTransportation.Controllers
                         _drivers.AddNewDriver(obj);
                         //_uow.SaveAllChanges();
                     }
-                    return RedirectToAction("Index");
+                    
+                    return View(driver);
                 }
             }
             return RedirectToAction("login", "Account");
@@ -178,29 +190,40 @@ namespace SabzGashtTransportation.Controllers
         //[Authorize(Roles = "admin , SuperViser")]
         public ActionResult Edit(int? id)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    if (id == null)
+                    if (User.IsInRole("Admin"))
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        if (id == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        }
+                        DriverTbl driver = _drivers.GetDriver(id);
+                        var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                        obj.Automobiles = _automobile.GetAllAutomobiles();
+                        if (driver.BirthDate != null)
+                        {
+                            obj.BirthDateString = obj.BirthDate != null
+                            ? ((DateTime)(obj.BirthDate)).ToPersianDateString()
+                            : ((DateTime)(driver.BirthDate)).ToPersianDateString();
+                        }
+                        obj.DriverId = driver.Id;
+                        if (driver == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        return View(obj);
                     }
-                    DriverTbl driver = _drivers.GetDriver(id);
-                    var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                    obj.Automobiles = _automobile.GetAllAutomobiles();
-                    obj.BirthDateString = obj.BirthDate != null
-                        ? obj.BirthDate.ToPersianDateString()
-                        : ((DateTime)(driver.BirthDate)).ToPersianDateString();
-                    obj.DriverId = driver.Id;
-                    if (driver == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    return View(obj);
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]
@@ -208,29 +231,37 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(DriverViewModel driver)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    if (ModelState.IsValid)
+                    if (User.IsInRole("Admin"))
                     {
-                        //driver.ModifiedDate=DateTime.Now;
-                        //_drivers.Delete(driver.DriverId);
-                        var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                        obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
-                        obj.CreatedDate = DateTime.Now;
-                        obj.ModifiedDate = DateTime.Now;
-                        obj.IsActive = true;
-                        //_drivers.AddNewDriver(obj);
-                        //_uow.SaveAllChanges(); 
-                        obj.Id = driver.DriverId;
-                        _drivers.UpdateDriver(obj);
-                        //_uow.SaveAllChanges();
+                        if (ModelState.IsValid)
+                        {
+                            //driver.ModifiedDate=DateTime.Now;
+                            //_drivers.Delete(driver.DriverId);
+                            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                            if (driver.BirthDateString != null)
+                                obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
+                            obj.CreatedDate = DateTime.Now;
+                            obj.ModifiedDate = DateTime.Now;
+                            obj.IsActive = true;
+                            //_drivers.AddNewDriver(obj);
+                            //_uow.SaveAllChanges(); 
+                            obj.Id = driver.DriverId;
+                            _drivers.UpdateDriver(obj);
+                            //_uow.SaveAllChanges();
+                        }
+                        return RedirectToAction("Index");
                     }
-                    return RedirectToAction("Index");
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
 
         }
 

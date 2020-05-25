@@ -26,7 +26,9 @@ namespace Sabz.ServiceLayer.IService
        // List<DriverRoutTbl> GetDriverRoutByDateByDriverNameByRoutName(DateTime datFrom, DateTime dateTo, string driverName, string routName);
         List<DriverRoutTbl> GetDriverRoutByDateByDriverName(DateTime datFrom, DateTime dateTo, string driverName);
         List<DriverRoutTbl> GetDriverRoutByDateByDriverNameByRegionId(DateTime datFrom, DateTime dateTo, string driverName, int regionId);
+        List<DriverRoutTbl> GetDriverRoutByDateByDriverIdByRegionId(DateTime datFrom, DateTime dateTo, int driverId, int regionId);
         List<DriverRoutTbl> GetDriverRoutByDateByDriverNameByRegionIdByIds(DateTime datFrom, DateTime dateTo, string driverName, int regionId, List<int> ids);
+        List<DriverRoutTbl> GetDriverRoutByDateByDriverIdByRegionIdByIds(DateTime datFrom, DateTime dateTo, int driverId, int regionId, List<int> ids);
         List<DriverRoutTbl> GetDriverRoutByDateByRegionId(DateTime datFrom, DateTime dateTo, int regionId);
         List<DriverRoutTbl> GetDriverRoutByDateByRegionIdByIds(DateTime datFrom, DateTime dateTo, int regionId, List<int> ids);
 

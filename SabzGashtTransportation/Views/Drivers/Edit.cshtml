@@ -72,7 +72,7 @@
                 @*@Html.EditorFor(model => model.AutomobileId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.AutomobileId, "", new { @class = "text-danger" })*@
 
-                @Html.DropDownListFor(x => Model.AutomobileId, new SelectList(Model.Automobiles, "Id", "Number"), htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
+                @Html.DropDownListFor(x => Model.AutomobileId, new SelectList(Model.Automobiles, "Id", "Number"), "انتخاب کنید", htmlAttributes: new { @class = "form-control", id = "DriverSelect" })
                 @Html.ValidationMessageFor(x => x.AutomobileId, "", new { @class = "text-danger" })
 
             </div>

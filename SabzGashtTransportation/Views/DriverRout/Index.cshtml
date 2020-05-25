@@ -2,7 +2,8 @@
 @using Sabz.ServiceLayer.Enumration
 @using Sabz.ServiceLayer.Extension
 @using PagedList.Mvc
-@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.DriverRoutViewModel>
+@model SabzGashtTransportation.ViewModel.DriverRoutFullViewModel
+
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 <script src="~/js/jquery-3.3.1.min.js"></script>
 
@@ -12,8 +13,8 @@
     @Styles.Render("~/css/css/style.css");
     var counter = 1;
     var routTransactionType = "";
-    string regionDropDown = ViewBag.Region;
-   // string regionDropDown =   TempData["Region"] != null ? TempData["Region"].ToString() : "" ;
+    string driverDropDown = Model.DriverId != 0 ? Model.Drivers.Where(x => x.Id == Model.DriverId).FirstOrDefault().FullName : "";
+    string regionDropDown = Model.RegionId != 0 ? Model.Regions.Where(x => x.Id == Model.RegionId).FirstOrDefault().RegionName : "";
 }
 
 <h2 class="style-h2">برنامه زمانی</h2>
@@ -33,24 +34,37 @@
         <table>
             <tr>
                 <th>راننده</th>
-                <th>@Html.TextBox("SearchDriver", ViewBag.CurrentFilterDriver as string)</th>
+                @*<th>@Html.TextBox("SearchDriver", ViewBag.CurrentFilterDriver as string)</th>*@
+                @if (string.IsNullOrEmpty(driverDropDown))
+                {
+                    driverDropDown = "انتخاب کنید";
+                }
+                <th>
+                    @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.Drivers, "Id", "FullName"), driverDropDown)
+                </th>
             </tr>
             <tr>
                 <th class="font-small">نام منطقه</th>
-                @if (regionDropDown == null)
+                @if (string.IsNullOrEmpty(regionDropDown))
                 {
                     regionDropDown = "انتخاب کنید";
                 }
                 <th>
-                    @Html.DropDownList("RegionItems", regionDropDown)
-                    @Html.Hidden("dropRegionId")
-
+                    @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.Regions, "Id", "RegionName"), regionDropDown)
                 </th>
             <tr>
                 <th>از تاریخ</th>
-                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
+                @*<th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>*@
+                <th>
+                    @Html.TextBoxFor(model => model.SearchDateFrom)
+                    @Html.ValidationMessageFor(model => model.SearchDateFrom, "", new { @class = "text-danger" })
+                </th>
                 <th>تا تاریخ</th>
-                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string)</th>
+                @*<th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string)</th>*@
+                <th>
+                    @Html.TextBoxFor(model => model.SearchDateTo)
+                    @Html.ValidationMessageFor(model => model.SearchDateTo, "", new { @class = "text-danger" })
+                </th>
             </tr>
         </table>
         <p class="search_table">
@@ -88,67 +102,73 @@
             عملیات
         </th>
     </tr>
-
-    @foreach (var item in Model)
+    @if (Model.DriverRoutViewModels != null)
     {
-        <tr>
-            <td>
-                @counter
-            </td>
+        foreach (var item in Model.DriverRoutViewModels)
+        {
+            <tr>
+                <td>
+                    @counter
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutRegionName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DriverFullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutStartDateString)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutEnterTimeString)
-            </td>
-            @{
-                if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
-                {
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutRegionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutStartDateString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutEnterTimeString)
+                </td>
+                @{
+                    if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
+                    {
 
-                    routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
+                        routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
+                    }
+                    else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
+                    }
+                    else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
+                    }
+                    else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
+                    }
                 }
-                else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
-                {
-                    routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
-                }
-                else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
-                {
-                    routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
-                }
-                else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
-                {
-                    routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
-                }
-            }
-            <td>@routTransactionType</td>
-            <td>
-                @(item.RoutShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())
-            </td>
-            <td>
-                @*@Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |*@
-                @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
-                @Html.ActionLink("حذف", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-        counter += 1;
+                <td>@routTransactionType</td>
+                <td>
+                    @(item.RoutShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())
+                </td>
+                <td>
+                    @*@Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |*@
+                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("حذف", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+            counter += 1;
 
+        }
     }
+
 
 </table>
 <br />
-<p class="showPage">
-    صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
-</p>
+@if (Model.DriverRoutViewModels != null)
+{
+    <p class="showPage">
+        صفحه @(Model.DriverRoutViewModels.PageCount < Model.DriverRoutViewModels.PageNumber ? 0 : Model.DriverRoutViewModels.PageNumber) از @Model.DriverRoutViewModels.PageCount
+    </p>
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+@Html.PagedListPager(Model.DriverRoutViewModels, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+}
 @*<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>*@
 <script>
 

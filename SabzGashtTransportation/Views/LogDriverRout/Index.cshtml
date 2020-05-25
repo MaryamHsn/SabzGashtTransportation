@@ -15,8 +15,6 @@
     var routTransactionType = ""; 
     string driverDropDown =Model.DriverId != 0 ? Model.Drivers.Where(x=>x.Id ==Model.DriverId).FirstOrDefault().FullName : "";
     string regionDropDown =Model.RegionId !=0 ? Model.Regions.Where(x=>x.Id ==Model.RegionId).FirstOrDefault().RegionName : "";
-
-
 }
 
 <h2 class="style-h2">نمایش مسیرهای روزانه</h2>

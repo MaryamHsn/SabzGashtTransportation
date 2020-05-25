@@ -29,15 +29,15 @@ namespace Sabz.ServiceLayer.Service
         }
         public IList<DriverRoutTbl> GetAllDriverRoutsByRegionId(int regionId)
         {
-            return _uow.DriverRoutRepository.GetAll().Where(x=>x.RoutTbl.RegionId==regionId).ToList();
+            return _uow.DriverRoutRepository.GetAll().Where(x => x.RoutTbl.RegionId == regionId).ToList();
         }
         public IList<DriverRoutTbl> GetAllDriverRoutsByIds(List<int> ids)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && ids.Contains(x.Id)).ToList();
         }
-        public IList<DriverRoutTbl> GetAllDriverRoutsByRegionIdByIds(int regionId,List<int> ids)
+        public IList<DriverRoutTbl> GetAllDriverRoutsByRegionIdByIds(int regionId, List<int> ids)
         {
-            return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive&& x.RoutTbl.RegionId==regionId && ids.Contains(x.Id)).ToList();
+            return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && ids.Contains(x.Id)).ToList();
         }
         public DriverRoutTbl GetDriverRout(int? id)
         {
@@ -62,7 +62,7 @@ namespace Sabz.ServiceLayer.Service
         public List<DriverRoutTbl> GetDriverRoutByRoutId(int routId)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutId == routId).ToList();
-        } 
+        }
         public List<DriverRoutTbl> GetDriverRoutByRoutIds(List<int> routIds)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && routIds.Contains(x.RoutId)).ToList();
@@ -71,9 +71,9 @@ namespace Sabz.ServiceLayer.Service
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.DriverTbl.FullName.Contains(driverName)).ToList();
         }
-        public List<DriverRoutTbl> GetDriverRoutByDriverNameByRegionId(string driverName,int regionId)
+        public List<DriverRoutTbl> GetDriverRoutByDriverNameByRegionId(string driverName, int regionId)
         {
-            return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId==regionId &&x.DriverTbl.FullName.Contains(driverName)).ToList();
+            return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.DriverTbl.FullName.Contains(driverName)).ToList();
         }
         //public List<DriverRoutTbl> GetDriverRoutByDateByDriverNameByRoutName(DateTime datFrom,DateTime dateTo,string driverName, string routName)
         //{
@@ -87,15 +87,23 @@ namespace Sabz.ServiceLayer.Service
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.DriverTbl.FullName.Contains(driverName) && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo).ToList();
         }
-        public List<DriverRoutTbl> GetDriverRoutByDateByDriverNameByRegionIdByIds(DateTime datFrom, DateTime dateTo, string driverName, int regionId,List<int>ids)
+        public List<DriverRoutTbl> GetDriverRoutByDateByDriverIdByRegionId(DateTime datFrom, DateTime dateTo, int driverId, int regionId)
+        {
+            return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.DriverTbl.Id == driverId && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo).ToList();
+        }
+        public List<DriverRoutTbl> GetDriverRoutByDateByDriverNameByRegionIdByIds(DateTime datFrom, DateTime dateTo, string driverName, int regionId, List<int> ids)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.DriverTbl.FullName.Contains(driverName) && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo && ids.Contains(x.Id)).ToList();
+        }
+        public List<DriverRoutTbl> GetDriverRoutByDateByDriverIdByRegionIdByIds(DateTime datFrom, DateTime dateTo, int driverId, int regionId, List<int> ids)
+        {
+            return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.DriverTbl.Id == driverId && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo && ids.Contains(x.Id)).ToList();
         }
         public List<DriverRoutTbl> GetDriverRoutByDateByRegionId(DateTime datFrom, DateTime dateTo, int regionId)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo).ToList();
         }
-        public List<DriverRoutTbl> GetDriverRoutByDateByRegionIdByIds(DateTime datFrom, DateTime dateTo, int regionId,List<int> ids)
+        public List<DriverRoutTbl> GetDriverRoutByDateByRegionIdByIds(DateTime datFrom, DateTime dateTo, int regionId, List<int> ids)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutTbl.RegionId == regionId && x.RoutTbl.StartDate >= datFrom && x.RoutTbl.StartDate <= dateTo && ids.Contains(x.Id)).ToList();
         }

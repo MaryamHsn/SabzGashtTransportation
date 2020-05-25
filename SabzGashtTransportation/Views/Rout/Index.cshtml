@@ -196,8 +196,8 @@
                     }*@
                 @Html.ActionLink("اختصاص ", "Allocate", "DriverRout", new { id = item.RoutID }, null) |
                 @Html.ActionLink("ویرایش", "Edit", new { id = item.RoutID }) |
-                @Html.ActionLink("جزئیات", "Details", new { id = item.RoutID }) |
-                @Html.ActionLink("حذف", "Delete", new { id = item.RoutID })
+                @Html.ActionLink("جزئیات", "Details", new { id = item.RoutID }) 
+                @*|@Html.ActionLink("حذف", "Delete", new { id = item.RoutID })*@
             </td>
         </tr>
         counter += 1;

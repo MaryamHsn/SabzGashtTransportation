@@ -1,4 +1,4 @@
-using Sabz.DomainClasses.DTO;
+﻿using Sabz.DomainClasses.DTO;
 
 namespace SabzGashtTransportation.ViewModel
 {
@@ -8,10 +8,9 @@ namespace SabzGashtTransportation.ViewModel
     using System.ComponentModel.DataAnnotations.Schema; 
     public   class RegionViewModel
     { 
-        public int RegionId { get; set; } 
-        public string RegionName { get; set; }     
-        public string RoutName { get; set; }
-
-        public  RoutTbl RoutTbl { get; set; }
+        public int RegionId { get; set; }
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
+        public string RegionName { get; set; }      
+     //   public  RoutTbl RoutTbl { get; set; }
     }
 }

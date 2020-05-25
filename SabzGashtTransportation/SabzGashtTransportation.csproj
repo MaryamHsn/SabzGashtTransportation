@@ -275,6 +275,7 @@
     <Compile Include="ViewModel\AccidentViewModel.cs" />
     <Compile Include="ViewModel\AutomobileViewModel.cs" />
     <Compile Include="ViewModel\AutomobileTypeViewModel.cs" />
+    <Compile Include="ViewModel\DriverRoutFullViewModel.cs" />
     <Compile Include="ViewModel\DriverViewModel.cs" />
     <Compile Include="ViewModel\DriverRoutViewModel.cs" />
     <Compile Include="ViewModel\LogDriverRoutFullViewModel.cs" />
