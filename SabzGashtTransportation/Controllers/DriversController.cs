@@ -36,75 +36,82 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    commonList = new List<DriverViewModel>();
-                    ViewBag.CurrentSort = sortOrder;
-                    ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
-                    ViewBag.LastName = sortOrder == "lastName" ? "lastName_desc" : "lastName";
-                    ViewBag.Phone = sortOrder == "phone" ? "phone_desc" : "phone";
-                    ViewBag.BankAccount = sortOrder == "bankAccount" ? "bankAccount_desc" : "bankAccount";
+                    if (User.IsInRole("Admin"))
+                    {
+                        commonList = new List<DriverViewModel>();
+                        ViewBag.CurrentSort = sortOrder;
+                        ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
+                        ViewBag.LastName = sortOrder == "lastName" ? "lastName_desc" : "lastName";
+                        ViewBag.Phone = sortOrder == "phone" ? "phone_desc" : "phone";
+                        ViewBag.BankAccount = sortOrder == "bankAccount" ? "bankAccount_desc" : "bankAccount";
 
-                    if (searchString != null)
-                    {
-                        page = 1;
-                    }
-                    else
-                    {
-                        searchString = currentFilter;
-                    }
+                        if (searchString != null)
+                        {
+                            page = 1;
+                        }
+                        else
+                        {
+                            searchString = currentFilter;
+                        }
 
-                    ViewBag.CurrentFilter = searchString;
-                    var list = _drivers.GetAllDrivers();
-                    if (!String.IsNullOrEmpty(searchString))
-                    {
-                        list = list.Where(s => s.FirstName.Contains(searchString)
-                                               || s.LastName.Contains(searchString)
-                                               || s.BankAccountNumber.Contains(searchString)
-                                               || s.Phone1.Contains(searchString)).ToList();
-                    }
-                    switch (sortOrder)
-                    {
-                        case "firstName_desc":
-                            list = list.OrderByDescending(s => s.FirstName).ToList();
-                            break;
-                        case "lastName":
-                            list = list.OrderBy(s => s.LastName).ToList();
-                            break;
-                        case "lastName_desc":
-                            list = list.OrderByDescending(s => s.LastName).ToList();
-                            break;
-                        case "phone":
-                            list = list.OrderBy(s => s.Phone1).ToList();
-                            break;
-                        case "phone_desc":
-                            list = list.OrderByDescending(s => s.Phone1).ToList();
-                            break;
-                        case "bankAccount":
-                            list = list.OrderBy(s => s.BankAccountNumber).ToList();
-                            break;
-                        case "bankAccount_desc":
-                            list = list.OrderByDescending(s => s.BankAccountNumber).ToList();
-                            break;
-                        default:
-                            list = list.OrderBy(s => s.Id).ToList();
-                            break;
-                    }
+                        ViewBag.CurrentFilter = searchString;
+                        var list = _drivers.GetAllDrivers();
+                        if (!String.IsNullOrEmpty(searchString))
+                        {
+                            list = list.Where(s => s.FirstName.Contains(searchString)
+                                                   || s.LastName.Contains(searchString)
+                                                   || s.BankAccountNumber.Contains(searchString)
+                                                   || s.Phone1.Contains(searchString)).ToList();
+                        }
+                        switch (sortOrder)
+                        {
+                            case "firstName_desc":
+                                list = list.OrderByDescending(s => s.FirstName).ToList();
+                                break;
+                            case "lastName":
+                                list = list.OrderBy(s => s.LastName).ToList();
+                                break;
+                            case "lastName_desc":
+                                list = list.OrderByDescending(s => s.LastName).ToList();
+                                break;
+                            case "phone":
+                                list = list.OrderBy(s => s.Phone1).ToList();
+                                break;
+                            case "phone_desc":
+                                list = list.OrderByDescending(s => s.Phone1).ToList();
+                                break;
+                            case "bankAccount":
+                                list = list.OrderBy(s => s.BankAccountNumber).ToList();
+                                break;
+                            case "bankAccount_desc":
+                                list = list.OrderByDescending(s => s.BankAccountNumber).ToList();
+                                break;
+                            default:
+                                list = list.OrderBy(s => s.Id).ToList();
+                                break;
+                        }
 
-                    int pageSize = 1000;
-                    int pageNumber = (page ?? 1);
-                    foreach (var item in list)
-                    {
-                        var element = BaseMapper<DriverViewModel, DriverTbl>.Map(item);
-                        element.DriverId = item.Id;
-                        commonList.Add(element);
+                        int pageSize = 1000;
+                        int pageNumber = (page ?? 1);
+                        foreach (var item in list)
+                        {
+                            var element = BaseMapper<DriverViewModel, DriverTbl>.Map(item);
+                            element.DriverId = item.Id;
+                            commonList.Add(element);
+                        }
+                        return View(commonList.ToPagedList(pageNumber, pageSize));
                     }
-                    return View(commonList.ToPagedList(pageNumber, pageSize));
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]
@@ -154,37 +161,44 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(DriverViewModel driver)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    driver.Automobiles = _automobile.GetAllAutomobiles();
-                    if (ModelState.IsValid)
+                    if (User.IsInRole("Admin"))
                     {
-                        var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                        if (string.IsNullOrEmpty(obj.FirstName))
+                        driver.Automobiles = _automobile.GetAllAutomobiles();
+                        if (ModelState.IsValid)
                         {
-                            ModelState.AddModelError("", "نام کاربری یا رمز عبور اشتباه است");
-                            return View(driver);
-                            //return RedirectToAction("Index");
-                        }
-                        if (string.IsNullOrEmpty(obj.LastName))
-                        {
+                            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
+                            //if (string.IsNullOrEmpty(obj.FirstName))
+                            //{
+                            //    return View(driver); 
+                            //}
+                            //if (string.IsNullOrEmpty(obj.LastName))
+                            //{
+                            //    return RedirectToAction("Index");
+                            //}
+                            if (driver.BirthDateString != null)
+                                obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
+                            obj.IsActive = true;
+                            obj.CreatedDate = DateTime.Now;
+                            obj.ModifiedDate = DateTime.Now;
+                            _drivers.AddNewDriver(obj);
+                            _uow.SaveAllChanges();
                             return RedirectToAction("Index");
+
                         }
-                        if (driver.BirthDateString != null)
-                            obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
-                        obj.IsActive = true;
-                        obj.CreatedDate = DateTime.Now;
-                        obj.ModifiedDate = DateTime.Now;
-                        _drivers.AddNewDriver(obj);
-                        //_uow.SaveAllChanges();
+
+                        return View(driver);
                     }
-                    
-                    return View(driver);
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return View(driver);
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]

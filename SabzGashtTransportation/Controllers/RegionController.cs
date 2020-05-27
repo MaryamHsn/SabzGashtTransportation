@@ -138,7 +138,7 @@ namespace SabzGashtTransportation.Controllers
             catch (Exception)
             {
 
-                throw;
+                return View(region);
             }
         }
 

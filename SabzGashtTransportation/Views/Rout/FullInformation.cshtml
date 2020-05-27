@@ -1,5 +1,4 @@
-﻿@model PagedList.IPagedList<SabzGashtTransportation.ViewModel.RoutViewModel>
-@*@model SabzGashtTransportation.ViewModel.RoutViewModel*@
+﻿@model SabzGashtTransportation.ViewModel.RoutFullViewModel
 <script src="~/js/jquery-3.3.1.min.js"></script>
 @{
     ViewBag.Title = "آمار کلی";
@@ -34,18 +33,28 @@
         <table>
             <tr>
                 <th class="font-small">از تاریخ</th>
-                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
+                <th>
+                    @Html.TextBoxFor(model => model.SearchDateFrom)
+                    @Html.ValidationMessageFor(model => model.SearchDateFrom, "", new { @class = "text-danger" })
+
+                </th>
                 <th class="font-small">تا تاریخ</th>
-                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string)</th>
+                <th>
+                    @*@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string, new { @style = "width: 144px" })*@
+                    @Html.TextBoxFor(model => model.SearchDateTo)
+                    @Html.ValidationMessageFor(model => model.SearchDateTo, "", new { @class = "text-danger" })
+                </th>
             </tr>
             <tr>
                 <th class="font-small">نام منطقه</th>
-                @if (regionDropDown == null)
+                @if (string.IsNullOrEmpty(regionDropDown))
                 {
                     regionDropDown = "انتخاب کنید";
                 }
                 <th>
-                    @Html.DropDownList("RegionItems", regionDropDown)
+                    @*@Html.DropDownList("RegionItems", regionDropDown)*@
+                    @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.Regions, "Id", "RegionName"), regionDropDown)
+
                     @Html.Hidden("dropRegionId")
 
                 </th>
@@ -58,115 +67,6 @@
 
     </div>
 }
-@*@if (!string.IsNullOrWhiteSpace(Model.RegionName))
-    {
-        <label style="margin-right:40px">نام منطقه : @(Model.RegionName) </label>
-
-    }*@
-@*<table id="showList">
-
-        <tr>
-            <th colspan="32">مسیرها</th>
-        </tr>
-        <tr>
-            <th colspan="16">@(Model.EnterShiftType) :ورودی</th>
-            <th colspan="16">@(Model.ExitShiftType) :خروجی</th>
-
-        </tr>
-        <tr>
-            <th colspan="8">@(Model.HasCoolerEnter) :کولر دار</th>
-            <th colspan="8">@(Model.HasNotCoolerEnter) :معمولی</th>
-            <th colspan="8">@(Model.HasCoolerExit) :کولر دار</th>
-            <th colspan="8">@(Model.HasNotCoolerExit) :معمولی</th>
-        </tr>
-        <tr>
-            <td colspan="4">@(Model.HasCoolerEnterBus) :اتوبوس</td>
-            <td colspan="4">@(Model.HasCoolerEnterMiniBus) :مینی بوس</td>
-            <td colspan="4">@(Model.HasNotCoolerEnterBus) :اتوبوس</td>
-            <td colspan="4">@(Model.HasNotCoolerEnterMiniBus) :مینی بوس</td>
-            <td colspan="4">@(Model.HasCoolerExitBus) :اتوبوس</td>
-            <td colspan="4">@(Model.HasCoolerExitMiniBus) :مینی بوس</td>
-            <td colspan="4">@(Model.HasNotCoolerExitBus) :اتوبوس</td>
-            <td colspan="4">@(Model.HasNotCoolerExitMiniBus) :مینی بوس</td>
-
-        </tr>
-        <tr>
-            <td>تک نیمراه</td>
-            <td>عادی</td>
-            <td>سه چهار نیمراه</td>
-            <td>پنج هفت نیمراه</td>
-            <td>تک نیمراه</td>
-            <td>عادی</td>
-            <td>سه چهار نیمراه</td>
-            <td>پنج هفت نیمراه</td>
-            <td>تک نیمراه</td>
-            <td>عادی</td>
-            <td>سه چهار نیمراه</td>
-            <td>پنج هفت نیمراه</td>
-            <td>تک نیمراه</td>
-            <td>عادی</td>
-            <td>سه چهار نیمراه</td>
-            <td>پنج هفت نیمراه</td>
-            <td>تک نیمراه</td>
-            <td>عادی</td>
-            <td>سه چهار نیمراه</td>
-            <td>پنج هفت نیمراه</td>
-            <td>تک نیمراه</td>
-            <td>عادی</td>
-            <td>سه چهار نیمراه</td>
-            <td>پنج هفت نیمراه</td>
-            <td>تک نیمراه</td>
-            <td>عادی</td>
-            <td>سه چها رنیمراه </td>
-            <td>پنج هفت نیمراه</td>
-            <td>تک نیمراه</td>
-            <td>عادی</td>
-            <td>سه چهار نیمراه</td>
-            <td>پنج هفت نیمراه</td>
-        </tr>
-        <tr>
-            <td>@(Model.HasCoolerEnterBusRoutTransactionSingle)</td>
-            <td>@(Model.HasCoolerEnterBusRoutTransactionRegular)</td>
-            <td>@(Model.HasCoolerEnterBusRoutTransactionThereeFour)</td>
-            <td>@(Model.HasCoolerEnterBusRoutTransactionFiveSeven)</td>
-
-            <td>@(Model.HasCoolerEnterMiniBusRoutTransactionSingle)</td>
-            <td>@(Model.HasCoolerEnterMiniBusRoutTransactionRegular)</td>
-            <td>@(Model.HasCoolerEnterMiniBusRoutTransactionThereeFour)</td>
-            <td>@(Model.HasCoolerEnterMiniBusRoutTransactionFiveSeven)</td>
-
-            <td>@(Model.HasNotCoolerEnterBusRoutTransactionSingle)</td>
-            <td>@(Model.HasNotCoolerEnterBusRoutTransactionRegular)</td>
-            <td>@(Model.HasNotCoolerEnterBusRoutTransactionThereeFour)</td>
-            <td>@(Model.HasNotCoolerEnterBusRoutTransactionFiveSeven)</td>
-
-            <td>@(Model.HasNotCoolerEnterMiniBusRoutTransactionSingle)</td>
-            <td>@(Model.HasNotCoolerEnterMiniBusRoutTransactionRegular)</td>
-            <td>@(Model.HasNotCoolerEnterMiniBusRoutTransactionThereeFour)</td>
-            <td>@(Model.HasNotCoolerEnterMiniBusRoutTransactionFiveSeven)</td>
-
-            <td>@(Model.HasCoolerExitBusRoutTransactionSingle)</td>
-            <td>@(Model.HasCoolerExitBusRoutTransactionRegular)</td>
-            <td>@(Model.HasCoolerExitBusRoutTransactionThereeFour)</td>
-            <td>@(Model.HasCoolerExitBusRoutTransactionFiveSeven)</td>
-
-            <td>@(Model.HasCoolerExitMiniBusRoutTransactionSingle)</td>
-            <td>@(Model.HasCoolerExitMiniBusRoutTransactionRegular)</td>
-            <td>@(Model.HasCoolerExitMiniBusRoutTransactionThereeFour)</td>
-            <td>@(Model.HasCoolerExitMiniBusRoutTransactionFiveSeven)</td>
-
-            <td>@(Model.HasNotCoolerExitBusRoutTransactionSingle)</td>
-            <td>@(Model.HasNotCoolerExitBusRoutTransactionRegular)</td>
-            <td>@(Model.HasNotCoolerExitBusRoutTransactionThereeFour)</td>
-            <td>@(Model.HasNotCoolerExitBusRoutTransactionFiveSeven)</td>
-
-            <td>@(Model.HasNotCoolerExitMiniBusRoutTransactionSingle)</td>
-            <td>@(Model.HasNotCoolerExitMiniBusRoutTransactionRegular)</td>
-            <td>@(Model.HasNotCoolerExitMiniBusRoutTransactionThereeFour)</td>
-            <td>@(Model.HasNotCoolerExitMiniBusRoutTransactionFiveSeven)</td>
-
-        </tr>
-    </table>*@
 <table id="showList">
     <tr>
         <th colspan="2" rowspan="2">تاریخ </th>
@@ -197,100 +97,103 @@
         <th colspan="1" rowspan="1">اتوبوس</th>
         <th colspan="1" rowspan="1">مینی بوس</th>
     </tr>
-
-    @foreach (var item in Model)
+    @if (Model.RoutViewModels != null)
     {
+        foreach (var item in Model.RoutViewModels)
+        {
+            <tr>
+                <td colspan="2">
+                    @Html.DisplayFor(modelItem => item.StartDateString)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionSingleBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionSingleMiniBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionSingleHasCoolerBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionSingleHasCoolerMiniBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularMiniBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerMiniBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourMiniBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourHasCoolerBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourHasCoolerMiniBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenMiniBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenHasCoolerBus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenHasCoolerMiniBus)
+                </td>
+
+            </tr>
+            SumRoutTransactionSingleBus += (int)item.RoutTransactionSingleBus;
+            SumRoutTransactionSingleMiniBus += (int)(int)item.RoutTransactionSingleMiniBus;
+            SumRoutTransactionSingleHasCoolerBus += (int)item.RoutTransactionSingleHasCoolerBus;
+            SumRoutTransactionSingleHasCoolerMiniBus += (int)item.RoutTransactionSingleHasCoolerMiniBus;
+            SumRoutTransactionRegularBus += (int)item.RoutTransactionRegularBus;
+            SumRoutTransactionRegularMiniBus += (int)item.RoutTransactionRegularMiniBus;
+            SumRoutTransactionRegularHasCoolerBus += (int)item.RoutTransactionRegularHasCoolerBus;
+            SumRoutTransactionRegularHasCoolerMiniBus += (int)item.RoutTransactionRegularHasCoolerMiniBus;
+            SumRoutTransactionThereeFourBus += (int)item.RoutTransactionThereeFourBus;
+            SumRoutTransactionThereeFourMiniBus += (int)item.RoutTransactionThereeFourMiniBus;
+            SumRoutTransactionThereeFourHasCoolerBus += (int)item.RoutTransactionThereeFourHasCoolerBus;
+            SumRoutTransactionThereeFourHasCoolerMiniBus += (int)item.RoutTransactionThereeFourHasCoolerMiniBus;
+            SumRoutTransactionFiveSevenBus += (int)item.RoutTransactionFiveSevenBus;
+            SumRoutTransactionFiveSevenMiniBus += (int)item.RoutTransactionFiveSevenMiniBus;
+            SumRoutTransactionFiveSevenHasCoolerBus += (int)item.RoutTransactionFiveSevenHasCoolerBus;
+            SumRoutTransactionFiveSevenHasCoolerMiniBus += (int)item.RoutTransactionFiveSevenHasCoolerMiniBus;
+        }
         <tr>
-            <td colspan="2">
-                @Html.DisplayFor(modelItem => item.StartDateString)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionSingleBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionSingleMiniBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionSingleHasCoolerBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionSingleHasCoolerMiniBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionRegularBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionRegularMiniBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionRegularHasCoolerMiniBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourMiniBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourHasCoolerBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionThereeFourHasCoolerMiniBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenMiniBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenHasCoolerBus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutTransactionFiveSevenHasCoolerMiniBus)
-            </td>
-
+            <td colspan="2">مجموع</td>
+            <td>@SumRoutTransactionSingleBus </td>
+            <td>@SumRoutTransactionSingleMiniBus </td>
+            <td>@SumRoutTransactionSingleHasCoolerBus </td>
+            <td>@SumRoutTransactionSingleHasCoolerMiniBus</td>
+            <td>@SumRoutTransactionRegularBus </td>
+            <td>@SumRoutTransactionRegularMiniBus </td>
+            <td>@SumRoutTransactionRegularHasCoolerBus </td>
+            <td>@SumRoutTransactionRegularHasCoolerMiniBus </td>
+            <td>@SumRoutTransactionThereeFourBus </td>
+            <td>@SumRoutTransactionThereeFourMiniBus</td>
+            <td>@SumRoutTransactionThereeFourHasCoolerBus </td>
+            <td>@SumRoutTransactionThereeFourHasCoolerMiniBus </td>
+            <td>@SumRoutTransactionFiveSevenBus </td>
+            <td>@SumRoutTransactionFiveSevenMiniBus</td>
+            <td>@SumRoutTransactionFiveSevenHasCoolerBus</td>
+            <td>@SumRoutTransactionFiveSevenHasCoolerMiniBus</td>
         </tr>
-        SumRoutTransactionSingleBus += (int)item.RoutTransactionSingleBus;
-        SumRoutTransactionSingleMiniBus += (int)(int)item.RoutTransactionSingleMiniBus;
-        SumRoutTransactionSingleHasCoolerBus += (int)item.RoutTransactionSingleHasCoolerBus;
-        SumRoutTransactionSingleHasCoolerMiniBus += (int)item.RoutTransactionSingleHasCoolerMiniBus;
-        SumRoutTransactionRegularBus += (int)item.RoutTransactionRegularBus;
-        SumRoutTransactionRegularMiniBus += (int)item.RoutTransactionRegularMiniBus;
-        SumRoutTransactionRegularHasCoolerBus += (int)item.RoutTransactionRegularHasCoolerBus;
-        SumRoutTransactionRegularHasCoolerMiniBus += (int)item.RoutTransactionRegularHasCoolerMiniBus;
-        SumRoutTransactionThereeFourBus += (int)item.RoutTransactionThereeFourBus;
-        SumRoutTransactionThereeFourMiniBus += (int)item.RoutTransactionThereeFourMiniBus;
-        SumRoutTransactionThereeFourHasCoolerBus += (int)item.RoutTransactionThereeFourHasCoolerBus;
-        SumRoutTransactionThereeFourHasCoolerMiniBus += (int)item.RoutTransactionThereeFourHasCoolerMiniBus;
-        SumRoutTransactionFiveSevenBus += (int)item.RoutTransactionFiveSevenBus;
-        SumRoutTransactionFiveSevenMiniBus += (int)item.RoutTransactionFiveSevenMiniBus;
-        SumRoutTransactionFiveSevenHasCoolerBus += (int)item.RoutTransactionFiveSevenHasCoolerBus;
-        SumRoutTransactionFiveSevenHasCoolerMiniBus += (int)item.RoutTransactionFiveSevenHasCoolerMiniBus;
     }
-    <tr>
-        <td colspan="2">مجموع</td>
-        <td>@SumRoutTransactionSingleBus </td>
-        <td>@SumRoutTransactionSingleMiniBus </td>
-        <td>@SumRoutTransactionSingleHasCoolerBus </td>
-        <td>@SumRoutTransactionSingleHasCoolerMiniBus</td>
-        <td>@SumRoutTransactionRegularBus </td>
-        <td>@SumRoutTransactionRegularMiniBus </td>
-        <td>@SumRoutTransactionRegularHasCoolerBus </td>
-        <td>@SumRoutTransactionRegularHasCoolerMiniBus </td>
-        <td>@SumRoutTransactionThereeFourBus </td>
-        <td>@SumRoutTransactionThereeFourMiniBus</td>
-        <td>@SumRoutTransactionThereeFourHasCoolerBus </td>
-        <td>@SumRoutTransactionThereeFourHasCoolerMiniBus </td>
-        <td>@SumRoutTransactionFiveSevenBus </td>
-        <td>@SumRoutTransactionFiveSevenMiniBus</td>
-        <td>@SumRoutTransactionFiveSevenHasCoolerBus</td>
-        <td>@SumRoutTransactionFiveSevenHasCoolerMiniBus</td>
-    </tr>
+
 </table>
 @*<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>*@
 <script>

@@ -260,6 +260,8 @@ namespace SabzGashtTransportation.Controllers
                         {
                             _driverRout.AddNewDriverRout(rout);
                             _uow.SaveAllChanges();
+                            return RedirectToAction("Index");
+
                         }
                         return View();
                     }

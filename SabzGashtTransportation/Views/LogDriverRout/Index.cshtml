@@ -2,7 +2,7 @@
 @using PagedList.Mvc
 @using Sabz.ServiceLayer.Enumration
 @using Sabz.ServiceLayer.Extension
-@model SabzGashtTransportation.ViewModel.LogDriverRoutFullViewModel 
+@model SabzGashtTransportation.ViewModel.LogDriverRoutFullViewModel
 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 <script src="~/js/jquery-3.3.1.min.js"></script>
@@ -12,9 +12,9 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     @Styles.Render("~/css/css/style.css");
     var counter = 1;
-    var routTransactionType = ""; 
-    string driverDropDown =Model.DriverId != 0 ? Model.Drivers.Where(x=>x.Id ==Model.DriverId).FirstOrDefault().FullName : "";
-    string regionDropDown =Model.RegionId !=0 ? Model.Regions.Where(x=>x.Id ==Model.RegionId).FirstOrDefault().RegionName : "";
+    var routTransactionType = "";
+    string driverDropDown = Model.DriverId != 0 ? Model.Drivers.Where(x => x.Id == Model.DriverId).FirstOrDefault().FullName : "";
+    string regionDropDown = Model.RegionId != 0 ? Model.Regions.Where(x => x.Id == Model.RegionId).FirstOrDefault().RegionName : "";
 }
 
 <h2 class="style-h2">نمایش مسیرهای روزانه</h2>
@@ -38,24 +38,24 @@
                     regionDropDown = "انتخاب کنید";
                 }
                 <th>
-                    @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.Regions, "Id", "RegionName"),regionDropDown)
+                    @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.Regions, "Id", "RegionName"), regionDropDown)
                     @*@Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })*@
                 </th>
             </tr>
             <tr>
-                <th>راننده</th> 
-                    @if (string.IsNullOrEmpty(driverDropDown))
+                <th>راننده</th>
+                @if (string.IsNullOrEmpty(driverDropDown))
 
-                    {
-                        driverDropDown = "انتخاب کنید";
-                    }
+                {
+                    driverDropDown = "انتخاب کنید";
+                }
 
                 @*<th>@Html.TextBox("dropDriverId", ViewBag.CurrentFilterDriver as string)</th>*@
-                    <th>
-                        @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.Drivers, "Id", "FullName"), driverDropDown)
-                        @*@Html.ValidationMessageFor(model => model.DriverId, "", new { @class = "text-danger" })*@
-                    </th>
-                </tr>
+                <th>
+                    @Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.Drivers, "Id", "FullName"), driverDropDown)
+                    @*@Html.ValidationMessageFor(model => model.DriverId, "", new { @class = "text-danger" })*@
+                </th>
+            </tr>
             <tr>
                 <th>از تاریخ</th>
                 <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string)</th>
@@ -154,8 +154,8 @@
             @Html.ActionLink("مبلغ جریمه", "Index", new { sortOrder = ViewBag.Fine, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-                عملیات
-            </th>
+            عملیات
+        </th>
     </tr>
 
     @foreach (var item in Model.LogDriverRoutViewModels)
@@ -210,8 +210,8 @@
                 @Html.DisplayFor(modelItem => item.FinePrice)
             </td>
             <td>
-                    @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) 
-                </td>
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.Id })
+            </td>
         </tr>
         counter += 1;
 

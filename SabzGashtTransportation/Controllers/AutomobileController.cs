@@ -178,6 +178,7 @@ namespace SabzGashtTransportation.Controllers
                                 obj.AutomobileTypeId = obj.AutomobileTypeTbl.Id;
                             _automobile.AddNewAutomobile(obj);
                             _uow.SaveAllChanges();
+                            return RedirectToAction("Index");
                         }
                         return View();
                     }
@@ -186,7 +187,7 @@ namespace SabzGashtTransportation.Controllers
             }
             catch (Exception)
             {
-                return View();
+                return View(automobile);
             }
         }
 

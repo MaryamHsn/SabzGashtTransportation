@@ -26,19 +26,19 @@
     <div class="searchBox">
         <h4 class="style-h4">جستجو</h4>
         <table>
-            @*<tr>
-                    <th>  جستجو در جدول</th>
-                    <th>@Html.TextBox("SearchString", ViewBag.CurrentFilter as string)</th>
-                </tr>*@
-            @*<tr>
-                    <th>تاریخ</th>
-                    <th>@Html.TextBox("SearchDate", ViewBag.CurrentFilterDate as string)</th>
-                </tr>*@
             <tr>
                 <th class="font-small">از تاریخ</th>
-                <th>@Html.TextBox("SearchDateFrom", ViewBag.CurrentFilterDateFrom as string, new { @style = "width: 144px" })</th>
+                <th>
+                    @Html.TextBoxFor(model => model.SearchDateFrom)
+                    @Html.ValidationMessageFor(model => model.SearchDateFrom, "", new { @class = "text-danger" })
+
+                </th>
                 <th class="font-small">تا تاریخ</th>
-                <th>@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string, new { @style = "width: 144px" })</th>
+                <th>
+                    @*@Html.TextBox("SearchDateTo", ViewBag.CurrentFilterDateTo as string, new { @style = "width: 144px" })*@
+                    @Html.TextBoxFor(model => model.SearchDateTo)
+                    @Html.ValidationMessageFor(model => model.SearchDateTo, "", new { @class = "text-danger" })
+                </th>
             </tr>
             <tr>
                 <th class="font-small">نام منطقه</th>
@@ -131,95 +131,100 @@
             عملیات
         </th>
     </tr>
-
-    @foreach (var item in Model.RoutViewModels)
+    @if (Model.RoutViewModels != null)
     {
-        <tr>
-            <td>
-                @counter
-            </td>
+        foreach (var item in Model.RoutViewModels)
+        {
+            <tr>
+                <td>
+                    @counter
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.RegionName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDateString)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDateString)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.EnterTime)
-            </td>
-            <td>
-                @(item.ShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())
-            </td>
-            @{
-                if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
-                {
-
-                    routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
-                }
-                else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
-                {
-                    routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
-                }
-                else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
-                {
-                    routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
-                }
-                else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
-                {
-                    routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
-                }
-            }
-            <td>@routTransactionType</td>
-            <td>
-                @(item.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())
-            </td>
-            <td>
-                @(item.AutomobileTypeTbl.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.ActionLink(item.Allocate.ToString(), "SearchByRout", "DriverRout", new { id = item.RoutID }, null)
-            </td>
-            <td>
-                @*@((((int)item.Count) - ((int)item.Allocate)).ToString())*@
-                @Html.DisplayFor(modelItem => item.RemainAllocate)
-
-            </td>
-            <td>
-                @*@if (item.Allocate < item.Count)
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnterTime)
+                </td>
+                <td>
+                    @(item.ShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())
+                </td>
+                @{
+                    if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
                     {
-                        @Html.ActionLink("اختصاص |", "Allocate", "DriverRout", new { id = item.RoutID }, null)
-                    }*@
-                @Html.ActionLink("اختصاص ", "Allocate", "DriverRout", new { id = item.RoutID }, null) |
-                @Html.ActionLink("ویرایش", "Edit", new { id = item.RoutID }) |
-                @Html.ActionLink("جزئیات", "Details", new { id = item.RoutID }) 
-                @*|@Html.ActionLink("حذف", "Delete", new { id = item.RoutID })*@
-            </td>
-        </tr>
-        counter += 1;
+
+                        routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
+                    }
+                    else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
+                    }
+                    else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
+                    }
+                    else if (item.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
+                    }
+                }
+                <td>@routTransactionType</td>
+                <td>
+                    @(item.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())
+                </td>
+                <td>
+                    @(item.AutomobileTypeTbl.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Allocate.ToString(), "SearchByRout", "DriverRout", new { id = item.RoutID }, null)
+                </td>
+                <td>
+                    @*@((((int)item.Count) - ((int)item.Allocate)).ToString())*@
+                    @Html.DisplayFor(modelItem => item.RemainAllocate)
+
+                </td>
+                <td>
+                    @*@if (item.Allocate < item.Count)
+                        {
+                            @Html.ActionLink("اختصاص |", "Allocate", "DriverRout", new { id = item.RoutID }, null)
+                        }*@
+                    @Html.ActionLink("اختصاص ", "Allocate", "DriverRout", new { id = item.RoutID }, null) |
+                    @Html.ActionLink("ویرایش", "Edit", new { id = item.RoutID }) |
+                    @Html.ActionLink("جزئیات", "Details", new { id = item.RoutID })
+                    @*|@Html.ActionLink("حذف", "Delete", new { id = item.RoutID })*@
+                </td>
+            </tr>
+            counter += 1;
+        }
+
     }
 
 </table>
 <br />
-<p class="showPage">
-    صفحه @(Model.RoutViewModels.PageCount < Model.RoutViewModels.PageNumber ? 0 : Model.RoutViewModels.PageNumber) از @Model.RoutViewModels.PageCount
-</p>
+@if (Model.RoutViewModels != null)
+{
+    <p class="showPage">
+        صفحه @(Model.RoutViewModels.PageCount < Model.RoutViewModels.PageNumber ? 0 : Model.RoutViewModels.PageNumber) از @Model.RoutViewModels.PageCount
+    </p>
 
-@Html.PagedListPager(Model.RoutViewModels, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    @Html.PagedListPager(Model.RoutViewModels, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
+}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
+        $(function () {
+            $('select').on('change', function () {
+                $("#dropRegionId").val(this.value);
+            })
 
-    $(function () {
-        $('select').on('change', function () {
-            $("#dropRegionId").val(this.value);
         })
-
-    })
-</script>
+    </script>

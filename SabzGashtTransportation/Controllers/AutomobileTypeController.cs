@@ -35,58 +35,65 @@ namespace SabzGashtTransportation.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    commonList = new List<AutomobileTypeViewModel>();
-                    ViewBag.CurrentSort = sortOrder;
-                    ViewBag.HasCooler = String.IsNullOrEmpty(sortOrder) ? "hasCooler_desc" : "";
-                    ViewBag.IsBus = sortOrder == "isBus" ? "isBus_desc" : "isBus";
+                    if (User.IsInRole("Admin"))
+                    {
+                        commonList = new List<AutomobileTypeViewModel>();
+                        ViewBag.CurrentSort = sortOrder;
+                        ViewBag.HasCooler = String.IsNullOrEmpty(sortOrder) ? "hasCooler_desc" : "";
+                        ViewBag.IsBus = sortOrder == "isBus" ? "isBus_desc" : "isBus";
 
-                    if (searchString != null)
-                    {
-                        page = 1;
-                    }
-                    else
-                    {
-                        searchString = currentFilter;
-                    }
+                        if (searchString != null)
+                        {
+                            page = 1;
+                        }
+                        else
+                        {
+                            searchString = currentFilter;
+                        }
 
-                    ViewBag.CurrentFilter = searchString;
-                    var list = _automobile.GetAllAutomobileTypes();
-                    if (!String.IsNullOrEmpty(searchString))
-                    {
-                        list = list.Where(s => s.HasCooler.ToString().Contains(searchString)
-                                               || s.IsBus.ToString().Contains(searchString)).ToList();
-                    }
-                    switch (sortOrder)
-                    {
-                        case "hasCooler_desc":
-                            list = list.OrderByDescending(s => s.HasCooler).ToList();
-                            break;
-                        case "isBus":
-                            list = list.OrderBy(s => s.IsBus).ToList();
-                            break;
-                        case "isBus_desc":
-                            list = list.OrderByDescending(s => s.IsBus).ToList();
-                            break;
-                        default:
-                            list = list.OrderBy(s => s.HasCooler).ToList();
-                            break;
-                    }
+                        ViewBag.CurrentFilter = searchString;
+                        var list = _automobile.GetAllAutomobileTypes();
+                        if (!String.IsNullOrEmpty(searchString))
+                        {
+                            list = list.Where(s => s.HasCooler.ToString().Contains(searchString)
+                                                   || s.IsBus.ToString().Contains(searchString)).ToList();
+                        }
+                        switch (sortOrder)
+                        {
+                            case "hasCooler_desc":
+                                list = list.OrderByDescending(s => s.HasCooler).ToList();
+                                break;
+                            case "isBus":
+                                list = list.OrderBy(s => s.IsBus).ToList();
+                                break;
+                            case "isBus_desc":
+                                list = list.OrderByDescending(s => s.IsBus).ToList();
+                                break;
+                            default:
+                                list = list.OrderBy(s => s.HasCooler).ToList();
+                                break;
+                        }
 
-                    int pageSize = 10;
-                    int pageNumber = (page ?? 1);
-                    foreach (var item in list)
-                    {
-                        var element = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(item);
-                        commonList.Add(element);
+                        int pageSize = 10;
+                        int pageNumber = (page ?? 1);
+                        foreach (var item in list)
+                        {
+                            var element = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(item);
+                            commonList.Add(element);
+                        }
+                        return View(commonList.ToPagedList(pageNumber, pageSize));
                     }
-                    return View(commonList.ToPagedList(pageNumber, pageSize));
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]
@@ -136,25 +143,33 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(AutomobileTypeViewModel automobile)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.IsInRole("Admin"))
+                if (User.Identity.IsAuthenticated)
                 {
-                    if (ModelState.IsValid)
+                    if (User.IsInRole("Admin"))
                     {
-                        var obj = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
-                        //obj.IsActive = true;
-                        //obj.CreatedDate = DateTime.Now;
-                        //obj.ModifiedDate = DateTime.Now;
-                        obj.HasCooler = Convert.ToBoolean(automobile.HasCoolerEnum);
-                        obj.IsBus = (int)automobile.IsBusEnum;
-                        _automobile.AddNewAutomobileType(obj);
-                        _uow.SaveAllChanges();
+                        if (ModelState.IsValid)
+                        {
+                            var obj = BaseMapper<AutomobileTypeViewModel, AutomobileTypeTbl>.Map(automobile);
+                            //obj.IsActive = true;
+                            //obj.CreatedDate = DateTime.Now;
+                            //obj.ModifiedDate = DateTime.Now;
+                            obj.HasCooler = Convert.ToBoolean(automobile.HasCoolerEnum);
+                            obj.IsBus = (int)automobile.IsBusEnum;
+                            _automobile.AddNewAutomobileType(obj);
+                            _uow.SaveAllChanges();
+                            return RedirectToAction("Index");
+                        }
+                        return View();
                     }
-                    return RedirectToAction("Index");
                 }
+                return RedirectToAction("login", "Account");
             }
-            return RedirectToAction("login", "Account");
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         //[Authorize(Roles = "admin , SuperViser")]

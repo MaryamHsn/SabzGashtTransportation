@@ -343,8 +343,8 @@ namespace SabzGashtTransportation.Controllers
                         foreach (var routDriver in routDrivers)
                         {
                             var obj = BaseMapper<LogDriverRoutViewModel, LogDriverRoutTbl>.Map(routDriver);
-                            if(routDriver.RoutStartDateString !=null)
-                                 obj.DoDate = routDriver.RoutStartDateString.ToGeorgianDate();
+                            if (routDriver.RoutStartDateString != null)
+                                obj.DoDate = routDriver.RoutStartDateString.ToGeorgianDate();
                             obj.IsDone = Convert.ToBoolean(routDriver.IsDone);
                             obj.DriverRoutId = (int)routDriver.DriverRoutId;
                             obj.FinePrice = routDriver.FinePrice == null ? 0 : routDriver.FinePrice;
