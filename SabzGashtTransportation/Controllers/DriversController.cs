@@ -45,6 +45,7 @@ namespace SabzGashtTransportation.Controllers
                         commonList = new List<DriverViewModel>();
                         ViewBag.CurrentSort = sortOrder;
                         ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
+                        ViewBag.LastName = sortOrder == "firstName" ? "firstName_desc" : "firstName";
                         ViewBag.LastName = sortOrder == "lastName" ? "lastName_desc" : "lastName";
                         ViewBag.Phone = sortOrder == "phone" ? "phone_desc" : "phone";
                         ViewBag.BankAccount = sortOrder == "bankAccount" ? "bankAccount_desc" : "bankAccount";
@@ -64,13 +65,15 @@ namespace SabzGashtTransportation.Controllers
                         {
                             list = list.Where(s => s.FirstName.Contains(searchString)
                                                    || s.LastName.Contains(searchString)
-                                                   || s.BankAccountNumber.Contains(searchString)
-                                                   || s.Phone1.Contains(searchString)).ToList();
+                                                   || s.BankAccountNumber.Contains(searchString)).ToList();
                         }
                         switch (sortOrder)
                         {
                             case "firstName_desc":
                                 list = list.OrderByDescending(s => s.FirstName).ToList();
+                                break;
+                            case "firsName":
+                                list = list.OrderBy(s => s.FirstName).ToList();
                                 break;
                             case "lastName":
                                 list = list.OrderBy(s => s.LastName).ToList();
@@ -108,7 +111,7 @@ namespace SabzGashtTransportation.Controllers
                 }
                 return RedirectToAction("login", "Account");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return View();
             }

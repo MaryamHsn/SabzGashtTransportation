@@ -176,24 +176,24 @@ namespace SabzGashtTransportation.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                if (User.IsInRole("Admin"))
-                {
-                    return RedirectToAction("Index", "Admin");
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    if (User.IsInRole("Admin"))
+            //    {
+            //        return RedirectToAction("Index", "Admin");
 
-                    //main dashboard
-                }
-                else
-                {
-                    return View("AccessDeny");
-                }
-            }
-            else
-            {
+            //        //main dashboard
+            //    }
+            //    else
+            //    {
+            //        return View("AccessDeny");
+            //    }
+            //}
+            //else
+            //{
                 ViewBag.ReturnUrl = returnUrl;
                 return View();
-            }
+            //}
         }
 
         //
@@ -222,10 +222,10 @@ namespace SabzGashtTransportation.Controllers
                 {
                     return View(model);
                 }
-                if (string.IsNullOrEmpty(returnUrl))
-                {
-                    returnUrl = this.Url.Action("Index", "Admin", null);
-                }
+                //if (string.IsNullOrEmpty(returnUrl))
+                //{
+                //    returnUrl = this.Url.Action("Index", "Admin", null);
+                //}
                 // NOTE: You must add your claims **before** sign the user in.
                 // At the end of its execution chain SignInManager.PasswordSignInAsync method calls for SignInAsync method
                 // which is basically responsible for setting an authentication cookie which contains multiple claims about
