@@ -405,11 +405,11 @@ namespace SabzGashtTransportation.Controllers
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
                         common = new DriverRoutViewModel();
-                        var driverRouts = _driverRout.GetDriverRoutByRoutId((int)id);
-                        if (driverRouts == null)
-                        {
-                            return HttpNotFound();
-                        }
+                        //var driverRouts = _driverRout.GetDriverRoutByRoutId((int)id);
+                        //if (driverRouts == null)
+                        //{
+                        //    return HttpNotFound();
+                        //}
                         var rout = _rout.GetRout(id);
                         var allDrivers = _driver.GetAllDrivers();
                         var allocateDriversId = _driverRout.GetDriverRoutByRoutId((int)id).Select(x => x.DriverId).ToList();
@@ -467,8 +467,8 @@ namespace SabzGashtTransportation.Controllers
                 {
                     if (User.IsInRole("Admin"))
                     {
-                        if (ModelState.IsValid)
-                        {
+                        //if (ModelState.IsValid)
+                        //{
                             var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
                             //ViewBag.Region = driverRouts.Rout.RegionId;
                             if (driverRout.RemailDriverList != null)
@@ -500,7 +500,7 @@ namespace SabzGashtTransportation.Controllers
                                 }
                             }
                             _uow.SaveAllChanges();
-                        }
+                        //}
                         return RedirectToAction("Index", "Rout");
                     }
                 }
@@ -513,7 +513,7 @@ namespace SabzGashtTransportation.Controllers
         }
 
         //[Authorize(Roles = "admin , SuperViser")]
-        public ActionResult SearchByRout(int? id, int? page, string dropRegionId)
+        public ActionResult SearchByRout(DriverRoutFullViewModel model)
         {
             try
             {
@@ -521,35 +521,23 @@ namespace SabzGashtTransportation.Controllers
                 {
                     if (User.IsInRole("Admin"))
                     {
-                        if (id == null)
+                        if (model.RoutId == 0)
                         {
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
-                        var driverRoutList = _driverRout.GetDriverRoutByRoutId((int)id);
+                        var driverRoutList = _driverRout.GetDriverRoutByRoutId((int)model.RoutId);
                         if (driverRoutList == null)
                         {
                             return HttpNotFound();
                         }
-                        IEnumerable<SelectListItem> regionItems = _region.GetAllRegions().Select(c => new SelectListItem
-                        {
-                            Value = c.Id.ToString(),
-                            Text = c.RegionName
-                        });
-
-                        if (!string.IsNullOrWhiteSpace(dropRegionId))
-                        {
-                            ViewBag.Region = regionItems.Where(x => x.Value == dropRegionId).FirstOrDefault().Text;
-                        }
-                        else
-                        {
-                            dropRegionId = ViewBag.Region != null ? ViewBag.Rgion : "0";
-                        }
-                        ViewBag.RegionItems = regionItems;
+                        var allregion = _region.GetAllRegions().ToList();
+                        var allDrivers = _driver.GetAllDrivers().ToList();
+                        model.Drivers = allDrivers;
+                        model.Regions = allregion; 
                         commonList = new List<DriverRoutViewModel>();
                         int pageSize = 10;
-                        var allDrivers = _driver.GetAllDrivers();
-                        var rout = _rout.GetRout(id);
-                        int pageNumber = (page ?? 1);
+                        var rout = _rout.GetRout(model.RoutId);
+                        int pageNumber = (model.page ?? 1);
                         foreach (var item in driverRoutList)
                         {
                             var element = BaseMapper<DriverRoutViewModel, DriverRoutTbl>.Map(item);
@@ -566,7 +554,10 @@ namespace SabzGashtTransportation.Controllers
                             element.RoutShiftType = _rout.GetRout(element.RoutId).ShiftType;
                             commonList.Add(element);
                         }
-                        return View("Index", commonList.ToPagedList(pageNumber, pageSize));
+                        model.DriverRoutViewModels = commonList.ToPagedList(pageNumber, pageSize);
+                        //model.DriverRoutViewModels = commonList.OrderBy(x => x.RoutStartDate).ThenBy(x => x.Rout.EnterTime).ToPagedList(pageNumber, pageSize);
+
+                        return View("Index",model );
                     }
                 }
                 return RedirectToAction("login", "Account");

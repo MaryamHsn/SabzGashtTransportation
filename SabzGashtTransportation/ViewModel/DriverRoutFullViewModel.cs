@@ -18,6 +18,7 @@ namespace SabzGashtTransportation.ViewModel
         public int? page { get; set; }
         public int RegionId { get; set; }
         public int DriverId { get; set; }
+        public int RoutId{ get; set; }
         public List<RegionTbl> Regions { get; set; }
         public List<DriverTbl> Drivers{ get; set; }
         public PagedList.IPagedList<SabzGashtTransportation.ViewModel.DriverRoutViewModel> DriverRoutViewModels { get; set; }

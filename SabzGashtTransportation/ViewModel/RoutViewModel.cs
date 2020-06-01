@@ -15,13 +15,15 @@ namespace SabzGashtTransportation.ViewModel
         public ShiftTypeEnum ShiftTypeEnum { get; set; }
         public int RoutTransactionType { get; set; } 
         public RoutTransactionTypeEnum RoutTransactionTypeEnum { get; set; }
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
         public TimeSpan EnterTime { get; set; }
         public DateTime StartDate { get; set; }
        // [RegularExpression(@"^$|^((1[34][0-9][0-9] |[0-9][0-9])[/\/]([0 ۰]{0,1}[۱-۶ 1-6])[/\/]([0 ۰]{0,1}[۱-۹ 1-9]|[۱۲12][۰-۹ 0-9]|[3۳][01۰۱])|[1۱][۰-۹ 0-9]{3}[/\/]([۰0]{0,1}[۷-۹ 7-9]|[1۱][۰۱۲012])[/\/]([۰0]{0,1}[1-9 ۱-۹]|[12۱۲][0-9 ۰-۹]|(30|۳۰)))$", ErrorMessage = "تاریخ وارد شده نامعتبر است.فرمت صحیح به صورت سال/ماه/روز است")]
         
         [RegularExpression(@"^$|^((1[34][0-9][0-9] |[0-9][0-9])(\/|\-)([0 ۰]{0,1}[۱-۶ 1-6])(\/|\-)([0 ۰]{0,1}[۱-۹ 1-9]|[۱۲12][۰-۹ 0-9]|[3۳][01۰۱])|[1۱][۰-۹ 0-9]{3}(\/|\-)([۰0]{0,1}[۷-۹ 7-9]|[1۱][۰۱۲012])(\/|\-)([۰0]{0,1}[1-9 ۱-۹]|[12۱۲][0-9 ۰-۹]|(30|۳۰)))$", ErrorMessage = "تاریخ وارد شده نامعتبر است.فرمت صحیح به صورت سال/ماه/روز است")]
         public string StartDateString { get; set; }
-        public int? RegionId { get; set; }
+        [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
+        public int RegionId { get; set; }
         public string RegionName { get; set; }
         public int? AutomobileTypeId { get; set; }
         public int? HasCooler { get; set; }

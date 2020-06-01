@@ -183,7 +183,7 @@
                     @Html.DisplayFor(modelItem => item.Count)
                 </td>
                 <td>
-                    @Html.ActionLink(item.Allocate.ToString(), "SearchByRout", "DriverRout", new { id = item.RoutID }, null)
+                    @Html.ActionLink(item.Allocate.ToString(), "SearchByRout", "DriverRout", new { RoutID  = item.RoutID }, null)
                 </td>
                 <td>
                     @*@((((int)item.Count) - ((int)item.Allocate)).ToString())*@

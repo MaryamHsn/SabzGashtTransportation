@@ -239,6 +239,7 @@ namespace SabzGashtTransportation.Controllers
                 {
                     if (User.IsInRole("Admin"))
                     {
+                        rout.RegionTblList = _region.GetAllRegions();
                         if (ModelState.IsValid)
                         {
                             rout.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus((int)rout.HasCoolerEnum, (int)rout.IsBusEnum).Id;
@@ -263,7 +264,7 @@ namespace SabzGashtTransportation.Controllers
                             _uow.SaveAllChanges();
                             return RedirectToAction("Index");
                         }
-                        return View();
+                        return View(rout);
                     }
                 }
                 return RedirectToAction("login", "Account");
