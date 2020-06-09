@@ -143,17 +143,21 @@ namespace Sabz.IocConfig
 
                 //config.For<IDataProtectionProvider>().Use(() => app.GetDataProtectionProvider()); // In Startup class
                 //Repository
-                          ioc.For<IAccidentRepository>()
-                              .HybridHttpOrThreadLocalScoped()
-                              .Use<AccidentRepository>();
+                ioc.For<IAccidentRepository>()
+                    .HybridHttpOrThreadLocalScoped()
+                    .Use<AccidentRepository>();
 
                 ioc.For<IAutomobileRepository>()
                     .HybridHttpOrThreadLocalScoped()
                     .Use<AutomobileRepository>();
 
                 ioc.For<IAutomobileTypeRepository>()
-          .HybridHttpOrThreadLocalScoped()
-          .Use<AutomobileTypeRepository>();
+                  .HybridHttpOrThreadLocalScoped()
+                  .Use<AutomobileTypeRepository>();
+
+                ioc.For<IBankAccountNumberRepository>()
+                  .HybridHttpOrThreadLocalScoped()
+                  .Use<BankAccountNumberRepository>();
 
 
                 ioc.For<IDriverRepository>()
@@ -186,6 +190,7 @@ namespace Sabz.IocConfig
                 ioc.For(typeof(IAccidentRepository)).Use(typeof(AccidentRepository));
                 ioc.For(typeof(IAutomobileRepository)).Use(typeof(AutomobileRepository));
                 ioc.For(typeof(IAutomobileTypeRepository)).Use(typeof(AutomobileTypeRepository));
+                ioc.For(typeof(IBankAccountNumberRepository)).Use(typeof(BankAccountNumberRepository));
                 ioc.For(typeof(IDriverRepository)).Use(typeof(DriverRepository));
                 ioc.For(typeof(ILogDriverRoutRepository)).Use(typeof(LogDriverRoutRepository));
                 ioc.For(typeof(IPaymentRepository)).Use(typeof(PaymentRepository));
@@ -205,6 +210,10 @@ namespace Sabz.IocConfig
                 ioc.For<IAutomobileTypeService>()
                     .HybridHttpOrThreadLocalScoped()
                     .Use<EfAutomobileTypeService>();
+
+                ioc.For<IBankAccountNumberService>()
+                    .HybridHttpOrThreadLocalScoped()
+                    .Use<EfBankAccountNumberService>();
 
                 ioc.For<IDriverRoutService>()
                     .HybridHttpOrThreadLocalScoped()

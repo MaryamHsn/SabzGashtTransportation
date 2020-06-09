@@ -170,6 +170,15 @@ namespace Sabz.DataLayer.Context
                 return _automobileTypesRepository ??
                     (_automobileTypesRepository = new BaseRepository<AutomobileTypeTbl, int>(this));
             }
+        }        
+        private BaseRepository<BankAccountNumberTbl, int> _bankAccountNumbersRepository;
+        public IRepository<BankAccountNumberTbl, int> BankAccountNumberRepository
+        {
+            get
+            {
+                return _bankAccountNumbersRepository ??
+                    (_bankAccountNumbersRepository = new BaseRepository<BankAccountNumberTbl, int>(this));
+            }
         }
 
         private BaseRepository<DriverRoutTbl, int> _driverRoutsRepository;

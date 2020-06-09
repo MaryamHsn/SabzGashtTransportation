@@ -42,10 +42,11 @@ namespace Sabz.ServiceLayer.Service
         {
             return _uow.DriverRepository.GetAll(x => x.IsActive && x.FullName.Contains(fullName)).FirstOrDefault();
         }
-        public void AddNewDriver(DriverTbl driver)
+        public DriverTbl AddNewDriver(DriverTbl driver)
         {
-            _uow.DriverRepository.Add(driver);
+            var entity =_uow.DriverRepository.Add(driver);
             _uow.SaveAllChanges();
+            return entity;
         }
         public bool Delete(int id)
         {

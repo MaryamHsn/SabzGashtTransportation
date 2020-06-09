@@ -126,6 +126,7 @@
     <Compile Include="IService\IApplicationUserManager.cs" />
     <Compile Include="IService\IAutomobileService.cs" />
     <Compile Include="IService\IAutomobileTypeService.cs" />
+    <Compile Include="IService\IBankAccountNumberService.cs" />
     <Compile Include="IService\ICustomRoleStore.cs" />
     <Compile Include="IService\ICustomUserStore.cs" />
     <Compile Include="IService\IDriverRoutService.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Service\EfAccidentService.cs" />
     <Compile Include="Service\EfAutomobileService.cs" />
     <Compile Include="Service\EfAutomobileTypeService.cs" />
+    <Compile Include="Service\EfBankAccountNumberService.cs" />
     <Compile Include="Service\EfDriverRoutService.cs" />
     <Compile Include="Service\EfDriverService.cs" />
     <Compile Include="Service\EfLogDriverRoutService.cs" />

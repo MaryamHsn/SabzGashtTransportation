@@ -7,13 +7,13 @@ namespace Sabz.DataLayer.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class addColomn2DriverTbl : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addColomn2DriverTbl));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "202005132006314_addColomn2DriverTbl"; }
+            get { return "202006080858499_init"; }
         }
         
         string IMigrationMetadata.Source

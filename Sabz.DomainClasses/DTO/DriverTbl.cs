@@ -14,6 +14,7 @@ namespace Sabz.DomainClasses.DTO
            // AccidentTbls = new HashSet<AccidentTbl>();
             DriverRoutTbls = new HashSet<DriverRoutTbl>();
             RepairmentTbls = new HashSet<RepairmentTbl>();
+            BankAccountNumberTbls = new HashSet<BankAccountNumberTbl>();
         }
         [Required]
         [StringLength(50)]
@@ -30,9 +31,7 @@ namespace Sabz.DomainClasses.DTO
             }
         }
         [StringLength(50)]
-        public string FatherName { get; set; }
-        [StringLength(50)]
-        public string BankAccountNumber { get; set; }
+        public string FatherName { get; set; } 
         [StringLength(10)]
         public string NationalCode { get; set; }
         [StringLength(10)]
@@ -48,6 +47,7 @@ namespace Sabz.DomainClasses.DTO
        // public virtual ICollection<AccidentTbl> AccidentTbls { get; set; }
        // public virtual AutomobileTbl AutomobileTbl { get; set; }
         public virtual ICollection<DriverRoutTbl> DriverRoutTbls { get; set; }
+        public virtual ICollection<BankAccountNumberTbl> BankAccountNumberTbls { get; set; }
         public virtual ICollection<RepairmentTbl> RepairmentTbls { get; set; }
         public virtual ICollection<PaymentTbl> PaymentTbls { get; set; }
     }

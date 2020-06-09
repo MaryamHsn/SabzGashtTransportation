@@ -20,13 +20,17 @@ namespace SabzGashtTransportation.Controllers
     {
         readonly IDriverService _drivers;
         readonly IAutomobileService _automobile;
+        readonly IBankAccountNumberService _bankAccountNumber;
+        readonly IRegionService _region;
 
         readonly IUnitOfWork _uow;
         private DriverViewModel common { get; set; }
         private List<DriverViewModel> commonList { get; set; }
 
-        public DriversController(IUnitOfWork uow, IDriverService drivers, IAutomobileService automobile)
+        public DriversController(IUnitOfWork uow, IDriverService drivers, IAutomobileService automobile, IBankAccountNumberService bankAccountNumber, IRegionService region)
         {
+            _region = region;
+            _bankAccountNumber = bankAccountNumber;
             _automobile = automobile;
             _drivers = drivers;
             _uow = uow;
@@ -34,7 +38,7 @@ namespace SabzGashtTransportation.Controllers
 
         //[Authorize(Roles = "admin , SuperViser")]
         [HttpGet]
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(DriverFullViewModel model)
         {
             try
             {
@@ -43,31 +47,31 @@ namespace SabzGashtTransportation.Controllers
                     if (User.IsInRole("Admin"))
                     {
                         commonList = new List<DriverViewModel>();
-                        ViewBag.CurrentSort = sortOrder;
-                        ViewBag.FirstName = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
-                        ViewBag.LastName = sortOrder == "firstName" ? "firstName_desc" : "firstName";
-                        ViewBag.LastName = sortOrder == "lastName" ? "lastName_desc" : "lastName";
-                        ViewBag.Phone = sortOrder == "phone" ? "phone_desc" : "phone";
-                        ViewBag.BankAccount = sortOrder == "bankAccount" ? "bankAccount_desc" : "bankAccount";
+                        ViewBag.CurrentSort = model.SortOrder;
+                        ViewBag.FirstName = String.IsNullOrEmpty(model.SortOrder) ? "firstName_desc" : "";
+                        ViewBag.LastName = model.SortOrder == "firstName" ? "firstName_desc" : "firstName";
+                        ViewBag.LastName = model.SortOrder == "lastName" ? "lastName_desc" : "lastName";
+                        ViewBag.Phone = model.SortOrder == "phone" ? "phone_desc" : "phone";
+                        //ViewBag.BankAccount = sortOrder == "bankAccount" ? "bankAccount_desc" : "bankAccount";
 
-                        if (searchString != null)
+                        if (model.SearchString != null)
                         {
-                            page = 1;
+                            model.Page = 1;
                         }
                         else
                         {
-                            searchString = currentFilter;
+                            model.SearchString = model.CurrentFilter;
                         }
 
-                        ViewBag.CurrentFilter = searchString;
+                        ViewBag.CurrentFilter = model.SearchString;
                         var list = _drivers.GetAllDrivers();
-                        if (!String.IsNullOrEmpty(searchString))
+                        if (!String.IsNullOrEmpty(model.SearchString))
                         {
-                            list = list.Where(s => s.FirstName.Contains(searchString)
-                                                   || s.LastName.Contains(searchString)
-                                                   || s.BankAccountNumber.Contains(searchString)).ToList();
+                            list = list.Where(s => s.FirstName.Contains(model.SearchString)
+                                                   || s.LastName.Contains(model.SearchString)
+                                                   || s.BankAccountNumberTbls.Select(x=>x.BankAccountNumber.Contains(model.SearchString)).FirstOrDefault()).ToList();
                         }
-                        switch (sortOrder)
+                        switch (model.SortOrder)
                         {
                             case "firstName_desc":
                                 list = list.OrderByDescending(s => s.FirstName).ToList();
@@ -87,26 +91,25 @@ namespace SabzGashtTransportation.Controllers
                             case "phone_desc":
                                 list = list.OrderByDescending(s => s.Phone1).ToList();
                                 break;
-                            case "bankAccount":
-                                list = list.OrderBy(s => s.BankAccountNumber).ToList();
-                                break;
-                            case "bankAccount_desc":
-                                list = list.OrderByDescending(s => s.BankAccountNumber).ToList();
-                                break;
                             default:
                                 list = list.OrderBy(s => s.Id).ToList();
                                 break;
                         }
 
                         int pageSize = 1000;
-                        int pageNumber = (page ?? 1);
+                        int pageNumber = (model.Page ?? 1);
+                        var bankAccount = _bankAccountNumber.GetAllBankAccountNumbers();
+                        model.Regiones= _region.GetAllRegions();
+                        
                         foreach (var item in list)
                         {
                             var element = BaseMapper<DriverViewModel, DriverTbl>.Map(item);
                             element.DriverId = item.Id;
+                            element.BankAccountNumbers = bankAccount.Where(x => x.DriverId == item.Id).ToList(); 
                             commonList.Add(element);
                         }
-                        return View(commonList.ToPagedList(pageNumber, pageSize));
+                        model.DriverViewModels= commonList.ToPagedList(pageNumber, pageSize);
+                        return View(model); 
                     }
                 }
                 return RedirectToAction("login", "Account");
@@ -149,9 +152,20 @@ namespace SabzGashtTransportation.Controllers
             {
                 if (User.IsInRole("Admin"))
                 {
+                    var Regiones = _region.GetAllRegions().ToList();
+                    var regionList = new List<RegionViewModel>();
+                    foreach (var item in Regiones)
+                    {
+                        var obj = new RegionViewModel();
+                        obj.RegionId = item.Id;
+                        obj.RegionName = item.RegionName;
+                        regionList.Add(obj);
+                    }
+
                     common = new DriverViewModel()
                     {
-                        Automobiles = _automobile.GetAllAutomobiles()
+                        Automobiles = _automobile.GetAllAutomobiles().ToList(),
+                        Regiones = regionList
                     };
                     return View(common);
                 }
@@ -170,24 +184,31 @@ namespace SabzGashtTransportation.Controllers
                 {
                     if (User.IsInRole("Admin"))
                     {
-                        driver.Automobiles = _automobile.GetAllAutomobiles();
+                        driver.Automobiles = _automobile.GetAllAutomobiles().ToList();
+                        var Regiones = _region.GetAllRegions().ToList();
+                        driver.Regiones = Regiones.Select(BaseMapper<RegionViewModel, RegionTbl>.Map).ToList();
+                         
                         if (ModelState.IsValid)
                         {
-                            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                            //if (string.IsNullOrEmpty(obj.FirstName))
-                            //{
-                            //    return View(driver); 
-                            //}
-                            //if (string.IsNullOrEmpty(obj.LastName))
-                            //{
-                            //    return RedirectToAction("Index");
-                            //}
+                            var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver); 
                             if (driver.BirthDateString != null)
                                 obj.BirthDate = driver.BirthDateString.ToGeorgianDate();
                             obj.IsActive = true;
                             obj.CreatedDate = DateTime.Now;
                             obj.ModifiedDate = DateTime.Now;
-                            _drivers.AddNewDriver(obj);
+                            var addnewDriver= _drivers.AddNewDriver(obj);
+                            foreach (var item in driver.BankAccountNumbers)
+                            {
+                                if (item.BankAccountNumber != null)
+                                {
+                                    var bnkAccount = new BankAccountNumberTbl();
+                                    bnkAccount.DriverId = addnewDriver.Id;
+                                    bnkAccount.RegionId = item.RegionId;
+                                    bnkAccount.BankAccountNumber = item.BankAccountNumber;
+                                    _bankAccountNumber.AddNewBankAccountNumber(bnkAccount);
+
+                                }
+                            }
                             _uow.SaveAllChanges();
                             return RedirectToAction("Index");
 
@@ -198,7 +219,7 @@ namespace SabzGashtTransportation.Controllers
                 }
                 return RedirectToAction("login", "Account");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return View(driver);
             }
@@ -218,8 +239,24 @@ namespace SabzGashtTransportation.Controllers
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
                         DriverTbl driver = _drivers.GetDriver(id);
+                        if (driver == null)
+                        {
+                            return HttpNotFound();
+                        }
+                        var Regiones = _region.GetAllRegions().ToList();
+                        var regionList = new List<RegionViewModel>();
+                        foreach (var item in Regiones)
+                        {
+                            var objRegion = new RegionViewModel();
+                            objRegion.RegionId = item.Id;
+                            objRegion.RegionName = item.RegionName;
+                            regionList.Add(objRegion);
+                        }
                         var obj = BaseMapper<DriverViewModel, DriverTbl>.Map(driver);
-                        obj.Automobiles = _automobile.GetAllAutomobiles();
+                        obj.Automobiles = _automobile.GetAllAutomobiles().ToList();
+                         
+                        obj.Regiones = regionList;
+                        obj.BankAccountNumbers = _bankAccountNumber.GetBankAccountNumberByDriverId((int)id);
                         if (driver.BirthDate != null)
                         {
                             obj.BirthDateString = obj.BirthDate != null
@@ -227,10 +264,6 @@ namespace SabzGashtTransportation.Controllers
                             : ((DateTime)(driver.BirthDate)).ToPersianDateString();
                         }
                         obj.DriverId = driver.Id;
-                        if (driver == null)
-                        {
-                            return HttpNotFound();
-                        }
                         return View(obj);
                     }
                 }
@@ -264,18 +297,32 @@ namespace SabzGashtTransportation.Controllers
                             obj.CreatedDate = DateTime.Now;
                             obj.ModifiedDate = DateTime.Now;
                             obj.IsActive = true;
-                            //_drivers.AddNewDriver(obj);
-                            //_uow.SaveAllChanges(); 
                             obj.Id = driver.DriverId;
                             _drivers.UpdateDriver(obj);
-                            //_uow.SaveAllChanges();
+                            var bankAccountExist = _bankAccountNumber.GetBankAccountNumberByDriverId(driver.DriverId);
+                            foreach (var acnt in bankAccountExist)
+                            {
+                                _bankAccountNumber.Delete(acnt.Id);
+                            }
+                            foreach (var item in driver.BankAccountNumbersReserve)
+                            {
+                                if (item.BankAccountNumber != null)
+                                {
+                                    var bnkAccount = new BankAccountNumberTbl();
+                                    bnkAccount.DriverId = driver.DriverId;
+                                    bnkAccount.RegionId = item.RegionId;
+                                    bnkAccount.BankAccountNumber = item.BankAccountNumber;
+                                    _bankAccountNumber.AddNewBankAccountNumber(bnkAccount);
+                                }
+                            }
+                            _uow.SaveAllChanges();
                         }
                         return RedirectToAction("Index");
                     }
                 }
                 return RedirectToAction("login", "Account");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return RedirectToAction("Index");
             }

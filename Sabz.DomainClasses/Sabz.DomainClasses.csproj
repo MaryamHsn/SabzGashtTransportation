@@ -61,6 +61,7 @@
     <Compile Include="DTO\ApplicationUser.cs" />
     <Compile Include="DTO\AutomobileTbl.cs" />
     <Compile Include="DTO\AutomobileTypeTbl.cs" />
+    <Compile Include="DTO\BankAccountNumberTbl.cs" />
     <Compile Include="DTO\CustomRole.cs" />
     <Compile Include="DTO\CustomUserClaim.cs" />
     <Compile Include="DTO\CustomUserLogin.cs" />

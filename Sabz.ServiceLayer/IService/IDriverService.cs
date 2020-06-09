@@ -15,7 +15,7 @@ namespace Sabz.ServiceLayer.IService
         IList<DriverTbl> GetOtherDriversByIds(List<int> ids);
         DriverTbl GetDriver(int? id);
         DriverTbl GetDriverByName(string fullName);
-        void AddNewDriver(DriverTbl driverRout);
+        DriverTbl AddNewDriver(DriverTbl driverRout);
         bool Delete(int id);
         DriverTbl UpdateDriver(DriverTbl entity);
         Task<IList<DriverTbl>> GetAllDriversAsync(CancellationToken ct = new CancellationToken());

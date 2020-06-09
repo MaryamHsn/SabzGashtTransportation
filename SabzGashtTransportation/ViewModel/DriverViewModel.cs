@@ -13,8 +13,7 @@ namespace SabzGashtTransportation.ViewModel
         [Required(ErrorMessage = "پر کردن مقدار اجباری است")]
         public string LastName { get; set; }
         public string FatherName { get; set; }
-        public string FullName { get; set; }
-        public string BankAccountNumber { get; set; }
+        public string FullName { get; set; } 
         public string NationalCode { get; set; }
         public string LicenceCode { get; set; }
         public DateTime? BirthDate { get; set; }
@@ -25,7 +24,12 @@ namespace SabzGashtTransportation.ViewModel
         public string Address { get; set; }
         public string Phone1 { get; set; }
         public string Phone2 { get; set; }
-        public bool IsSelected { get; set; } 
-        public IEnumerable<AutomobileTbl >Automobiles { get; set; } 
+        public bool IsSelected { get; set; }
+       // public List<RegionTbl> Regiones { get; set; }
+        public List<RegionViewModel> Regiones { get; set; }
+        public List<AutomobileTbl> Automobiles { get; set; }
+        public List<BankAccountNumberTbl> BankAccountNumbers { get; set; }
+        public List<BankAccountNumberTbl> BankAccountNumbersReserve { get; set; }
+        public BankAccountNumberTbl BankAccountNumber { get; set; }
     }
 }

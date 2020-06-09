@@ -13,6 +13,7 @@ namespace Sabz.DataLayer.Context
        IRepository<AccidentTbl,int> AccidentRepository { get; }
        IRepository<AutomobileTbl,int> AutomobileRepository { get; }
        IRepository<AutomobileTypeTbl,int> AutomobileTypeRepository { get; }
+       IRepository<BankAccountNumberTbl, int> BankAccountNumberRepository { get; }
        IRepository<DriverRoutTbl,int> DriverRoutRepository { get; }
        IRepository<DriverTbl,int> DriverRepository { get; }
        IRepository<LogDriverRoutTbl,int> LogDriverRoutRepository { get; }
