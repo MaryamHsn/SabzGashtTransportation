@@ -1131,6 +1131,7 @@
     <None Include="Properties\PublishProfiles\FolderProfile4.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile5.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile6.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile7.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
