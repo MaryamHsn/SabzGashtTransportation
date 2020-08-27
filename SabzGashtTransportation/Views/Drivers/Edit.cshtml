@@ -141,14 +141,10 @@
 
                     else
                     {
-
-                        
-                            @Html.DisplayFor(modelItem => modelItem.Regiones[i].RegionName)
                             @Html.EditorFor(m => m.BankAccountNumbersReserve[i].BankAccountNumber);
                             @Html.ValidationMessageFor(m => m.BankAccountNumbersReserve[i].BankAccountNumber);
                             var temp = Model.Regiones[@i].RegionId;
                             <input type="hidden" name="BankAccountNumbers[@i].RegionId" value=@temp />
-                        
                     }
 
                 }
