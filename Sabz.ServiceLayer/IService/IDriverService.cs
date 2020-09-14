@@ -11,6 +11,7 @@ namespace Sabz.ServiceLayer.IService
     public interface IDriverService
     {
         IList<DriverTbl> GetAllDrivers();
+        IList<DriverTbl> GetAllDriversByRegionId(int regionId);
         IList<DriverTbl> GetAllDriversByIds(List<int> ids);
         IList<DriverTbl> GetOtherDriversByIds(List<int> ids);
         DriverTbl GetDriver(int? id);
@@ -20,6 +21,7 @@ namespace Sabz.ServiceLayer.IService
         DriverTbl UpdateDriver(DriverTbl entity);
         Task<IList<DriverTbl>> GetAllDriversAsync(CancellationToken ct = new CancellationToken());
         Task<IList<DriverTbl>> GetAllDriversByIdsAsync(List<int> ids);
+        Task<IList<DriverTbl>> GetAllDriversByRegionIdAsync(int regionId);
         Task<IList<DriverTbl>> GetOtherDriversByIdsAsync(List<int> ids);
         Task<DriverTbl> GetDriverAsync(int? id);
         Task<DriverTbl> GetDriverByNameAsync(string fullName);

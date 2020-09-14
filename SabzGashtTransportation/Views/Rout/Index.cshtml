@@ -41,7 +41,7 @@
                 </th>
             </tr>
             <tr>
-                <th class="font-small">نام منطقه</th>
+                <th class="font-small">نام شرکت</th>
                 @if (string.IsNullOrEmpty(regionDropDown))
                 {
                     regionDropDown = "انتخاب کنید";
@@ -97,7 +97,7 @@
             ردیف
         </th>
         <th>
-            @Html.ActionLink(" منطقه", "Index", new { sortOrder = ViewBag.RegionId, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink(" شرکت", "Index", new { sortOrder = ViewBag.RegionId, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             @Html.ActionLink("تاریخ", "Index", new { sortOrder = ViewBag.Date, currentFilter = ViewBag.CurrentFilter })

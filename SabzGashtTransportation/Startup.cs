@@ -11,7 +11,8 @@ using System.Web.Optimization;
 using Sabz.IocConfig;
 using Sabz.ServiceLayer;
 using Sabz.ServiceLayer.IService;
-using SabzGashtTransportation.Helpers; 
+using SabzGashtTransportation.Helpers;
+using Sabz.DataLayer.Context;
 
 namespace SabzGashtTransportation
 {
@@ -33,9 +34,14 @@ namespace SabzGashtTransportation
                       .Use(() => app.GetDataProtectionProvider());
             });
             container.GetInstance<IApplicationUserManager>().SeedDatabase();
+            // Configure the db context, user manager and role manager to use a single instance per request
+            //app.CreatePerOwinContext(ApplicationDbContext.Create);
 
             // This is necessary for `GenerateUserIdentityAsync` and `SecurityStampValidator` to work internally by ASP.NET Identity 2.x
             app.CreatePerOwinContext(() => (ApplicationUserManager)container.GetInstance<IApplicationUserManager>());
+            app.CreatePerOwinContext(() => (ApplicationUserManager)container.GetInstance<IApplicationUserManager>());
+            app.CreatePerOwinContext(() => (ApplicationRoleManager)container.GetInstance<ApplicationRoleManager>());
+            app.CreatePerOwinContext(() => (ApplicationSignInManager)container.GetInstance<ApplicationSignInManager>());
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider

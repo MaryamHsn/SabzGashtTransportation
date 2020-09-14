@@ -26,6 +26,11 @@ namespace Sabz.ServiceLayer.Service
         {
             return _uow.DriverRepository.GetAll(x => x.IsActive).ToList();
         }
+        public IList<DriverTbl> GetAllDriversByRegionId(int regionId)
+        {
+            var findDrivers = _uow.BankAccountNumberRepository.GetAll(x => x.IsActive && x.RegionId==regionId).Select(x=>x.DriverId).ToList();
+            return GetAllDriversByIds(findDrivers);
+        }
         public IList<DriverTbl> GetAllDriversByIds(List<int> ids)
         {
             return _uow.DriverRepository.GetAll(x =>ids.Contains(x.Id) && x.IsActive).ToList();
@@ -66,6 +71,12 @@ namespace Sabz.ServiceLayer.Service
         {
             var obj = await _uow.DriverRepository.GetAllAsync(ct);
             return obj.ToList();
+        }
+        public async Task<IList<DriverTbl>> GetAllDriversByRegionIdAsync(int regionId)
+        {
+            var findDrivers =await _uow.BankAccountNumberRepository.GetAllAsync(x => x.IsActive && x.RegionId == regionId);
+            //findDrivers.
+            return await GetAllDriversByIdsAsync(findDrivers.Select(x=>x.DriverId).ToList());
         }
         public async Task<IList<DriverTbl>> GetAllDriversByIdsAsync(List<int> ids)
         {

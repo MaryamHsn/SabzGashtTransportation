@@ -12,7 +12,8 @@ namespace SabzGashtTransportation.ViewModel
         public string CurrentFilter { get; set; }
         public string SortOrder { get; set; }
         public int? Page { get; set; }
-        public IEnumerable<RegionTbl> Regiones { get; set; }
+        public int RegionId { get; set; }
+        public IEnumerable<RegionTbl> Regions { get; set; }
         public PagedList.IPagedList<SabzGashtTransportation.ViewModel.DriverViewModel> DriverViewModels { get; set; }
 
     }

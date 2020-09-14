@@ -34,14 +34,14 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             <p class="control-label">نام پدر:</p>
             <div class="col-md-10">
 
                 @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <p class="control-label">کد ملی:</p>
@@ -92,29 +92,29 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             <p class="control-label">آدرس:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
-            <p class="control-label">موبایل:</p>
+            <p class="control-label">تلفن:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Phone1, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Phone1, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <p class="control-label">تلفن:</p>
+        @*<div class="form-group">
+            <p class="control-label">موبایل:</p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Phone2, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Phone2, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -76,7 +76,7 @@ namespace SabzGashtTransportation.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName= loginInfo.Email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.Email });
             }
         }
 
@@ -101,7 +101,7 @@ namespace SabzGashtTransportation.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.UserName};//, Email = model.Email 
+                var user = new ApplicationUser { UserName = model.UserName };//, Email = model.Email 
                 var result = await _userManager.CreateAsync(user).ConfigureAwait(false);
                 if (result.Succeeded)
                 {
@@ -112,7 +112,7 @@ namespace SabzGashtTransportation.Controllers
                         return redirectToLocal(returnUrl);
                     }
                 }
-                addErrors(result);
+                AddErrors(result);
             }
 
             ViewBag.ReturnUrl = returnUrl;
@@ -191,8 +191,8 @@ namespace SabzGashtTransportation.Controllers
             //}
             //else
             //{
-                ViewBag.ReturnUrl = returnUrl;
-                return View();
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
             //}
         }
 
@@ -203,50 +203,70 @@ namespace SabzGashtTransportation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
+            if (!ModelState.IsValid)
             {
-                if (User.IsInRole("Admin"))
-                {
-                    return RedirectToAction("Index", "Admin");
-
-                    //main dashboard
-                }
-                else
-                {
-                    return View("AccessDeny");
-                }
+                return View(model);
             }
-            else
+
+            // This doen't count login failures towards lockout only two factor authentication
+            // To enable password failures to trigger lockout, change to shouldLockout: true
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false).ConfigureAwait(false);
+            switch (result)
             {
-                if (!ModelState.IsValid)
-                {
+                case SignInStatus.Success:
+                    return redirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
+                default:
+                    ModelState.AddModelError("", "نام کاربری یا رمز عبور اشتباه است");
                     return View(model);
-                }
-                //if (string.IsNullOrEmpty(returnUrl))
-                //{
-                //    returnUrl = this.Url.Action("Index", "Admin", null);
-                //}
-                // NOTE: You must add your claims **before** sign the user in.
-                // At the end of its execution chain SignInManager.PasswordSignInAsync method calls for SignInAsync method
-                // which is basically responsible for setting an authentication cookie which contains multiple claims about
-                // a user (one of them is its name).
-
-                // This doesn't count login failures towards lockout only two factor authentication
-                // To enable password failures to trigger lockout, change to shouldLockout: true
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false).ConfigureAwait(false);
-                switch (result)
-                {
-                    case SignInStatus.Success:
-                        return redirectToLocal(returnUrl);
-                    case SignInStatus.LockedOut:
-                        return View("Lockout");
-                    case SignInStatus.RequiresVerification:
-                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
-                    default:
-                        ModelState.AddModelError("", "نام کاربری یا رمز عبور اشتباه است");
-                        return View(model);
-                }
             }
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    if (User.IsInRole("Admin"))
+            //    {
+            //        return RedirectToAction("Index", "Admin");
+
+            //        //main dashboard
+            //    }
+            //    else
+            //    {
+            //        return View("AccessDeny");
+            //    }
+            //}
+            //else
+            //{
+            //    if (!ModelState.IsValid)
+            //    {
+            //        return View(model);
+            //    }
+            //    //if (string.IsNullOrEmpty(returnUrl))
+            //    //{
+            //    //    returnUrl = this.Url.Action("Index", "Admin", null);
+            //    //}
+            //    // NOTE: You must add your claims **before** sign the user in.
+            //    // At the end of its execution chain SignInManager.PasswordSignInAsync method calls for SignInAsync method
+            //    // which is basically responsible for setting an authentication cookie which contains multiple claims about
+            //    // a user (one of them is its name).
+
+            //    // This doesn't count login failures towards lockout only two factor authentication
+            //    // To enable password failures to trigger lockout, change to shouldLockout: true
+            //    var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false).ConfigureAwait(false);
+            //    switch (result)
+            //    {
+            //        case SignInStatus.Success:
+            //            return redirectToLocal(returnUrl);
+            //        case SignInStatus.LockedOut:
+            //            return View("Lockout");
+            //        case SignInStatus.RequiresVerification:
+            //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
+            //        default:
+            //            ModelState.AddModelError("", "نام کاربری یا رمز عبور اشتباه است");
+            //            return View(model);
+            //    }
+            //}
         }
 
         //
@@ -281,7 +301,7 @@ namespace SabzGashtTransportation.Controllers
                 }
             }
             else
-            { 
+            {
                 return View();
             }
         }
@@ -298,8 +318,6 @@ namespace SabzGashtTransportation.Controllers
                 if (User.IsInRole("Admin"))
                 {
                     return RedirectToAction("Index", "Admin");
-
-                    //main dashboard
                 }
                 else
                 {
@@ -311,7 +329,6 @@ namespace SabzGashtTransportation.Controllers
                 if (ModelState.IsValid)
                 {
                     var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName + "@gmail.com", PurePassword = model.Password };
-                    //var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
                     var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
                     if (result.Succeeded)
                     {
@@ -321,7 +338,7 @@ namespace SabzGashtTransportation.Controllers
                         ViewBag.Link = callbackUrl;
                         return View("DisplayEmail");
                     }
-                    addErrors(result);
+                    AddErrors(result);
                 }
 
                 // If we got this far, something failed, redisplay form
@@ -359,7 +376,7 @@ namespace SabzGashtTransportation.Controllers
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            addErrors(result);
+            AddErrors(result);
             return View();
         }
 
@@ -449,7 +466,7 @@ namespace SabzGashtTransportation.Controllers
             }
         }
 
-        private void addErrors(IdentityResult result)
+        private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {

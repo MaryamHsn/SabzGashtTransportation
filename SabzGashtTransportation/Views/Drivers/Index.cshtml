@@ -1,13 +1,16 @@
 ﻿@using PagedList.Mvc
 
 @model SabzGashtTransportation.ViewModel.DriverFullViewModel
- 
+
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
+    /**/
+
     ViewBag.Title = "کارمندان";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     @Styles.Render("~/css/css/style.css");
+    string regionDropDown = Model.RegionId != 0 ? Model.Regions.Where(x => x.Id == Model.RegionId).FirstOrDefault().RegionName : "";
     var counter = 1;
 }
 
@@ -17,8 +20,22 @@
 
 @using (Html.BeginForm("Index", "Drivers", FormMethod.Get))
 {
+    <tr>
+        <th class="font-small">نام شرکت</th>
+        @if (string.IsNullOrEmpty(regionDropDown))
+        {
+            regionDropDown = "انتخاب کنید";
+        }
+        <th>
+            @*@Html.DropDownList("RegionItems", regionDropDown)*@
+            @Html.DropDownListFor(x => Model.RegionId, new SelectList(Model.Regions, "Id", "RegionName"), regionDropDown)
+
+            @Html.Hidden("dropRegionId")
+
+        </th>
+    </tr>
     <p class="search_table">
-        جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+       @* جستجو در جدول: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)*@
         <input type="submit" value="جستجو" />
         <input type="button" value="حذف فیلتر" onclick="location.href='@Url.Action("index")';return false;">
 
@@ -64,17 +81,17 @@
             <td>
                 @foreach (var acnt in item.BankAccountNumbers)
                 {
-                    @Html.DisplayFor(modelItem => acnt.BankAccountNumber) 
-                    @Html.DisplayFor(modelItem => Model.Regiones.Where(x=>x.Id==acnt.RegionId).FirstOrDefault().RegionName)
-                    <br/>
+                    @Html.DisplayFor(modelItem => acnt.BankAccountNumber)
+                    @Html.DisplayFor(modelItem => Model.Regions.Where(x => x.Id == acnt.RegionId).FirstOrDefault().RegionName)
+                    <br />
                 }
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.BankAccountNumber)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.BankAccountNumber)
+                </td>*@
             <td>
-                @Html.ActionLink("ویرایش", "Edit", new { id = item.DriverId }) |
-                @Html.ActionLink("جزئیات", "Details", new { id = item.DriverId })
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.DriverId }) 
+            @*   |  @Html.ActionLink("جزئیات", "Details", new { id = item.DriverId })*@
                 @*@Html.ActionLink("حذف", "Delete", new { id = item.DriverId })*@
             </td>
         </tr>

@@ -64,7 +64,16 @@ namespace SabzGashtTransportation.Controllers
                         }
 
                         ViewBag.CurrentFilter = model.SearchString;
-                        var list = _drivers.GetAllDrivers();
+                        var list = new List<DriverTbl>();
+
+                        if (model.RegionId == 0)
+                        {
+                            list = _drivers.GetAllDrivers().ToList();
+                        }
+                        else
+                        {
+                            list = _drivers.GetAllDriversByRegionId(model.RegionId).ToList();
+                        }
                         if (!String.IsNullOrEmpty(model.SearchString))
                         {
                             list = list.Where(s => s.FirstName.Contains(model.SearchString)
@@ -99,7 +108,7 @@ namespace SabzGashtTransportation.Controllers
                         int pageSize = 1000;
                         int pageNumber = (model.Page ?? 1);
                         var bankAccount = _bankAccountNumber.GetAllBankAccountNumbers();
-                        model.Regiones= _region.GetAllRegions();
+                        model.Regions= _region.GetAllRegions();
                         
                         foreach (var item in list)
                         {
