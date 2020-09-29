@@ -16,7 +16,9 @@ namespace SabzGashtTransportation.ViewModel
         public string sortOrder { get; set; }
         public int? page { get; set; }
         public int RegionId { get; set; }
+        public int RoutId { get; set; }
         public IEnumerable<RegionTbl> Regions { get; set; }
+        public RoutViewModel Rout { get; set; } 
         public PagedList.IPagedList<SabzGashtTransportation.ViewModel.RoutViewModel> RoutViewModels { get; set; }
 
     }

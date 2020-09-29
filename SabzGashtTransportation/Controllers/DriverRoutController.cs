@@ -24,17 +24,19 @@ namespace SabzGashtTransportation.Controllers
         readonly IDriverService _driver;
         readonly IRoutService _rout;
         readonly IRegionService _region;
+        readonly IBankAccountNumberService _bankAccountNumber;
         readonly IUnitOfWork _uow;
 
         private DriverRoutViewModel common;
         private List<DriverRoutViewModel> commonList;
 
-        public DriverRoutController(IUnitOfWork uow, IDriverRoutService driverRout, IDriverService driver, IRoutService rout, IRegionService region)
+        public DriverRoutController(IUnitOfWork uow, IDriverRoutService driverRout, IDriverService driver, IRoutService rout, IRegionService region, IBankAccountNumberService bankAccountNumber)
         {
             _region = region;
             _driver = driver;
             _rout = rout;
             _driverRout = driverRout;
+            _bankAccountNumber = bankAccountNumber;
             _uow = uow;
         }
 
@@ -405,16 +407,38 @@ namespace SabzGashtTransportation.Controllers
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
                         common = new DriverRoutViewModel();
-                        //var driverRouts = _driverRout.GetDriverRoutByRoutId((int)id);
-                        //if (driverRouts == null)
-                        //{
-                        //    return HttpNotFound();
-                        //}
+                        common.RoutRegionName= _rout.GetRout(id).RegionTbl.RegionName;
                         var rout = _rout.GetRout(id);
                         var allDrivers = _driver.GetAllDrivers();
+                        //sort driver by region
+                        var specifidRegion = rout.RegionId;
+                        var bankAccountRegion = _bankAccountNumber.GetBankAccountNumberByRegionId(specifidRegion).ToList();
+                        var otherBankAccountRegion = _bankAccountNumber.GetBankAccountNumberByExceptRegionId(specifidRegion).ToList();
+                        var driverRegion = bankAccountRegion.Select(x => x.DriverTbl); //_bankAccountNumber.GetDriverByRegionId(specifidRegion);
+                        //var OtherdriverRegion = otherBankAccountRegion.Select(x => x.DriverTbl); //_bankAccountNumber.GetDriverByExceptRegionId(specifidRegion);
+                        var OtherdriverRegion = otherBankAccountRegion.Select(x => x.DriverTbl).GroupBy(x => x.Id).Select(y => y.First()); //_bankAccountNumber.GetDriverByExceptRegionId(specifidRegion);
+                        var driverRegionTemp = new List<DriverViewModel>();
+                        foreach (var item in driverRegion)
+                        {
+                            var obj = BaseMapper<DriverTbl, DriverViewModel>.Map(item);
+                            obj.DriverId = item.Id;
+                            obj.BirthDateString = "";
+                            obj.RegionId = specifidRegion;
+                            driverRegionTemp.Add(obj);
+                        }
+                        var OtherdriverRegionTemp = new List<DriverViewModel>();
+                        foreach (var item in otherBankAccountRegion)
+                        {
+                            var obj = BaseMapper<DriverTbl, DriverViewModel>.Map(item.DriverTbl);
+                            obj.DriverId = item.Id;
+                            obj.BirthDateString = "";
+                            obj.RegionId = item.RegionId;
+                            OtherdriverRegionTemp.Add(obj);
+                        } 
+                        //sort drivers by selecting
                         var allocateDriversId = _driverRout.GetDriverRoutByRoutId((int)id).Select(x => x.DriverId).ToList();
                         var AllocateDriverList = _driver.GetAllDriversByIds(allocateDriversId);
-                        var remainDrivers = _driver.GetOtherDriversByIds(allocateDriversId);
+                        var remainDriverList = _driver.GetOtherDriversByIds(allocateDriversId);
                         var driverListTemp = new List<DriverViewModel>();
                         foreach (var item in allDrivers)
                         {
@@ -426,31 +450,60 @@ namespace SabzGashtTransportation.Controllers
                         common.DriverList = driverListTemp;
                         //common.AllocateDriverList = AllocateDriverList.Select(BaseMapper<DriverTbl, DriverViewModel>.Map).ToList();
                         //common.AllocateDriverList.Select(x => { x.IsSelected = true; return x; }).ToList();
-                        var allocateDriverListTemp = new List<DriverViewModel>();
+                        var allocateDriverListRegionTemp = new List<DriverViewModel>();
+                        var allocateDriverListOtherRegionTemp = new List<DriverViewModel>();
                         foreach (var item in AllocateDriverList)
                         {
                             var obj = BaseMapper<DriverTbl, DriverViewModel>.Map(item);
-                            obj.DriverId = item.Id;
-                            obj.IsSelected = true;
-                            allocateDriverListTemp.Add(obj);
+                            foreach (var dlr in driverRegionTemp)
+                            {
+                                if (item.Id == dlr.DriverId)
+                                {
+                                    obj.DriverId = item.Id;
+                                    obj.IsSelected = true;
+                                    allocateDriverListRegionTemp.Add(obj);
+                                }
+                                else
+                                {
+                                    obj.DriverId = item.Id;
+                                    obj.IsSelected = false;
+                                    allocateDriverListOtherRegionTemp.Add(obj);
+                                }
+                            }
                         }
-                        common.AllocateDriverList = allocateDriverListTemp;
-                        var remainDriversTemp = new List<DriverViewModel>();
-                        foreach (var item in remainDrivers)
+                        common.AllocateDriverListRegion = allocateDriverListRegionTemp;
+                        common.AllocateDriverListOtherRegion= allocateDriverListOtherRegionTemp;
+
+                        var remainDriverListRegionTemp = new List<DriverViewModel>();
+                        var remainDriverListOtherRegionTemp = new List<DriverViewModel>();
+                        foreach (var item in remainDriverList)
                         {
                             var obj = BaseMapper<DriverTbl, DriverViewModel>.Map(item);
-                            obj.DriverId = item.Id;
-                            obj.IsSelected = false;
-                            remainDriversTemp.Add(obj);
+                            foreach (var dlr in OtherdriverRegionTemp)
+                            {
+                                if (item.Id == dlr.DriverId)
+                                {
+                                    obj.DriverId = item.Id;
+                                    obj.IsSelected = true;
+                                    remainDriverListRegionTemp.Add(obj);
+                                }
+                                else
+                                {
+                                    obj.DriverId = item.Id;
+                                    obj.IsSelected = false;
+                                    remainDriverListOtherRegionTemp.Add(obj);
+                                }
+                            }
                         }
-                        common.RemailDriverList = remainDriversTemp;
+                        common.RemailDriverListRegion = remainDriverListRegionTemp;
+                        common.RemailDriverListOtherRegion = remainDriverListOtherRegionTemp;
                         common.RoutId = (int)id;
                         return View(common);
                     }
                 }
                 return RedirectToAction("login", "Account");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return View();
             }
@@ -470,10 +523,10 @@ namespace SabzGashtTransportation.Controllers
                         //if (ModelState.IsValid)
                         //{
                             var obj = BaseMapper<DriverRoutTbl, DriverRoutViewModel>.Map(driverRout);
-                            //ViewBag.Region = driverRouts.Rout.RegionId;
-                            if (driverRout.RemailDriverList != null)
+                        //ViewBag.Region = driverRouts.Rout.RegionId;
+                            if (driverRout.RemailDriverListRegion != null)
                             {
-                                foreach (var item in driverRout.RemailDriverList)
+                                foreach (var item in driverRout.RemailDriverListRegion)
                                 {
                                     if (item.IsSelected)
                                     {
@@ -486,9 +539,9 @@ namespace SabzGashtTransportation.Controllers
                                     }
                                 }
                             }
-                            if (driverRout.AllocateDriverList != null)
+                            if (driverRout.AllocateDriverListRegion != null)
                             {
-                                foreach (var item in driverRout.AllocateDriverList)
+                                foreach (var item in driverRout.AllocateDriverListRegion)
                                 {
                                     if (!item.IsSelected)
                                     {
@@ -499,7 +552,36 @@ namespace SabzGashtTransportation.Controllers
                                     }
                                 }
                             }
-                            _uow.SaveAllChanges();
+
+                        if (driverRout.RemailDriverListOtherRegion!= null)
+                        {
+                            foreach (var item in driverRout.RemailDriverListOtherRegion)
+                            {
+                                if (item.IsSelected)
+                                {
+                                    var entity = new DriverRoutTbl();
+                                    if (item.DriverId != null)
+                                        entity.DriverId = item.DriverId;
+                                    if (driverRout.RoutId != null)
+                                        entity.RoutId = (int)driverRout.RoutId;
+                                    _driverRout.AddNewDriverRout(entity);
+                                }
+                            }
+                        }
+                        if (driverRout.AllocateDriverListOtherRegion!= null)
+                        {
+                            foreach (var item in driverRout.AllocateDriverListOtherRegion)
+                            {
+                                if (!item.IsSelected)
+                                {
+                                    var entity = new DriverRoutTbl();
+                                    entity = _driverRout.GetDriverRoutByDriverIdRoutId(item.DriverId, (int)driverRout.RoutId);
+                                    if (entity != null)
+                                        _driverRout.Delete(entity.Id);
+                                }
+                            }
+                        }
+                        _uow.SaveAllChanges();
                         //}
                         return RedirectToAction("Index", "Rout");
                     }

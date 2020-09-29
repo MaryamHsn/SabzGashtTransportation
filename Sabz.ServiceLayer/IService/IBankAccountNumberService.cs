@@ -18,7 +18,10 @@ namespace Sabz.ServiceLayer.IService
         BankAccountNumberTbl GetBankAccountNumberByDriverIdByRegionId(int driverId, int regionId);
         bool Delete(int id);
         void UpdateBankAccountNumber(BankAccountNumberTbl automobileType);
-
+        List<DriverTbl> GetDriverByRegionId(int regionId);
+        List<DriverTbl> GetDriverByExceptRegionId(int regionId);
+        List<DriverTbl> GetDriverByRegionIds(List<int> regionIds); 
+        List<BankAccountNumberTbl> GetBankAccountNumberByExceptRegionId(int regionId);
         Task AddNewBankAccountNumberAsync(BankAccountNumberTbl BankAccountNumber, CancellationToken ct = new CancellationToken());
         Task<IList<BankAccountNumberTbl>> GetAllBankAccountNumbersAsync(CancellationToken ct = new CancellationToken());
         Task<BankAccountNumberTbl> GetBankAccountNumberAsync(int? id, CancellationToken ct = new CancellationToken());

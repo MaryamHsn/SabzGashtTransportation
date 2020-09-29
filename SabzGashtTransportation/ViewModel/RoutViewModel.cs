@@ -52,5 +52,7 @@ namespace SabzGashtTransportation.ViewModel
         public ICollection<RegionTbl> RegionTblList { get; set; }
         public AutomobileTypeEnum IsBusEnum { get; set; }
         public HasCoolerEnum HasCoolerEnum { get; set; }
+        public IEnumerable<DriverTbl> Drivers { get; set; }
+
     }
 }

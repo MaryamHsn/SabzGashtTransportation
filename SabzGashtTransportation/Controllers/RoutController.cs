@@ -240,6 +240,10 @@ namespace SabzGashtTransportation.Controllers
                     if (User.IsInRole("Admin"))
                     {
                         rout.RegionTblList = _region.GetAllRegions();
+                        if (!string.IsNullOrEmpty(rout.StartDateString))
+                        {
+                            rout.StartDate = rout.StartDateString.ToGeorgianDate();
+                        }
                         if (ModelState.IsValid)
                         {
                             rout.AutomobileTypeId = _automobileType.GetAutomobileTypeByCoolerBus((int)rout.HasCoolerEnum, (int)rout.IsBusEnum).Id;
@@ -269,7 +273,7 @@ namespace SabzGashtTransportation.Controllers
                 }
                 return RedirectToAction("login", "Account");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return RedirectToAction("Index");
             }
@@ -523,6 +527,30 @@ namespace SabzGashtTransportation.Controllers
         //    }
         //    return RedirectToAction("login", "Account");
         //}
+
+        public ActionResult SelectedDriver(RoutFullViewModel fullRout)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                { 
+                    var drivers = _driverRout.GetDriverByRoutId(fullRout.RoutId);
+                    if (drivers == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    var findRout= _rout.GetRout(fullRout.RoutId);
+                    fullRout.Regions = _region.GetAllRegions(); 
+                    var routModel = BaseMapper<RoutViewModel, RoutTbl>.Map(findRout);
+                    fullRout.Rout = routModel;
+                    fullRout.Rout.StartDateString = fullRout.Rout.StartDate.ToPersianDateString();
+                    fullRout.Rout.Drivers = drivers;
+
+                    return View(fullRout);
+                }
+            }
+            return RedirectToAction("login", "Account");
+        }
 
         public ActionResult FullInformation(RoutFullViewModel fullRout)
         {

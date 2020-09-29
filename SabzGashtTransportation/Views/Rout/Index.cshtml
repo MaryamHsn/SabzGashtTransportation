@@ -183,7 +183,8 @@
                     @Html.DisplayFor(modelItem => item.Count)
                 </td>
                 <td>
-                    @Html.ActionLink(item.Allocate.ToString(), "SearchByRout", "DriverRout", new { RoutID  = item.RoutID }, null)
+                    @*@Html.ActionLink(item.Allocate.ToString(), "SearchByRout", "DriverRout", new { RoutID  = item.RoutID }, null)*@
+                    @Html.ActionLink(item.Allocate.ToString(), "SelectedDriver", "Rout", new { RoutID  = item.RoutID }, null)
                 </td>
                 <td>
                     @*@((((int)item.Count) - ((int)item.Allocate)).ToString())*@
@@ -195,9 +196,9 @@
                         {
                             @Html.ActionLink("اختصاص |", "Allocate", "DriverRout", new { id = item.RoutID }, null)
                         }*@
-                    @Html.ActionLink("اختصاص ", "Allocate", "DriverRout", new { id = item.RoutID }, null) |
-                    @Html.ActionLink("ویرایش", "Edit", new { id = item.RoutID }) |
-                    @Html.ActionLink("جزئیات", "Details", new { id = item.RoutID })
+                    @Html.ActionLink("اختصاص راننده به مسیر", "Allocate", "DriverRout", new { id = item.RoutID }, null) |
+                    @Html.ActionLink("ویرایش", "Edit", new { id = item.RoutID }) 
+                    @*@Html.ActionLink("جزئیات", "Details", new { id = item.RoutID })*@
                     @*|@Html.ActionLink("حذف", "Delete", new { id = item.RoutID })*@
                 </td>
             </tr>

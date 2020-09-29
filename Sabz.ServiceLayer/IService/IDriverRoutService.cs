@@ -18,6 +18,7 @@ namespace Sabz.ServiceLayer.IService
         DriverRoutTbl GetDriverRout(int? id);
         DriverRoutTbl GetDriverRoutByDriverIdRoutId(int driverId, int routId);
         List<DriverRoutTbl> GetDriverRoutByRoutId(int routId);
+        List<DriverTbl> GetDriverByRoutId(int routId);
         List<DriverRoutTbl> GetDriverRoutByRoutIds(List<int> routIds);
         bool Delete(int id);
         void UpdateDriverRout(DriverRoutTbl driverRout);
@@ -46,6 +47,7 @@ namespace Sabz.ServiceLayer.IService
         Task<List<DriverRoutTbl>> GetDriverRoutByRoutIdAsync(int routId);
         Task<bool> DeleteAsync(int id, CancellationToken ct = new CancellationToken());
         Task UpdateDriverRoutAsync(DriverRoutTbl driverRout);
+        Task<List<DriverTbl>> GetDriverByRoutIdAsync(int routId);
         Task<List<DriverRoutTbl>> GetDriverRoutByRoutIdsAsync(List<int> routIds);
         Task<List<DriverRoutTbl>> GetDriverRoutByDriverNameAsync(string driverName);
         Task<List<DriverRoutTbl>> GetDriverRoutByDriverNameByRegionIdAsync(string driverName, int regionId);

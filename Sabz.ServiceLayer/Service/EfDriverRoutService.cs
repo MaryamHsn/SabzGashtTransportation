@@ -67,6 +67,11 @@ namespace Sabz.ServiceLayer.Service
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && routIds.Contains(x.RoutId)).ToList();
         }
+        public List<DriverTbl> GetDriverByRoutId(int routId)
+        {
+            var drivers = _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.RoutId == routId).Select(x => x.DriverId).ToList();
+            return _uow.DriverRepository.GetAll().Where(x => drivers.Contains(x.Id)).ToList();
+        }
         public List<DriverRoutTbl> GetDriverRoutByDriverName(string driverName)
         {
             return _uow.DriverRoutRepository.GetAll().Where(x => x.IsActive && x.DriverTbl.FullName.Contains(driverName)).ToList();
@@ -175,6 +180,13 @@ namespace Sabz.ServiceLayer.Service
         {
             var list = await _uow.DriverRoutRepository.GetAllAsync(x => x.IsActive && routIds.Contains(x.RoutId));
             return list.ToList();
+        }
+        public async Task<List<DriverTbl>> GetDriverByRoutIdAsync(int routId)
+        {
+            var allDrivers =await _uow.DriverRoutRepository.GetAllAsync();
+            var drivers = allDrivers.Where(x => x.IsActive && x.RoutId == routId).Select(x => x.DriverId).ToList();
+            var detail= await _uow.DriverRepository.GetAllAsync();
+            return detail.Where(x => drivers.Contains(x.Id)).ToList();
         }
         public async Task<List<DriverRoutTbl>> GetDriverRoutByDriverNameAsync(string driverName)
         {

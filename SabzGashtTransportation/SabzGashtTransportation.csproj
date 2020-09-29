@@ -1252,6 +1252,7 @@
     <Content Include="Views\LogDriverRout\FullInformation.cshtml" />
     <Content Include="Views\Shared\_LoginPartialDealer.cshtml" />
     <Content Include="Views\Account\AccessDeny.cshtml" />
+    <Content Include="Views\Rout\SelectedDriver.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

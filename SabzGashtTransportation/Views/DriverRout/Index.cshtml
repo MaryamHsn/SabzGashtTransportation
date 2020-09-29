@@ -81,7 +81,7 @@
         </th>
 
         <th>
-            @Html.ActionLink("محدوده مسیر", "Index", new { sortOrder = ViewBag.RoutRegion, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("نام شرکت", "Index", new { sortOrder = ViewBag.RoutRegion, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             @Html.ActionLink("راننده", "Index", new { sortOrder = ViewBag.Driver, currentFilter = ViewBag.CurrentFilter })
@@ -148,7 +148,7 @@
                 </td>
                 <td>
                     @*@Html.ActionLink("ویرایش", "Edit", new { id = item.Id }) |*@
-                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |
+                    @*@Html.ActionLink("جزئیات", "Details", new { id = item.Id }) |*@
                     @Html.ActionLink("حذف", "Delete", new { id = item.Id })
                 </td>
             </tr>

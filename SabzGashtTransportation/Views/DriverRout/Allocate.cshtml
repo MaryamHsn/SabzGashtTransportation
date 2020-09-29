@@ -43,16 +43,14 @@
     <div class="link-back">
         @Html.ActionLink("بازگشت به لیست", "Index")
     </div>*@
-
-
+********************************
 
 @model SabzGashtTransportation.ViewModel.DriverRoutViewModel
 
 @{
-    ViewBag.Title = "اختصاص راننده";
+    ViewBag.Title = "اختصاص راننده به مسیر";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     @Styles.Render("~/css/css/style.css");
-
 }
 
 <h2 class="style-h2">اختصاص راننده به مسیر</h2>
@@ -66,35 +64,89 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            <p class="control-label">راننده:</p>
+            <p class="control-label">راننده @Model.RoutRegionName:</p>
             <div class="col-md-10">
-                @*@Html.DropDownListFor(x => Model.DriverId, new SelectList(Model.DriverList, "Id", "FullName"), htmlAttributes: new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Driver.DriverFullName, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.DriverId)*@
-                @{ for (int i = 0; i < Model.AllocateDriverList.Count(); i++)
-                    {
-                        var name = Model.AllocateDriverList[i];
-                        @Html.CheckBoxFor(model => model.AllocateDriverList[i].IsSelected)
-                        @Html.LabelFor(model => model.AllocateDriverList[i].FullName, name.FullName)
-                        @Html.ValidationMessageFor(model => model.AllocateDriverList[i], "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.AllocateDriverList[i].DriverId)
+                @*@{ for (int i = 0; i < Model.AllocateDriverList.Count(); i++)
+            {
+                var name = Model.AllocateDriverList[i];
+                @Html.CheckBoxFor(model => model.AllocateDriverList[i].IsSelected)
+                @Html.LabelFor(model => model.AllocateDriverList[i].FullName, name.FullName)
+                @Html.ValidationMessageFor(model => model.AllocateDriverList[i], "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.AllocateDriverList[i].DriverId)
 
-                        @*@Html.EditorFor(model => model.AllocateDriverList[i])*@
+                @Html.EditorFor(model => model.AllocateDriverList[i])
+                <br />
+            }
+        }
+        @{
+            for (int i = 0; i < Model.RemailDriverList.Count; i++)
+            {
+                var name = Model.RemailDriverList[i];
+                @Html.CheckBoxFor(model => model.RemailDriverList[i].IsSelected)
+                @Html.LabelFor(model => model.RemailDriverList[i].FullName, name.FullName)
+                @Html.ValidationMessageFor(model => model.RemailDriverList[i], "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.RemailDriverList[i].DriverId)
+
+                <br />
+            }
+        }*@
+
+                @{ for (int i = 0; i < Model.AllocateDriverListRegion.Count(); i++)
+                    {
+                        var name = Model.AllocateDriverListRegion[i];
+                        @Html.CheckBoxFor(model => model.AllocateDriverListRegion[i].IsSelected)
+                        @Html.LabelFor(model => model.AllocateDriverListRegion[i].FullName, name.FullName)
+                        @Html.ValidationMessageFor(model => model.AllocateDriverListRegion[i], "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.AllocateDriverListRegion[i].DriverId)
+                        @Html.EditorFor(model => model.AllocateDriverListRegion[i])
                         <br />
                     }
                 }
                 @{
-                    for (int i = 0; i < Model.RemailDriverList.Count; i++)
+                    for (int i = 0; i < Model.RemailDriverListRegion.Count; i++)
                     {
-                        var name = Model.RemailDriverList[i];
-                        @Html.CheckBoxFor(model => model.RemailDriverList[i].IsSelected)
-                        @Html.LabelFor(model => model.RemailDriverList[i].FullName, name.FullName)
-                        @Html.ValidationMessageFor(model => model.RemailDriverList[i], "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.RemailDriverList[i].DriverId)
+                        var name = Model.RemailDriverListRegion[i];
+                        @Html.CheckBoxFor(model => model.RemailDriverListRegion[i].IsSelected)
+                        @Html.LabelFor(model => model.RemailDriverListRegion[i].FullName, name.FullName)
+                        @Html.ValidationMessageFor(model => model.RemailDriverListRegion[i], "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.RemailDriverListRegion[i].DriverId)
+                        @Html.EditorFor(model => model.RemailDriverListRegion[i])
 
                         <br />
                     }
                 }
+
+                <div class="form-group">
+                    <p class="control-label">سایر رانندگان:</p>
+                    <div class="col-md-10">
+                    </div>
+                </div>
+                @{ for (int i = 0; i < Model.AllocateDriverListOtherRegion.Count(); i++)
+                    {
+                        var name = Model.AllocateDriverListOtherRegion[i];
+                        @Html.CheckBoxFor(model => model.AllocateDriverListOtherRegion[i].IsSelected)
+                        @Html.LabelFor(model => model.AllocateDriverListOtherRegion[i].FullName, name.FullName)
+                        @Html.ValidationMessageFor(model => model.AllocateDriverListOtherRegion[i], "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.AllocateDriverListOtherRegion[i].DriverId)
+                        @Html.EditorFor(model => model.AllocateDriverListOtherRegion[i])
+
+                        <br />
+                    }
+                }
+                @{
+                    for (int i = 0; i < Model.RemailDriverListOtherRegion.Count; i++)
+                    {
+                        var name = Model.RemailDriverListOtherRegion[i];
+                        @Html.CheckBoxFor(model => model.RemailDriverListOtherRegion[i].IsSelected)
+                        @Html.LabelFor(model => model.RemailDriverListOtherRegion[i].FullName, name.FullName)
+                        @Html.ValidationMessageFor(model => model.RemailDriverListOtherRegion[i], "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.RemailDriverListOtherRegion[i].DriverId)
+                        @Html.EditorFor(model => model.RemailDriverListOtherRegion[i])
+
+                        <br />
+                    }
+                }
+
             </div>
         </div>
 
@@ -111,3 +163,7 @@
 <div class="link-back">
     @Html.ActionLink("بازگشت به لیست", "Index")
 </div>
+
+
+        ********************************
+ 

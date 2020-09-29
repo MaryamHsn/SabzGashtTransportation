@@ -25,7 +25,8 @@ namespace SabzGashtTransportation.ViewModel
         public string Phone1 { get; set; }
         public string Phone2 { get; set; }
         public bool IsSelected { get; set; }
-       // public List<RegionTbl> Regiones { get; set; }
+        //survey on one region
+        public int RegionId { get; set; }
         public List<RegionViewModel> Regiones { get; set; }
         public List<AutomobileTbl> Automobiles { get; set; }
         public List<BankAccountNumberTbl> BankAccountNumbers { get; set; }

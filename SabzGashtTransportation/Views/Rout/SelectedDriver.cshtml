@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewBag.Title = "SelectedDriver";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using PagedList.Mvc
+@using Sabz.ServiceLayer.Enumration
+@using Sabz.ServiceLayer.Extension
+@model SabzGashtTransportation.ViewModel.RoutFullViewModel
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<script src="~/js/jquery-3.3.1.min.js"></script>
+@{
+    ViewBag.Title = "اختصاص یافته ها";
+    ViewBag.Title = "SelectedDriver";
+
+    @Styles.Render("~/css/css/style.css");
+    var counter = 1;
+    var routTransactionType = "";
+    string regionDropDown = Model.Rout.RegionId != 0 ? Model.Regions.Where(x => x.Id == Model.Rout.RegionId).FirstOrDefault().RegionName : "";
+
+}
+
+<h2 class="style-h2">اختصاص یافته ها</h2>
+
+@using (Html.BeginForm("Index", "Rout", FormMethod.Get))
+{
+    <div>
+        <h4 class="style-h4">مسیر</h4>
+        <table>
+            <tr>
+                <th class="font-small">نام شرکت</th>
+                <th> @Html.DisplayFor(model => model.Rout.RegionName)</th>
+            </tr>
+            <tr>
+                <th class="font-small">  تاریخ</th>
+                <th> @Html.DisplayFor(model => model.Rout.StartDateString)</th>
+            </tr>
+            <tr>
+                <th class="font-small"> ساعت</th>
+                <th> @Html.DisplayFor(model => model.Rout.EnterTime)</th>
+            </tr>
+            <tr>
+                <th class="font-small">ورودی/خروجی</th>
+                <th> @(Model.Rout.ShiftType == (int)ShiftTypeEnum.Enter ? ShiftTypeEnum.Enter.GetDisplayName() : ShiftTypeEnum.Exit.GetDisplayName())</th>
+            </tr>
+            <tr>
+                <th class="font-small">نوع نیمراه</th>
+                @{
+                    if (Model.Rout.RoutTransactionType == (int)RoutTransactionTypeEnum.Single)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.Single.GetDisplayName();
+                    }
+                    else if (Model.Rout.RoutTransactionType == (int)RoutTransactionTypeEnum.Regular)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.Regular.GetDisplayName();
+                    }
+                    else if (Model.Rout.RoutTransactionType == (int)RoutTransactionTypeEnum.ThereeFour)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.ThereeFour.GetDisplayName();
+                    }
+                    else if (Model.Rout.RoutTransactionType == (int)RoutTransactionTypeEnum.FiveSeven)
+                    {
+                        routTransactionType = RoutTransactionTypeEnum.FiveSeven.GetDisplayName();
+                    }
+                }
+                <th>
+                    @routTransactionType
+                </th>
+            </tr>
+            <tr>
+                <th class="font-small"> نوع اتومبیل</th>
+
+                <th>  @(Model.Rout.AutomobileTypeTbl.IsBus == (int)AutomobileTypeEnum.Bus ? AutomobileTypeEnum.Bus.GetDisplayName() : AutomobileTypeEnum.MiniBus.GetDisplayName())</th>
+            </tr>
+            <tr>
+                <th class="font-small"> کولر اتومبیل</th>
+                <th>
+                    @(Model.Rout.AutomobileTypeTbl.HasCooler ? HasCoolerEnum.HasCooler.GetDisplayName() : HasCoolerEnum.HasNotCooler.GetDisplayName())
+                </th>
+            </tr>
+        </table>
+    </div>
+}
+
+<div class="link-back">
+    @Html.ActionLink("بازگشت به لیست", "Index")
+</div>
+<table id="showList">
+    <tr>
+        <th>
+            ردیف
+        </th>
+        <th>
+            @Html.ActionLink(" نام راننده", "Index", new { sortOrder = ViewBag.RegionId, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            عملیات
+        </th>
+    </tr>
+    @if (Model.Rout != null)
+    {
+        foreach (var item in Model.Rout.Drivers)
+        {
+            <tr>
+                <td>
+                    @counter
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.ActionLink("حذف", "Delete", "Rout", new { id = item.Id })
+                </td>
+            </tr>
+            counter += 1;
+        }
+
+    }
+
+</table>
+<br />
+@if (Model.RoutViewModels != null)
+{
+    <p class="showPage">
+        صفحه @(Model.RoutViewModels.PageCount < Model.RoutViewModels.PageNumber ? 0 : Model.RoutViewModels.PageNumber) از @Model.RoutViewModels.PageCount
+    </p>
+
+    @Html.PagedListPager(Model.RoutViewModels, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+    $(function () {
+        $('select').on('change', function () {
+            $("#dropRegionId").val(this.value);
+        })
+
+    })
+</script>

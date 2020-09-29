@@ -52,7 +52,23 @@ namespace Sabz.ServiceLayer.Service
         {
             _uow.BankAccountNumberRepository.Update(bankAccountNumber);
         }
-
+        public List<DriverTbl> GetDriverByRegionId(int regionId)
+        {
+         return _uow.BankAccountNumberRepository.GetAll(x => x.IsActive && x.RegionId == regionId).Select(x=>x.DriverTbl).ToList();
+        }
+        public List<DriverTbl> GetDriverByExceptRegionId(int regionId)
+        {
+         return _uow.BankAccountNumberRepository.GetAll(x => x.IsActive && x.RegionId != regionId).Select(x=>x.DriverTbl).ToList();
+        } 
+        public List<BankAccountNumberTbl> GetBankAccountNumberByExceptRegionId(int regionId)
+        {
+            var findDriverIds = GetBankAccountNumberByRegionId(regionId).Select(x => x.DriverId).ToList();
+         return _uow.BankAccountNumberRepository.GetAll(x => x.IsActive && x.RegionId != regionId && !findDriverIds.Contains(x.DriverId)).GroupBy(x => x.DriverId).Select(y => y.First()).ToList();
+        }
+        public List<DriverTbl> GetDriverByRegionIds(List<int> regionIds)
+        { 
+            return _uow.BankAccountNumberRepository.GetAll(x => !regionIds.Contains(x.RegionId) && x.IsActive).Select(x=>x.DriverTbl).ToList();
+        }
         ////Async 
         public async Task AddNewBankAccountNumberAsync(BankAccountNumberTbl BankAccountNumber, CancellationToken ct = new CancellationToken())
         {
